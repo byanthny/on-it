@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  title: On It API
+  description: REST API for On It
+  version: 0.1.0
+
+servers:
+  - url: https://onitapp.herku.com
+
+components:
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    packet:
+      type: object
+      description: The packaging in which all API responses are sent.
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+        meta:
+          type: object
+    User:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          $ref: "#/components/schemas/Name"
+        email:
+          type: string
+          maxLength: 60
+        createdAt:
+          type: string
+          description: The date at which the user was added.
+        updatedAt:
+          type: string
+          description: The last time the user was updated.
+    Name:
+      type: object
+      properties:
+        first:
+          type: string
+          maxLength: 50
+          minLength: 1
+        last:
+          type: string
+          maxLength: 50
+          minLength: 1
+        display:
+          type: string
+          maxLength: 50
+          minLength: 3
+    Friendship:
+      type: object
+      description: A "friendship" relation with some meta info
+      properties:
+        friends:
+          type: array
+          items:
+            type: string
+            description: User ID
+          maxLength: 2
+          minLength: 2
+        requestedAt:
+          type: string
+          description: Date this Friendship was requested
+        confirmedAt:
+          type: string
+          description: Date this Friendship was confirmed by the recipient
+
+    Agendum:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: The ID of the owning User
+        date:
+          type: string
+          description: The date of this Agendum
+        tasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Task"
+        createdAt:
+          type: string
+          description: The date this agendum was created
+        updatedAt:
+          type: string
+          description: The last date this agendum was udpated
+    Task:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 255
+          minLength: 1
+          description: The name or title of the task. A shorthand
+        description:
+          type: string
+          maxLength: 1024
+          minLength: 1
+          description: A longer description of the task
+        state:
+          type: string
+          enum:
+            - todo
+            - doing
+            - complete
+            - cancelled
+        time:
+          type: object
+          description: The time this task is for
+          properties:
+            hour:
+              type: number
+              maximum: 23
+              minimum: 0
+            minute:
+              type: number
+              maximum: 59
+              minimum: 0
+paths:
+  /api/auth/register:
+    post:
+      description:
+  /api/user/:uid:
+    get:
+      description: Gets a user with the given id
