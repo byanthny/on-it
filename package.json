@@ -4,7 +4,8 @@
   "description": "advanced schedulable, checkable TODOs",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest ./spec/"
+    "test": "jest ./spec/",
+    "start": "node --experimental-modules src/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,10 +21,12 @@
     "@hapi/joi": "^17.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "firebase-admin": "^8.9.2",
     "joigoose": "^6.2.0",
     "mongoose": "^5.8.11",
     "nanoid": "^2.1.11",
     "packetier": "^2.0.0",
     "subtroller": "^0.1.5"
-  }
+  },
+  "type": "module"
 }

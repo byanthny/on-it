@@ -55,79 +55,146 @@ components:
           type: string
           maxLength: 50
           minLength: 3
-    Friendship:
-      type: object
-      description: A "friendship" relation with some meta info
-      properties:
-        friends:
-          type: array
-          items:
-            type: string
-            description: User ID
-          maxLength: 2
-          minLength: 2
-        requestedAt:
-          type: string
-          description: Date this Friendship was requested
-        confirmedAt:
-          type: string
-          description: Date this Friendship was confirmed by the recipient
 
-    Agendum:
+    Task:
       type: object
       properties:
         uid:
           type: string
-          description: The ID of the owning User
-        date:
+          description: Owning User ID
+        tid:
           type: string
-          description: The date of this Agendum
-        tasks:
-          type: array
-          items:
-            $ref: "#/components/schemas/Task"
-        createdAt:
+          description: this Task's
+        parent:
           type: string
-          description: The date this agendum was created
-        updatedAt:
-          type: string
-          description: The last date this agendum was udpated
-    Task:
-      type: object
-      properties:
-        title:
+          description: ID of parent task
+          default: null
+        text:
           type: string
           maxLength: 255
           minLength: 1
           description: The name or title of the task. A shorthand
-        description:
-          type: string
-          maxLength: 1024
-          minLength: 1
-          description: A longer description of the task
+        notes:
+          type: array
+          items:
+            $ref: "#/components/schemas/Note"
+        due:
+          type: object
+          description: The date this task is due.
+        reminders:
+          type: array
+          description: An array of dates for reminders
+          items:
+            type: string
         state:
           type: string
           enum:
             - todo
-            - doing
-            - complete
+            - done
             - cancelled
-        time:
-          type: object
-          description: The time this task is for
-          properties:
-            hour:
-              type: number
-              maximum: 23
-              minimum: 0
-            minute:
-              type: number
-              maximum: 59
-              minimum: 0
+        pinned:
+          type: boolean
+          description: Whether this task is pinned to the top of lists
+          default: false
+        tags:
+          type: array
+          maxLength: 50
+          items:
+            type: string
+            maxLength: 255
+            minLength: 1
+
+    Note:
+      type: object
+      description: A note
+      properties:
+        uid:
+          type: string
+          description: Owning user ID
+        title:
+          type: string
+          maxLength: 255
+        text:
+          type: string
+          maxLength: 5120
+        tags:
+          type: array
+          maxLength: 50
+          items:
+            type: string
+            maxLength: 255
+            minLength: 1
+
 paths:
-  /api/auth/register:
-    post:
-      description:
-  /api/user/:uid:
+  /api/user/{uid}:
     get:
-      description: Gets a user with the given id
+      description: Get information on the associated user
+      parameters:
+        - name: uid
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Auth token
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: No such user
+    post:
+      description: Create a new user
+      parameters:
+        - name: uid
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Auth token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The user information to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        201:
+          description: User created
+        401:
+          description: Unauthorized
+    put:
+      description: Update user information
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: TODO
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: User updated
