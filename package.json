@@ -1,0 +1,29 @@
+{
+  "name": "on-it",
+  "version": "0.1.0",
+  "description": "advanced schedulable, checkable TODOs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest ./spec/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/JonoAugustine/on-it.git"
+  },
+  "author": "JonoAugustine",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://gitlab.com/JonoAugustine/on-it/issues"
+  },
+  "homepage": "https://gitlab.com/JonoAugustine/on-it#readme",
+  "dependencies": {
+    "@hapi/joi": "^17.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "joigoose": "^6.2.0",
+    "mongoose": "^5.8.11",
+    "nanoid": "^2.1.11",
+    "packetier": "^2.0.0",
+    "subtroller": "^0.1.5"
+  }
+}
