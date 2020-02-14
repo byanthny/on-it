@@ -1,3 +1,5 @@
+# TODO Examples for all routes
+
 openapi: 3.0.0
 info:
   title: On It API
@@ -387,3 +389,26 @@ paths:
       description: Create a new Note
       tags:
         - note
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                title:
+                  type: string
+                  example: Homework notes
+                text:
+                  type: string
+                  example: make sure to use the 4th edition textbook
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example: ["project 1"]
+                tid:
+                  type: string
+                  description: Parent task ID
+                  example: tid-afgkp
+      responses:
+        201:
+          description: Note created
