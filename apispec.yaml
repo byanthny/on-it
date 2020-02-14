@@ -5,7 +5,7 @@ info:
   version: 0.1.0
 
 servers:
-  - url: https://onitapp.herku.com
+  - url: https://onitapp.herku.com/api
 
 components:
   securitySchemes:
@@ -35,10 +35,10 @@ components:
           type: string
           maxLength: 60
         createdAt:
-          type: string
+          type: number
           description: The date at which the user was added.
         updatedAt:
-          type: string
+          type: number
           description: The last time the user was updated.
     Name:
       type: object
@@ -55,7 +55,6 @@ components:
           type: string
           maxLength: 50
           minLength: 3
-
     Task:
       type: object
       properties:
@@ -74,18 +73,14 @@ components:
           maxLength: 255
           minLength: 1
           description: The name or title of the task. A shorthand
-        notes:
-          type: array
-          items:
-            $ref: "#/components/schemas/Note"
         due:
-          type: object
+          type: number
           description: The date this task is due.
         reminders:
           type: array
           description: An array of dates for reminders
           items:
-            type: string
+            type: number
         state:
           type: string
           enum:
@@ -98,12 +93,11 @@ components:
           default: false
         tags:
           type: array
-          maxLength: 50
+          maxItems: 50
           items:
             type: string
             maxLength: 255
             minLength: 1
-
     Note:
       type: object
       description: A note
@@ -111,6 +105,12 @@ components:
         uid:
           type: string
           description: Owning user ID
+        tid:
+          type: string
+          description: The ID of the owning task
+        nid:
+          type: string
+          description: Note's ID
         title:
           type: string
           maxLength: 255
@@ -124,11 +124,48 @@ components:
             type: string
             maxLength: 255
             minLength: 1
+        createdAt:
+          type: number
+        updatedAt:
+          type: number
+
+tags:
+  - name: user
+    description: Routes used for accessing & modifying user data
+  - name: task
+    description: Routes used for accessing & modifying user tasks
+  - name: note
+
+# Routes needed:
+#   User:
+#     create X
+#     update X
+#     get X
+#   Tasks:
+#     create X
+#     update X
+#     delete X
+#     get one X
+#     get many X
+#   Notes:
+#     create
+#     update
+#     delete
+#     get one
+#     get many
+#   Projects (Tags):
+#     create
+#     update
+#     delete
+#     get one
+#     get many
 
 paths:
-  /api/user/{uid}:
+  /user/{uid}:
     get:
       description: Get information on the associated user
+      tags:
+        - user
       parameters:
         - name: uid
           in: path
@@ -145,12 +182,18 @@ paths:
       responses:
         200:
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
         401:
           description: Unauthorized
         404:
           description: No such user
     post:
       description: Create a new user
+      tags:
+        - user
       parameters:
         - name: uid
           in: path
@@ -178,6 +221,8 @@ paths:
           description: Unauthorized
     put:
       description: Update user information
+      tags:
+        - user
       parameters:
         - name: uid
           in: path
@@ -190,11 +235,155 @@ paths:
           schema:
             type: string
       requestBody:
-        description: TODO
+        description: User information to update
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              properties:
+                name:
+                  $ref: "#/components/schemas/Name"
       responses:
         200:
           description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /tasks/{uid}:
+    get:
+      description: get a user's tasks
+      tags:
+        - task
+      parameters:
+        - name: uid
+          description: User ID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          description: Max number of results
+          in: query
+          schema:
+            type: number
+            maximum: 300
+            default: 100
+        - name: state
+          description: The completion state of the tasks
+          in: query
+          schema:
+            type: string
+            default: null
+            enum:
+              - todo
+              - done
+              - cancelled
+      responses:
+        200:
+          description: OK
+    post:
+      description: Creates a new task
+      tags:
+        - task
+      parameters:
+        - name: uid
+          description: Owning user ID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          description: Auth token
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The task to create
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                due:
+                  type: number
+                reminders:
+                  type: array
+                  default: []
+                  items:
+                    type: number
+                tags:
+                  type: array
+                  maxItems: 50
+                  items:
+                    type: string
+      responses:
+        201:
+          description: Task created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+  /tasks/{uid}/{tid}:
+    summary: Route for accessing a specific task and it's child tasks
+    get:
+      description: Gets a user's task
+      tags:
+        - task
+      parameters:
+        - name: uid
+          description: Owning user ID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: tid
+          description: Task ID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Returns the Task matching the given ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+    put:
+      description: Updates a task
+      tags:
+        - task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        200:
+          description: Task updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+    delete:
+      description: Deletes a task
+      tags:
+        - task
+      responses:
+        200:
+          description: Task deleted
+        401:
+          description: Unauthorized
+        404:
+          description: Task not found
+
+  /notes/{uid}:
+    summary: Route for creating notes, getting (many) notes
+    post:
+      description: Create a new Note
+      tags:
+        - note
