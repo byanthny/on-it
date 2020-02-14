@@ -1,5 +1,3 @@
-# TODO Examples for all routes
-
 openapi: 3.0.0
 info:
   title: On It API
@@ -137,30 +135,6 @@ tags:
   - name: task
     description: Routes used for accessing & modifying user tasks
   - name: note
-
-# Routes needed:
-#   User:
-#     create X
-#     update X
-#     get X
-#   Tasks:
-#     create X
-#     update X
-#     delete X
-#     get one X
-#     get many X
-#   Notes:
-#     create
-#     update
-#     delete
-#     get one
-#     get many
-#   Projects (Tags):
-#     create
-#     update
-#     delete
-#     get one
-#     get many
 
 paths:
   /user/{uid}:

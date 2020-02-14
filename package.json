@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest ./spec/",
-    "start": "node --experimental-modules src/index.js"
+    "stat": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,11 @@
     "mongoose": "^5.8.11",
     "nanoid": "^2.1.11",
     "packetier": "^2.0.0",
-    "subtroller": "^0.1.5"
+    "subtroller": "^0.1.5",
+    "swagger-ui-express": "^4.1.3",
+    "yamljs": "^0.3.0"
   },
-  "type": "module"
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }
