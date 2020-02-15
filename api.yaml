@@ -105,7 +105,7 @@ components:
         uid:
           type: string
           description: Owning user ID
-        tid:
+        parent:
           type: string
           description: The ID of the owning task
         nid:
