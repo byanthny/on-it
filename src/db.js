@@ -10,7 +10,8 @@ const connect = async () => {
     } = await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useCreateIndex: true,
-      useFindAndModify: true
+      useUnifiedTopology: true,
+      useFindAndModify: false
     });
 
     console.log(`MONGO: ${databaseName} @ ${host}`);
