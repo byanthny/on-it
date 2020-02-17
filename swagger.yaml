@@ -161,7 +161,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/User"
         401:
           description: Unauthorized
         404:
@@ -193,6 +200,17 @@ paths:
       responses:
         201:
           description: User created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/User"
         401:
           description: Unauthorized
     put:
@@ -224,7 +242,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/User"
 
   /tasks/{uid}:
     get:
@@ -359,6 +384,40 @@ paths:
 
   /notes/{uid}:
     summary: Route for creating notes, getting (many) notes
+    get:
+      description: Get a user's notes
+      tags:
+        - note
+      parameters:
+        - name: uid
+          description: Owning user ID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          description: Max number of results
+          in: query
+          schema:
+            type: number
+            maximum: 300
+            default: 100
+      responses:
+        200:
+          description: Returns up to {limit} number of the user's notes
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      notes:
+                        type: array
+                        items:
+                          $ref: "#components/schemas/Note"
     post:
       description: Create a new Note
       tags:
