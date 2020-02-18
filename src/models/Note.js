@@ -8,11 +8,11 @@ const ID = () => "nid_" + nanoid(28);
 const NoteSchema = joi.object({
   uid: joi
     .string()
-    .length(process.env.ID_LENG + 4)
+    .length(parseInt(process.env.ID_LENG) + 4)
     .regex(/^uid_/),
   parent: joi
     .string()
-    .length(process.env.ID_LENG + 4)
+    .length(parseInt(process.env.ID_LENG) + 4)
     .regex(/^tid_/),
   nid: joi.string().default(ID),
   title: joi
@@ -31,7 +31,7 @@ const NoteSchema = joi.object({
   updatedAt: joi.date().default(Date.now)
 });
 
-const NoteMongooseSchema = new mongoose.Schema(convert(UserSchema));
+const NoteMongooseSchema = new mongoose.Schema(convert(NoteSchema));
 
 const NoteModel = mongoose.model("Note", NoteMongooseSchema);
 

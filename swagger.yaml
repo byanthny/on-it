@@ -137,6 +137,47 @@ tags:
   - name: note
 
 paths:
+  /user/:
+    post:
+        description: Create a new user
+        tags:
+          - user
+        parameters:
+          - name: uid
+            in: path
+            description: User ID
+            required: true
+            schema:
+              type: string
+          - name: token
+            in: header
+            description: Auth token
+            required: true
+            schema:
+              type: string
+        requestBody:
+          description: The user information to create
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        responses:
+          201:
+            description: User created
+            content:
+              application/json:
+                schema:
+                  allOf:
+                    - $ref: "#/components/schemas/packet"
+                  properties:
+                    payload:
+                      type: object
+                      properties:
+                        user:
+                          $ref: "#/components/schemas/User"
+          401:
+            description: Unauthorized
   /user/{uid}:
     get:
       description: Get information on the associated user
@@ -173,46 +214,6 @@ paths:
           description: Unauthorized
         404:
           description: No such user
-    post:
-      description: Create a new user
-      tags:
-        - user
-      parameters:
-        - name: uid
-          in: path
-          description: User ID
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Auth token
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: The user information to create
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
-      responses:
-        201:
-          description: User created
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/packet"
-                properties:
-                  payload:
-                    type: object
-                    properties:
-                      user:
-                        $ref: "#/components/schemas/User"
-        401:
-          description: Unauthorized
     put:
       description: Update user information
       tags:
@@ -283,6 +284,19 @@ paths:
       responses:
         200:
           description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      tasks:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Task"
     post:
       description: Creates a new task
       tags:
@@ -327,7 +341,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Task"
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      task:
+                        $ref: "#/components/schemas/Task"
   /tasks/{uid}/{tid}:
     summary: Route for accessing a specific task and it's child tasks
     get:
@@ -353,7 +374,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Task"
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      task:
+                        $ref: "#/components/schemas/Task"
     put:
       description: Updates a task
       tags:
@@ -369,7 +397,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Task"
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      task:
+                        $ref: "#/components/schemas/Task"
     delete:
       description: Deletes a task
       tags:
@@ -445,3 +480,46 @@ paths:
       responses:
         201:
           description: Note created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      note:
+                        $ref: "#/components/schemas/Note"
+  /notes/{uid}/{nid}:
+    get:
+      description: Get a single note by ID
+      tags:
+        - note
+      parameters:
+        - name: uid
+          description: Owning User ID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: nid
+          description: Note ID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Returns the requested note
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      note:
+                        $ref: "#/components/schemas/Note"

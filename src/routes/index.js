@@ -1,5 +1,4 @@
 const docs = require("./docs");
+const user = require("./user");
 
-module.exports = {
-  docs
-};
+module.exports = { docs, user };

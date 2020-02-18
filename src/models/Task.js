@@ -6,17 +6,19 @@ const { TaskState } = require("../enum");
 
 const ID = () => "tid_" + nanoid(process.env.ID_LENG);
 
+console.log(process.env.ID_LENG);
+
 const TaskSchema = joi.object({
   uid: joi
     .string()
-    .length(process.env.ID_LENG + 4)
-    .regex(/^uid_/),
+    .length(parseInt(process.env.ID_LENG) + 4)
+    .regex(/^uid_/)
+    .required(),
   tid: joi.string().default(ID),
   parent: joi
     .string()
-    .length(process.env.ID_LENG + 4)
-    .regex(/^tid_/)
-    .default(null),
+    .length(parseInt(process.env.ID_LENG) + 4)
+    .regex(/^tid_/),
   text: joi
     .string()
     .min(1)
@@ -42,7 +44,7 @@ const TaskSchema = joi.object({
   updatedAt: joi.date().default(Date.now)
 });
 
-const TaskMongooseSchema = new mongoose.Schema(convert(UserSchema));
+const TaskMongooseSchema = new mongoose.Schema(convert(TaskSchema));
 
 const TaskModel = mongoose.model("Task", TaskMongooseSchema);
 

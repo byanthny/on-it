@@ -1,7 +1,7 @@
 const express = require("express");
 const swaggerUI = require("swagger-ui-express");
 const swaggerDocument = require("yamljs").load(
-  require("path").join(__dirname, "..", "..", "api.yaml")
+  require("path").join(__dirname, "..", "..", "swagger.yaml")
 );
 
 const router = express.Router();
