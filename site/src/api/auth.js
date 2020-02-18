@@ -16,4 +16,10 @@ Firebase.initializeApp(config);
 
 const auth = Firebase.auth();
 
-export default auth;
+let token;
+
+auth.onAuthStateChanged(async user => {
+  token = user ? await user.getIdToken() : null;
+});
+
+export default { ...auth, token };

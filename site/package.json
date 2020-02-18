@@ -18,7 +18,11 @@
       "@babel/preset-react"
     ]
   },
+  "browserslist": [
+    "last 1 Chrome versions"
+  ],
   "dependencies": {
+    "axios": "^0.19.2",
     "firebase": "^7.8.2"
   }
 }
