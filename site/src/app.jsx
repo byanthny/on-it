@@ -11,10 +11,17 @@ const App = () => {
     u => (title.textContent = u.username)
   );
 
+  const button = <button>docs</button>;
+  button.onclick = () => {
+    console.log("click");
+    window.location.href = "/api/docs";
+  };
+
   return (
     <div>
       {header}
       {title}
+      {button}
     </div>
   );
 };
