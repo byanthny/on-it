@@ -2,7 +2,7 @@ import _axios from "axios";
 import { token } from "./auth";
 import { User } from "./models";
 
-const API_URI = "http://localhost:7000/api"; //"https://onitapp.herokuapp.com/api";
+const API_URI = "https://onitapp.herokuapp.com/api";
 
 const axios = _axios.create({
   baseURL: API_URI,
