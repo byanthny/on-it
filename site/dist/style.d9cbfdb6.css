@@ -1,0 +1,20 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  color: #e4e6ea;
+}
+
+#root {
+  background-color: #333436;
+}
+
+/*# sourceMappingURL=/style.d9cbfdb6.css.map */

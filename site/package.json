@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx parcel index.html",
+    "build": "parcel index.html",
     "dev": "parcel serve index.html"
   },
   "devDependencies": {
