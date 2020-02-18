@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest ./spec/",
-    "start": "node src/index.js",
+    "start": "cd site && npm i && npm build && node src/index.js",
     "dev": "nodemon src/index.js"
   },
   "repository": {
