@@ -2,14 +2,7 @@ import { Input } from "./components";
 import { API } from "./api";
 
 const App = () => {
-  const header = <header>This is the App</header>;
-  let input = Input.Text("sample");
-
-  const title = <h1></h1>;
-
-  API.createUser({ username: "username" }).then(
-    u => (title.textContent = u.username)
-  );
+  const title = <h1>Title</h1>;
 
   const button = <button>docs</button>;
   button.onclick = () => {
@@ -17,9 +10,10 @@ const App = () => {
     window.location.href = "/api/docs";
   };
 
+  API.login("swordmaster9@gmail.com", "mypass").then(u => console.log(u));
+
   return (
     <div>
-      {header}
       {title}
       {button}
     </div>

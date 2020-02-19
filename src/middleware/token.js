@@ -1,4 +1,4 @@
-
+const firebase = require("../firebase");
 
 class Token {
   constructor({ uid, email }, raw) {
@@ -11,10 +11,39 @@ class Token {
 /**
  * Attempts to extract the Firebase Auth token from the request header
  * and add the data to the req object as "token"
+ *
  * @param {*} req
  * @param {*} res
  * @param {function} next
  */
-const pullToken = (req, res, next) => {};
+const pullToken = async (req, res, next) => {
+  const _token = req.header.token;
 
-module.exports = {};
+  if (!_token) {
+    return next();
+  }
+
+  let decoded;
+  try {
+    decoded = await firebase.verifyIdToken(_token, true);
+  } catch (error) {
+    return next();
+  }
+
+  if (decoded) {
+    req.token = new Token(decoded, _token);
+  }
+
+  next();
+};
+
+/**
+ * Require an auth token, send 401 if no token is found.
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+const requireToken = async (req, res, next) => {};
+
+module.exports = { pullToken, requireToken };

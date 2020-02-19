@@ -10,10 +10,11 @@ const { User } = require("../models");
  */
 const controller = new Controller()
   .make("get", "one", async (req, res) => {
-    res.json(body);
+    console.log(req.token);
+    res.json({});
   })
   .make("post", "one", async (req, res) => {
-    res.json({ ...req.body, ...req.header });
+    res.json(req.token);
   })
   .make("put", "one", async (req, res) => {});
 

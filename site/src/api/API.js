@@ -1,8 +1,8 @@
 import _axios from "axios";
-import { token } from "./auth";
-import { User } from "./models";
+import auth, { token } from "./auth";
+import { User, Name } from "./models";
 
-const API_URI = "https://onitapp.herokuapp.com/api";
+const API_URI = "/api";
 
 const axios = _axios.create({
   baseURL: API_URI,
@@ -19,23 +19,61 @@ const axios = _axios.create({
  */
 class API {
   /**
-   * Creates a new user.
+   * Register a new user.
    *
-   * @param {User} user - The new user to create
-   * @returns {Promise<User>} The created User or null if it failed.
+   * @param {string} email - User's email
+   * @param {string} password - User's password
    *
-   * @since 0.1.0
+   * @returns {Promise<User>} The newly created User
    */
-  async createUser(user) {
+  async register(email, password) {
+    let result;
     try {
-      const { data } = await axios.post("/user/", user, {
-        headers: { token }
-      });
-
-      return data;
+      result = await auth.createUserWithEmailAndPassword(email, password);
     } catch (error) {
-      return error;
+      throw error;
     }
+
+    return result.user;
+  }
+
+  /**
+   * Logs in to Firebase auth.
+   *
+   * @param {string} email - User's email
+   * @param {string} password - User's password
+   *
+   * @returns
+   */
+  async login(email, password) {
+    let result;
+    try {
+      result = await auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      throw error;
+    }
+
+    return result;
+  }
+
+  /**
+   *
+   * @param {string} newUsername - String value to set the username to.
+   *
+   * @returns {string} The current user's new username/displayname or null if it failed
+   */
+  async setUsername(username) {
+    if (!auth.currentUser) {
+      return null;
+    }
+
+    try {
+      await auth.currentUser.updateProfile({ displayName: username });
+    } catch (error) {
+      return null;
+    }
+
+    return username;
   }
 }
 

@@ -13417,7 +13417,7 @@ require("@firebase/auth");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.token = void 0;
 
 var _app = _interopRequireDefault(require("firebase/app"));
 
@@ -13439,14 +13439,20 @@ const config = {
 _app.default.initializeApp(config);
 
 const auth = _app.default.auth();
+/**
+ * @returns {Promise<string>} The Firebase auth token if logged in or null.
+ */
 
-let token;
-auth.onAuthStateChanged(async user => {
-  token = user ? await user.getIdToken() : null;
-});
-var _default = { ...auth,
-  token
+
+let token = async () => {
+  auth.currentUser ? auth.currentUser.getIdToken() : null;
 };
+
+exports.token = token;
+auth.onAuthStateChanged(user => {
+  console.log("user updated: ", user);
+});
+var _default = auth;
 exports.default = _default;
 },{"firebase/app":"node_modules/firebase/app/dist/index.cjs.js","firebase/auth":"node_modules/firebase/auth/dist/index.esm.js"}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
@@ -15242,46 +15248,7 @@ class Name {
 
 var _default = Name;
 exports.default = _default;
-},{}],"src/api/models/User.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Name = _interopRequireDefault(require("./Name"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * User object with UID, Name, email, createdAt & updatedAt.
- *
- * @since 0.1.0
- * @author Jonathan Augustine
- */
-class User {
-  /**
-   *
-   * @param {string} uid - User ID
-   * @param {Name} name - User's name
-   * @param {string} email - User's email
-   * @param {number} createdAt - When the user was created (server side)
-   * @param {number} updatedAt - When the user was last updated (server side)
-   */
-  constructor(uid, name, email, createdAt, updatedAt) {
-    this.uid = uid;
-    this.name = name;
-    this.email = email;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-  }
-
-}
-
-var _default = User;
-exports.default = _default;
-},{"./Name":"src/api/models/Name.js"}],"src/api/models/Task.js":[function(require,module,exports) {
+},{}],"src/api/models/Task.js":[function(require,module,exports) {
 /**
  * Task object.
  *
@@ -15357,12 +15324,6 @@ Object.defineProperty(exports, "Name", {
     return _Name.default;
   }
 });
-Object.defineProperty(exports, "User", {
-  enumerable: true,
-  get: function () {
-    return _User.default;
-  }
-});
 Object.defineProperty(exports, "Task", {
   enumerable: true,
   get: function () {
@@ -15378,14 +15339,12 @@ Object.defineProperty(exports, "Note", {
 
 var _Name = _interopRequireDefault(require("./Name"));
 
-var _User = _interopRequireDefault(require("./User"));
-
 var _Task = _interopRequireDefault(require("./Task"));
 
 var _Note = _interopRequireDefault(require("./Note"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./Name":"src/api/models/Name.js","./User":"src/api/models/User.js","./Task":"src/api/models/Task.js","./Note":"src/api/models/Note.js"}],"src/api/API.js":[function(require,module,exports) {
+},{"./Name":"src/api/models/Name.js","./Task":"src/api/models/Task.js","./Note":"src/api/models/Note.js"}],"src/api/API.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15395,13 +15354,17 @@ exports.default = void 0;
 
 var _axios2 = _interopRequireDefault(require("axios"));
 
-var _auth = require("./auth");
+var _auth = _interopRequireWildcard(require("./auth"));
 
 var _models = require("./models");
 
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const API_URI = "http://localhost:7000/api"; //"https://onitapp.herokuapp.com/api";
+const API_URI = "/api";
 
 const axios = _axios2.default.create({
   baseURL: API_URI,
@@ -15419,26 +15382,67 @@ const axios = _axios2.default.create({
 
 class API {
   /**
-   * Creates a new user.
+   * Register a new user.
    *
-   * @param {User} user - The new user to create
-   * @returns {Promise<User>} The created User or null if it failed.
+   * @param {string} email - User's email
+   * @param {string} password - User's password
    *
-   * @since 0.1.0
+   * @returns {Promise<User>} The newly created User
    */
-  async createUser(user) {
+  async register(email, password) {
+    let result;
+
     try {
-      const {
-        data
-      } = await axios.post("/user/", user, {
-        headers: {
-          token: _auth.token
-        }
-      });
-      return data;
+      result = await _auth.default.createUserWithEmailAndPassword(email, password);
     } catch (error) {
-      return error;
+      throw error;
     }
+
+    return result.user;
+  }
+  /**
+   * Logs in to Firebase auth.
+   *
+   * @param {string} email - User's email
+   * @param {string} password - User's password
+   *
+   * @returns
+   */
+
+
+  async login(email, password) {
+    let result;
+
+    try {
+      result = await _auth.default.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      throw error;
+    }
+
+    return result;
+  }
+  /**
+   *
+   * @param {string} newUsername - String value to set the username to.
+   *
+   * @returns {string} The current user's new username/displayname or null if it failed
+   */
+
+
+  async setUsername(username) {
+    if (!_auth.default.currentUser) {
+      return null;
+    }
+
+    try {
+      await _auth.default.currentUser.updateProfile({
+        displayName: username
+      });
+    } catch (error) {
+      return null;
+    }
+
+    return username;
   }
 
 }
@@ -15491,16 +15495,7 @@ var _components = require("./components");
 var _api = require("./api");
 
 const App = () => {
-  const header = React.createElement("header", null, "This is the App");
-
-  let input = _components.Input.Text("sample");
-
-  const title = React.createElement("h1", null);
-
-  _api.API.createUser({
-    username: "username"
-  }).then(u => title.textContent = u.username);
-
+  const title = React.createElement("h1", null, "Title");
   const button = React.createElement("button", null, "docs");
 
   button.onclick = () => {
@@ -15508,7 +15503,9 @@ const App = () => {
     window.location.href = "/api/docs";
   };
 
-  return React.createElement("div", null, header, title, button);
+  _api.API.login("swordmaster9@gmail.com", "mypass").then(u => console.log(u));
+
+  return React.createElement("div", null, title, button);
 };
 
 var _default = App;
@@ -15550,7 +15547,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52326" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51958" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
