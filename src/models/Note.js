@@ -6,10 +6,7 @@ const nanoid = require("nanoid");
 const ID = () => "nid_" + nanoid(28);
 
 const NoteSchema = joi.object({
-  uid: joi
-    .string()
-    .length(parseInt(process.env.ID_LENG) + 4)
-    .regex(/^uid_/),
+  uid: joi.string().required(),
   parent: joi
     .string()
     .length(parseInt(process.env.ID_LENG) + 4)

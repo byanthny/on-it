@@ -7,11 +7,7 @@ const { TaskState } = require("../enum");
 const ID = () => "tid_" + nanoid(process.env.ID_LENG);
 
 const TaskSchema = joi.object({
-  uid: joi
-    .string()
-    .length(parseInt(process.env.ID_LENG) + 4)
-    .regex(/^uid_/)
-    .required(),
+  uid: joi.string().required(),
   tid: joi.string().default(ID),
   parent: joi
     .string()

@@ -1,6 +1,6 @@
 const { Controller } = require("subtroller");
 const { packetier } = require("packetier");
-const { User } = require("../models");
+const FirebaseAuth = require("../firebase");
 
 /**
  * Controller for User routes.
@@ -8,14 +8,25 @@ const { User } = require("../models");
  * @since 0.1.0
  * @author Jonathan Augustine
  */
-const controller = new Controller()
-  .make("get", "one", async (req, res) => {
-    console.log(req.token);
-    res.json({});
-  })
-  .make("post", "one", async (req, res) => {
-    res.json(req.token);
-  })
-  .make("put", "one", async (req, res) => {});
+const controller = new Controller().make("delete", "one", async (req, res) => {
+  let decoded;
+  try {
+    decoded = await FirebaseAuth.verifyIdToken(req.token.raw);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json(packetier(false, null, { err: "Internal 1" }));
+  }
+
+  try {
+    await FirebaseAuth.deleteUser(decoded.uid);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json(packetier(false, null, { err: "Internal 2" }));
+  }
+
+  return res
+    .status(200)
+    .json(packetier(true, null, { msg: `User ${decoded.uid} Deleted` }));
+});
 
 module.exports = controller;

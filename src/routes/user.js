@@ -1,10 +1,11 @@
 const { Router } = require("express");
+const {
+  token: { requireToken }
+} = require("../middleware");
 const { user: ctrlr } = require("../controllers");
 
 const router = Router();
 
-router.route("/").post(ctrlr.post.one);
-
-router.route("/:uid").get(ctrlr.get.one);
+router.route("/:uid").delete(requireToken, ctrlr.delete.one);
 
 module.exports = router;
