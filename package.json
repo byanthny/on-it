@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest ./spec/",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "deploy": "cd site && npm run build & cd .. && git push heroku master && heroku logs --tail"
   },
   "repository": {
     "type": "git",
