@@ -18,3 +18,12 @@ $bg: #333436;
 #root {
   background-color: $bg;
 }
+
+input[type="text"],
+input[type="email"] {
+  color: rgb(228, 230, 234);
+  margin: 1rem 0;
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom: 1px solid rgb(41, 81, 211);
+}

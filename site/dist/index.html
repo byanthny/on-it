@@ -19,7 +19,11 @@
         if (value === true) {
           element.setAttribute(name, name);
         } else if (value !== false && value != null) {
-          element.setAttribute(name, value.toString());
+          if (typeof value === "function") {
+            element[name.toLowerCase()] = value;
+          } else {
+            element.setAttribute(name, value.toString());
+          }
         }
       }
     }

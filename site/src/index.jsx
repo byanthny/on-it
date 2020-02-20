@@ -1,5 +1,5 @@
-import app from "./app";
+import { Home } from "./pages";
 
 const root = document.getElementById("root");
 
-root.appendChild(app());
+root.appendChild(Home());
