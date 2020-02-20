@@ -21,6 +21,8 @@ const Server = async () => {
 
   // API routes
   svr.use("/api/user", routes.user);
+  svr.use("/api/tokens", routes.tokens);
+  svr.use("/api/notes", routes.notes);
 
   return svr;
 };

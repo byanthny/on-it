@@ -1,4 +1,5 @@
 const firebase = require("../firebase");
+const { packetier } = require("packetier");
 
 class Token {
   constructor({ uid, email }, raw) {
@@ -44,6 +45,12 @@ const pullToken = async (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const requireToken = async (req, res, next) => {};
+const requireToken = (req, res, next) => {
+  if (!req.token) {
+    return res
+      .status(401)
+      .json(packetier(false, null, { err: "Invalid or missing token" }));
+  } else next();
+};
 
 module.exports = { pullToken, requireToken };

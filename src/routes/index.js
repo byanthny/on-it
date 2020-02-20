@@ -1,4 +1,6 @@
-const docs = require("./docs");
-const user = require("./user");
-
-module.exports = { docs, user };
+module.exports = {
+  docs: require("./docs"),
+  user: require("./users"),
+  tokens: require("./tokens"),
+  notes: require('./notes')
+};
