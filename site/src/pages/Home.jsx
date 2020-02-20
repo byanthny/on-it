@@ -1,4 +1,9 @@
+import { API } from "../api";
+
 const Home = () => {
+  const inputEmail = <input id="in_email" name="email" type="email" />;
+  const inputPass = <input id="in_pass" type="text" name="password" />;
+
   return (
     <div>
       <header>
@@ -7,13 +12,13 @@ const Home = () => {
       <main style="margin:auto; max-width: 70%">
         <h2>Login</h2>
         <form style="display:flex;flex-direction:column;">
-          <input name="email" type="email" />
-          <input type="text" name="password" />
+          {inputEmail}
+          {inputPass}
           <button
             type="submit"
             onClick={e => {
               e.preventDefault();
-              console.log("CLICK");
+              API.login(inputEmail.value, inputPass.value);
             }}
           >
             Login
