@@ -1,2 +1,5 @@
-.*
+.env
+.firebase-key.json
+.cache
+*.map
 node_modules
