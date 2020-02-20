@@ -1,3 +1,5 @@
 # On It
 
-A project for creating daily repeat tasks which need to be completed.
+Keeping you focused on what needs to get done.
+
+---
