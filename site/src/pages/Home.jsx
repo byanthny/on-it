@@ -5,7 +5,7 @@ const Home = () => {
   const inputPass = <input id="in_pass" type="text" name="password" />;
 
   return (
-    <div>
+    <div id="home">
       <header>
         <h2>On It</h2>
       </header>
@@ -18,12 +18,27 @@ const Home = () => {
             type="submit"
             onClick={e => {
               e.preventDefault();
-              API.login(inputEmail.value, inputPass.value);
+              API.user.login(inputEmail.value, inputPass.value);
             }}
           >
             Login
           </button>
         </form>
+
+        <button
+          onClick={e => {
+            e.preventDefault();
+            API.task.create("This Is My first Task", Date.now() + 1).then(r => {
+              document.getElementById("home").appendChild(
+                <pre>
+                  <code>{JSON.stringify(r, null, 2)}</code>
+                </pre>
+              );
+            });
+          }}
+        >
+          Test Task
+        </button>
       </main>
     </div>
   );

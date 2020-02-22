@@ -3,15 +3,16 @@ const mongoose = require("mongoose");
 const { convert } = require("joigoose")(mongoose);
 const nanoid = require("nanoid");
 const { TaskState } = require("../enum");
+const ID_LENG = require("../config").ID_LENG;
 
-const ID = () => "tid_" + nanoid(process.env.ID_LENG);
+const ID = () => "tid_" + nanoid(ID_LENG);
 
 const TaskSchema = joi.object({
   uid: joi.string().required(),
   tid: joi.string().default(ID),
   parent: joi
     .string()
-    .length(parseInt(process.env.ID_LENG) + 4)
+    .length(ID_LENG + 4)
     .regex(/^tid_/),
   text: joi
     .string()

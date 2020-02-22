@@ -1,6 +1,6 @@
 import _axios from "axios";
 import auth, { token } from "./auth";
-import { User, Name } from "./models";
+import { Note, Task } from "./models";
 
 const API_URI = "/api";
 
@@ -18,63 +18,99 @@ const axios = _axios.create({
  * @author Jonathan Augustine
  */
 class API {
-  /**
-   * Register a new user.
-   *
-   * @param {string} email - User's email
-   * @param {string} password - User's password
-   *
-   * @returns {Promise<User>} The newly created User
-   */
-  async register(email, password) {
-    let result;
-    try {
-      result = await auth.createUserWithEmailAndPassword(email, password);
-    } catch (error) {
-      throw error;
+  user = {
+    /**
+     * Register a new user.
+     *
+     * @param {string} email - User's email
+     * @param {string} password - User's password
+     *
+     * @returns The newly created User
+     */
+    register: async (email, password) => {
+      let result;
+      try {
+        result = await auth.createUserWithEmailAndPassword(email, password);
+      } catch (error) {
+        throw error;
+      }
+
+      return result.user;
+    },
+
+    /**
+     * Logs in to Firebase auth.
+     *
+     * @param {string} email - User's email
+     * @param {string} password - User's password
+     *
+     * @returns
+     */
+    login: async (email, password) => {
+      let result;
+      try {
+        result = await auth.signInWithEmailAndPassword(email, password);
+      } catch (error) {
+        throw error;
+      }
+
+      return result;
+    },
+
+    /**
+     *
+     * @param {string} newUsername - String value to set the username to.
+     *
+     * @returns {string} The current user's new username/displayname or null if it failed
+     */
+    setUsername: async username => {
+      if (!auth.currentUser) {
+        return null;
+      }
+
+      try {
+        await auth.currentUser.updateProfile({ displayName: username });
+      } catch (error) {
+        return null;
+      }
+
+      return username;
     }
+  };
 
-    return result.user;
-  }
+  task = {
+    /**
+     * @param {string} text
+     * @param {number} due
+     * @param {Array<number>} reminders
+     * @param {Array<string>} tags
+     *
+     * @returns {Promise<Task>}
+     */
+    create: async (text, due, reminders = [], tags = []) => {
+      let result;
+      try {
+        result = await axios.post(
+          `/tasks/${auth.currentUser.uid}`,
+          {
+            text,
+            due,
+            reminders,
+            tags
+          },
+          {
+            headers: {
+              token: await token()
+            }
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
 
-  /**
-   * Logs in to Firebase auth.
-   *
-   * @param {string} email - User's email
-   * @param {string} password - User's password
-   *
-   * @returns
-   */
-  async login(email, password) {
-    let result;
-    try {
-      result = await auth.signInWithEmailAndPassword(email, password);
-    } catch (error) {
-      throw error;
+      return result.data.payload.task;
     }
-
-    return result;
-  }
-
-  /**
-   *
-   * @param {string} newUsername - String value to set the username to.
-   *
-   * @returns {string} The current user's new username/displayname or null if it failed
-   */
-  async setUsername(username) {
-    if (!auth.currentUser) {
-      return null;
-    }
-
-    try {
-      await auth.currentUser.updateProfile({ displayName: username });
-    } catch (error) {
-      return null;
-    }
-
-    return username;
-  }
+  };
 }
 
 export default new API();

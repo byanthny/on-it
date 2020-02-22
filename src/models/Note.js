@@ -2,14 +2,15 @@ const joi = require("@hapi/joi");
 const mongoose = require("mongoose");
 const { convert } = require("joigoose")(mongoose);
 const nanoid = require("nanoid");
+const ID_LENG = require("../config").ID_LENG;
 
-const ID = () => "nid_" + nanoid(28);
+const ID = () => "nid_" + nanoid(ID_LENG);
 
 const NoteSchema = joi.object({
   uid: joi.string().required(),
   parent: joi
     .string()
-    .length(parseInt(process.env.ID_LENG) + 4)
+    .length(ID_LENG + 4)
     .regex(/^tid_/),
   nid: joi.string().default(ID),
   title: joi

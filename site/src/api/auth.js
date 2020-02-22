@@ -20,11 +20,12 @@ const auth = Firebase.auth();
  * @returns {Promise<string>} The Firebase auth token if logged in or null.
  */
 let token = async () => {
-  auth.currentUser ? auth.currentUser.getIdToken() : null;
+  return auth.currentUser ? auth.currentUser.getIdToken() : null;
 };
 
-auth.onAuthStateChanged(user => {
-  console.log("user updated: ", user);
+auth.onAuthStateChanged(async user => {
+  console.log("user updated", user);
+  console.log("token", await token());
 });
 
 export { token };

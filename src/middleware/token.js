@@ -18,7 +18,7 @@ class Token {
  * @param {function} next
  */
 const pullToken = async (req, res, next) => {
-  const _token = req.header.token;
+  const _token = req.headers.token;
 
   if (!_token) {
     return next();
@@ -28,7 +28,7 @@ const pullToken = async (req, res, next) => {
   try {
     decoded = await firebase.verifyIdToken(_token, true);
   } catch (error) {
-    return next();
+    console.error("Failed to decode token");
   }
 
   if (decoded) {
