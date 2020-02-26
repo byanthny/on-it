@@ -11,4 +11,4 @@ const ProjectSchema = joi.object({
     .default("#333333")
 });
 
-export default { schema: ProjectSchema };
+module.exports = { schema: ProjectSchema };

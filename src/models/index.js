@@ -4,5 +4,7 @@ module.exports = {
   ID_LENG,
   User: require("./User"),
   Task: require("./Task"),
-  Note: require("./Note")
+  Note: require("./Note"),
+  Project: require("./Project"),
+  Settings: require("./Settings")
 };
