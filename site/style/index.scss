@@ -1,29 +1,72 @@
+//Colors
+$dark: #262626;
+$white: #fff;
+$grey: #bbb;
+$gradient: linear-gradient(76deg, rgba(#FEE140, .85) 0%, rgba(#FA709A, .85) 100%);
+//Font-Sizes
+//General
+$padding: 15px;
+$margin: 5px;
+$font-color: $white;
+$primary-color: $dark;
+$secondary-color: $white;
+$accent-color: $grey;
+$border-radius: 5px;
+$border: 5px;
+$min-space: 15px;
+//Cards
+$card-padding: $padding;
+$input-height: 15px;
+//Mix ins
+@mixin gradient-border {
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        margin: -$border;
+        border-radius: inherit;
+        background: transparent;
+        background: $gradient;
+    }
+}
+
+@mixin drop-shadow {}
+
+@mixin rounded-corners {
+    border-radius: $border-radius;
+    border-width: $border;
+}
+
 *,
 *::after,
 *::before {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html,
 body,
 #root {
-  height: 100%;
-  color: rgb(228, 230, 234);
+    height: 100%;
+    color: $secondary-color;
 }
-
-$bg: #333436;
 
 #root {
-  background-color: $bg;
+    background-color: $primary-color;
 }
 
-input[type="text"],
-input[type="email"] {
-  color: rgb(228, 230, 234);
-  margin: 1rem 0;
-  background-color: transparent;
-  border-color: transparent;
-  border-bottom: 1px solid rgb(41, 81, 211);
+input {
+    padding: $padding;
+    width: 100%;
+    height: $input-height;
+    //background-color: rgba($secondary-color, .85);
+    color: $primary-color;
+    margin-bottom: $min-space;
+    @include gradient-border();
+    @include rounded-corners()
 }
