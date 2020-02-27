@@ -28,13 +28,12 @@ const Home = () => {
         <button
           onClick={e => {
             e.preventDefault();
-            API.task.create("This Is My first Task", Date.now() + 1).then(r => {
-              document.getElementById("home").appendChild(
-                <pre>
-                  <code>{JSON.stringify(r, null, 2)}</code>
-                </pre>
-              );
-            });
+            API.task
+              .getAll()
+              .then(tasks => {
+                console.log(tasks);
+              })
+              .catch(e => console.log(e));
           }}
         >
           Test Task

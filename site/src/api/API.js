@@ -79,6 +79,26 @@ class API {
   };
 
   task = {
+    getAll: async (state = null, limit = 100) => {
+      let result;
+      try {
+        result = await axios.get(
+          `/tasks/${auth.currentUser.uid}?limit=${limit}${
+            state ? `&state=${state}` : ""
+          }`,
+          {
+            headers: {
+              token: await token()
+            }
+          }
+        );
+      } catch (error) {
+        throw error;
+      }
+
+      return result.data.payload.tasks;
+    },
+
     /**
      * @param {string} text
      * @param {number} due

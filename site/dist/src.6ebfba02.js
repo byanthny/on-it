@@ -15420,6 +15420,22 @@ class API {
       }
     };
     this.task = {
+      getAll: async (state = null, limit = 100) => {
+        let result;
+
+        try {
+          result = await axios.get(`/tasks/${_auth.default.currentUser.uid}?limit=${limit}${state ? `&state=${state}` : ""}`, {
+            headers: {
+              token: await (0, _auth.token)()
+            }
+          });
+        } catch (error) {
+          throw error;
+        }
+
+        return result.data.payload.tasks;
+      },
+
       /**
        * @param {string} text
        * @param {number} due
@@ -15526,9 +15542,9 @@ const Home = () => {
     onClick: e => {
       e.preventDefault();
 
-      _api.API.task.create("This Is My first Task", Date.now() + 1).then(r => {
-        document.getElementById("home").appendChild(React.createElement("pre", null, React.createElement("code", null, JSON.stringify(r, null, 2))));
-      });
+      _api.API.task.getAll().then(tasks => {
+        console.log(tasks);
+      }).catch(e => console.log(e));
     }
   }, "Test Task")));
 };
@@ -15588,7 +15604,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53722" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59303" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
