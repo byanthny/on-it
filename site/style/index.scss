@@ -9,7 +9,7 @@ $font-fam: 'Open Sans';
 $bold: 700;
 $light: 400;
 $semi-bold: 600;
-$h1: 5em;
+$h1: 3em;
 $p-fontsize: 1em;
 $input-fontsize: $p-fontsize/1.5;
 //General
@@ -19,14 +19,20 @@ $font-color: $white;
 $primary-color: $dark;
 $secondary-color: $white;
 $accent-color: $grey;
-$border-radius: 5px;
+$border-radius: 8px;
 $border: 0px;
 $min-space: 18px;
 //Cards
 $card-padding: $padding;
 $input-height: 15px;
 //Mix ins
-@mixin drop-shadow {}
+@mixin drop-shadow {
+    box-shadow: 0 0 24px 0px rgba(0, 0, 0, 0.4)
+}
+
+@mixin lgdrop-shadow {
+    box-shadow: 0 0 80px 0px rgba(0, 0, 0, .1)
+}
 
 @mixin rounded-corners($radius, $width) {
     border-radius: $radius;
@@ -46,6 +52,7 @@ $input-height: 15px;
     transition: all .5s;
 }
 
+//Home
 *,
 *::after,
 *::before {
@@ -59,7 +66,7 @@ $input-height: 15px;
 }
 
 h1 {
-    font-size: 5em;
+    font-size: $h1;
 }
 
 p {
@@ -100,17 +107,28 @@ body,
     color: $secondary-color;
 }
 
+//comment
 #home {
     height: 100vh;
     padding-top: 15vh;
     background-color: $primary-color;
+    //@include lgdrop-shadow();
     main {
         padding: 50px
     }
     h1 {
-        text-align: center;
-        padding-bottom: 12vh;
+        text-align: left;
+        //padding-bottom: $padding;
+        padding-left: 15%;
         font-weight: $bold;
+    }
+    .emoji-header {
+        font-size: 5em;
+        padding-right: 15%;
+        padding-left: 0;
+    }
+    p {
+        padding-bottom: $padding*3;
     }
 }
 
@@ -128,4 +146,9 @@ input,
     &:focus {
         background-color: $secondary-color;
     }
+}
+
+input::placeholder {
+    font-weight: $light;
+    opacity: .9;
 }

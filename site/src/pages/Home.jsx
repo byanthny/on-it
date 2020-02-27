@@ -9,7 +9,8 @@ const Home = () => {
        return Date.shortMonths[dt.getMonth()]; 
      }
   
-  dt = new Date();
+  var dt = new Date();
+  var date = short_months(dt) + ". " + dt.getDay();
 
   const inputEmail = <input placeholder="email" id="in_email" name="email" type="email" />;
   const inputPass = <input  placeholder="password" id="in_pass" type="password" name="password" />;
@@ -22,8 +23,9 @@ const Home = () => {
     <div id="all">
     <div id="home">
       <div class="login">
-  <h1>{short_months(dt)} {dt.getDay()}</h1>
-      <h1>📌On It</h1>
+      <h1 class="emoji-header" style="float: right;">📌</h1>
+      <h1>{date}</h1>
+      <h1 style="padding-bottom: 10vh;">Welcome to On It</h1>
       <main style="margin:auto; max-width:550px">
         <form style="text-align:center;">
           {inputEmail}

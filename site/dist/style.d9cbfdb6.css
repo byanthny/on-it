@@ -11,7 +11,7 @@
 }
 
 h1 {
-  font-size: 5em;
+  font-size: 3em;
 }
 
 p {
@@ -62,9 +62,17 @@ body,
   padding: 50px;
 }
 #home h1 {
-  text-align: center;
-  padding-bottom: 12vh;
+  text-align: left;
+  padding-left: 15%;
   font-weight: 700;
+}
+#home .emoji-header {
+  font-size: 5em;
+  padding-right: 15%;
+  padding-left: 0;
+}
+#home p {
+  padding-bottom: 45px;
 }
 
 input {
@@ -74,12 +82,17 @@ input {
   color: #262626;
   margin-bottom: 18px;
   font-size: 0.6666666667em;
-  border-radius: 5px;
+  border-radius: 8px;
   border-width: 0px;
   transition: all 0.5s;
 }
 input:hover, input:focus {
   background-color: #fff;
+}
+
+input::placeholder {
+  font-weight: 400;
+  opacity: 0.9;
 }
 
 /*# sourceMappingURL=/style.d9cbfdb6.css.map */
