@@ -4,6 +4,10 @@ $white: #fff;
 $grey: #bbb;
 $gradient: linear-gradient(76deg, rgba(#FEE140, .85) 0%, rgba(#FA709A, .85) 100%);
 //Font-Sizes
+$font-fam: 'Open Sans';
+$bold: 700;
+$light: 400;
+$semi-bold: 600;
 //General
 $padding: 15px;
 $margin: 5px;
@@ -12,33 +16,26 @@ $primary-color: $dark;
 $secondary-color: $white;
 $accent-color: $grey;
 $border-radius: 5px;
-$border: 5px;
+$border: 0px;
 $min-space: 15px;
 //Cards
 $card-padding: $padding;
 $input-height: 15px;
 //Mix ins
-@mixin gradient-border {
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: -1;
-        margin: -$border;
-        border-radius: inherit;
-        background: transparent;
-        background: $gradient;
-    }
-}
-
 @mixin drop-shadow {}
 
-@mixin rounded-corners {
+@mixin rounded-corners($radius, $width) {
+    border-radius: $radius;
+    border-width: $width;
+}
+
+@mixin round {
     border-radius: $border-radius;
     border-width: $border;
+}
+
+@mixin vertical-center {
+    margin: 0 auto;
 }
 
 *,
@@ -49,24 +46,62 @@ $input-height: 15px;
     padding: 0;
 }
 
+* {
+    margin-bottom: 10px;
+}
+
+p {
+    font-weight: $light;
+    padding: $padding;
+}
+
+button {
+    display: inline-block;
+    width: auto;
+    padding: ($padding/1.5) (2*$padding);
+    background: $gradient;
+    color: $secondary-color;
+    border: transparent;
+    @include rounded-corners(100px, 0)
+}
+
 html,
 body,
 #root {
     height: 100%;
+    width: 100%;
+    background-color: $primary-color;
+    font-family: $font-fam;
+    font-weight: $semi-bold;
+}
+
+#all {
+    @include vertical-center();
+    max-width: 1350px;
     color: $secondary-color;
 }
 
-#root {
-    background-color: $primary-color;
+#home {
+    height: 100vh;
+    padding-top: 15vh;
+    main {
+        padding: 50px
+    }
+    h1 {
+        text-align: center;
+        padding-bottom: 12vh;
+    }
+    p {
+        margin-top: 20vh;
+    }
 }
 
 input {
     padding: $padding;
     width: 100%;
     height: $input-height;
-    //background-color: rgba($secondary-color, .85);
+    background-color: rgba($secondary-color, .85);
     color: $primary-color;
     margin-bottom: $min-space;
-    @include gradient-border();
-    @include rounded-corners()
+    @include rounded-corners($border-radius, $border)
 }

@@ -1,30 +1,37 @@
 import { API } from "../api";
 
 const Home = () => {
-  const inputEmail = <input id="in_email" name="email" type="email" />;
-  const inputPass = <input id="in_pass" type="text" name="password" />;
+  const inputEmail = <input placeholder="email" id="in_email" name="email" type="email" />;
+  const inputPass = <input  placeholder="password" id="in_pass" type="password" name="password" />;
 
   return (
+    <div id="all">
     <div id="home">
-      <header>
-        <h2>On It</h2>
-      </header>
-      <main style="margin:auto; max-width: 70%">
-        <h2>Login</h2>
-        <form style="display:flex;flex-direction:column;">
+      <div class="login">
+        <h1>On It</h1>
+      <main style="margin:auto; max-width:550px">
+        <form style="text-align:center;">
           {inputEmail}
           {inputPass}
           <button
             type="submit"
             onClick={e => {
               e.preventDefault();
-              API.user.login(inputEmail.value, inputPass.value);
+              try {
+                API.user.login(inputEmail.value, inputPass.value);
+              } catch (error) {
+                console.log("error handled.")
+              }
             }}
           >
             Login
           </button>
+          <p>Don't have an account? Sign Up!</p>
         </form>
-
+        </main>
+        </div>
+        </div>
+        <div id="task">
         <button
           onClick={e => {
             e.preventDefault();
@@ -39,8 +46,8 @@ const Home = () => {
         >
           Test Task
         </button>
-      </main>
-    </div>
+        </div>
+        </div>
   );
 };
 

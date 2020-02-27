@@ -15500,29 +15500,41 @@ var _api = require("../api");
 
 const Home = () => {
   const inputEmail = React.createElement("input", {
+    placeholder: "email",
     id: "in_email",
     name: "email",
     type: "email"
   });
   const inputPass = React.createElement("input", {
+    placeholder: "password",
     id: "in_pass",
-    type: "text",
+    type: "password",
     name: "password"
   });
   return React.createElement("div", {
+    id: "all"
+  }, React.createElement("div", {
     id: "home"
-  }, React.createElement("header", null, React.createElement("h2", null, "On It")), React.createElement("main", {
-    style: "margin:auto; max-width: 70%"
-  }, React.createElement("h2", null, "Login"), React.createElement("form", {
-    style: "display:flex;flex-direction:column;"
+  }, React.createElement("div", {
+    class: "login"
+  }, React.createElement("h1", null, "On It"), React.createElement("main", {
+    style: "margin:auto; max-width:550px"
+  }, React.createElement("form", {
+    style: "text-align:center;"
   }, inputEmail, inputPass, React.createElement("button", {
     type: "submit",
     onClick: e => {
       e.preventDefault();
 
-      _api.API.user.login(inputEmail.value, inputPass.value);
+      try {
+        _api.API.user.login(inputEmail.value, inputPass.value);
+      } catch (error) {
+        console.log("error handled.");
+      }
     }
-  }, "Login")), React.createElement("button", {
+  }, "Login"), React.createElement("p", null, "Don't have an account? Sign Up!"))))), React.createElement("div", {
+    id: "task"
+  }, React.createElement("button", {
     onClick: e => {
       e.preventDefault();
 
@@ -15588,7 +15600,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53722" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64200" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
