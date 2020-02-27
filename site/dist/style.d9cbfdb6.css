@@ -6,24 +6,106 @@
   padding: 0;
 }
 
+* {
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+p {
+  font-weight: 400;
+  padding: 15px;
+  font-size: 1em;
+}
+
+button {
+  display: inline-block;
+  width: auto;
+  padding: 7.5px 22.5px;
+  background: #fff;
+  color: #262626;
+  border: transparent;
+  opacity: 0.85;
+  font-size: 1em;
+  border-radius: 100px;
+  border-width: 0;
+  transition: all 0.5s;
+}
+button:hover {
+  opacity: 1;
+}
+
 html,
 body,
 #root {
   height: 100%;
-  color: #e4e6ea;
+  width: 100%;
+  background-color: #262626;
+  font-family: "Open Sans";
+  font-weight: 600;
 }
 
-#root {
-  background-color: #333436;
+#all {
+  margin: 0 auto;
+  max-width: 1350px;
+  color: #fff;
 }
 
-input[type=text],
-input[type=email] {
-  color: #e4e6ea;
-  margin: 1rem 0;
-  background-color: transparent;
-  border-color: transparent;
-  border-bottom: 1px solid #2951d3;
+#home {
+  height: 100vh;
+  background-color: #262626;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+#home .login {
+  padding-top: 15vh;
+}
+#home main {
+  padding: 50px;
+}
+#home p {
+  padding-bottom: 45px;
+}
+
+.view {
+  padding-left: 17%;
+  padding-right: 17%;
+}
+
+.header h1 {
+  text-align: left;
+  font-weight: 700;
+}
+.header .emoji-header {
+  font-size: 5em;
+  padding-left: 0;
+}
+
+input {
+  padding: 10px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #262626;
+  margin-bottom: 18px;
+  font-size: 0.6666666667em;
+  border-radius: 8px;
+  border-width: 0px;
+  transition: all 0.5s;
+}
+input:hover, input:focus {
+  background-color: #fff;
+}
+
+input::placeholder {
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+#task {
+  height: 100vh;
+  padding-top: 7vh;
 }
 
 /*# sourceMappingURL=/style.d9cbfdb6.css.map */

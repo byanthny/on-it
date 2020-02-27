@@ -1,29 +1,170 @@
+//Colors
+$dark: #262626;
+$white: #fff;
+$grey: #bbb;
+//$gradient-faded: linear-gradient(76deg, rgba(#FEE140, .85) 0%, rgba(#FA709A, .85) 100%);
+//$gradient: linear-gradient(76deg, rgba(#FEE140, 1) 0%, rgba(#FA709A, 1) 100%);
+//Font-Sizes
+$font-fam: 'Open Sans';
+$bold: 700;
+$light: 400;
+$semi-bold: 600;
+$h1: 3em;
+$p-fontsize: 1em;
+$input-fontsize: $p-fontsize/1.5;
+//General
+$padding: 15px;
+$margin: 5px;
+$font-color: $white;
+$primary-color: $dark;
+$secondary-color: $white;
+$accent-color: $grey;
+$border-radius: 8px;
+$border: 0px;
+$min-space: 18px;
+$side-padding: 17%;
+//Cards
+$card-padding: $padding;
+$input-height: 15px;
+//Mix ins
+@mixin drop-shadow {
+    box-shadow: 0 0 24px 0px rgba(0, 0, 0, 0.4)
+}
+
+@mixin lgdrop-shadow {
+    box-shadow: 0 0 80px 0px rgba(0, 0, 0, .1)
+}
+
+@mixin rounded-corners($radius, $width) {
+    border-radius: $radius;
+    border-width: $width;
+}
+
+@mixin round {
+    border-radius: $border-radius;
+    border-width: $border;
+}
+
+@mixin vertical-center {
+    margin: 0 auto;
+}
+
+@mixin transition() {
+    transition: all .5s;
+}
+
+//Home
 *,
 *::after,
 *::before {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: $h1;
+}
+
+p {
+    font-weight: $light;
+    padding: $padding;
+    font-size: $p-fontsize;
+}
+
+button {
+    display: inline-block;
+    width: auto;
+    padding: ($padding/2) (1.5*$padding);
+    background: $secondary-color;
+    color: $primary-color;
+    border: transparent;
+    opacity: .85;
+    font-size: $p-fontsize;
+    @include rounded-corners(100px, 0);
+    @include transition();
+    &:hover {
+        opacity: 1;
+    }
 }
 
 html,
 body,
 #root {
-  height: 100%;
-  color: rgb(228, 230, 234);
+    height: 100%;
+    width: 100%;
+    background-color: $primary-color;
+    font-family: $font-fam;
+    font-weight: $semi-bold;
 }
 
-$bg: #333436;
-
-#root {
-  background-color: $bg;
+#all {
+    @include vertical-center();
+    max-width: 1350px;
+    color: $secondary-color;
 }
 
-input[type="text"],
-input[type="email"] {
-  color: rgb(228, 230, 234);
-  margin: 1rem 0;
-  background-color: transparent;
-  border-color: transparent;
-  border-bottom: 1px solid rgb(41, 81, 211);
+//comment
+#home {
+    height: 100vh;
+    background-color: $primary-color;
+    overflow: hidden;
+    @include transition();
+    //@include lgdrop-shadow();
+    .login {
+        padding-top: 15vh;
+    }
+    main {
+        padding: 50px
+    }
+    p {
+        padding-bottom: $padding*3;
+    }
+}
+
+.view {
+    padding-left: $side-padding;
+    padding-right: $side-padding;
+}
+
+.header {
+    h1 {
+        text-align: left;
+        //padding-bottom: $padding;
+        font-weight: $bold;
+    }
+    .emoji-header {
+        font-size: 5em;
+        padding-left: 0;
+    }
+}
+
+input,
+%input {
+    padding: $padding/1.5;
+    width: 100%;
+    background-color: rgba($secondary-color, .9);
+    color: $primary-color;
+    margin-bottom: $min-space;
+    font-size: $input-fontsize;
+    @include rounded-corners($border-radius, $border);
+    @include transition();
+    &:hover,
+    &:focus {
+        background-color: $secondary-color;
+    }
+}
+
+input::placeholder {
+    font-weight: $light;
+    opacity: .9;
+}
+
+#task {
+    height: 100vh;
+    padding-top: 7vh;
 }

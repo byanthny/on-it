@@ -15515,30 +15515,73 @@ exports.default = void 0;
 var _api = require("../api");
 
 const Home = () => {
+  Date.shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  function short_months(dt) {
+    return Date.shortMonths[dt.getMonth()];
+  }
+
+  var dt = new Date();
+  var date = short_months(dt) + ". " + dt.getDate();
   const inputEmail = React.createElement("input", {
+    placeholder: "email",
     id: "in_email",
     name: "email",
     type: "email"
   });
   const inputPass = React.createElement("input", {
+    placeholder: "password",
     id: "in_pass",
-    type: "text",
+    type: "password",
     name: "password"
   });
+  const signupMessage = React.createElement("p", null, React.createElement("span", {
+    style: "opacity: .6"
+  }, "Don't have an account?"), " Sign Up!");
+
+  function createHeader($emoji, $message) {
+    return React.createElement("header", {
+      class: "header"
+    }, React.createElement("h1", {
+      class: "emoji-header",
+      style: "float: right;"
+    }, $emoji), React.createElement("h1", null, date), React.createElement("h1", {
+      class: "message",
+      style: "padding-bottom: 10vh;"
+    }, $message));
+  } //var hue = Math.floor(Math.random() * 360);
+  // var pastel = 'hsl(' + hue + ', 100%, 80%)';
+  //var pastelbackground  = "background-color: " + pastel;
+
+
   return React.createElement("div", {
-    id: "home"
-  }, React.createElement("header", null, React.createElement("h2", null, "On It")), React.createElement("main", {
-    style: "margin:auto; max-width: 70%"
-  }, React.createElement("h2", null, "Login"), React.createElement("form", {
-    style: "display:flex;flex-direction:column;"
-  }, inputEmail, inputPass, React.createElement("button", {
+    id: "all"
+  }, React.createElement("div", {
+    id: "home",
+    class: "view"
+  }, React.createElement("div", {
+    class: "login"
+  }, createHeader("📌", "Welcome to On It"), React.createElement("main", {
+    style: "margin:auto; max-width:550px"
+  }, React.createElement("form", {
+    style: "text-align:center;"
+  }, inputEmail, inputPass, signupMessage, React.createElement("button", {
+    //style={pastelbackground}
     type: "submit",
     onClick: e => {
       e.preventDefault();
+      document.getElementById("home").style.height = "0";
 
-      _api.API.user.login(inputEmail.value, inputPass.value);
+      try {
+        _api.API.user.login(inputEmail.value, inputPass.value);
+      } catch (error) {
+        console.log("error handled.");
+      }
     }
-  }, "Login")), React.createElement("button", {
+  }, "login"))))), React.createElement("div", {
+    id: "task",
+    class: "view"
+  }, createHeader("🤓", "Inbox"), React.createElement("button", {
     onClick: e => {
       e.preventDefault();
 
@@ -15604,7 +15647,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59303" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64599" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
