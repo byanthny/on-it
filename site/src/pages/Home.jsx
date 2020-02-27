@@ -24,7 +24,7 @@ const Home = () => {
     <div id="home">
       <div class="login">
       <h1 class="emoji-header" style="float: right;">📌</h1>
-      <h1>{date}</h1>
+  <h1>{date}</h1>
       <h1 style="padding-bottom: 10vh;">Welcome to On It</h1>
       <main style="margin:auto; max-width:550px">
         <form style="text-align:center;">
