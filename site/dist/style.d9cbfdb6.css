@@ -55,24 +55,32 @@ body,
 
 #home {
   height: 100vh;
-  padding-top: 15vh;
   background-color: #262626;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+#home .login {
+  padding-top: 15vh;
 }
 #home main {
   padding: 50px;
 }
-#home h1 {
-  text-align: left;
-  padding-left: 15%;
-  font-weight: 700;
-}
-#home .emoji-header {
-  font-size: 5em;
-  padding-right: 15%;
-  padding-left: 0;
-}
 #home p {
   padding-bottom: 45px;
+}
+
+.view {
+  padding-left: 17%;
+  padding-right: 17%;
+}
+
+.header h1 {
+  text-align: left;
+  font-weight: 700;
+}
+.header .emoji-header {
+  font-size: 5em;
+  padding-left: 0;
 }
 
 input {
@@ -93,6 +101,11 @@ input:hover, input:focus {
 input::placeholder {
   font-weight: 400;
   opacity: 0.9;
+}
+
+#task {
+  height: 100vh;
+  padding-top: 7vh;
 }
 
 /*# sourceMappingURL=/style.d9cbfdb6.css.map */

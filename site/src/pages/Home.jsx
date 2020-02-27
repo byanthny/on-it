@@ -10,10 +10,22 @@ const Home = () => {
      }
   
   var dt = new Date();
-  var date = short_months(dt) + ". " + dt.getDay();
+  var date = short_months(dt) + ". " + dt.getDate();
 
   const inputEmail = <input placeholder="email" id="in_email" name="email" type="email" />;
   const inputPass = <input  placeholder="password" id="in_pass" type="password" name="password" />;
+  const signupMessage = <p><span style="opacity: .6">Don't have an account?</span> Sign Up!</p>;
+  
+  
+  function createHeader($emoji, $message) {
+    return (   
+      <header class="header">
+        <h1 class="emoji-header" style="float: right;">{$emoji}</h1>
+        <h1>{date}</h1>
+        <h1 class="message" style="padding-bottom: 10vh;">{$message}</h1>
+    </header>  
+        );
+  } 
   
   //var hue = Math.floor(Math.random() * 360);
  // var pastel = 'hsl(' + hue + ', 100%, 80%)';
@@ -21,21 +33,20 @@ const Home = () => {
 
   return (
     <div id="all">
-    <div id="home">
+    <div id="home" class="view">
       <div class="login">
-      <h1 class="emoji-header" style="float: right;">📌</h1>
-  <h1>{date}</h1>
-      <h1 style="padding-bottom: 10vh;">Welcome to On It</h1>
+      {createHeader("📌", "Welcome to On It")}
       <main style="margin:auto; max-width:550px">
         <form style="text-align:center;">
           {inputEmail}
           {inputPass}
-          <p><span style="opacity: .6">Don't have an account?</span> Sign Up!</p>
+          {signupMessage}
           <button
           //style={pastelbackground}
             type="submit"
             onClick={e => {
               e.preventDefault();
+              document.getElementById("home").style.height = "0";
               try {
                 API.user.login(inputEmail.value, inputPass.value);
               } catch (error) {
@@ -49,10 +60,13 @@ const Home = () => {
         </main>
         </div>
         </div>
-        <div id="task">
+        <div id="task" class="view">
+            {createHeader("🤓","Inbox")}
+
         <button
           onClick={e => {
             e.preventDefault();
+            document.getElementsByClassName("message").text = "Test";
             API.task.create("This Is My first Task", Date.now() + 1).then(r => {
               document.getElementById("home").appendChild(
                 <pre>

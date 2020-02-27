@@ -22,6 +22,7 @@ $accent-color: $grey;
 $border-radius: 8px;
 $border: 0px;
 $min-space: 18px;
+$side-padding: 17%;
 //Cards
 $card-padding: $padding;
 $input-height: 15px;
@@ -110,25 +111,35 @@ body,
 //comment
 #home {
     height: 100vh;
-    padding-top: 15vh;
     background-color: $primary-color;
+    overflow: hidden;
+    @include transition();
     //@include lgdrop-shadow();
+    .login {
+        padding-top: 15vh;
+    }
     main {
         padding: 50px
     }
+    p {
+        padding-bottom: $padding*3;
+    }
+}
+
+.view {
+    padding-left: $side-padding;
+    padding-right: $side-padding;
+}
+
+.header {
     h1 {
         text-align: left;
         //padding-bottom: $padding;
-        padding-left: 15%;
         font-weight: $bold;
     }
     .emoji-header {
         font-size: 5em;
-        padding-right: 15%;
         padding-left: 0;
-    }
-    p {
-        padding-bottom: $padding*3;
     }
 }
 
@@ -151,4 +162,9 @@ input,
 input::placeholder {
     font-weight: $light;
     opacity: .9;
+}
+
+#task {
+    height: 100vh;
+    padding-top: 7vh;
 }

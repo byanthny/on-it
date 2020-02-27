@@ -15506,7 +15506,7 @@ const Home = () => {
   }
 
   var dt = new Date();
-  var date = short_months(dt) + ". " + dt.getDay();
+  var date = short_months(dt) + ". " + dt.getDate();
   const inputEmail = React.createElement("input", {
     placeholder: "email",
     id: "in_email",
@@ -15518,32 +15518,43 @@ const Home = () => {
     id: "in_pass",
     type: "password",
     name: "password"
-  }); //var hue = Math.floor(Math.random() * 360);
+  });
+  const signupMessage = React.createElement("p", null, React.createElement("span", {
+    style: "opacity: .6"
+  }, "Don't have an account?"), " Sign Up!");
+
+  function createHeader($emoji, $message) {
+    return React.createElement("header", {
+      class: "header"
+    }, React.createElement("h1", {
+      class: "emoji-header",
+      style: "float: right;"
+    }, $emoji), React.createElement("h1", null, date), React.createElement("h1", {
+      class: "message",
+      style: "padding-bottom: 10vh;"
+    }, $message));
+  } //var hue = Math.floor(Math.random() * 360);
   // var pastel = 'hsl(' + hue + ', 100%, 80%)';
   //var pastelbackground  = "background-color: " + pastel;
+
 
   return React.createElement("div", {
     id: "all"
   }, React.createElement("div", {
-    id: "home"
+    id: "home",
+    class: "view"
   }, React.createElement("div", {
     class: "login"
-  }, React.createElement("h1", {
-    class: "emoji-header",
-    style: "float: right;"
-  }, "\uD83D\uDCCC"), React.createElement("h1", null, date), React.createElement("h1", {
-    style: "padding-bottom: 10vh;"
-  }, "Welcome to On It"), React.createElement("main", {
+  }, createHeader("📌", "Welcome to On It"), React.createElement("main", {
     style: "margin:auto; max-width:550px"
   }, React.createElement("form", {
     style: "text-align:center;"
-  }, inputEmail, inputPass, React.createElement("p", null, React.createElement("span", {
-    style: "opacity: .6"
-  }, "Don't have an account?"), " Sign Up!"), React.createElement("button", {
+  }, inputEmail, inputPass, signupMessage, React.createElement("button", {
     //style={pastelbackground}
     type: "submit",
     onClick: e => {
       e.preventDefault();
+      document.getElementById("home").style.height = "0";
 
       try {
         _api.API.user.login(inputEmail.value, inputPass.value);
@@ -15552,10 +15563,12 @@ const Home = () => {
       }
     }
   }, "login"))))), React.createElement("div", {
-    id: "task"
-  }, React.createElement("button", {
+    id: "task",
+    class: "view"
+  }, createHeader("🤓", "Inbox"), React.createElement("button", {
     onClick: e => {
       e.preventDefault();
+      document.getElementsByClassName("message").text = "Test";
 
       _api.API.task.create("This Is My first Task", Date.now() + 1).then(r => {
         document.getElementById("home").appendChild(React.createElement("pre", null, React.createElement("code", null, JSON.stringify(r, null, 2))));
