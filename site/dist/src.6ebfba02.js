@@ -15510,18 +15510,24 @@ const Home = () => {
     id: "in_pass",
     type: "password",
     name: "password"
-  });
+  }); //var hue = Math.floor(Math.random() * 360);
+  // var pastel = 'hsl(' + hue + ', 100%, 80%)';
+  //var pastelbackground  = "background-color: " + pastel;
+
   return React.createElement("div", {
     id: "all"
   }, React.createElement("div", {
     id: "home"
   }, React.createElement("div", {
     class: "login"
-  }, React.createElement("h1", null, "On It"), React.createElement("main", {
+  }, React.createElement("h1", null, "\uD83D\uDCCCOn It"), React.createElement("main", {
     style: "margin:auto; max-width:550px"
   }, React.createElement("form", {
     style: "text-align:center;"
-  }, inputEmail, inputPass, React.createElement("button", {
+  }, inputEmail, inputPass, React.createElement("p", null, React.createElement("span", {
+    style: "opacity: .6"
+  }, "Don't have an account?"), " Sign Up!"), React.createElement("button", {
+    //style={pastelbackground}
     type: "submit",
     onClick: e => {
       e.preventDefault();
@@ -15532,7 +15538,7 @@ const Home = () => {
         console.log("error handled.");
       }
     }
-  }, "Login"), React.createElement("p", null, "Don't have an account? Sign Up!"))))), React.createElement("div", {
+  }, "login"))))), React.createElement("div", {
     id: "task"
   }, React.createElement("button", {
     onClick: e => {

@@ -3,17 +3,23 @@ import { API } from "../api";
 const Home = () => {
   const inputEmail = <input placeholder="email" id="in_email" name="email" type="email" />;
   const inputPass = <input  placeholder="password" id="in_pass" type="password" name="password" />;
+  
+  //var hue = Math.floor(Math.random() * 360);
+ // var pastel = 'hsl(' + hue + ', 100%, 80%)';
+  //var pastelbackground  = "background-color: " + pastel;
 
   return (
     <div id="all">
     <div id="home">
       <div class="login">
-        <h1>On It</h1>
+        <h1>📌On It</h1>
       <main style="margin:auto; max-width:550px">
         <form style="text-align:center;">
           {inputEmail}
           {inputPass}
+          <p><span style="opacity: .6">Don't have an account?</span> Sign Up!</p>
           <button
+          //style={pastelbackground}
             type="submit"
             onClick={e => {
               e.preventDefault();
@@ -24,9 +30,8 @@ const Home = () => {
               }
             }}
           >
-            Login
+            login
           </button>
-          <p>Don't have an account? Sign Up!</p>
         </form>
         </main>
         </div>

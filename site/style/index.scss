@@ -2,12 +2,16 @@
 $dark: #262626;
 $white: #fff;
 $grey: #bbb;
-$gradient: linear-gradient(76deg, rgba(#FEE140, .85) 0%, rgba(#FA709A, .85) 100%);
+//$gradient-faded: linear-gradient(76deg, rgba(#FEE140, .85) 0%, rgba(#FA709A, .85) 100%);
+//$gradient: linear-gradient(76deg, rgba(#FEE140, 1) 0%, rgba(#FA709A, 1) 100%);
 //Font-Sizes
 $font-fam: 'Open Sans';
 $bold: 700;
 $light: 400;
 $semi-bold: 600;
+$h1: 5em;
+$p-fontsize: 1em;
+$input-fontsize: $p-fontsize/1.5;
 //General
 $padding: 15px;
 $margin: 5px;
@@ -17,7 +21,7 @@ $secondary-color: $white;
 $accent-color: $grey;
 $border-radius: 5px;
 $border: 0px;
-$min-space: 15px;
+$min-space: 18px;
 //Cards
 $card-padding: $padding;
 $input-height: 15px;
@@ -38,6 +42,10 @@ $input-height: 15px;
     margin: 0 auto;
 }
 
+@mixin transition() {
+    transition: all .5s;
+}
+
 *,
 *::after,
 *::before {
@@ -50,19 +58,30 @@ $input-height: 15px;
     margin-bottom: 10px;
 }
 
+h1 {
+    font-size: 5em;
+}
+
 p {
     font-weight: $light;
     padding: $padding;
+    font-size: $p-fontsize;
 }
 
 button {
     display: inline-block;
     width: auto;
-    padding: ($padding/1.5) (2*$padding);
-    background: $gradient;
-    color: $secondary-color;
+    padding: ($padding/2) (1.5*$padding);
+    background: $secondary-color;
+    color: $primary-color;
     border: transparent;
-    @include rounded-corners(100px, 0)
+    opacity: .85;
+    font-size: $p-fontsize;
+    @include rounded-corners(100px, 0);
+    @include transition();
+    &:hover {
+        opacity: 1;
+    }
 }
 
 html,
@@ -84,24 +103,29 @@ body,
 #home {
     height: 100vh;
     padding-top: 15vh;
+    background-color: $primary-color;
     main {
         padding: 50px
     }
     h1 {
         text-align: center;
         padding-bottom: 12vh;
-    }
-    p {
-        margin-top: 20vh;
+        font-weight: $bold;
     }
 }
 
-input {
-    padding: $padding;
+input,
+%input {
+    padding: $padding/1.5;
     width: 100%;
-    height: $input-height;
-    background-color: rgba($secondary-color, .85);
+    background-color: rgba($secondary-color, .9);
     color: $primary-color;
     margin-bottom: $min-space;
-    @include rounded-corners($border-radius, $border)
+    font-size: $input-fontsize;
+    @include rounded-corners($border-radius, $border);
+    @include transition();
+    &:hover,
+    &:focus {
+        background-color: $secondary-color;
+    }
 }
