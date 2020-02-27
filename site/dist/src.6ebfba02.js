@@ -15499,6 +15499,13 @@ exports.default = void 0;
 var _api = require("../api");
 
 const Home = () => {
+  Date.shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  function short_months(dt) {
+    return Date.shortMonths[dt.getMonth()];
+  }
+
+  dt = new Date();
   const inputEmail = React.createElement("input", {
     placeholder: "email",
     id: "in_email",
@@ -15520,7 +15527,7 @@ const Home = () => {
     id: "home"
   }, React.createElement("div", {
     class: "login"
-  }, React.createElement("h1", null, "\uD83D\uDCCCOn It"), React.createElement("main", {
+  }, React.createElement("h1", null, short_months(dt), " ", dt.getDay()), React.createElement("h1", null, "\uD83D\uDCCCOn It"), React.createElement("main", {
     style: "margin:auto; max-width:550px"
   }, React.createElement("form", {
     style: "text-align:center;"
@@ -15606,7 +15613,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64200" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52963" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

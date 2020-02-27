@@ -1,6 +1,16 @@
 import { API } from "../api";
 
 const Home = () => {
+
+  Date.shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  function short_months(dt)
+     { 
+       return Date.shortMonths[dt.getMonth()]; 
+     }
+  
+  dt = new Date();
+
   const inputEmail = <input placeholder="email" id="in_email" name="email" type="email" />;
   const inputPass = <input  placeholder="password" id="in_pass" type="password" name="password" />;
   
@@ -12,7 +22,8 @@ const Home = () => {
     <div id="all">
     <div id="home">
       <div class="login">
-        <h1>📌On It</h1>
+  <h1>{short_months(dt)} {dt.getDay()}</h1>
+      <h1>📌On It</h1>
       <main style="margin:auto; max-width:550px">
         <form style="text-align:center;">
           {inputEmail}
