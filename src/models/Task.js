@@ -7,9 +7,7 @@ const ID_LENG = require("../config").ID_LENG;
 
 const ID = () => "tid_" + nanoid(ID_LENG);
 
-const TaskSchema = joi.object({
-  uid: joi.string().required(),
-  tid: joi.string().default(ID),
+const TaskRoot = {
   parent: joi
     .string()
     .length(ID_LENG + 4)
@@ -34,7 +32,15 @@ const TaskSchema = joi.object({
   tags: joi
     .array()
     .items(joi.string())
-    .default([]),
+    .default([])
+};
+
+const TaskUpdateSchema = joi.object(TaskRoot);
+
+const TaskSchema = joi.object({
+  uid: joi.string().required(),
+  tid: joi.string().default(ID),
+  ...TaskRoot,
   createdAt: joi.date().default(Date.now),
   updatedAt: joi.date().default(Date.now)
 });
@@ -47,4 +53,8 @@ TaskModel.on(/update/i, async function() {
   this.updatedAt = Date.now();
 });
 
-module.exports = { schema: TaskSchema, model: TaskModel };
+module.exports = {
+  schema: TaskSchema,
+  updateSchema: TaskUpdateSchema,
+  model: TaskModel
+};

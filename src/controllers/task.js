@@ -4,6 +4,7 @@ const {
 } = require("subtroller");
 const { packetier } = require("packetier");
 const { Task } = require("../models");
+const joi = require("@hapi/joi");
 
 /**
  * Controller for Task routes.
@@ -145,7 +146,49 @@ const controller = new Controller()
       .status(201)
       .json(packetier(true, { task: _clean }, { createdAt: _clean.createdAt }));
   })
-  .make(PUT, "one", async (req, res) => {})
-  .make(DELETE, "one", async (req, res) => {});
+  .make(PUT, "one", async (req, res) => {
+    // Pull data
+    const { uid } = req.token;
+    const { uid: pUid, tid } = req.params;
+
+    // auth stage
+    if (uid !== pUid) {
+      return res
+        .status(401)
+        .json(packetier(false, null, { err: "Mismatch uid" }));
+    }
+
+    // validate body
+    try {
+      Task.schema.validateAsync({ ...req.body, uid });
+    } catch (error) {
+      return res
+        .status(400)
+        .json(packetier(false, null, { err: error.message }));
+    }
+
+    // Update
+    let result;
+    try {
+      result = await Task.model.updateOne({ uid, tid }, req.body);
+    } catch (error) {
+      return res
+        .status(500)
+        .json(packetier(false, null, { err: "Internal 1" }));
+    }
+
+    console.log(result);
+
+    res.json(
+      packetier(
+        true,
+        { task: "TOOD" },
+        { query: { update: { ...req.body }, uid, tid } }
+      )
+    );
+  })
+  .make(DELETE, "one", async (req, res) => {
+    // TODO
+  });
 
 module.exports = controller;
