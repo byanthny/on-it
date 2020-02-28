@@ -181,6 +181,27 @@ class API {
       }
 
       return new Task(result.data.payload.task);
+    },
+
+    /**
+     *
+     * @param {*} task
+     * @returns {boolean} `true` if the task was deleted
+     */
+    deleteOne: async function(task) {
+      const tid = typeof task === "string" ? task : task.tid;
+
+      let result;
+      try {
+        result = await axios.delete(
+          `${this.root}${auth.currentUser.uid}/${tid}`,
+          { headers: { token: await token() } }
+        );
+      } catch (error) {
+        throw error;
+      }
+
+      return result.data.payload.deleted;
     }
   };
 

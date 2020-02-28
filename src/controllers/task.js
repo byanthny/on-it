@@ -199,7 +199,33 @@ const controller = new Controller()
     );
   })
   .make(DELETE, "one", async (req, res) => {
-    // TODO
+    // Pull data
+    const { uid } = req.token;
+    const { uid: pUid, tid } = req.params;
+
+    if (uid !== pUid) {
+      return res
+        .status(401)
+        .json(packetier(false, null, { err: "Mismatch uid" }));
+    }
+
+    // Delete task
+    let result;
+    try {
+      result = await Task.model.deleteOne({ uid, tid });
+    } catch (error) {
+      return res
+        .status(500)
+        .json(packetier(false, null, { err: "Internal 2" }));
+    }
+
+    res.json(
+      packetier(
+        true,
+        { deleted: result.deletedCount > 0 },
+        { query: { ...req.params } }
+      )
+    );
   });
 
 module.exports = controller;
