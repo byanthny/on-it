@@ -93,12 +93,6 @@ const Home = () => {
         <button
           onClick={e => {
             e.preventDefault();
-            API.task
-              .getAllTodo()
-              .then(arr => arr[0])
-              .then(t => API.task.deleteOne(t))
-              .then(t => console.log(t))
-              .catch(e => console.log(e));
           }}
         >
           Test
