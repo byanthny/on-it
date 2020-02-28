@@ -96,7 +96,7 @@ const Home = () => {
             API.task
               .getAllTodo()
               .then(arr => arr[0])
-              .then(t => API.task.getOne(t))
+              .then(t => API.task.updateOne(t, { text: "New Task Text" }))
               .then(t => console.log(t))
               .catch(e => console.log(e));
           }}

@@ -4,7 +4,6 @@ const {
 } = require("subtroller");
 const { packetier } = require("packetier");
 const { Task } = require("../models");
-const joi = require("@hapi/joi");
 
 /**
  * Controller for Task routes.
@@ -159,31 +158,43 @@ const controller = new Controller()
     }
 
     // validate body
+    let validBody;
     try {
-      Task.schema.validateAsync({ ...req.body, uid });
+      validBody = await Task.updateSchema.validateAsync({ ...req.body });
     } catch (error) {
       return res
         .status(400)
         .json(packetier(false, null, { err: error.message }));
     }
 
-    // Update
-    let result;
+    // Get doc
+    let taskDoc;
     try {
-      result = await Task.model.updateOne({ uid, tid }, req.body);
+      taskDoc = await Task.model.findOne({ uid, tid });
     } catch (error) {
       return res
         .status(500)
         .json(packetier(false, null, { err: "Internal 1" }));
     }
 
-    console.log(result);
+    // Update
+    try {
+      for (const k in req.body) taskDoc[k] = req.body[k];
+      await taskDoc.save();
+    } catch (error) {
+      return res
+        .status(500)
+        .json(packetier(false, null, { err: "Internal 2" }));
+    }
 
     res.json(
       packetier(
         true,
-        { task: "TOOD" },
-        { query: { update: { ...req.body }, uid, tid } }
+        { task: taskDoc },
+        {
+          query: { update: { ...req.body }, uid, tid },
+          updated: true
+        }
       )
     );
   })

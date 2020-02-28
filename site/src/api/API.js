@@ -87,11 +87,12 @@ class API {
    * Map of task-related API functions.
    */
   task = {
+    root: "/tasks/",
     getAll: async function(state = null, limit = 100) {
       let result;
       try {
         result = await axios.get(
-          `/tasks/${auth.currentUser.uid}?limit=${limit}${
+          `${this.root}${auth.currentUser.uid}?limit=${limit}${
             state ? `&state=${state}` : ""
           }`,
           {
@@ -130,7 +131,7 @@ class API {
 
       let result;
       try {
-        result = await axios.get(`/tasks/${auth.currentUser.uid}/${tid}`, {
+        result = await axios.get(`${this.root}${auth.currentUser.uid}/${tid}`, {
           headers: {
             token: await token()
           }
@@ -154,18 +155,26 @@ class API {
       let result;
       try {
         result = await axios.post(
-          `/tasks/${auth.currentUser.uid}`,
-          {
-            text,
-            due,
-            reminders,
-            tags
-          },
-          {
-            headers: {
-              token: await token()
-            }
-          }
+          `${this.root}${auth.currentUser.uid}`,
+          { text, due, reminders, tags },
+          { headers: { token: await token() } }
+        );
+      } catch (error) {
+        throw error;
+      }
+
+      return new Task(result.data.payload.task);
+    },
+
+    updateOne: async function(task, updateData) {
+      const tid = typeof task === "string" ? task : task.tid;
+
+      let result;
+      try {
+        result = await axios.put(
+          `${this.root}${auth.currentUser.uid}/${tid}`,
+          updateData,
+          { headers: { token: await token() } }
         );
       } catch (error) {
         throw error;
