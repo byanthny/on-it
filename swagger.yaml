@@ -239,10 +239,16 @@ paths:
       description: Update a project
       tags:
         - project
+      responses:
+        200: 
+          description: TODO
     delete:
       description: Delete a project
       tags:
         - project
+      responses:
+        200:
+          description: TODO
   /tasks/{uid}:
     get:
       description: get a user's tasks
@@ -381,7 +387,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Task"
+              properties:
+                parent:
+                  type: string
+                  description: ID of parent task
+                title:
+                  type: string
+                text:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
       responses:
         200:
           description: Task updated
