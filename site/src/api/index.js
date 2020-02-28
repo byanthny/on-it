@@ -1,5 +1,5 @@
 import auth from "./auth";
 import API from "./API";
-import models from "./models";
+import { Task, Note, Name } from "./models";
 
-export { auth, API, models };
+export { auth, API, Task, Note, Name };

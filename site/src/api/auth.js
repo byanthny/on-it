@@ -23,10 +23,7 @@ let token = async () => {
   return auth.currentUser ? auth.currentUser.getIdToken() : null;
 };
 
-auth.onAuthStateChanged(async user => {
-  console.log("user updated", user);
-  console.log("token", await token());
-});
+auth.onAuthStateChanged(() => console.log("user updated"));
 
 export { token };
 

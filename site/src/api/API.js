@@ -18,6 +18,11 @@ const axios = _axios.create({
  * @author Jonathan Augustine
  */
 class API {
+  /**
+   * Map of User API functions
+   *
+   * TODO: Settings functions
+   */
   user = {
     /**
      * Register a new user.
@@ -78,8 +83,11 @@ class API {
     }
   };
 
+  /**
+   * Map of task-related API functions.
+   */
   task = {
-    getAll: async (state = null, limit = 100) => {
+    getAll: async function(state = null, limit = 100) {
       let result;
       try {
         result = await axios.get(
@@ -96,7 +104,42 @@ class API {
         throw error;
       }
 
-      return result.data.payload.tasks;
+      return result.data.payload.tasks.map(t => new Task(t));
+    },
+
+    /**
+     * Get all Tasks that have state "todo"
+     *
+     * @param {number} limit - Max number of results
+     */
+    getAllTodo: async function(limit = 100) {
+      return this.getAll("todo", limit);
+    },
+
+    /**
+     * Get all Tasks that have state "done"
+     *
+     * @param {number} limit
+     */
+    getAllDone: async function(limit = 100) {
+      return this.getAll("done", limit);
+    },
+
+    getOne: async function(task) {
+      const tid = typeof task === "string" ? task : task.tid;
+
+      let result;
+      try {
+        result = await axios.get(`/tasks/${auth.currentUser.uid}/${tid}`, {
+          headers: {
+            token: await token()
+          }
+        });
+      } catch (error) {
+        throw error;
+      }
+
+      return new Task(result.data.payload.task);
     },
 
     /**
@@ -107,7 +150,7 @@ class API {
      *
      * @returns {Promise<Task>}
      */
-    create: async (text, due, reminders = [], tags = []) => {
+    create: async function(text, due, reminders = [], tags = []) {
       let result;
       try {
         result = await axios.post(
@@ -128,9 +171,11 @@ class API {
         throw error;
       }
 
-      return result.data.payload.task;
+      return new Task(result.data.payload.task);
     }
   };
+
+  // TODO Notes & Projects
 }
 
 export default new API();
