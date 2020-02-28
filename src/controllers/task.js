@@ -46,22 +46,25 @@ const controller = new Controller()
       );
     }
 
-    const cleanTask = taskDoc.get();
+    const cleanTask = taskDoc;
     delete cleanTask.__v;
     delete cleanTask._id;
 
-    return releaseEvents.json(
+    return res.json(
       packetier(true, { task: cleanTask }, { query: { ...req.params } })
     );
   })
   /**
-   * GET /task/{uid}
+   * GET /tasks/{uid}
    */
   .make(GET, "many", async (req, res) => {
     // Pull data
     const { uid } = req.token;
     const { uid: pUid } = req.params;
     let { limit, state } = req.query;
+
+    limit = parseInt(limit);
+    limit = limit && limit > 1 && limit < 350 ? limit : 100;
 
     if (uid !== pUid) {
       return req
@@ -70,15 +73,19 @@ const controller = new Controller()
     }
 
     // Build query
-    const query = { limit: limit || 100, uid };
+    const query = { uid };
 
     if (state) query.state = state;
 
     // Query
     let taskDocs;
     try {
-      taskDocs = await Task.model.find(query);
+      taskDocs = await Task.model
+        .find(query)
+        .limit(limit)
+        .sort({ due: -1 });
     } catch (error) {
+      console.log(error);
       return res
         .status(500)
         .json(packetier(false, null, { err: "Internal 1" }));
@@ -94,14 +101,12 @@ const controller = new Controller()
       packetier(
         true,
         {
-          tasks: taskDocs
-            .map(t => t.get())
-            .map(t => {
-              let b = t;
-              delete b.__v;
-              delete b._id;
-              return b;
-            })
+          tasks: taskDocs.map(t => {
+            let b = t;
+            delete b.__v;
+            delete b._id;
+            return b;
+          })
         },
         { query: { ...req.query, ...req.params } }
       )
