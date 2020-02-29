@@ -1,5 +1,6 @@
 const readStyle = style => {
   if (style === null) return "";
+  if (typeof style === "string") return style;
   let s = "";
   for (var k in style) {
     s =
@@ -25,7 +26,7 @@ window["React"] = {
           if (typeof value === "function") {
             element[name.toLowerCase()] = value;
           } else if (name === "style") {
-            const style = element.setAttribute(name, readStyle(value));
+            element.setAttribute(name, readStyle(value));
           } else {
             element.setAttribute(name, value.toString());
           }
