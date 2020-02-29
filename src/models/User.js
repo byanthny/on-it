@@ -11,11 +11,17 @@ const UserSchema = joi.object({
     .array()
     .items(ProjectSchema)
     .max(255)
-    .default([])
+    .default([]),
+  createdAt: joi.date().default(Date.now),
+  updatedAt: joi.date().default(Date.now)
 });
 
 const UserMongooseSchema = new mongoose.Schema(convert(UserSchema));
 
 const UserModel = mongoose.model("User", UserMongooseSchema);
+
+UserModel.on(/update/i, async function() {
+  this.updatedAt = Date.now();
+});
 
 module.exports = { schema: UserSchema, model: UserModel };

@@ -20,7 +20,8 @@ const Server = async () => {
   svr.use("/api/docs", routes.docs);
 
   // API routes
-  svr.use("/api/user", routes.user);
+  svr.use("/api/users", routes.user);
+  svr.use("/api/projects", routes.projects);
   svr.use("/api/tasks", routes.tasks);
   svr.use("/api/notes", routes.notes);
 
