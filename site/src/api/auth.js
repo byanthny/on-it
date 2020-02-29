@@ -23,8 +23,6 @@ let token = async () => {
   return auth.currentUser ? auth.currentUser.getIdToken() : null;
 };
 
-auth.onAuthStateChanged(() => console.log("user updated"));
-
 export { token };
 
 export default auth;

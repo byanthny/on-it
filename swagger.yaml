@@ -152,7 +152,31 @@ tags:
     description: Routes relating to projects (tags)
 
 paths:
-  /user/{uid}:
+  /users/{uid}:
+    get:
+      description: Get a user
+      tags:
+        - user
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: The user
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/User"
     delete:
       description: Delete a user
       tags:
@@ -177,6 +201,8 @@ paths:
           description: Unauthorized
         404:
           description: User not found
+  /users/{uid}/settings:
+    summary: Route for creating and editing Projects
   /projects/{uid}:
     get:
       description: Get all projects
@@ -223,7 +249,7 @@ paths:
               $ref: "#/components/schemas/Project"
       responses:
         201:
-          description: Project craeted
+          description: Project created
           content:
             application/json:
               schema:
@@ -240,7 +266,7 @@ paths:
       tags:
         - project
       responses:
-        200: 
+        200:
           description: TODO
     delete:
       description: Delete a project
@@ -249,6 +275,7 @@ paths:
       responses:
         200:
           description: TODO
+
   /tasks/{uid}:
     get:
       description: get a user's tasks
@@ -484,7 +511,7 @@ paths:
                 tid:
                   type: string
                   description: Parent task ID
-                  example: tid-afgkp
+                  example: tidafgkp
       responses:
         201:
           description: Note created

@@ -93,6 +93,22 @@ const Home = () => {
         <button
           onClick={e => {
             e.preventDefault();
+            API.projects
+              .create("Project-Name-One")
+              .then(u =>
+                document.getElementById("root").appendChild(
+                  <div
+                    style={{
+                      backgroundColor: u.color,
+                      color: "white",
+                      padding: "1rem"
+                    }}
+                  >
+                    {u.name}
+                  </div>
+                )
+              )
+              .catch(e => console.log(e));
           }}
         >
           Test

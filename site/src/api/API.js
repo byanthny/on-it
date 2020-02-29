@@ -1,6 +1,6 @@
 import _axios from "axios";
 import auth, { token } from "./auth";
-import { Note, Task } from "./models";
+import { Note, Task, User, Project } from "./models";
 
 const API_URI = "/api";
 
@@ -18,12 +18,24 @@ const axios = _axios.create({
  * @author Jonathan Augustine
  */
 class API {
+  constructor() {
+    this.currentUser = null;
+
+    auth.onAuthStateChanged(async _user => {
+      console.log("user updated");
+      if (_user) {
+        this.currentUser = await this.user.get();
+      }
+    });
+  }
+
   /**
    * Map of User API functions
    *
    * TODO: Settings functions
    */
   user = {
+    root: "/users/",
     /**
      * Register a new user.
      *
@@ -66,7 +78,7 @@ class API {
      *
      * @param {string} newUsername - String value to set the username to.
      *
-     * @returns {string} The current user's new username/displayname or null if it failed
+     * @returns {string} The current user's new username or null if it failed
      */
     setUsername: async username => {
       if (!auth.currentUser) {
@@ -76,10 +88,61 @@ class API {
       try {
         await auth.currentUser.updateProfile({ displayName: username });
       } catch (error) {
-        return null;
+        throw error;
       }
 
       return username;
+    },
+
+    get: async function() {
+      if (!auth.currentUser) {
+        return null;
+      }
+
+      let result;
+      try {
+        result = await axios.get(`${this.root}${auth.currentUser.uid}`, {
+          headers: { token: await token() }
+        });
+      } catch (error) {
+        throw error;
+      }
+
+      return new User(result.data.payload.user);
+    }
+  };
+
+  projects = {
+    root: "/projects/",
+    /**
+     *
+     * @param {string} name - Name of the project
+     * @param {string} color - The color of the project
+     */
+    create: async function(name, color) {
+      if (!auth.currentUser) {
+        return null;
+      }
+
+      const pjt = { name };
+
+      if (color && color[0] !== "#") {
+        color = "#" + color;
+        pjt.color = color;
+      }
+
+      let result;
+      try {
+        result = await axios.post(`${this.root}${auth.currentUser.uid}`, pjt, {
+          headers: {
+            token: await token()
+          }
+        });
+      } catch (error) {
+        throw error;
+      }
+
+      return new Project(result.data.payload.project);
     }
   };
 

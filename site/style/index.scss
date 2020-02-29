@@ -5,7 +5,7 @@ $grey: #bbb;
 //$gradient-faded: linear-gradient(76deg, rgba(#FEE140, .85) 0%, rgba(#FA709A, .85) 100%);
 //$gradient: linear-gradient(76deg, rgba(#FEE140, 1) 0%, rgba(#FA709A, 1) 100%);
 //Font-Sizes
-$font-fam: 'Open Sans';
+$font-fam: "Open Sans";
 $bold: 700;
 $light: 400;
 $semi-bold: 600;
@@ -28,143 +28,143 @@ $card-padding: $padding;
 $input-height: 15px;
 //Mix ins
 @mixin drop-shadow {
-    box-shadow: 0 0 24px 0px rgba(0, 0, 0, 0.4)
+  box-shadow: 0 0 24px 0px rgba(0, 0, 0, 0.4);
 }
 
 @mixin lgdrop-shadow {
-    box-shadow: 0 0 80px 0px rgba(0, 0, 0, .1)
+  box-shadow: 0 0 80px 0px rgba(0, 0, 0, 0.1);
 }
 
 @mixin rounded-corners($radius, $width) {
-    border-radius: $radius;
-    border-width: $width;
+  border-radius: $radius;
+  border-width: $width;
 }
 
 @mixin round {
-    border-radius: $border-radius;
-    border-width: $border;
+  border-radius: $border-radius;
+  border-width: $border;
 }
 
 @mixin vertical-center {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 @mixin transition() {
-    transition: all .5s;
+  transition: all 0.5s;
 }
 
 //Home
 *,
 *::after,
 *::before {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 * {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 h1 {
-    font-size: $h1;
+  font-size: $h1;
 }
 
 p {
-    font-weight: $light;
-    padding: $padding;
-    font-size: $p-fontsize;
+  font-weight: $light;
+  padding: $padding;
+  font-size: $p-fontsize;
 }
 
 button {
-    display: inline-block;
-    width: auto;
-    padding: ($padding/2) (1.5*$padding);
-    background: $secondary-color;
-    color: $primary-color;
-    border: transparent;
-    opacity: .85;
-    font-size: $p-fontsize;
-    @include rounded-corners(100px, 0);
-    @include transition();
-    &:hover {
-        opacity: 1;
-    }
+  display: inline-block;
+  width: auto;
+  padding: ($padding/2) (1.5 * $padding);
+  background: $secondary-color;
+  color: $primary-color;
+  border: transparent;
+  opacity: 0.85;
+  font-size: $p-fontsize;
+  @include rounded-corners(100px, 0);
+  @include transition();
+  &:hover {
+    opacity: 1;
+  }
 }
 
 html,
 body,
 #root {
-    height: 100%;
-    width: 100%;
-    background-color: $primary-color;
-    font-family: $font-fam;
-    font-weight: $semi-bold;
+  height: 100%;
+  width: 100%;
+  background-color: $primary-color;
+  font-family: $font-fam;
+  font-weight: $semi-bold;
 }
 
 #all {
-    @include vertical-center();
-    max-width: 1350px;
-    color: $secondary-color;
+  @include vertical-center();
+  max-width: 1350px;
+  color: $secondary-color;
 }
 
 //comment
 #home {
-    height: 100vh;
-    background-color: $primary-color;
-    overflow: hidden;
-    @include transition();
-    //@include lgdrop-shadow();
-    .login {
-        padding-top: 15vh;
-    }
-    main {
-        padding: 50px
-    }
-    p {
-        padding-bottom: $padding*3;
-    }
+  height: 100vh;
+  background-color: $primary-color;
+  overflow: hidden;
+  @include transition();
+  //@include lgdrop-shadow();
+  .login {
+    padding-top: 15vh;
+  }
+  main {
+    padding: 50px;
+  }
+  p {
+    padding-bottom: $padding * 3;
+  }
 }
 
 .view {
-    padding-left: $side-padding;
-    padding-right: $side-padding;
+  padding-left: $side-padding;
+  padding-right: $side-padding;
 }
 
 .header {
-    h1 {
-        text-align: left;
-        //padding-bottom: $padding;
-        font-weight: $bold;
-    }
-    .emoji-header {
-        font-size: 5em;
-        padding-left: 0;
-    }
+  h1 {
+    text-align: left;
+    //padding-bottom: $padding;
+    font-weight: $bold;
+  }
+  .emoji-header {
+    font-size: 5em;
+    padding-left: 0;
+  }
 }
 
 input,
 %input {
-    padding: $padding/1.5;
-    width: 100%;
-    background-color: rgba($secondary-color, .9);
-    color: $primary-color;
-    margin-bottom: $min-space;
-    font-size: $input-fontsize;
-    @include rounded-corners($border-radius, $border);
-    @include transition();
-    &:hover,
-    &:focus {
-        background-color: $secondary-color;
-    }
+  padding: $padding/1.5;
+  width: 100%;
+  background-color: rgba($secondary-color, 0.9);
+  color: $primary-color;
+  margin-bottom: $min-space;
+  font-size: $input-fontsize;
+  @include rounded-corners($border-radius, $border);
+  @include transition();
+  &:hover,
+  &:focus {
+    background-color: $secondary-color;
+  }
 }
 
 input::placeholder {
-    font-weight: $light;
-    opacity: .9;
+  font-weight: $light;
+  opacity: 0.9;
 }
 
 #task {
-    height: 100vh;
-    padding-top: 7vh;
+  height: 100vh;
+  padding-top: 7vh;
 }

@@ -1,3 +1,17 @@
+const readStyle = style => {
+  if (style === null) return "";
+  let s = "";
+  for (var k in style) {
+    s =
+      s +
+      k.replace(/([a-zA-Z])(?=[A-Z])/g, "$1-").toLowerCase() +
+      ":" +
+      style[k] +
+      ";";
+  }
+  return s;
+};
+
 window["React"] = {
   createElement: function(tag, attrs, children) {
     var element = document.createElement(tag);
@@ -10,12 +24,15 @@ window["React"] = {
         } else if (value !== false && value != null) {
           if (typeof value === "function") {
             element[name.toLowerCase()] = value;
+          } else if (name === "style") {
+            const style = element.setAttribute(name, readStyle(value));
           } else {
             element.setAttribute(name, value.toString());
           }
         }
       }
     }
+
     for (let i = 2; i < arguments.length; i++) {
       let child = arguments[i];
       element.appendChild(
