@@ -118,6 +118,17 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"src/React.js":[function(require,module,exports) {
+const readStyle = style => {
+  if (style === null) return "";
+  let s = "";
+
+  for (var k in style) {
+    s = s + k.replace(/([a-zA-Z])(?=[A-Z])/g, "$1-").toLowerCase() + ":" + style[k] + ";";
+  }
+
+  return s;
+};
+
 window["React"] = {
   createElement: function (tag, attrs, children) {
     var element = document.createElement(tag);
@@ -131,6 +142,8 @@ window["React"] = {
         } else if (value !== false && value != null) {
           if (typeof value === "function") {
             element[name.toLowerCase()] = value;
+          } else if (name === "style") {
+            const style = element.setAttribute(name, readStyle(value));
           } else {
             element.setAttribute(name, value.toString());
           }
@@ -13422,10 +13435,6 @@ let token = async () => {
 };
 
 exports.token = token;
-auth.onAuthStateChanged(async user => {
-  console.log("user updated", user);
-  console.log("token", (await token()));
-});
 var _default = auth;
 exports.default = _default;
 },{"firebase/app":"node_modules/firebase/app/dist/index.cjs.js","firebase/auth":"node_modules/firebase/auth/dist/index.esm.js"}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
@@ -14464,7 +14473,7 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-},{"./../utils":"node_modules/axios/lib/utils.js","./../core/settle":"node_modules/axios/lib/core/settle.js","./../helpers/buildURL":"node_modules/axios/lib/helpers/buildURL.js","../core/buildFullPath":"node_modules/axios/lib/core/buildFullPath.js","./../helpers/parseHeaders":"node_modules/axios/lib/helpers/parseHeaders.js","./../helpers/isURLSameOrigin":"node_modules/axios/lib/helpers/isURLSameOrigin.js","../core/createError":"node_modules/axios/lib/core/createError.js","./../helpers/cookies":"node_modules/axios/lib/helpers/cookies.js"}],"node_modules/process/browser.js":[function(require,module,exports) {
+},{"./../utils":"node_modules/axios/lib/utils.js","./../core/settle":"node_modules/axios/lib/core/settle.js","./../helpers/buildURL":"node_modules/axios/lib/helpers/buildURL.js","../core/buildFullPath":"node_modules/axios/lib/core/buildFullPath.js","./../helpers/parseHeaders":"node_modules/axios/lib/helpers/parseHeaders.js","./../helpers/isURLSameOrigin":"node_modules/axios/lib/helpers/isURLSameOrigin.js","../core/createError":"node_modules/axios/lib/core/createError.js","./../helpers/cookies":"node_modules/axios/lib/helpers/cookies.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -14773,7 +14782,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-},{"./utils":"node_modules/axios/lib/utils.js","./helpers/normalizeHeaderName":"node_modules/axios/lib/helpers/normalizeHeaderName.js","./adapters/xhr":"node_modules/axios/lib/adapters/xhr.js","./adapters/http":"node_modules/axios/lib/adapters/xhr.js","process":"node_modules/process/browser.js"}],"node_modules/axios/lib/core/dispatchRequest.js":[function(require,module,exports) {
+},{"./utils":"node_modules/axios/lib/utils.js","./helpers/normalizeHeaderName":"node_modules/axios/lib/helpers/normalizeHeaderName.js","./adapters/xhr":"node_modules/axios/lib/adapters/xhr.js","./adapters/http":"node_modules/axios/lib/adapters/xhr.js","process":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/axios/lib/core/dispatchRequest.js":[function(require,module,exports) {
 'use strict';
 
 var utils = require('./../utils');
@@ -15191,7 +15200,7 @@ module.exports.default = axios;
 
 },{"./utils":"node_modules/axios/lib/utils.js","./helpers/bind":"node_modules/axios/lib/helpers/bind.js","./core/Axios":"node_modules/axios/lib/core/Axios.js","./core/mergeConfig":"node_modules/axios/lib/core/mergeConfig.js","./defaults":"node_modules/axios/lib/defaults.js","./cancel/Cancel":"node_modules/axios/lib/cancel/Cancel.js","./cancel/CancelToken":"node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel":"node_modules/axios/lib/cancel/isCancel.js","./helpers/spread":"node_modules/axios/lib/helpers/spread.js"}],"node_modules/axios/index.js":[function(require,module,exports) {
 module.exports = require('./lib/axios');
-},{"./lib/axios":"node_modules/axios/lib/axios.js"}],"src/api/models/Name.js":[function(require,module,exports) {
+},{"./lib/axios":"node_modules/axios/lib/axios.js"}],"src/api/models/Task.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15199,30 +15208,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-/**
- * Simple Name object with first, last, and display names.
- *
- * @since 0.1.0
- * @author Jonathan Augustine
- */
-class Name {
-  /**
-   * 
-   * @param {string} first - First name
-   * @param {string} last - Last name
-   * @param {string} display - Display name
-   */
-  constructor(first, last, display) {
-    this.first = first;
-    this.last = last;
-    this.display = display;
-  }
-
-}
-
-var _default = Name;
-exports.default = _default;
-},{}],"src/api/models/Task.js":[function(require,module,exports) {
 /**
  * Task object.
  *
@@ -15232,30 +15217,57 @@ exports.default = _default;
 class Task {
   /**
    *
-   * @param {string} uid
-   * @param {string} tid
-   * @param {string} parent
-   * @param {string} text
-   * @param {number} due
-   * @param {Array<number>} reminders
-   * @param {string} state
-   * @param {boolean} pinned
-   * @param {Array<string>} tags
+   * @param {object} Raw - Raw task data
+   * @param {string} Raw.uid
+   * @param {string} Raw.tid
+   * @param {string} Raw.parent
+   * @param {string} Raw.text
+   * @param {string} Raw.due
+   * @param {Array<string>} Raw.reminders
+   * @param {string} Raw.state
+   * @param {boolean} Raw.pinned
+   * @param {Array<string>} Raw.tags
+   * @param {string} Raw.createdAt
+   * @param {string} Raw.updatedAt
    */
-  constructor(uid, tid, parent, text, due, reminders, state, pinned, tags) {
+  constructor({
+    uid,
+    tid,
+    parent,
+    text,
+    due,
+    reminders,
+    state,
+    pinned,
+    tags,
+    createdAt,
+    updatedAt
+  }) {
     this.uid = uid;
     this.tid = tid;
-    this.parent = parent;
+    this.parent = parent || null;
     this.text = text;
-    this.due = due;
-    this.reminders = reminders;
+    this.due = new Date(due);
+    this.reminders = reminders.map(r => new Date(r));
     this.state = state;
     this.pinned = pinned;
     this.tags = tags;
+    this.createdAt = new Date(createdAt);
+    this.updatedAt = new Date(updatedAt);
   }
 
 }
+
+var _default = Task;
+exports.default = _default;
 },{}],"src/api/models/Note.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 /**
  * Note object
  *
@@ -15265,38 +15277,108 @@ class Task {
 class Note {
   /**
    *
-   * @param {string} uid
-   * @param {string} nid
-   * @param {string} parent
-   * @param {string} title
-   * @param {string} text
-   * @param {Array<string>} tags
-   * @param {number} createdAt
-   * @param {number} updatedAt
+   * @param {object} Raw.Raw
+   * @param {string} Raw.uid
+   * @param {string} Raw.nid
+   * @param {string} Raw.parent
+   * @param {string} Raw.title
+   * @param {string} Raw.text
+   * @param {Array<string>} Raw.tags
+   * @param {string} Raw.createdAt
+   * @param {string} Raw.updatedAt
    */
-  constructor(uid, nid, parent, title, text, tags, createdAt, updatedAt) {
+  constructor({
+    uid,
+    nid,
+    parent,
+    title,
+    text,
+    tags,
+    createdAt,
+    updatedAt
+  }) {
     this.uid = uid;
     this.nid = nid;
     this.parent = parent;
     this.title = title;
     this.text = text;
     this.tags = tags;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+    this.createdAt = new Date(createdAt);
+    this.updatedAt = new Date(updatedAt);
   }
 
 }
-},{}],"src/api/models/index.js":[function(require,module,exports) {
+
+var _default = Note;
+exports.default = _default;
+},{}],"src/api/models/User.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "Name", {
-  enumerable: true,
-  get: function () {
-    return _Name.default;
+exports.default = void 0;
+
+/**
+ * Model for User information.
+ * TODO
+ */
+class User {
+  /**
+   *
+   * @param {object} Raw -
+   * @param {string} Raw.uid -
+   * @param {Settings} Raw.settings -
+   * @param {Array<Project>} Raw.projects -
+   * @param {string} Raw.createdAt -
+   * @param {string} Raw.updatedAt -
+   */
+  constructor({
+    uid,
+    settings,
+    projects,
+    createdAt,
+    updatedAt
+  }) {
+    this.uid = uid;
+    this.settings = settings;
+    this.projects = projects;
+    this.createdAt = new Date(createdAt);
+    this.updatedAt = new Date(updatedAt);
   }
+
+}
+
+var _default = User;
+exports.default = _default;
+},{}],"src/api/models/Project.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+class Project {
+  constructor({
+    name,
+    color,
+    createdAt
+  }) {
+    this.name = name;
+    this.color = color;
+    this.createdAt = new Date(createdAt);
+  }
+
+}
+
+var _default = Project;
+exports.default = _default;
+},{}],"src/api/models/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 Object.defineProperty(exports, "Task", {
   enumerable: true,
@@ -15310,15 +15392,29 @@ Object.defineProperty(exports, "Note", {
     return _Note.default;
   }
 });
-
-var _Name = _interopRequireDefault(require("./Name"));
+Object.defineProperty(exports, "User", {
+  enumerable: true,
+  get: function () {
+    return _User.default;
+  }
+});
+Object.defineProperty(exports, "Project", {
+  enumerable: true,
+  get: function () {
+    return _Project.default;
+  }
+});
 
 var _Task = _interopRequireDefault(require("./Task"));
 
 var _Note = _interopRequireDefault(require("./Note"));
 
+var _User = _interopRequireDefault(require("./User"));
+
+var _Project = _interopRequireDefault(require("./Project"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./Name":"src/api/models/Name.js","./Task":"src/api/models/Task.js","./Note":"src/api/models/Note.js"}],"src/api/API.js":[function(require,module,exports) {
+},{"./Task":"src/api/models/Task.js","./Note":"src/api/models/Note.js","./User":"src/api/models/User.js","./Project":"src/api/models/Project.js"}],"src/api/API.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15357,6 +15453,8 @@ const axios = _axios2.default.create({
 class API {
   constructor() {
     this.user = {
+      root: "/users/",
+
       /**
        * Register a new user.
        *
@@ -15401,7 +15499,7 @@ class API {
        *
        * @param {string} newUsername - String value to set the username to.
        *
-       * @returns {string} The current user's new username/displayname or null if it failed
+       * @returns {string} The current user's new username or null if it failed
        */
       setUsername: async username => {
         if (!_auth.default.currentUser) {
@@ -15413,18 +15511,20 @@ class API {
             displayName: username
           });
         } catch (error) {
-          return null;
+          throw error;
         }
 
         return username;
-      }
-    };
-    this.task = {
-      getAll: async (state = null, limit = 100) => {
+      },
+      get: async function () {
+        if (!_auth.default.currentUser) {
+          return null;
+        }
+
         let result;
 
         try {
-          result = await axios.get(`/tasks/${_auth.default.currentUser.uid}?limit=${limit}${state ? `&state=${state}` : ""}`, {
+          result = await axios.get(`${this.root}${_auth.default.currentUser.uid}`, {
             headers: {
               token: await (0, _auth.token)()
             }
@@ -15433,7 +15533,96 @@ class API {
           throw error;
         }
 
-        return result.data.payload.tasks;
+        return new _models.User(result.data.payload.user);
+      }
+    };
+    this.projects = {
+      root: "/projects/",
+
+      /**
+       *
+       * @param {string} name - Name of the project
+       * @param {string} color - The color of the project
+       */
+      create: async function (name, color) {
+        if (!_auth.default.currentUser) {
+          return null;
+        }
+
+        const pjt = {
+          name
+        };
+
+        if (color && color[0] !== "#") {
+          color = "#" + color;
+          pjt.color = color;
+        }
+
+        let result;
+
+        try {
+          result = await axios.post(`${this.root}${_auth.default.currentUser.uid}`, pjt, {
+            headers: {
+              token: await (0, _auth.token)()
+            }
+          });
+        } catch (error) {
+          throw error;
+        }
+
+        return new _models.Project(result.data.payload.project);
+      }
+    };
+    this.task = {
+      root: "/tasks/",
+      getAll: async function (state = null, limit = 100) {
+        let result;
+
+        try {
+          result = await axios.get(`${this.root}${_auth.default.currentUser.uid}?limit=${limit}${state ? `&state=${state}` : ""}`, {
+            headers: {
+              token: await (0, _auth.token)()
+            }
+          });
+        } catch (error) {
+          throw error;
+        }
+
+        return result.data.payload.tasks.map(t => new _models.Task(t));
+      },
+
+      /**
+       * Get all Tasks that have state "todo"
+       *
+       * @param {number} limit - Max number of results
+       */
+      getAllTodo: async function (limit = 100) {
+        return this.getAll("todo", limit);
+      },
+
+      /**
+       * Get all Tasks that have state "done"
+       *
+       * @param {number} limit
+       */
+      getAllDone: async function (limit = 100) {
+        return this.getAll("done", limit);
+      },
+      getOne: async function (task) {
+        const tid = typeof task === "string" ? task : task.tid;
+        let result;
+
+        try {
+          result = await axios.get(`${this.root}${_auth.default.currentUser.uid}/${tid}`, {
+            headers: {
+              token: await (0, _auth.token)()
+            }
+          });
+        } catch (error) {
+          throw error;
+        }
+
+        return new _models.Task(result.data.payload.task);
       },
 
       /**
@@ -15444,11 +15633,11 @@ class API {
        *
        * @returns {Promise<Task>}
        */
-      create: async (text, due, reminders = [], tags = []) => {
+      create: async function (text, due, reminders = [], tags = []) {
         let result;
 
         try {
-          result = await axios.post(`/tasks/${_auth.default.currentUser.uid}`, {
+          result = await axios.post(`${this.root}${_auth.default.currentUser.uid}`, {
             text,
             due,
             reminders,
@@ -15462,10 +15651,64 @@ class API {
           throw error;
         }
 
-        return result.data.payload.task;
+        return new _models.Task(result.data.payload.task);
+      },
+      updateOne: async function (task, updateData) {
+        const tid = typeof task === "string" ? task : task.tid;
+        let result;
+
+        try {
+          result = await axios.put(`${this.root}${_auth.default.currentUser.uid}/${tid}`, updateData, {
+            headers: {
+              token: await (0, _auth.token)()
+            }
+          });
+        } catch (error) {
+          throw error;
+        }
+
+        return new _models.Task(result.data.payload.task);
+      },
+
+      /**
+       *
+       * @param {*} task
+       * @returns {boolean} `true` if the task was deleted
+       */
+      deleteOne: async function (task) {
+        const tid = typeof task === "string" ? task : task.tid;
+        let result;
+
+        try {
+          result = await axios.delete(`${this.root}${_auth.default.currentUser.uid}/${tid}`, {
+            headers: {
+              token: await (0, _auth.token)()
+            }
+          });
+        } catch (error) {
+          throw error;
+        }
+
+        return result.data.payload.deleted;
       }
     };
+    this.currentUser = null;
+
+    _auth.default.onAuthStateChanged(async _user => {
+      console.log("user updated");
+
+      if (_user) {
+        this.currentUser = await this.user.get();
+      }
+    });
   }
+  /**
+   * Map of User API functions
+   *
+   * TODO: Settings functions
+   */
+  // TODO Notes & Projects
+
 
 }
 
@@ -15490,10 +15733,22 @@ Object.defineProperty(exports, "API", {
     return _API.default;
   }
 });
-Object.defineProperty(exports, "models", {
+Object.defineProperty(exports, "Task", {
   enumerable: true,
   get: function () {
-    return _models.default;
+    return _models.Task;
+  }
+});
+Object.defineProperty(exports, "Note", {
+  enumerable: true,
+  get: function () {
+    return _models.Note;
+  }
+});
+Object.defineProperty(exports, "Name", {
+  enumerable: true,
+  get: function () {
+    return _models.Name;
   }
 });
 
@@ -15501,7 +15756,7 @@ var _auth = _interopRequireDefault(require("./auth"));
 
 var _API = _interopRequireDefault(require("./API"));
 
-var _models = _interopRequireDefault(require("./models"));
+var _models = require("./models");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 },{"./auth":"src/api/auth.js","./API":"src/api/API.js","./models":"src/api/models/index.js"}],"src/pages/Home.jsx":[function(require,module,exports) {
@@ -15515,7 +15770,7 @@ exports.default = void 0;
 var _api = require("../api");
 
 const Home = () => {
-  Date.shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  Date.shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   function short_months(dt) {
     return Date.shortMonths[dt.getMonth()];
@@ -15585,11 +15840,15 @@ const Home = () => {
     onClick: e => {
       e.preventDefault();
 
-      _api.API.task.getAll().then(tasks => {
-        console.log(tasks);
-      }).catch(e => console.log(e));
+      _api.API.projects.create("Project-Name-One").then(u => document.getElementById("root").appendChild(React.createElement("div", {
+        style: {
+          backgroundColor: u.color,
+          color: "white",
+          padding: "1rem"
+        }
+      }, u.name))).catch(e => console.log(e));
     }
-  }, "Test Task")));
+  }, "Test")));
 };
 
 var _default = Home;
@@ -15647,7 +15906,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64599" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58089" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
