@@ -89,26 +89,10 @@ const Home = () => {
       </div>
       <div id="task" class="view">
         {createHeader("🤓", "Inbox")}
-
         <button
           onClick={e => {
             e.preventDefault();
-            API.projects
-              .create("Project-Name-One")
-              .then(u =>
-                document.getElementById("root").appendChild(
-                  <div
-                    style={{
-                      backgroundColor: u.color,
-                      color: "white",
-                      padding: "1rem"
-                    }}
-                  >
-                    {u.name}
-                  </div>
-                )
-              )
-              .catch(e => console.log(e));
+            API.projects.getAll().then(p => console.log(p));
           }}
         >
           Test

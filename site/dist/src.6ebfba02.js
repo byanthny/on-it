@@ -120,6 +120,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"src/React.js":[function(require,module,exports) {
 const readStyle = style => {
   if (style === null) return "";
+  if (typeof style === "string") return style;
   let s = "";
 
   for (var k in style) {
@@ -143,7 +144,7 @@ window["React"] = {
           if (typeof value === "function") {
             element[name.toLowerCase()] = value;
           } else if (name === "style") {
-            const style = element.setAttribute(name, readStyle(value));
+            element.setAttribute(name, readStyle(value));
           } else {
             element.setAttribute(name, value.toString());
           }
@@ -15538,6 +15539,25 @@ class API {
     };
     this.projects = {
       root: "/projects/",
+      getAll: async function (limit = 100) {
+        if (!_auth.default.currentUser) {
+          return null;
+        }
+
+        let result;
+
+        try {
+          result = await axios.get(`${this.root}${_auth.default.currentUser.uid}`, {
+            headers: {
+              token: await (0, _auth.token)()
+            }
+          });
+        } catch (error) {
+          throw error;
+        }
+
+        return result.data.payload.projects.map(p => new _models.Project(p));
+      },
 
       /**
        *
@@ -15840,13 +15860,7 @@ const Home = () => {
     onClick: e => {
       e.preventDefault();
 
-      _api.API.projects.create("Project-Name-One").then(u => document.getElementById("root").appendChild(React.createElement("div", {
-        style: {
-          backgroundColor: u.color,
-          color: "white",
-          padding: "1rem"
-        }
-      }, u.name))).catch(e => console.log(e));
+      _api.API.projects.getAll().then(p => console.log(p));
     }
   }, "Test")));
 };
@@ -15906,7 +15920,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58089" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56596" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

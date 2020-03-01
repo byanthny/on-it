@@ -6,47 +6,73 @@ const { packetier } = require("packetier");
 const { User, Project } = require("../models");
 
 // TODO GET, DELETE, PUT
-const controller = new Controller().make(POST, "one", async (req, res) => {
-  // Validate
-  let project;
-  try {
-    project = await Project.schema.validateAsync(req.body);
-  } catch (error) {
-    return res.status(400).json(packetier(false, null, { err: error.message }));
-  }
+const controller = new Controller()
+  .make(GET, "many", async (req, res) => {
+    // Get user
+    let userDoc;
+    try {
+      userDoc = await User.model.findOne({ uid: req.token.uid });
+    } catch (error) {
+      return res
+        .status(500)
+        .json(packetier(false, null, { err: "Internal 1" }));
+    }
 
-  // Get user
-  let userDoc;
-  try {
-    userDoc = await User.model.findOne({ uid: req.token.uid });
-  } catch (error) {
-    return res.status(500).json(packetier(false, null, { err: "Internal 1" }));
-  }
+    res.json(
+      packetier(
+        true,
+        { projects: userDoc.projects },
+        { count: userDoc.projects.length, query: { uid: req.token.uid } }
+      )
+    );
+  })
+  .make(POST, "one", async (req, res) => {
+    // Validate
+    let project;
+    try {
+      project = await Project.schema.validateAsync(req.body);
+    } catch (error) {
+      return res
+        .status(400)
+        .json(packetier(false, null, { err: error.message }));
+    }
 
-  if (!userDoc) {
-    return res
-      .status(404)
-      .json(
-        packetier(false, null, { err: "User not found", uid: req.token.uid })
-      );
-  }
+    // Get user
+    let userDoc;
+    try {
+      userDoc = await User.model.findOne({ uid: req.token.uid });
+    } catch (error) {
+      return res
+        .status(500)
+        .json(packetier(false, null, { err: "Internal 1" }));
+    }
 
-  if (userDoc.projects.some(p => p.name.toLowerCase() == project.name)) {
-    return res
-      .status(409)
-      .json(packetier(false, null, { err: "Duplicate Name" }));
-  }
+    if (!userDoc) {
+      return res
+        .status(404)
+        .json(
+          packetier(false, null, { err: "User not found", uid: req.token.uid })
+        );
+    }
 
-  userDoc.projects.push(project);
+    if (userDoc.projects.some(p => p.name.toLowerCase() == project.name)) {
+      return res
+        .status(409)
+        .json(packetier(false, null, { err: "Duplicate Name" }));
+    }
 
-  // Save
-  try {
-    await userDoc.save();
-  } catch (error) {
-    return res.status(500).json(packetier(false, null, { err: "Internal 2" }));
-  }
+    userDoc.projects.push(project);
 
-  res.json(packetier(true, { project }, { user: userDoc }));
-});
+    // Save
+    try {
+      await userDoc.save();
+    } catch (error) {
+      return res
+        .status(500)
+        .json(packetier(false, null, { err: "Internal 2" }));
+    }
+
+    res.json(packetier(true, { project }, { user: userDoc }));
+  });
 
 module.exports = controller;

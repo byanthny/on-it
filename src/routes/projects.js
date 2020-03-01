@@ -7,6 +7,9 @@ const { project: ctrlr } = require("../controllers");
 
 const router = Router();
 
-router.route("/:uid").post(requireToken, requireMatchingUids, ctrlr.post.one);
+router
+  .route("/:uid")
+  .get(requireToken, requireMatchingUids, ctrlr.get.many)
+  .post(requireToken, requireMatchingUids, ctrlr.post.one);
 
 module.exports = router;
