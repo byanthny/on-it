@@ -15599,6 +15599,26 @@ class API {
         }
 
         return new _models.Project(result.data.payload.project);
+      },
+
+      /**
+       * @param {{string|Project}}
+       */
+      delete: async function (project) {
+        const name = typeof project === "string" ? project : project.name;
+        let result;
+
+        try {
+          result = await axios.delete(`${this.root}${_auth.default.currentUser.uid}/${name}`, {
+            headers: {
+              token: await (0, _auth.token)()
+            }
+          });
+        } catch (error) {
+          throw error;
+        }
+
+        return result.data;
       }
     };
     this.task = {
@@ -15891,16 +15911,45 @@ Object.defineProperty(exports, "Home", {
 var _Home = _interopRequireDefault(require("./Home"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./Home":"src/pages/Home.jsx"}],"src/index.jsx":[function(require,module,exports) {
+},{"./Home":"src/pages/Home.jsx"}],"src/render.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+const root = document.getElementById("root");
+/**
+ * Appends the given child element to the given parent element.
+ * The parent element will be cleared of all children.
+ *
+ * @param {HTMLELement} child - The child element to render
+ * @param {HTMLElement} parent - The parent element to append to, defaults to the root div
+ * @returns {HTMLELement} The parent element with the child appended
+ */
+
+const render = (child, parent = root) => {
+  for (const e of parent.children) e.remove();
+
+  parent.appendChild(child);
+  return parent;
+};
+
+var _default = render;
+exports.default = _default;
+},{}],"src/index.jsx":[function(require,module,exports) {
 "use strict";
 
 require("./React");
 
 var _pages = require("./pages");
 
-const root = document.getElementById("root");
-root.appendChild((0, _pages.Home)());
-},{"./React":"src/React.js","./pages":"src/pages/index.jsx"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var _render = _interopRequireDefault(require("./render"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _render.default)((0, _pages.Home)());
+},{"./React":"src/React.js","./pages":"src/pages/index.jsx","./render":"src/render.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -15928,7 +15977,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56596" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62100" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -159,6 +159,24 @@ class API {
       }
 
       return new Project(result.data.payload.project);
+    },
+    /**
+     * @param {{string|Project}}
+     */
+    delete: async function(project) {
+      const name = typeof project === "string" ? project : project.name;
+
+      let result;
+      try {
+        result = await axios.delete(
+          `${this.root}${auth.currentUser.uid}/${name}`,
+          { headers: { token: await token() } }
+        );
+      } catch (error) {
+        throw error;
+      }
+
+      return result.data;
     }
   };
 
