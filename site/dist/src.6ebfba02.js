@@ -15547,6 +15547,12 @@ class API {
     };
     this.projects = {
       root: "/projects/",
+
+      /**
+       *
+       * @param {*} limit
+       * @returns {Promise<Array<Project>>}
+       */
       getAll: async function (limit = 100) {
         if (!_auth.default.currentUser) {
           return null;
@@ -15807,7 +15813,36 @@ var _API = _interopRequireDefault(require("./API"));
 var _models = require("./models");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./auth":"src/api/auth.js","./API":"src/api/API.js","./models":"src/api/models/index.js"}],"src/pages/Home.jsx":[function(require,module,exports) {
+},{"./auth":"src/api/auth.js","./API":"src/api/API.js","./models":"src/api/models/index.js"}],"src/render.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+const root = document.getElementById("root");
+/**
+ * Appends the given child element to the given parent element.
+ * The parent element will be cleared of all children.
+ *
+ * @param {HTMLElement} child - The child element to render
+ * @param {boolean} preserve - `true` if the parent sould not be cleared of child elements before rendering. Defaults to false
+ * @param {HTMLElement} parent - The parent element to append to, defaults to the root div
+ * @returns {HTMLELement} The parent element with the child appended
+ */
+
+const render = async (child, preserve = false, parent = root) => {
+  if (!preserve) {
+    for (const e of parent.children) e.remove();
+  }
+
+  parent.appendChild(typeof child === "function" ? await child() : child);
+  return parent;
+};
+
+var _default = render;
+exports.default = _default;
+},{}],"src/pages/Home.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15816,6 +15851,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _api = require("../api");
+
+var _render = _interopRequireDefault(require("../render"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const Home = () => {
   Date.shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -15852,6 +15891,16 @@ const Home = () => {
       class: "message",
       style: "padding-bottom: 10vh;"
     }, $message));
+  }
+
+  function loadProjects() {
+    const list = document.getElementById("projs");
+    return _api.API.projects.getAll().then(r => r.map(p => React.createElement("div", {
+      className: "project",
+      style: {
+        border: `1px solid ${p.color}`
+      }
+    }, React.createElement("h2", null, p.name))).forEach(pd => (0, _render.default)(pd, true, list)));
   } //var hue = Math.floor(Math.random() * 360);
   // var pastel = 'hsl(' + hue + ', 100%, 80%)';
   //var pastelbackground  = "background-color: " + pastel;
@@ -15884,18 +15933,21 @@ const Home = () => {
   }, "login"))))), React.createElement("div", {
     id: "task",
     class: "view"
-  }, createHeader("🤓", "Inbox"), React.createElement("button", {
+  }, createHeader("🤓", "Inbox"), React.createElement("div", {
+    id: "projs"
+  }, React.createElement("button", {
     onClick: e => {
-      e.preventDefault();
+      e.preventDefault(); //API.projects.create("TesT-prOject-name");
+      //API.projects.delete("Project-Name-One").then(r => console.log(r));
 
-      _api.API.projects.getAll().then(p => console.log(p));
+      loadProjects();
     }
-  }, "Test")));
+  }, "Test"))));
 };
 
 var _default = Home;
 exports.default = _default;
-},{"../api":"src/api/index.js"}],"src/pages/index.jsx":[function(require,module,exports) {
+},{"../api":"src/api/index.js","../render":"src/render.js"}],"src/pages/index.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15911,33 +15963,7 @@ Object.defineProperty(exports, "Home", {
 var _Home = _interopRequireDefault(require("./Home"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./Home":"src/pages/Home.jsx"}],"src/render.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-const root = document.getElementById("root");
-/**
- * Appends the given child element to the given parent element.
- * The parent element will be cleared of all children.
- *
- * @param {HTMLELement} child - The child element to render
- * @param {HTMLElement} parent - The parent element to append to, defaults to the root div
- * @returns {HTMLELement} The parent element with the child appended
- */
-
-const render = (child, parent = root) => {
-  for (const e of parent.children) e.remove();
-
-  parent.appendChild(child);
-  return parent;
-};
-
-var _default = render;
-exports.default = _default;
-},{}],"src/index.jsx":[function(require,module,exports) {
+},{"./Home":"src/pages/Home.jsx"}],"src/index.jsx":[function(require,module,exports) {
 "use strict";
 
 require("./React");
@@ -15948,7 +15974,7 @@ var _render = _interopRequireDefault(require("./render"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _render.default)((0, _pages.Home)());
+(0, _render.default)(_pages.Home);
 },{"./React":"src/React.js","./pages":"src/pages/index.jsx","./render":"src/render.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -15977,7 +16003,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62100" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64049" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

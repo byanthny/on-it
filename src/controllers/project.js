@@ -55,7 +55,12 @@ const controller = new Controller()
         );
     }
 
-    if (userDoc.projects.some(p => p.name.toLowerCase() == project.name)) {
+    // Reject duplicate name
+    if (
+      userDoc.projects.some(
+        p => p.name.toLowerCase() == project.name.toLowerCase()
+      )
+    ) {
       return res
         .status(409)
         .json(packetier(false, null, { err: "Duplicate Name" }));
@@ -73,6 +78,54 @@ const controller = new Controller()
     }
 
     res.json(packetier(true, { project }, { user: userDoc }));
+  })
+
+  /** DELETE /projects/uid/pname */
+  .make(DELETE, "one", async (req, res) => {
+    // Get user doc
+    let userDoc;
+    try {
+      userDoc = await User.model.findOne({ uid: req.token.uid });
+    } catch (error) {
+      return res
+        .status(500)
+        .json(packetier(false, null, { err: "Internal 1" }));
+    }
+
+    if (!userDoc) {
+      return res
+        .status(404)
+        .json(packetier(false, null, { err: "User not found" }));
+    }
+
+    // find project
+    let project = userDoc.projects.filter(
+      ({ name }) => name === req.params.pname
+    );
+
+    if (project.length === 0) {
+      return res
+        .status(404)
+        .json(packetier(false, null, { err: "Project not found" }));
+    }
+
+    const deletedProject = project[0];
+
+    // Remove project
+    userDoc.projects = userDoc.projects.filter(
+      ({ name }) => name !== req.params.pname
+    );
+
+    // Update
+    try {
+      await userDoc.save();
+    } catch (error) {
+      return res
+        .status(500)
+        .json(packetier(false, null, { err: "Internal 2" }));
+    }
+
+    res.json(packetier(true, { deleted: true, project: deletedProject }));
   });
 
 module.exports = controller;

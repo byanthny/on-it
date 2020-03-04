@@ -12,4 +12,8 @@ router
   .get(requireToken, requireMatchingUids, ctrlr.get.many)
   .post(requireToken, requireMatchingUids, ctrlr.post.one);
 
+router
+  .route("/:uid/:pname")
+  .delete(requireToken, requireMatchingUids, ctrlr.delete.one);
+
 module.exports = router;

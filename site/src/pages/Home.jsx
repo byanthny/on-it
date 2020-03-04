@@ -1,4 +1,5 @@
 import { API, Task } from "../api";
+import render from "../render";
 
 const Home = () => {
   Date.shortMonths = [
@@ -26,6 +27,7 @@ const Home = () => {
   const inputEmail = (
     <input placeholder="email" id="in_email" name="email" type="email" />
   );
+
   const inputPass = (
     <input
       placeholder="password"
@@ -34,6 +36,7 @@ const Home = () => {
       name="password"
     />
   );
+
   const signupMessage = (
     <p>
       <span style="opacity: .6">Don't have an account?</span> Sign Up!
@@ -51,6 +54,19 @@ const Home = () => {
           {$message}
         </h1>
       </header>
+    );
+  }
+
+  function loadProjects() {
+    const list = document.getElementById("projs");
+    return API.projects.getAll().then(r =>
+      r
+        .map(p => (
+          <div className="project" style={{ border: `1px solid ${p.color}` }}>
+            <h2>{p.name}</h2>
+          </div>
+        ))
+        .forEach(pd => render(pd, true, list))
     );
   }
 
@@ -89,14 +105,18 @@ const Home = () => {
       </div>
       <div id="task" class="view">
         {createHeader("🤓", "Inbox")}
-        <button
-          onClick={e => {
-            e.preventDefault();
-            API.projects.getAll().then(p => console.log(p));
-          }}
-        >
-          Test
-        </button>
+        <div id="projs">
+          <button
+            onClick={e => {
+              e.preventDefault();
+              //API.projects.create("TesT-prOject-name");
+              //API.projects.delete("Project-Name-One").then(r => console.log(r));
+              loadProjects();
+            }}
+          >
+            Test
+          </button>
+        </div>
       </div>
     </div>
   );

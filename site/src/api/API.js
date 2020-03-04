@@ -114,6 +114,11 @@ class API {
 
   projects = {
     root: "/projects/",
+    /**
+     *
+     * @param {*} limit
+     * @returns {Promise<Array<Project>>}
+     */
     getAll: async function(limit = 100) {
       if (!auth.currentUser) {
         return null;
