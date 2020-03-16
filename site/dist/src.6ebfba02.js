@@ -14482,7 +14482,7 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-},{"./../utils":"node_modules/axios/lib/utils.js","./../core/settle":"node_modules/axios/lib/core/settle.js","./../helpers/buildURL":"node_modules/axios/lib/helpers/buildURL.js","../core/buildFullPath":"node_modules/axios/lib/core/buildFullPath.js","./../helpers/parseHeaders":"node_modules/axios/lib/helpers/parseHeaders.js","./../helpers/isURLSameOrigin":"node_modules/axios/lib/helpers/isURLSameOrigin.js","../core/createError":"node_modules/axios/lib/core/createError.js","./../helpers/cookies":"node_modules/axios/lib/helpers/cookies.js"}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
+},{"./../utils":"node_modules/axios/lib/utils.js","./../core/settle":"node_modules/axios/lib/core/settle.js","./../helpers/buildURL":"node_modules/axios/lib/helpers/buildURL.js","../core/buildFullPath":"node_modules/axios/lib/core/buildFullPath.js","./../helpers/parseHeaders":"node_modules/axios/lib/helpers/parseHeaders.js","./../helpers/isURLSameOrigin":"node_modules/axios/lib/helpers/isURLSameOrigin.js","../core/createError":"node_modules/axios/lib/core/createError.js","./../helpers/cookies":"node_modules/axios/lib/helpers/cookies.js"}],"node_modules/process/browser.js":[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
@@ -14791,7 +14791,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-},{"./utils":"node_modules/axios/lib/utils.js","./helpers/normalizeHeaderName":"node_modules/axios/lib/helpers/normalizeHeaderName.js","./adapters/xhr":"node_modules/axios/lib/adapters/xhr.js","./adapters/http":"node_modules/axios/lib/adapters/xhr.js","process":"../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/axios/lib/core/dispatchRequest.js":[function(require,module,exports) {
+},{"./utils":"node_modules/axios/lib/utils.js","./helpers/normalizeHeaderName":"node_modules/axios/lib/helpers/normalizeHeaderName.js","./adapters/xhr":"node_modules/axios/lib/adapters/xhr.js","./adapters/http":"node_modules/axios/lib/adapters/xhr.js","process":"node_modules/process/browser.js"}],"node_modules/axios/lib/core/dispatchRequest.js":[function(require,module,exports) {
 'use strict';
 
 var utils = require('./../utils');
@@ -15857,14 +15857,6 @@ var _render = _interopRequireDefault(require("../render"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const Home = () => {
-  Date.shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-  function short_months(dt) {
-    return Date.shortMonths[dt.getMonth()];
-  }
-
-  var dt = new Date();
-  var date = short_months(dt) + ". " + dt.getDate();
   const inputEmail = React.createElement("input", {
     placeholder: "email",
     id: "in_email",
@@ -15880,43 +15872,18 @@ const Home = () => {
   const signupMessage = React.createElement("p", null, React.createElement("span", {
     style: "opacity: .6"
   }, "Don't have an account?"), " Sign Up!");
-
-  function createHeader($emoji, $message) {
-    return React.createElement("header", {
-      class: "header"
-    }, React.createElement("h1", {
-      class: "emoji-header",
-      style: "float: right;"
-    }, $emoji), React.createElement("h1", null, date), React.createElement("h1", {
-      class: "message",
-      style: "padding-bottom: 10vh;"
-    }, $message));
-  }
-
-  function loadProjects() {
-    const list = document.getElementById("projs");
-    return _api.API.projects.getAll().then(r => r.map(p => React.createElement("div", {
-      className: "project",
-      style: {
-        border: `1px solid ${p.color}`
-      }
-    }, React.createElement("h2", null, p.name))).forEach(pd => (0, _render.default)(pd, true, list)));
-  } //var hue = Math.floor(Math.random() * 360);
-  // var pastel = 'hsl(' + hue + ', 100%, 80%)';
-  //var pastelbackground  = "background-color: " + pastel;
-
-
   return React.createElement("div", {
-    id: "all"
+    class: "container"
   }, React.createElement("div", {
-    id: "home",
-    class: "view"
+    class: "row"
   }, React.createElement("div", {
-    class: "login"
-  }, createHeader("📌", "Welcome to On It"), React.createElement("main", {
-    style: "margin:auto; max-width:550px"
+    class: "five columns"
+  }, React.createElement("h1", null, "ON IT")), React.createElement("div", {
+    class: "seven columns"
+  }, React.createElement("h1", null, "Login"), React.createElement("main", {
+    style: ""
   }, React.createElement("form", {
-    style: "text-align:center;"
+    style: ""
   }, inputEmail, inputPass, signupMessage, React.createElement("button", {
     //style={pastelbackground}
     type: "submit",
@@ -15933,7 +15900,7 @@ const Home = () => {
   }, "login"))))), React.createElement("div", {
     id: "task",
     class: "view"
-  }, createHeader("🤓", "Inbox"), React.createElement("div", {
+  }, React.createElement("div", {
     id: "projs"
   }, React.createElement("button", {
     onClick: e => {
@@ -16003,7 +15970,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64049" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65500" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

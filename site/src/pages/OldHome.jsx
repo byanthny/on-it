@@ -1,63 +1,7 @@
 import { API, Task } from "../api";
+import render from "../render";
 
 const Home = () => {
-  Date.shortMonths = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-  ];
-
-  function short_months(dt) {
-    return Date.shortMonths[dt.getMonth()];
-  }
-
-  var dt = new Date();
-  var date = short_months(dt) + ". " + dt.getDate();
-
-  const inputEmail = (
-    <input placeholder="email" id="in_email" name="email" type="email" />
-  );
-  const inputPass = (
-    <input
-      placeholder="password"
-      id="in_pass"
-      type="password"
-      name="password"
-    />
-  );
-  const signupMessage = (
-    <p>
-      <span style="opacity: .6">Don't have an account?</span> Sign Up!
-    </p>
-  );
-
-  function createHeader($emoji, $message) {
-    return (
-      <header class="header">
-        <h1 class="emoji-header" style="float: right;">
-          {$emoji}
-        </h1>
-        <h1>{date}</h1>
-        <h1 class="message" style="padding-bottom: 10vh;">
-          {$message}
-        </h1>
-      </header>
-    );
-  }
-
-  //var hue = Math.floor(Math.random() * 360);
-  // var pastel = 'hsl(' + hue + ', 100%, 80%)';
-  //var pastelbackground  = "background-color: " + pastel;
-
   return (
     <div id="all">
       <div id="home" class="view">
@@ -89,14 +33,18 @@ const Home = () => {
       </div>
       <div id="task" class="view">
         {createHeader("🤓", "Inbox")}
-        <button
-          onClick={e => {
-            e.preventDefault();
-            API.projects.getAll().then(p => console.log(p));
-          }}
-        >
-          Test
-        </button>
+        <div id="projs">
+          <button
+            onClick={e => {
+              e.preventDefault();
+              //API.projects.create("TesT-prOject-name");
+              //API.projects.delete("Project-Name-One").then(r => console.log(r));
+              loadProjects();
+            }}
+          >
+            Test
+          </button>
+        </div>
       </div>
     </div>
   );

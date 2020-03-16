@@ -1,3 +1,60 @@
+/*
+//Colors
+$dark: #262626;
+$white: #fff;
+$grey: #bbb;
+//$gradient-faded: linear-gradient(76deg, rgba(#FEE140, .85) 0%, rgba(#FA709A, .85) 100%);
+//$gradient: linear-gradient(76deg, rgba(#FEE140, 1) 0%, rgba(#FA709A, 1) 100%);
+//Font-Sizes
+$font-fam: "Open Sans";
+$bold: 700;
+$light: 400;
+$semi-bold: 600;
+$h1: 3em;
+$p-fontsize: 1em;
+$input-fontsize: $p-fontsize/1.5;
+//General
+$padding: 15px;
+$margin: 5px;
+$font-color: $white;
+$primary-color: $dark;
+$secondary-color: $white;
+$accent-color: $grey;
+$border-radius: 8px;
+$border: 0px;
+$min-space: 18px;
+$side-padding: 17%;
+//Cards
+$card-padding: $padding;
+$input-height: 15px;
+//Mix ins
+@mixin drop-shadow {
+  box-shadow: 0 0 24px 0px rgba(0, 0, 0, 0.4);
+}
+
+@mixin lgdrop-shadow {
+  box-shadow: 0 0 80px 0px rgba(0, 0, 0, 0.1);
+}
+
+@mixin rounded-corners($radius, $width) {
+  border-radius: $radius;
+  border-width: $width;
+}
+
+@mixin round {
+  border-radius: $border-radius;
+  border-width: $border;
+}
+
+@mixin vertical-center {
+  margin: 0 auto;
+}
+
+@mixin transition() {
+  transition: all 0.5s;
+}
+
+//Home
 *,
 *::after,
 *::before {
@@ -11,30 +68,29 @@
 }
 
 h1 {
-  font-size: 3em;
+  font-size: $h1;
 }
 
 p {
-  font-weight: 400;
-  padding: 15px;
-  font-size: 1em;
+  font-weight: $light;
+  padding: $padding;
+  font-size: $p-fontsize;
 }
 
 button {
   display: inline-block;
   width: auto;
-  padding: 7.5px 22.5px;
-  background: #fff;
-  color: #262626;
+  padding: ($padding/2) (1.5 * $padding);
+  background: $secondary-color;
+  color: $primary-color;
   border: transparent;
   opacity: 0.85;
-  font-size: 1em;
-  border-radius: 100px;
-  border-width: 0;
-  transition: all 0.5s;
-}
-button:hover {
-  opacity: 1;
+  font-size: $p-fontsize;
+  @include rounded-corners(100px, 0);
+  @include transition();
+  &:hover {
+    opacity: 1;
+  }
 }
 
 html,
@@ -42,64 +98,70 @@ body,
 #root {
   height: 100%;
   width: 100%;
-  background-color: #262626;
-  font-family: "Open Sans";
-  font-weight: 600;
+  background-color: $primary-color;
+  font-family: $font-fam;
+  font-weight: $semi-bold;
 }
 
 #all {
-  margin: 0 auto;
+  @include vertical-center();
   max-width: 1350px;
-  color: #fff;
+  color: $secondary-color;
 }
 
+//comment
 #home {
   height: 100vh;
-  background-color: #262626;
+  background-color: $primary-color;
   overflow: hidden;
-  transition: all 0.5s;
-}
-#home .login {
-  padding-top: 15vh;
-}
-#home main {
-  padding: 50px;
-}
-#home p {
-  padding-bottom: 45px;
+  @include transition();
+  //@include lgdrop-shadow();
+  .login {
+    padding-top: 15vh;
+  }
+  main {
+    padding: 50px;
+  }
+  p {
+    padding-bottom: $padding * 3;
+  }
 }
 
 .view {
-  padding-left: 17%;
-  padding-right: 17%;
+  padding-left: $side-padding;
+  padding-right: $side-padding;
 }
 
-.header h1 {
-  text-align: left;
-  font-weight: 700;
-}
-.header .emoji-header {
-  font-size: 5em;
-  padding-left: 0;
+.header {
+  h1 {
+    text-align: left;
+    //padding-bottom: $padding;
+    font-weight: $bold;
+  }
+  .emoji-header {
+    font-size: 5em;
+    padding-left: 0;
+  }
 }
 
-input {
-  padding: 10px;
+input,
+%input {
+  padding: $padding/1.5;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #262626;
-  margin-bottom: 18px;
-  font-size: 0.6666666667em;
-  border-radius: 8px;
-  border-width: 0px;
-  transition: all 0.5s;
-}
-input:hover, input:focus {
-  background-color: #fff;
+  background-color: rgba($secondary-color, 0.9);
+  color: $primary-color;
+  margin-bottom: $min-space;
+  font-size: $input-fontsize;
+  @include rounded-corners($border-radius, $border);
+  @include transition();
+  &:hover,
+  &:focus {
+    background-color: $secondary-color;
+  }
 }
 
 input::placeholder {
-  font-weight: 400;
+  font-weight: $light;
   opacity: 0.9;
 }
 
@@ -107,5 +169,6 @@ input::placeholder {
   height: 100vh;
   padding-top: 7vh;
 }
+*/
 
 /*# sourceMappingURL=/style.d9cbfdb6.css.map */
