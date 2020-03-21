@@ -1,3 +1,7 @@
-import Home from "./Home";
+import Login from "./Login";
+import DesktopApp from "./DesktopApp";
+import MobileApp from "./MobileApp";
 
-export { Home };
+export { Login };
+export {DesktopApp};
+export {MobileApp};

@@ -170,3 +170,57 @@ input::placeholder {
   padding-top: 7vh;
 }
 */
+
+//Colors
+$dark: #333;
+$padding: 25px;
+//Mix ins
+@mixin drop-shadow {
+    box-shadow: 0 0 24px 0px rgba(0, 0, 0, 0.4);
+}
+
+body {
+    background-color: white;
+}
+
+#root {
+    height: 100vh;
+    overflow: hidden;
+}
+
+#login {
+    color: white;
+    margin: 0 auto;
+    padding: 25px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    margin: auto;
+    form {
+        display: inline-block;
+        padding: $padding*2 15%;
+        margin: 0 auto;
+        background-color: $dark;
+        @include drop-shadow();
+        p {
+            margin: 15px 0px;
+        }
+        button {
+            width: 85%;
+            margin: 10px 10px;
+        }
+        input {
+            color: $dark;
+            width: 100%;
+        }
+    }
+}
+
+.lined {
+    border-bottom: 1px solid #fff;
+    line-height: 0.1em;
+    span {
+        background: $dark;
+        padding: 0 10px;
+    }
+}

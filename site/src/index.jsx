@@ -1,5 +1,7 @@
 import "./React";
-import { Home } from "./pages";
+import { DesktopApp } from "./pages";
+import { MobileApps } from "./pages";
+import { Login } from "./pages";
 import render from "./render";
 
-render(Home);
+render(Login);
