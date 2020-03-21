@@ -168,6 +168,35 @@ window["React"] = {
     return element;
   }
 };
+},{}],"src/render.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+const root = document.getElementById("root");
+/**
+ * Appends the given child element to the given parent element.
+ * The parent element will be cleared of all children.
+ *
+ * @param {HTMLElement} child - The child element to render
+ * @param {boolean} preserve - `true` if the parent sould not be cleared of child elements before rendering. Defaults to false
+ * @param {HTMLElement} parent - The parent element to append to, defaults to the root div
+ * @returns {HTMLELement} The parent element with the child appended
+ */
+
+const render = async (child, preserve = false, parent = root) => {
+  if (!preserve) {
+    for (const e of parent.children) e.remove();
+  }
+
+  parent.appendChild(typeof child === "function" ? await child() : child);
+  return parent;
+};
+
+var _default = render;
+exports.default = _default;
 },{}],"node_modules/tslib/tslib.es6.js":[function(require,module,exports) {
 "use strict";
 
@@ -15813,36 +15842,7 @@ var _API = _interopRequireDefault(require("./API"));
 var _models = require("./models");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./auth":"src/api/auth.js","./API":"src/api/API.js","./models":"src/api/models/index.js"}],"src/render.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-const root = document.getElementById("root");
-/**
- * Appends the given child element to the given parent element.
- * The parent element will be cleared of all children.
- *
- * @param {HTMLElement} child - The child element to render
- * @param {boolean} preserve - `true` if the parent sould not be cleared of child elements before rendering. Defaults to false
- * @param {HTMLElement} parent - The parent element to append to, defaults to the root div
- * @returns {HTMLELement} The parent element with the child appended
- */
-
-const render = async (child, preserve = false, parent = root) => {
-  if (!preserve) {
-    for (const e of parent.children) e.remove();
-  }
-
-  parent.appendChild(typeof child === "function" ? await child() : child);
-  return parent;
-};
-
-var _default = render;
-exports.default = _default;
-},{}],"src/pages/Home.jsx":[function(require,module,exports) {
+},{"./auth":"src/api/auth.js","./API":"src/api/API.js","./models":"src/api/models/index.js"}],"src/pages/DesktopApp.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15852,11 +15852,7 @@ exports.default = void 0;
 
 var _api = require("../api");
 
-var _render = _interopRequireDefault(require("../render"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const Home = () => {
+const DesktopApp = () => {
   const inputEmail = React.createElement("input", {
     placeholder: "email",
     id: "in_email",
@@ -15912,25 +15908,106 @@ const Home = () => {
   }, "Test"))));
 };
 
-var _default = Home;
+var _default = DesktopApp;
 exports.default = _default;
-},{"../api":"src/api/index.js","../render":"src/render.js"}],"src/pages/index.jsx":[function(require,module,exports) {
+},{"../api":"src/api/index.js"}],"src/pages/Login.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "Home", {
+exports.default = void 0;
+
+var _render = _interopRequireDefault(require("../render"));
+
+var _DesktopApp = _interopRequireDefault(require("./DesktopApp"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const Login = () => {
+  const inputEmail = React.createElement("input", {
+    placeholder: "email",
+    id: "in_email",
+    name: "email",
+    type: "email"
+  });
+  const inputPass = React.createElement("input", {
+    placeholder: "password",
+    id: "in_pass",
+    type: "password",
+    name: "password"
+  });
+  return React.createElement("div", {
+    class: "container",
+    style: "display:table;height:100vh;"
+  }, React.createElement("div", {
+    id: "login"
+  }, React.createElement("form", null, React.createElement("h1", null, "Welcome to On it!"), inputEmail, React.createElement("br", null), inputPass, React.createElement("br", null), React.createElement("button", {
+    type: "submit",
+    onClick: e => {
+      e.preventDefault();
+
+      try {
+        API.user.login(inputEmail.value, inputPass.value);
+        (0, _render.default)(_DesktopApp.default);
+      } catch (error) {
+        console.log("error handled.");
+      }
+    }
+  }, "login"), React.createElement("br", null), React.createElement("p", {
+    class: "lined"
+  }, React.createElement("span", null, "or")), React.createElement("button", {
+    type: "button",
+    onClick: e => {
+      e.preventDefault();
+
+      try {
+        API.user.register(inputEmail.value, inputPass.value);
+        (0, _render.default)(_DesktopApp.default);
+      } catch (error) {
+        console.log("error handled.");
+      }
+    }
+  }, "Sign Up"))));
+};
+
+var _default = Login;
+exports.default = _default;
+},{"../render":"src/render.js","./DesktopApp":"src/pages/DesktopApp.jsx"}],"src/pages/MobileApp.jsx":[function(require,module,exports) {
+
+},{}],"src/pages/index.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "Login", {
   enumerable: true,
   get: function () {
-    return _Home.default;
+    return _Login.default;
+  }
+});
+Object.defineProperty(exports, "DesktopApp", {
+  enumerable: true,
+  get: function () {
+    return _DesktopApp.default;
+  }
+});
+Object.defineProperty(exports, "MobileApp", {
+  enumerable: true,
+  get: function () {
+    return _MobileApp.default;
   }
 });
 
-var _Home = _interopRequireDefault(require("./Home"));
+var _Login = _interopRequireDefault(require("./Login"));
+
+var _DesktopApp = _interopRequireDefault(require("./DesktopApp"));
+
+var _MobileApp = _interopRequireDefault(require("./MobileApp"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./Home":"src/pages/Home.jsx"}],"src/index.jsx":[function(require,module,exports) {
+},{"./Login":"src/pages/Login.jsx","./DesktopApp":"src/pages/DesktopApp.jsx","./MobileApp":"src/pages/MobileApp.jsx"}],"src/index.jsx":[function(require,module,exports) {
 "use strict";
 
 require("./React");
@@ -15941,7 +16018,7 @@ var _render = _interopRequireDefault(require("./render"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _render.default)(_pages.Home);
+(0, _render.default)(_pages.Login);
 },{"./React":"src/React.js","./pages":"src/pages/index.jsx","./render":"src/render.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -15970,7 +16047,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65500" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58307" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
