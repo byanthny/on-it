@@ -174,6 +174,7 @@ input::placeholder {
 //Colors
 $dark: #333;
 $padding: 25px;
+$radius: 5px;
 //Mix ins
 @mixin drop-shadow {
     box-shadow: 0 0 24px 0px rgba(0, 0, 0, 0.4);
@@ -197,19 +198,26 @@ body {
     vertical-align: middle;
     margin: auto;
     form {
+        border-radius: $radius;
         display: inline-block;
         padding: $padding*2 15%;
         margin: 0 auto;
         background-color: $dark;
+        width: 75%;
         @include drop-shadow();
+        h1 {
+            margin-bottom: 25px;
+        }
         p {
             margin: 15px 0px;
         }
         button {
+            color: white;
             width: 85%;
             margin: 10px 10px;
         }
         input {
+            border-radius: $radius;
             color: $dark;
             width: 100%;
         }
