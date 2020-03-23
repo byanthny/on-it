@@ -15853,17 +15853,39 @@ exports.default = void 0;
 var _api = require("../api");
 
 const DesktopApp = () => {
+  //TODO Date update on new day
+
+  /* Gets current date on "MAR. 4" format*/
+  var date = () => {
+    var dt = new Date();
+    Date.shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return Date.shortMonths[dt.getMonth()].toUpperCase() + ". " + dt.getDay();
+  };
+
+  var projects = _api.API.projects.getAll();
+
+  var createProject = p => {
+    //<a class="project-name current"><h5>{p}</h5></a>
+    return React.createElement("a", {
+      class: "project-name"
+    }, React.createElement("h5", null, p));
+  };
+
   return React.createElement("div", {
     class: "container"
   }, React.createElement("div", {
     class: "flex-box-col"
   }, React.createElement("div", {
     id: "settings"
-  }, React.createElement("h1", null, "MARCH")), React.createElement("div", {
+  }, React.createElement("h3", null, date())), React.createElement("div", {
     class: "flex-box-row"
   }, React.createElement("div", {
     id: "projects"
-  }, "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), React.createElement("div", {
+  }, createProject("🥴 Inbox"), createProject("🔥 Today"), React.createElement("hr", null), React.createElement("h4", null, "Projects"), React.createElement("div", {
+    class: "usr-projects"
+  }, createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"))), React.createElement("div", {
+    id: "data"
+  }, React.createElement("div", {
     id: "task",
     class: "view"
   }, React.createElement("div", {
@@ -15875,9 +15897,11 @@ const DesktopApp = () => {
 
       loadProjects();
     }
-  }, "Test")))), React.createElement("div", {
-    id: "data"
-  }))));
+  }, "Test")))))), React.createElement("div", {
+    class: "help"
+  }, React.createElement("a", null, "?"), React.createElement("div", {
+    class: "help-info"
+  })));
 };
 
 var _default = DesktopApp;
