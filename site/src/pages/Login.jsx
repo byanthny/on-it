@@ -17,7 +17,7 @@ const Login = () => {
 
 
     return(
-    <div class="container"  style="display:table;height:100vh;">
+    <div class="container"  style="display:table;">
         <div  id="login"> 
         <form>
             {/*TODO Input validation and add reenter password for signup.*/}
@@ -31,6 +31,7 @@ const Login = () => {
                     onClick={e => {
                       e.preventDefault();
                       try {
+                        render(DesktopApp) //For testing
                         API.user.login(inputEmail.value, inputPass.value);
                         render(DesktopApp)
                       } catch (error) {
