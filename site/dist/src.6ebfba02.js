@@ -15853,47 +15853,17 @@ exports.default = void 0;
 var _api = require("../api");
 
 const DesktopApp = () => {
-  const inputEmail = React.createElement("input", {
-    placeholder: "email",
-    id: "in_email",
-    name: "email",
-    type: "email"
-  });
-  const inputPass = React.createElement("input", {
-    placeholder: "password",
-    id: "in_pass",
-    type: "password",
-    name: "password"
-  });
-  const signupMessage = React.createElement("p", null, React.createElement("span", {
-    style: "opacity: .6"
-  }, "Don't have an account?"), " Sign Up!");
   return React.createElement("div", {
     class: "container"
   }, React.createElement("div", {
-    class: "row"
+    class: "flex-box-col"
   }, React.createElement("div", {
-    class: "five columns"
-  }, React.createElement("h1", null, "ON IT")), React.createElement("div", {
-    class: "seven columns"
-  }, React.createElement("h1", null, "Login"), React.createElement("main", {
-    style: ""
-  }, React.createElement("form", {
-    style: ""
-  }, inputEmail, inputPass, signupMessage, React.createElement("button", {
-    //style={pastelbackground}
-    type: "submit",
-    onClick: e => {
-      e.preventDefault();
-      document.getElementById("home").style.height = "0";
-
-      try {
-        _api.API.user.login(inputEmail.value, inputPass.value);
-      } catch (error) {
-        console.log("error handled.");
-      }
-    }
-  }, "login"))))), React.createElement("div", {
+    id: "settings"
+  }, React.createElement("h1", null, "MARCH")), React.createElement("div", {
+    class: "flex-box-row"
+  }, React.createElement("div", {
+    id: "projects"
+  }, "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), "x", React.createElement("br", null), React.createElement("div", {
     id: "task",
     class: "view"
   }, React.createElement("div", {
@@ -15905,7 +15875,9 @@ const DesktopApp = () => {
 
       loadProjects();
     }
-  }, "Test"))));
+  }, "Test")))), React.createElement("div", {
+    id: "data"
+  }))));
 };
 
 var _default = DesktopApp;
@@ -15939,7 +15911,7 @@ const Login = () => {
   });
   return React.createElement("div", {
     class: "container",
-    style: "display:table;height:100vh;"
+    style: "display:table;"
   }, React.createElement("div", {
     id: "login"
   }, React.createElement("form", null, React.createElement("h1", null, "Welcome to On it!"), inputEmail, React.createElement("br", null), inputPass, React.createElement("br", null), React.createElement("button", {
@@ -15948,6 +15920,8 @@ const Login = () => {
       e.preventDefault();
 
       try {
+        (0, _render.default)(_DesktopApp.default); //For testing
+
         API.user.login(inputEmail.value, inputPass.value);
         (0, _render.default)(_DesktopApp.default);
       } catch (error) {
@@ -16047,7 +16021,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58307" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62949" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
