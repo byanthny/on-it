@@ -206,6 +206,7 @@ h6 {
 }
 
 #root {
+  background: #242424;
   height: 100vh;
   overflow: hidden;
 }
@@ -225,7 +226,7 @@ h6 {
   padding: 50px 15%;
   margin: 0 auto;
   background-color: #333;
-  box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.5);
 }
 #login form h1 {
   margin-bottom: 25px;
@@ -255,11 +256,11 @@ h6 {
 
 #projects {
   flex-grow: 3;
-  box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.5);
   background-color: #333;
   margin: 10px;
   overflow: auto;
-  border-radius: 2.5px;
+  border-radius: 5px;
   padding: 25px;
 }
 #projects a {
@@ -271,22 +272,33 @@ h6 {
 
 #data {
   flex-grow: 7;
-  box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.5);
   background-color: #333;
   margin: 10px;
   overflow: auto;
-  border-radius: 2.5px;
+  border-radius: 5px;
   padding: 25px;
 }
 
 #settings {
+  position: absolute;
+  z-index: 9;
+  background-color: #333;
+  width: 200px;
+  height: 200px;
+  cursor: move;
+  border: 1px solid #d3d3d3;
+  box-shadow: 0 0 25px 0px rgba(0, 0, 0, 0.5);
+}
+
+#header {
   margin: 0 10px;
   color: white;
 }
-#settings h1,
-#settings h2,
-#settings h3,
-#settings h4 {
+#header h1,
+#header h2,
+#header h3,
+#header h4 {
   margin-bottom: 0;
 }
 
@@ -294,7 +306,7 @@ h6 {
   height: 100vh;
   width: 100vw;
   max-width: 100vw;
-  padding: 25px;
+  padding: 12.5px;
 }
 
 .flex-box-col {

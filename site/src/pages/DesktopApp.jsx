@@ -2,6 +2,11 @@ import { API, Task } from "../api";
 
 
 const DesktopApp = ()  => {
+    const root = document.getElementById("root");
+    var setBackground = (hex) => {
+        root.style.backgroundColor = hex;
+    }
+
     //TODO Date update on new day
     /* Gets current date on "MAR. 4" format*/
     var date = () => {
@@ -23,9 +28,15 @@ const DesktopApp = ()  => {
 
     return (
         <div class="container">
+            <div id="settings">
+
+            </div>
+            {/* TODO customizable background*/
+            setBackground("#242424")}
+
             <div class="flex-box-col">
-                <div id="settings">
-                    <h3>{date()}</h3>
+                <div id="header">
+                    <h4>{date()}</h4>
                 </div>
                 <div class="flex-box-row">
                     <div id="projects">
@@ -36,20 +47,6 @@ const DesktopApp = ()  => {
                         <hr></hr>
                         <h4>Projects</h4>
                         <div class="usr-projects">
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
-                            {createProject("🔥 Test")}
                             {createProject("🔥 Test")}
 
                             {/*projects.array.forEach(element => {

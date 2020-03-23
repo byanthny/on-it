@@ -15853,9 +15853,15 @@ exports.default = void 0;
 var _api = require("../api");
 
 const DesktopApp = () => {
-  //TODO Date update on new day
+  const root = document.getElementById("root");
+
+  var setBackground = hex => {
+    root.style.backgroundColor = hex;
+  }; //TODO Date update on new day
 
   /* Gets current date on "MAR. 4" format*/
+
+
   var date = () => {
     var dt = new Date();
     Date.shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -15874,16 +15880,20 @@ const DesktopApp = () => {
   return React.createElement("div", {
     class: "container"
   }, React.createElement("div", {
+    id: "settings"
+  }),
+  /* TODO customizable background*/
+  setBackground("#242424"), React.createElement("div", {
     class: "flex-box-col"
   }, React.createElement("div", {
-    id: "settings"
-  }, React.createElement("h3", null, date())), React.createElement("div", {
+    id: "header"
+  }, React.createElement("h4", null, date())), React.createElement("div", {
     class: "flex-box-row"
   }, React.createElement("div", {
     id: "projects"
   }, createProject("🥴 Inbox"), createProject("🔥 Today"), React.createElement("hr", null), React.createElement("h4", null, "Projects"), React.createElement("div", {
     class: "usr-projects"
-  }, createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"), createProject("🔥 Test"))), React.createElement("div", {
+  }, createProject("🔥 Test"))), React.createElement("div", {
     id: "data"
   }, React.createElement("div", {
     id: "task",
