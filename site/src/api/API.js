@@ -5,10 +5,10 @@ import { Note, Task, User, Project } from "./models";
 const API_URI = "/api";
 
 const axios = _axios.create({
-  baseURL: API_URI,
-  headers: {
-    "Content-Type": "application/json"
-  }
+    baseURL: API_URI,
+    headers: {
+        "Content-Type": "application/json"
+    }
 });
 
 /**
@@ -18,183 +18,182 @@ const axios = _axios.create({
  * @author Jonathan Augustine
  */
 class API {
-  constructor() {
-    this.currentUser = null;
+    constructor() {
+        this.currentUser = null;
 
-    auth.onAuthStateChanged(async _user => {
-      console.log("user updated");
-      if (_user) {
-        this.currentUser = await this.user.get();
-      }
-    });
-  }
-
-  /**
-   * Map of User API functions
-   *
-   * TODO: Settings functions
-   */
-  user = {
-    root: "/users/",
-    /**
-     * Register a new user.
-     *
-     * @param {string} email - User's email
-     * @param {string} password - User's password
-     *
-     * @returns The newly created User
-     */
-    register: async (email, password) => {
-      let result;
-      try {
-        result = await auth.createUserWithEmailAndPassword(email, password);
-      } catch (error) {
-        throw error;
-      }
-
-      return result.user;
-    },
-
-    /**
-     * Logs in to Firebase auth.
-     *
-     * @param {string} email - User's email
-     * @param {string} password - User's password
-     *
-     * @returns
-     */
-    login: async (email, password) => {
-      let result;
-      try {
-        result = await auth.signInWithEmailAndPassword(email, password);
-      } catch (error) {
-        throw error;
-      }
-
-      return result;
-    },
-
-    /**
-     *
-     * @param {string} newUsername - String value to set the username to.
-     *
-     * @returns {string} The current user's new username or null if it failed
-     */
-    setUsername: async username => {
-      if (!auth.currentUser) {
-        return null;
-      }
-
-      try {
-        await auth.currentUser.updateProfile({ displayName: username });
-      } catch (error) {
-        throw error;
-      }
-
-      return username;
-    },
-
-    get: async function() {
-      if (!auth.currentUser) {
-        return null;
-      }
-
-      let result;
-      try {
-        result = await axios.get(`${this.root}${auth.currentUser.uid}`, {
-          headers: { token: await token() }
+        auth.onAuthStateChanged(async _user => {
+            console.log("user updated");
+            if (_user) {
+                this.currentUser = await this.user.get();
+            }
         });
-      } catch (error) {
-        throw error;
-      }
-
-      return new User(result.data.payload.user);
     }
-  };
 
-  projects = {
-    root: "/projects/",
     /**
+     * Map of User API functions
      *
-     * @param {*} limit
-     * @returns {Promise<Array<Project>>}
+     * TODO: Settings functions
      */
-    getAll: async function(limit = 100) {
-      if (!auth.currentUser) {
-        return null;
-      }
+    user = {
+        root: "/users/",
+        /**
+         * Register a new user.
+         *
+         * @param {string} email - User's email
+         * @param {string} password - User's password
+         *
+         * @returns The newly created User
+         */
+        register: async(email, password) => {
+            let result;
+            try {
+                result = await auth.createUserWithEmailAndPassword(email, password);
+            } catch (error) {
+                throw error;
+            }
 
-      let result;
-      try {
-        result = await axios.get(`${this.root}${auth.currentUser.uid}`, {
-          headers: { token: await token() }
-        });
-      } catch (error) {
-        throw error;
-      }
+            return result.user;
+        },
 
-      return result.data.payload.projects.map(p => new Project(p));
-    },
+        /**
+         * Logs in to Firebase auth.
+         *
+         * @param {string} email - User's email
+         * @param {string} password - User's password
+         *
+         * @returns
+         */
+        login: async(email, password) => {
+            let result;
+            try {
+                result = await auth.signInWithEmailAndPassword(email, password);
+            } catch (error) {
+                throw error;
+            }
+
+            return result;
+        },
+
+        /**
+         *
+         * @param {string} newUsername - String value to set the username to.
+         *
+         * @returns {string} The current user's new username or null if it failed
+         */
+        setUsername: async username => {
+            if (!auth.currentUser) {
+                return null;
+            }
+
+            try {
+                await auth.currentUser.updateProfile({ displayName: username });
+            } catch (error) {
+                throw error;
+            }
+
+            return username;
+        },
+
+        get: async function() {
+            if (!auth.currentUser) {
+                return null;
+            }
+
+            let result;
+            try {
+                result = await axios.get(`${this.root}${auth.currentUser.uid}`, {
+                    headers: { token: await token() }
+                });
+            } catch (error) {
+                throw error;
+            }
+
+            return new User(result.data.payload.user);
+        }
+    };
+
+    projects = {
+        root: "/projects/",
+        /**
+         *
+         * @param {*} limit
+         * @returns {Promise<Array<Project>>}
+         */
+        getAll: async function(limit = 100) {
+            if (!auth.currentUser) {
+                return null;
+            }
+
+            let result;
+            try {
+                result = await axios.get(`${this.root}${auth.currentUser.uid}`, {
+                    headers: { token: await token() }
+                });
+            } catch (error) {
+                throw error;
+            }
+
+            return result.data.payload.projects.map(p => new Project(p));
+        },
+        /**
+         *
+         * @param {string} name - Name of the project
+         * @param {string} color - The color of the project
+         */
+        create: async function(name, color) {
+            if (!auth.currentUser) {
+                return null;
+            }
+
+            const pjt = { name };
+
+            if (color && color[0] !== "#") {
+                color = "#" + color;
+                pjt.color = color;
+            }
+
+            let result;
+            try {
+                result = await axios.post(`${this.root}${auth.currentUser.uid}`, pjt, {
+                    headers: {
+                        token: await token()
+                    }
+                });
+            } catch (error) {
+                throw error;
+            }
+
+            return new Project(result.data.payload.project);
+        },
+        /**
+         * @param {{string|Project}}
+         */
+        delete: async function(project) {
+            const name = typeof project === "string" ? project : project.name;
+
+            let result;
+            try {
+                result = await axios.delete(
+                    `${this.root}${auth.currentUser.uid}/${name}`, { headers: { token: await token() } }
+                );
+            } catch (error) {
+                throw error;
+            }
+
+            return result.data;
+        }
+    };
+
     /**
-     *
-     * @param {string} name - Name of the project
-     * @param {string} color - The color of the project
+     * Map of task-related API functions.
      */
-    create: async function(name, color) {
-      if (!auth.currentUser) {
-        return null;
-      }
-
-      const pjt = { name };
-
-      if (color && color[0] !== "#") {
-        color = "#" + color;
-        pjt.color = color;
-      }
-
-      let result;
-      try {
-        result = await axios.post(`${this.root}${auth.currentUser.uid}`, pjt, {
-          headers: {
-            token: await token()
-          }
-        });
-      } catch (error) {
-        throw error;
-      }
-
-      return new Project(result.data.payload.project);
-    },
-    /**
-     * @param {{string|Project}}
-     */
-    delete: async function(project) {
-      const name = typeof project === "string" ? project : project.name;
-
-      let result;
-      try {
-        result = await axios.delete(
-          `${this.root}${auth.currentUser.uid}/${name}`,
-          { headers: { token: await token() } }
-        );
-      } catch (error) {
-        throw error;
-      }
-
-      return result.data;
-    }
-  };
-
-  /**
-   * Map of task-related API functions.
-   */
-  task = {
-    root: "/tasks/",
-    getAll: async function(state = null, limit = 100) {
-      let result;
-      try {
-        result = await axios.get(
-          `${this.root}${auth.currentUser.uid}?limit=${limit}${
+    task = {
+            root: "/tasks/",
+            getAll: async function(state = null, limit = 100) {
+                    let result;
+                    try {
+                        result = await axios.get(
+                                `${this.root}${auth.currentUser.uid}?limit=${limit}${
             state ? `&state=${state}` : ""
           }`,
           {
