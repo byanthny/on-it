@@ -19,12 +19,9 @@ const axios = __axios.create({
  */
 class API {
   constructor() {
-    this.currentUser = null;
-
     auth.onAuthStateChanged(async _user => {
-      console.log("user updated");
       if (_user) {
-        this.currentUser = await this.user.get();
+        await this.user.get();
       }
     });
   }
@@ -37,6 +34,32 @@ class API {
   user = {
     root: "/users/",
     /**
+     * The currently logged in user.
+     * @type {User}
+     */
+    currentUser: null,
+    hooks: [],
+    /**
+     *
+     * @param {User} user - The new user
+     * @returns {User}
+     */
+    updateUser: function(user) {
+      this.currentUser = new User(user);
+      this.hooks.forEach(h => h(user));
+      return this.currentUser;
+    },
+    /**
+     *
+     * @param {function} hook - Function to be called when the user is updated.
+     */
+    onUpdate: async function(hook) {
+      if (typeof hook !== "function") {
+        throw new Error("Hook must be function");
+      }
+      this.hooks.push(hook);
+    },
+    /**
      * Register a new user.
      *
      * @param {string} email - User's email
@@ -44,7 +67,7 @@ class API {
      *
      * @returns The newly created User
      */
-    register: async (email, password) => {
+    register: async function(email, password) {
       let result;
       try {
         result = await auth.createUserWithEmailAndPassword(email, password);
@@ -52,7 +75,7 @@ class API {
         throw error;
       }
 
-      return result.user;
+      return this.get();
     },
 
     /**
@@ -63,7 +86,7 @@ class API {
      *
      * @returns
      */
-    login: async (email, password) => {
+    login: async function(email, password) {
       let result;
       try {
         result = await auth.signInWithEmailAndPassword(email, password);
@@ -71,7 +94,7 @@ class API {
         throw error;
       }
 
-      return result;
+      return this.get();
     },
 
     /**
@@ -94,6 +117,11 @@ class API {
       return username;
     },
 
+    /**
+     * Get the logged in user's information.
+     *
+     * @returns {Promise<User>}
+     */
     get: async function() {
       if (!auth.currentUser) {
         return null;
@@ -108,7 +136,7 @@ class API {
         throw error;
       }
 
-      return new User(result.data.payload.user);
+      return this.updateUser(result.data.payload.user);
     }
   };
 
@@ -173,9 +201,12 @@ class API {
 
       let result;
       try {
-        result = await axios.delete(`${this.root}${auth.currentUser.uid}/${name}`, {
-          headers: { token: await token() }
-        });
+        result = await axios.delete(
+          `${this.root}${auth.currentUser.uid}/${name}`,
+          {
+            headers: { token: await token() }
+          }
+        );
       } catch (error) {
         throw error;
       }
@@ -294,9 +325,12 @@ class API {
 
       let result;
       try {
-        result = await axios.delete(`${this.root}${auth.currentUser.uid}/${tid}`, {
-          headers: { token: await token() }
-        });
+        result = await axios.delete(
+          `${this.root}${auth.currentUser.uid}/${tid}`,
+          {
+            headers: { token: await token() }
+          }
+        );
       } catch (error) {
         throw error;
       }
