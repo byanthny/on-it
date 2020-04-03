@@ -1,4 +1,5 @@
 import render from "../render";
+import { API } from "../api";
 import DesktopApp from "./DesktopApp";
 
 const Login = () => {
@@ -6,7 +7,12 @@ const Login = () => {
     <input placeholder="email" id="in_email" name="email" type="email" />
   );
   const inputPass = (
-    <input placeholder="password" id="in_pass" type="password" name="password" />
+    <input
+      placeholder="password"
+      id="in_pass"
+      type="password"
+      name="password"
+    />
   );
 
   return (
@@ -29,6 +35,7 @@ const Login = () => {
                 render(DesktopApp);
               } catch (error) {
                 console.log("error handled.");
+                console.log(error);
               }
             }}
           >

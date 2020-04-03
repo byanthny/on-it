@@ -148,15 +148,14 @@ class API {
      * @returns {Promise<Array<Project>>}
      */
     getAll: async function(limit = 100) {
-      if (!auth.currentUser) {
-        return null;
-      }
-
       let result;
       try {
-        result = await axios.get(`${this.root}${auth.currentUser.uid}`, {
-          headers: { token: await token() }
-        });
+        result = await axios.get(
+          `${this.root}${auth.currentUser.uid}?limit=${limit}`,
+          {
+            headers: { token: await token() }
+          }
+        );
       } catch (error) {
         throw error;
       }

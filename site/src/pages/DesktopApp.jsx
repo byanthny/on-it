@@ -1,4 +1,5 @@
 import { API, Task } from "../api";
+import render from "../render";
 
 const DesktopApp = () => {
   const root = document.getElementById("root");
@@ -27,7 +28,15 @@ const DesktopApp = () => {
     return Date.shortMonths[dt.getMonth()].toUpperCase() + ". " + dt.getDay();
   };
 
-  var projects = API.projects.getAll();
+  API.user.onUpdate(async user => {
+    if (user) {
+      API.projects.getAll().then(projects => {
+        projects.forEach(p => {
+          render(createProject(p), true, document.getElementById("__projects"));
+        });
+      });
+    }
+  });
 
   var createProject = p => {
     //<a class="project-name current"><h5>{p}</h5></a>
@@ -56,7 +65,7 @@ const DesktopApp = () => {
 
             <hr></hr>
             <h4>Projects</h4>
-            <div class="usr-projects">
+            <div id="__projects" class="usr-projects">
               {createProject("🔥 Test")}
 
               {/*projects.array.forEach(element => {

@@ -159,7 +159,10 @@ window["React"] = {
     for (let i = 2; i < arguments.length; i++) {
       try {
         let child = arguments[i];
-        element.appendChild(child.nodeType == null ? document.createTextNode(child.toString()) : child);
+
+        if (child) {
+          element.appendChild(child.nodeType == null ? document.createTextNode(child.toString()) : child);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -175,7 +178,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-const root = document.getElementById("root");
+var root = document.getElementById("root");
 /**
  * Appends the given child element to the given parent element.
  * The parent element will be cleared of all children.
@@ -15460,7 +15463,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _axios2 = _interopRequireDefault(require("axios"));
+var _axios = _interopRequireDefault(require("axios"));
 
 var _auth = _interopRequireWildcard(require("./auth"));
 
@@ -15474,7 +15477,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const API_URI = "/api";
 
-const axios = _axios2.default.create({
+const axios = _axios.default.create({
   baseURL: API_URI,
   headers: {
     "Content-Type": "application/json"
@@ -15494,6 +15497,36 @@ class API {
       root: "/users/",
 
       /**
+       * The currently logged in user.
+       * @type {User}
+       */
+      currentUser: null,
+      hooks: [],
+
+      /**
+       *
+       * @param {User} user - The new user
+       * @returns {User}
+       */
+      updateUser: function (user) {
+        this.currentUser = new _models.User(user);
+        this.hooks.forEach(h => h(user));
+        return this.currentUser;
+      },
+
+      /**
+       *
+       * @param {function} hook - Function to be called when the user is updated.
+       */
+      onUpdate: async function (hook) {
+        if (typeof hook !== "function") {
+          throw new Error("Hook must be function");
+        }
+
+        this.hooks.push(hook);
+      },
+
+      /**
        * Register a new user.
        *
        * @param {string} email - User's email
@@ -15501,7 +15534,7 @@ class API {
        *
        * @returns The newly created User
        */
-      register: async (email, password) => {
+      register: async function (email, password) {
         let result;
 
         try {
@@ -15510,7 +15543,7 @@ class API {
           throw error;
         }
 
-        return result.user;
+        return this.get();
       },
 
       /**
@@ -15521,7 +15554,7 @@ class API {
        *
        * @returns
        */
-      login: async (email, password) => {
+      login: async function (email, password) {
         let result;
 
         try {
@@ -15530,7 +15563,7 @@ class API {
           throw error;
         }
 
-        return result;
+        return this.get();
       },
 
       /**
@@ -15554,6 +15587,12 @@ class API {
 
         return username;
       },
+
+      /**
+       * Get the logged in user's information.
+       *
+       * @returns {Promise<User>}
+       */
       get: async function () {
         if (!_auth.default.currentUser) {
           return null;
@@ -15571,7 +15610,7 @@ class API {
           throw error;
         }
 
-        return new _models.User(result.data.payload.user);
+        return this.updateUser(result.data.payload.user);
       }
     };
     this.projects = {
@@ -15583,14 +15622,10 @@ class API {
        * @returns {Promise<Array<Project>>}
        */
       getAll: async function (limit = 100) {
-        if (!_auth.default.currentUser) {
-          return null;
-        }
-
         let result;
 
         try {
-          result = await axios.get(`${this.root}${_auth.default.currentUser.uid}`, {
+          result = await axios.get(`${this.root}${_auth.default.currentUser.uid}?limit=${limit}`, {
             headers: {
               token: await (0, _auth.token)()
             }
@@ -15775,13 +15810,10 @@ class API {
         return result.data.payload.deleted;
       }
     };
-    this.currentUser = null;
 
     _auth.default.onAuthStateChanged(async _user => {
-      console.log("user updated");
-
       if (_user) {
-        this.currentUser = await this.user.get();
+        await this.user.get();
       }
     });
   }
@@ -15852,6 +15884,10 @@ exports.default = void 0;
 
 var _api = require("../api");
 
+var _render = _interopRequireDefault(require("../render"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 const DesktopApp = () => {
   const root = document.getElementById("root");
 
@@ -15864,11 +15900,19 @@ const DesktopApp = () => {
 
   var date = () => {
     var dt = new Date();
-    Date.shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    Date.shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     return Date.shortMonths[dt.getMonth()].toUpperCase() + ". " + dt.getDay();
   };
 
-  var projects = _api.API.projects.getAll();
+  _api.API.user.onUpdate(async user => {
+    if (user) {
+      _api.API.projects.getAll().then(projects => {
+        projects.forEach(p => {
+          (0, _render.default)(createProject(p), true, document.getElementById("__projects"));
+        });
+      });
+    }
+  });
 
   var createProject = p => {
     //<a class="project-name current"><h5>{p}</h5></a>
@@ -15892,6 +15936,7 @@ const DesktopApp = () => {
   }, React.createElement("div", {
     id: "projects"
   }, createProject("🥴 Inbox"), createProject("🔥 Today"), React.createElement("hr", null), React.createElement("h4", null, "Projects"), React.createElement("div", {
+    id: "__projects",
     class: "usr-projects"
   }, createProject("🔥 Test"))), React.createElement("div", {
     id: "data"
@@ -15916,7 +15961,7 @@ const DesktopApp = () => {
 
 var _default = DesktopApp;
 exports.default = _default;
-},{"../api":"src/api/index.js"}],"src/pages/Login.jsx":[function(require,module,exports) {
+},{"../api":"src/api/index.js","../render":"src/render.js"}],"src/pages/Login.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15925,6 +15970,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _render = _interopRequireDefault(require("../render"));
+
+var _api = require("../api");
 
 var _DesktopApp = _interopRequireDefault(require("./DesktopApp"));
 
@@ -15956,10 +16003,12 @@ const Login = () => {
       try {
         (0, _render.default)(_DesktopApp.default); //For testing
 
-        API.user.login(inputEmail.value, inputPass.value);
+        _api.API.user.login(inputEmail.value, inputPass.value);
+
         (0, _render.default)(_DesktopApp.default);
       } catch (error) {
         console.log("error handled.");
+        console.log(error);
       }
     }
   }, "login"), React.createElement("br", null), React.createElement("p", {
@@ -15970,7 +16019,8 @@ const Login = () => {
       e.preventDefault();
 
       try {
-        API.user.register(inputEmail.value, inputPass.value);
+        _api.API.user.register(inputEmail.value, inputPass.value);
+
         (0, _render.default)(_DesktopApp.default);
       } catch (error) {
         console.log("error handled.");
@@ -15981,7 +16031,7 @@ const Login = () => {
 
 var _default = Login;
 exports.default = _default;
-},{"../render":"src/render.js","./DesktopApp":"src/pages/DesktopApp.jsx"}],"src/pages/MobileApp.jsx":[function(require,module,exports) {
+},{"../render":"src/render.js","../api":"src/api/index.js","./DesktopApp":"src/pages/DesktopApp.jsx"}],"src/pages/MobileApp.jsx":[function(require,module,exports) {
 
 },{}],"src/pages/index.jsx":[function(require,module,exports) {
 "use strict";
@@ -16055,7 +16105,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49311" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64944" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

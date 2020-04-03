@@ -41,11 +41,13 @@ window["React"] = {
     for (let i = 2; i < arguments.length; i++) {
       try {
         let child = arguments[i];
-        element.appendChild(
-          child.nodeType == null
-            ? document.createTextNode(child.toString())
-            : child
-        );
+        if (child) {
+          element.appendChild(
+            child.nodeType == null
+              ? document.createTextNode(child.toString())
+              : child
+          );
+        }
       } catch (error) {
         console.log(error);
       }

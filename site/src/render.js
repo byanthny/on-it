@@ -1,4 +1,4 @@
-const root = document.getElementById("root");
+var root = document.getElementById("root");
 
 /**
  * Appends the given child element to the given parent element.
