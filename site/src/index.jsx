@@ -1,7 +1,9 @@
 import "./React";
-import { DesktopApp } from "./pages";
-import { MobileApps } from "./pages";
-import { Login } from "./pages";
+import { DesktopApp, MobileApps, Login } from "./pages";
 import render from "./render";
+import { API } from "./api";
 
-render(Login);
+API.user.onUpdate(u => console.log(u));
+
+render(API.user.currentUser ? DesktopApp : Login);
+

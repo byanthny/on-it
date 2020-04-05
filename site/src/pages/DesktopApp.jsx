@@ -1,5 +1,6 @@
 import { API, Task } from "../api";
-import render from "../render";
+import render, { clear } from "../render";
+import { app } from "firebase";
 
 const DesktopApp = () => {
   const root = document.getElementById("root");
@@ -28,13 +29,18 @@ const DesktopApp = () => {
     return Date.shortMonths[dt.getMonth()].toUpperCase() + ". " + dt.getDay();
   };
 
+  const projects = <div id="__projects" class="usr-projects"></div>;
+
+  const appendProject = p => render(createProject(p.name), true, projects);
+
+  const loadProjects = () => {
+    API.projects.getAll().then(ps => ps.forEach(appendProject));
+  };
+
   API.user.onUpdate(async user => {
     if (user) {
-      API.projects.getAll().then(projects => {
-        projects.forEach(p => {
-          render(createProject(p), true, document.getElementById("__projects"));
-        });
-      });
+      clear(projects);
+      loadProjects();
     }
   });
 
@@ -65,13 +71,7 @@ const DesktopApp = () => {
 
             <hr></hr>
             <h4>Projects</h4>
-            <div id="__projects" class="usr-projects">
-              {createProject("🔥 Test")}
-
-              {/*projects.array.forEach(element => {
-                                createProject(element.name);
-                            })*/}
-            </div>
+            {projects}
           </div>
 
           <div id="data">
@@ -80,9 +80,10 @@ const DesktopApp = () => {
                 <button
                   onClick={e => {
                     e.preventDefault();
-                    //API.projects.create("TesT-prOject-name");
+                    API.projects
+                      .create("TesT-prOject-name-beaner")
+                      .then(appendProject);
                     //API.projects.delete("Project-Name-One").then(r => console.log(r));
-                    loadProjects();
                   }}
                 >
                   Test

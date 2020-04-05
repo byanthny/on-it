@@ -148,6 +148,10 @@ class API {
      * @returns {Promise<Array<Project>>}
      */
     getAll: async function(limit = 100) {
+      if (!auth.currentUser) {
+        throw Error("User not logged in");
+      }
+
       let result;
       try {
         result = await axios.get(

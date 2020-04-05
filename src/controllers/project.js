@@ -18,11 +18,17 @@ const controller = new Controller()
         .json(packetier(false, null, { err: "Internal 1" }));
     }
 
+    const limit = Math.max(255, req.body.limit) || 100;
+
     res.json(
       packetier(
         true,
-        { projects: userDoc.projects },
-        { count: userDoc.projects.length, query: { uid: req.token.uid } }
+        {
+          projects: userDoc.projects.sort(
+            ({ date: d1 }, { date: d2 }) => d1 - d2
+          )
+        },
+        { count: userDoc.projects.length, query: { uid: req.token.uid, limit } }
       )
     );
   })
