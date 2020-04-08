@@ -1,16 +1,15 @@
-import { API, Task } from "../api";
+import { API, Task, Project } from "../api";
 import render, { clear } from "../render";
 import { app } from "firebase";
 
 const DesktopApp = () => {
-  const root = document.getElementById("root");
-  var setBackground = hex => {
+  const setBackground = hex => {
     root.style.backgroundColor = hex;
   };
 
   //TODO Date update on new day
   /* Gets current date on "MAR. 4" format*/
-  var date = () => {
+  const date = () => {
     var dt = new Date();
     Date.shortMonths = [
       "Jan",
@@ -31,7 +30,7 @@ const DesktopApp = () => {
 
   const projects = <div id="__projects" class="usr-projects"></div>;
 
-  const appendProject = p => render(createProject(p.name), true, projects);
+  const appendProject = p => render(createProject(p), true, projects);
 
   const loadProjects = () => {
     API.projects.getAll().then(ps => ps.forEach(appendProject));
@@ -44,11 +43,25 @@ const DesktopApp = () => {
     }
   });
 
-  var createProject = p => {
-    //<a class="project-name current"><h5>{p}</h5></a>
+  /**
+   *
+   * @param {Project} project
+   */
+  const createProject = project => {
+    const display = <h5>{project.name}</h5>;
     return (
-      <a class="project-name">
-        <h5>{p}</h5>
+      <a
+        class="project-name"
+        onClick={() => {
+          project
+            .setName("NEW_NAME_" + Date.now().toFixed())
+            .then(p => {
+              display.textContent = p.name;
+            })
+            .catch(e => console.log(e));
+        }}
+      >
+        {display}
       </a>
     );
   };
@@ -66,8 +79,8 @@ const DesktopApp = () => {
         <div class="flex-box-row">
           <div id="projects">
             {/* TODO load in list of projects and  */}
-            {createProject("🥴 Inbox")}
-            {createProject("🔥 Today")}
+            {createProject({ name: "🥴 Inbox" })}
+            {createProject({ name: "🔥 Today" })}
 
             <hr></hr>
             <h4>Projects</h4>
@@ -81,9 +94,8 @@ const DesktopApp = () => {
                   onClick={e => {
                     e.preventDefault();
                     API.projects
-                      .create("TesT-prOject-name-beaner")
+                      .create("Project" + Date.now().toFixed())
                       .then(appendProject);
-                    //API.projects.delete("Project-Name-One").then(r => console.log(r));
                   }}
                 >
                   Test

@@ -197,6 +197,26 @@ class API {
       return new Project(result.data.payload.project);
     },
     /**
+     *
+     * @param {(string|Project)} project
+     */
+    update: async function(project, { name, color }) {
+      const pName = typeof project === "string" ? project : project.name;
+
+      let result;
+      try {
+        result = await axios.put(
+          `${this.root}${auth.currentUser.uid}/${pName}`,
+          { name, color },
+          { headers: { token: await token() } }
+        );
+      } catch (error) {
+        throw error;
+      }
+
+      return new Project(result.data.payload.project);
+    },
+    /**
      * @param {{string|Project}}
      */
     delete: async function(project) {

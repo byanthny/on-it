@@ -15412,22 +15412,46 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _API = _interopRequireDefault(require("../API"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 class Project {
   constructor({
     name,
     color,
     createdAt
   }) {
+    this.setName = async newName => {
+      const r = await _API.default.projects.update(this, {
+        name: newName
+      });
+      this.name = r.name;
+      return this;
+    };
+
+    this.setColor = async newColor => {
+      const r = await _API.default.projects.update(this, {
+        color: newColor
+      });
+      this.color = r.color;
+      return this;
+    };
+
     this.name = name;
     this.color = color;
     this.createdAt = new Date(createdAt);
   }
+  /**
+   *
+   */
+
 
 }
 
 var _default = Project;
 exports.default = _default;
-},{}],"src/api/models/index.js":[function(require,module,exports) {
+},{"../API":"src/api/API.js"}],"src/api/models/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15688,6 +15712,33 @@ class API {
       },
 
       /**
+       *
+       * @param {(string|Project)} project
+       */
+      update: async function (project, {
+        name,
+        color
+      }) {
+        const pName = typeof project === "string" ? project : project.name;
+        let result;
+
+        try {
+          result = await axios.put(`${this.root}${_auth.default.currentUser.uid}/${pName}`, {
+            name,
+            color
+          }, {
+            headers: {
+              token: await (0, _auth.token)()
+            }
+          });
+        } catch (error) {
+          throw error;
+        }
+
+        return new _models.Project(result.data.payload.project);
+      },
+
+      /**
        * @param {{string|Project}}
        */
       delete: async function (project) {
@@ -15880,6 +15931,12 @@ Object.defineProperty(exports, "Name", {
   enumerable: true,
   get: function () {
     return _models.Name;
+  }
+});
+Object.defineProperty(exports, "Project", {
+  enumerable: true,
+  get: function () {
+    return _models.Project;
   }
 });
 
@@ -69954,16 +70011,14 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const DesktopApp = () => {
-  const root = document.getElementById("root");
-
-  var setBackground = hex => {
+  const setBackground = hex => {
     root.style.backgroundColor = hex;
   }; //TODO Date update on new day
 
   /* Gets current date on "MAR. 4" format*/
 
 
-  var date = () => {
+  const date = () => {
     var dt = new Date();
     Date.shortMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     return Date.shortMonths[dt.getMonth()].toUpperCase() + ". " + dt.getDay();
@@ -69974,7 +70029,7 @@ const DesktopApp = () => {
     class: "usr-projects"
   });
 
-  const appendProject = p => (0, _render.default)(createProject(p.name), true, projects);
+  const appendProject = p => (0, _render.default)(createProject(p), true, projects);
 
   const loadProjects = () => {
     _api.API.projects.getAll().then(ps => ps.forEach(appendProject));
@@ -69986,12 +70041,22 @@ const DesktopApp = () => {
       loadProjects();
     }
   });
+  /**
+   *
+   * @param {Project} project
+   */
 
-  var createProject = p => {
-    //<a class="project-name current"><h5>{p}</h5></a>
+
+  const createProject = project => {
+    const display = React.createElement("h5", null, project.name);
     return React.createElement("a", {
-      class: "project-name"
-    }, React.createElement("h5", null, p));
+      class: "project-name",
+      onClick: () => {
+        project.setName("NEW_NAME_" + Date.now().toFixed()).then(p => {
+          display.textContent = p.name;
+        }).catch(e => console.log(e));
+      }
+    }, display);
   };
 
   return React.createElement("div", {
@@ -70008,7 +70073,11 @@ const DesktopApp = () => {
     class: "flex-box-row"
   }, React.createElement("div", {
     id: "projects"
-  }, createProject("🥴 Inbox"), createProject("🔥 Today"), React.createElement("hr", null), React.createElement("h4", null, "Projects"), projects), React.createElement("div", {
+  }, createProject({
+    name: "🥴 Inbox"
+  }), createProject({
+    name: "🔥 Today"
+  }), React.createElement("hr", null), React.createElement("h4", null, "Projects"), projects), React.createElement("div", {
     id: "data"
   }, React.createElement("div", {
     id: "task",
@@ -70019,8 +70088,7 @@ const DesktopApp = () => {
     onClick: e => {
       e.preventDefault();
 
-      _api.API.projects.create("TesT-prOject-name-beaner").then(appendProject); //API.projects.delete("Project-Name-One").then(r => console.log(r));
-
+      _api.API.projects.create("Project" + Date.now().toFixed()).then(appendProject);
     }
   }, "Test")))))), React.createElement("div", {
     class: "help"
@@ -70179,7 +70247,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49606" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51961" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
