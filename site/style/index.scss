@@ -279,6 +279,7 @@ input::placeholder {
         height: 200px;
         cursor: move;
         border: 1px solid #d3d3d3; //TODO
+        border-radius: $radius;
         @include drop-shadow();
     }
     
