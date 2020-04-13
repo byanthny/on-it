@@ -14,6 +14,7 @@ router
 
 router
   .route("/:uid/:pname")
+  .put(requireToken, requireMatchingUids, ctrlr.put.one)
   .delete(requireToken, requireMatchingUids, ctrlr.delete.one);
 
 module.exports = router;
