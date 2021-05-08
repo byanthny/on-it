@@ -1,0 +1,7 @@
+default:
+  image: node:latest
+
+stages:
+  - build
+  - test
+  - deploy
