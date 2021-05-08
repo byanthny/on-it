@@ -1,0 +1,38 @@
+{
+  "include": ["src/", "../common/src", "spec"],
+  "compilerOptions": {
+    "incremental": true,
+    "target": "es6",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    /* Redirect output structure to the directory. */
+    "outDir": "./dist",
+    /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+    "rootDir": "./src",
+    // "noImplicitAny": true,                       /* Raise error on expressions and declarations with an implied 'any' type. */
+    /* Raise error on 'this' expressions with an implied 'any' type. */
+    "noImplicitThis": true,
+    /* Report errors on unused locals. */
+    //"noUnusedLocals": true,
+    /* Report errors on unused parameters. */
+    // "noUnusedParameters": true,
+    /* Report error when not all code paths in function return a value. */
+    // "noImplicitReturns": true,
+    /* Base directory to resolve non-absolute module names. */
+    "baseUrl": "./src",
+    /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
+    "paths": {
+      "src/*": ["src/*"],
+      "~common/*": ["../common/src/*"]
+    },
+    // "rootDirs": [],                              /* List of root folders whose combined content represents the structure of the project at runtime. */
+    // "typeRoots": [],                             /* List of folders to include type definitions from. */
+    // "types": [],                                 /* Type declaration files to be included in compilation. */
+    // "allowSyntheticDefaultImports": true,        /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+    // "preserveSymlinks": true,                    /* Do not resolve the real path of symlinks. */
+    // "allowUmdGlobalAccess": true,                /* Allow accessing UMD globals from modules. */
+    "skipLibCheck": true /* Skip type checking of declaration files. */,
+    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
+  }
+}
