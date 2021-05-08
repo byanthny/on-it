@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: On It API
+  title: On It API Spec
   description: REST API for On It
-  version: 0.1.0
+  version: 1.0.0
 
 servers:
   - url: https://onitapp.herku.com/api
@@ -10,27 +10,38 @@ servers:
 components:
   securitySchemes:
     token:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: token
   schemas:
     packet:
       type: object
       description: The packaging in which all API responses are sent.
       properties:
-        success:
-          type: boolean
         payload:
           type: object
-        meta:
-          type: object
+        error:
+          type: string
+    Name:
+      type: string
+      pattern: ^[A-Za-z][A-Za-z0-9_\-]{0}$
     User:
       type: object
       properties:
-        uid:
+        _id:
           type: string
-        settings:
-          $ref: "#/components/schemas/Settings"
+        email:
+          type: string
+          format: email
+        name:
+          type: object
+          properties:
+            first:
+              $ref: "#/components/schemas/Name"
+            last:
+              $ref: "#/components/schemas/Name"
+            display:
+              $ref: "#/components/schemas/Name"
         Projects:
           type: array
           uniqueItems: true
@@ -42,58 +53,44 @@ components:
         updatedAt:
           type: number
           description: The last time the user was updated.
-    Name:
-      type: object
-      properties:
-        first:
-          type: string
-          maxLength: 50
-          minLength: 1
-        last:
-          type: string
-          maxLength: 50
-          minLength: 1
-        display:
-          type: string
-          maxLength: 50
-          minLength: 3
-    Settings:
-      type: object
     Project:
       type: object
       properties:
-        name:
+        _id:
           type: string
+        uid:
+          type: string
+        name:
+          $ref: "#/components/schemas/Name"
         color:
           type: string
-          maxLength: 6
-          minLength: 6
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
     Task:
       type: object
       properties:
+        _id:
+          type: string
         uid:
           type: string
-          description: Owning User ID
-        tid:
-          type: string
-          description: this Task's
+          description: Owning User's ID
         parent:
           type: string
           description: ID of parent task
           default: null
-        text:
+        title:
           type: string
           maxLength: 255
           minLength: 1
-          description: The name or title of the task. A shorthand
+          description: The name or title of the task
         due:
           type: number
-          description: The date this task is due.
+          description: The date this task is due
         reminders:
           type: array
           description: An array of dates for reminders
           items:
-            type: number
+            type: string
+            format: date-time
         state:
           type: string
           enum:
@@ -108,22 +105,20 @@ components:
           type: array
           maxItems: 50
           items:
-            type: string
-            maxLength: 255
-            minLength: 1
+            $ref: "#/components/schemas/Project"
     Note:
       type: object
       description: A note
       properties:
+        _id:
+          type: string
+          description: Note's ID
         uid:
           type: string
           description: Owning user ID
         parent:
           type: string
           description: The ID of the owning task
-        nid:
-          type: string
-          description: Note's ID
         title:
           type: string
           maxLength: 255
@@ -134,13 +129,24 @@ components:
           type: array
           maxLength: 50
           items:
-            type: string
-            maxLength: 255
-            minLength: 1
+            $ref: "#/components/schemas/Project"
         createdAt:
-          type: number
+          type: string
+          format: date-time
         updatedAt:
-          type: number
+          type: string
+          format: date-time
+  responses:
+    Error:
+      description: An error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/packet"
+            properties:
+              payload:
+                default: null
 
 tags:
   - name: user
@@ -148,24 +154,43 @@ tags:
   - name: task
     description: Routes used for accessing & modifying user tasks
   - name: note
+    description: Routes used for accessing & modifying user notes
   - name: project
     description: Routes relating to projects (tags)
 
 paths:
-  /users/{uid}:
-    get:
-      description: Get a user
+  # USERS
+  /users/login:
+    post:
+      summary: Login
+      description: Logs a user in with email or username and passowrd
       tags:
         - user
-      parameters:
-        - name: uid
-          in: path
-          required: true
-          schema:
-            type: string
+      security:
+        - token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                - type: object
+                  properties:
+                    username:
+                      $ref: "#/components/schemas/Name"
+              properties:
+                password:
+                  type: string
+                  pattern: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
-          description: The user
+          description: User updated
           content:
             application/json:
               schema:
@@ -177,47 +202,31 @@ paths:
                     properties:
                       user:
                         $ref: "#/components/schemas/User"
-    delete:
-      description: Delete a user
+                      token:
+                        type: string
+  /users/register:
+    post:
+      summary: Create a new User
       tags:
         - user
-      parameters:
-        - name: uid
-          description: The User ID to delete
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: token
-          description: Auth token
-          in: header
-          required: true
-          schema:
-            type: string
+      security:
+        - token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  pattern: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
-          description: User deleted
-        401:
-          description: Unauthorized
-        404:
-          description: User not found
-  /users/{uid}/settings:
-    summary: Route for creating and editing Projects
-  /projects/{uid}:
-    get:
-      description: Get all projects
-      tags:
-        - project
-      parameters:
-        - name: uid
-          description: Owning User ID
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: A user's projects
+          description: User updated
           content:
             application/json:
               schema:
@@ -227,27 +236,117 @@ paths:
                   payload:
                     type: object
                     properties:
-                      projects:
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/Project"
-    post:
-      description: Add a new project
+                      user:
+                        $ref: "#/components/schemas/User"
+                      token:
+                        type: string
+  /users/{uid}:
+    parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get a user by ID
+      tags:
+        - user
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        200:
+          description: The User
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          user:
+                            $ref: "#/components/schemas/User"
+    patch:
+      summary: Update a User
+      tags:
+        - user
+      security:
+        - token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        200:
+          description: User updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/User"
+    delete:
+      summary: Delete a user
+      security:
+        - token: []
+      tags:
+        - user
+      responses:
+        200:
+          description: User deleted
+        default:
+          $ref: "#/components/responses/Error"
+  # PROJECTS
+  /projects:
+    get:
+      summary: Search for projects
       tags:
         - project
+      security:
+        - token: []
       parameters:
         - name: uid
-          description: Owning User ID
-          in: path
-          required: true
+          description: owning User ID.
+            Will be autofilled with the client ID if not provided
+          in: query
           schema:
             type: string
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Project"
+    post:
+      summary: Add a new project
+      tags:
+        - project
+      security:
+        - token: []
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Project"
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         201:
           description: Project created
           content:
@@ -257,44 +356,88 @@ paths:
                   - $ref: "#/components/schemas/packet"
                 properties:
                   payload:
-                    type: object
-                    properties:
-                      project:
-                        $ref: "#/components/schemas/Project"
-    put:
+                    $ref: "#/components/schemas/Project"
+  /projects/{pid}:
+    parameters:
+      - name: pid
+        description: Project ID
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      description: Get all projects
+      tags:
+        - project
+      security:
+        - token: []
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        200:
+          description: A user's projects
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Project"
+    patch:
       description: Update a project
       tags:
         - project
+      security:
+        - token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Project"
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
-          description: TODO
+          description: Project Updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Project"
     delete:
       description: Delete a project
       tags:
         - project
+      security:
+        - token: []
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
-          description: TODO
-
-  /tasks/{uid}:
+          description: Project deleted
+  # TASKS
+  /tasks:
     get:
-      description: get a user's tasks
+      summary: Search for tasks
       tags:
         - task
+      security:
+        - token: []
       parameters:
         - name: uid
-          description: User ID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: limit
-          description: Max number of results
+          description: Owning User ID. Will default to the client's ID
           in: query
           schema:
-            type: number
-            maximum: 300
-            default: 100
+            type: string
+        - name: parent
+          description: Parent task ID
+          in: query
+          schema:
+            type: string
         - name: state
           description: The completion state of the tasks
           in: query
@@ -306,6 +449,8 @@ paths:
               - done
               - cancelled
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
           description: OK
           content:
@@ -315,51 +460,24 @@ paths:
                   - $ref: "#/components/schemas/packet"
                 properties:
                   payload:
-                    type: object
-                    properties:
-                      tasks:
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/Task"
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Task"
     post:
-      description: Creates a new task
+      summary: Creates a new task
       tags:
         - task
-      parameters:
-        - name: uid
-          description: Owning user ID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: token
-          description: Auth token
-          in: header
-          required: true
-          schema:
-            type: string
+      security:
+        - token: []
       requestBody:
         description: The task to create
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                text:
-                  type: string
-                due:
-                  type: number
-                reminders:
-                  type: array
-                  default: []
-                  items:
-                    type: number
-                tags:
-                  type: array
-                  maxItems: 50
-                  items:
-                    type: string
+              $ref: "#/components/schemas/Task"
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         201:
           description: Task created
           content:
@@ -369,30 +487,24 @@ paths:
                   - $ref: "#/components/schemas/packet"
                 properties:
                   payload:
-                    type: object
-                    properties:
-                      task:
-                        $ref: "#/components/schemas/Task"
-  /tasks/{uid}/{tid}:
-    summary: Route for accessing a specific task and it's child tasks
+                    $ref: "#/components/schemas/Task"
+  /tasks/{tid}:
+    parameters:
+      - name: tid
+        description: ID of the task
+        in: path
+        required: true
+        schema:
+          type: string
     get:
-      description: Gets a user's task
+      summary: Gets a Task by ID
       tags:
         - task
-      parameters:
-        - name: uid
-          description: Owning user ID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: tid
-          description: Task ID
-          in: path
-          required: true
-          schema:
-            type: string
+      security:
+        - token: []
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
           description: Returns the Task matching the given ID
           content:
@@ -402,31 +514,21 @@ paths:
                   - $ref: "#/components/schemas/packet"
                 properties:
                   payload:
-                    type: object
-                    properties:
-                      task:
-                        $ref: "#/components/schemas/Task"
-    put:
-      description: Updates a task
+                    $ref: "#/components/schemas/Task"
+    patch:
+      summary: Update a task
       tags:
         - task
+      security:
+        - token: []
       requestBody:
         content:
           application/json:
             schema:
-              properties:
-                parent:
-                  type: string
-                  description: ID of parent task
-                title:
-                  type: string
-                text:
-                  type: string
-                tags:
-                  type: array
-                  items:
-                    type: string
+              $ref: "#/components/schemas/Task"
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
           description: Task updated
           content:
@@ -436,45 +538,42 @@ paths:
                   - $ref: "#/components/schemas/packet"
                 properties:
                   payload:
-                    type: object
-                    properties:
-                      task:
-                        $ref: "#/components/schemas/Task"
+                    $ref: "#/components/schemas/Task"
     delete:
-      description: Deletes a task
+      summary: Deletes a task
       tags:
         - task
+      security:
+        - token: []
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
           description: Task deleted
-        401:
-          description: Unauthorized
-        404:
-          description: Task not found
-
-  /notes/{uid}:
-    summary: Route for creating notes, getting (many) notes
+  # NOTES
+  /notes:
     get:
-      description: Get a user's notes
+      summary: Search for Notes
       tags:
         - note
+      security:
+        - token: []
       parameters:
         - name: uid
-          description: Owning user ID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: limit
-          description: Max number of results
+          description: Owning user ID. Defaults to client ID
           in: query
           schema:
-            type: number
-            maximum: 300
-            default: 100
+            type: string
+        - name: parent
+          description: ID of the Parent Task
+          in: query
+          schema:
+            type: string
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
-          description: Returns up to {limit} number of the user's notes
+          description: User's Notes
           content:
             application/json:
               schema:
@@ -482,37 +581,23 @@ paths:
                   - $ref: "#/components/schemas/packet"
                 properties:
                   payload:
-                    type: object
-                    properties:
-                      notes:
-                        type: array
-                        items:
-                          $ref: "#components/schemas/Note"
+                    type: array
+                    items:
+                      $ref: "#components/schemas/Note"
     post:
-      description: Create a new Note
+      summary: Create a new Note
       tags:
         - note
+      security:
+        - token: []
       requestBody:
         content:
           application/json:
             schema:
-              properties:
-                title:
-                  type: string
-                  example: Homework notes
-                text:
-                  type: string
-                  example: make sure to use the 4th edition textbook
-                tags:
-                  type: array
-                  items:
-                    type: string
-                  example: ["project 1"]
-                tid:
-                  type: string
-                  description: Parent task ID
-                  example: tidafgkp
+              $ref: "#/components/schemas/Note"
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         201:
           description: Note created
           content:
@@ -522,29 +607,24 @@ paths:
                   - $ref: "#/components/schemas/packet"
                 properties:
                   payload:
-                    type: object
-                    properties:
-                      note:
-                        $ref: "#/components/schemas/Note"
-  /notes/{uid}/{nid}:
+                    $ref: "#/components/schemas/Note"
+  /notes/{nid}:
+    parameters:
+      - name: nid
+        description: Note ID
+        in: path
+        required: true
+        schema:
+          type: string
     get:
-      description: Get a single note by ID
+      summary: Get a note by ID
       tags:
         - note
-      parameters:
-        - name: uid
-          description: Owning User ID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: nid
-          description: Note ID
-          in: path
-          required: true
-          schema:
-            type: string
+      security:
+        - token: []
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
           description: Returns the requested note
           content:
@@ -554,33 +634,21 @@ paths:
                   - $ref: "#/components/schemas/packet"
                 properties:
                   payload:
-                    type: object
-                    properties:
-                      note:
-                        $ref: "#/components/schemas/Note"
-    put:
-      description: Update a note
+                    $ref: "#/components/schemas/Note"
+    patch:
+      summary: Update a note
       tags:
         - note
-      parameters:
-        - name: uid
-          description: Owning User ID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: nid
-          description: Note ID
-          in: path
-          required: true
-          schema:
-            type: string
+      security:
+        - token: []
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/Note"
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
           description: Note updated
           content:
@@ -590,27 +658,15 @@ paths:
                   - $ref: "#/components/schemas/packet"
                 properties:
                   payload:
-                    type: object
-                    properties:
-                      note:
-                        $ref: "#/components/schema/packet"
+                    $ref: "#/components/schemas/Note"
     delete:
-      description: Delete a note
+      summary: Delete a note
       tags:
         - note
-      parameters:
-        - name: uid
-          description: Owning User ID
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: nid
-          description: Note ID
-          in: path
-          required: true
-          schema:
-            type: string
+      security:
+        - token: []
       responses:
+        default:
+          $ref: "#/components/responses/Error"
         200:
           description: Note Deleted
