@@ -1,0 +1,35 @@
+{
+  "COLLECTIONS": {
+    "USERS": "USERS",
+    "TASKS": "TASKS",
+    "NOTES": "NOTES",
+    "PROJECTS": "PROJECTS"
+  },
+  "INDEXES": {
+    "USER": {
+      "UNIQUE_EMAIL": "user_unique_email",
+      "NAME_FIRST": "user_name_first",
+      "NAME_LAST": "user_name_last",
+      "NAME_DISPLAY": "user_name_display"
+    },
+    "TASK": {
+      "USER_ID": "task_user_id",
+      "PARENT_ID": "task_parent_id",
+      "STATE": "task_state",
+      "TAG_ID": "task_tag_id"
+    },
+    "NOTE": {
+      "USER_ID": "note_user_id",
+      "PARENT": "note_parent_id",
+      "TAG_ID": "note_tag_id"
+    },
+    "PROJECT": {
+      "USER_ID": "project_user_id",
+      "NAME": "project_name",
+      "UNIQUE_NAME_AND_USER": "project_unique_name_and_user"
+    }
+  },
+  "ROLES": {
+    "LOGGED_IN": "LOGGED_IN"
+  }
+}
