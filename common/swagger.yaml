@@ -42,11 +42,6 @@ components:
               $ref: "#/components/schemas/Name"
             display:
               $ref: "#/components/schemas/Name"
-        Projects:
-          type: array
-          uniqueItems: true
-          items:
-            $ref: "#/components/schemas/Project"
         createdAt:
           type: number
           description: The date at which the user was added.
