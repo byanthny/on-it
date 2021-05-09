@@ -4,4 +4,5 @@
 *.map
 node_modules
 common/lib
-server/lib
+common/src/**/*.js
+server/dist
