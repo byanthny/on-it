@@ -4,8 +4,8 @@ export type ID = string
 
 type Snowflake = {
   _id?: ID
-  createdAt?: string | Date
-  updateAt?: string | Date
+  createdAt?: string
+  updateAt?: string
 }
 
 export const idSchema = Joi.string().regex(/\d+/)
