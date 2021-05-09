@@ -6,10 +6,16 @@
     "module": "commonjs",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+    "rootDir": "..",
     /* Redirect output structure to the directory. */
     "outDir": "./dist",
-    /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
-    "rootDir": "./src",
+    "baseUrl": "./src",
+    /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
+    "paths": {
+      "@server/*": ["server/src/*"],
+      "@common/*": ["common/src/*"]
+    },
     // "noImplicitAny": true,                       /* Raise error on expressions and declarations with an implied 'any' type. */
     /* Raise error on 'this' expressions with an implied 'any' type. */
     "noImplicitThis": true,
@@ -20,12 +26,6 @@
     /* Report error when not all code paths in function return a value. */
     // "noImplicitReturns": true,
     /* Base directory to resolve non-absolute module names. */
-    "baseUrl": "..",
-    /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
-    "paths": {
-      "@server/*": ["server/src/*"],
-      "@common/*": ["common/src/*"]
-    },
     // "rootDirs": [],                              /* List of root folders whose combined content represents the structure of the project at runtime. */
     /* Type declaration files to be included in compilation. */
     // "allowSyntheticDefaultImports": true,        /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
