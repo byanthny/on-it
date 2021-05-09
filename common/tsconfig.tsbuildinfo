@@ -1,0 +1,126 @@
+{
+  "program": {
+    "fileInfos": {
+      "./node_modules/typescript/lib/lib.d.ts": {
+        "version": "2dc8c927c9c162a773c6bb3cdc4f3286c23f10eedc67414028f9cb5951610f60",
+        "signature": "2dc8c927c9c162a773c6bb3cdc4f3286c23f10eedc67414028f9cb5951610f60",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "b3584bc5798ed422ce2516df360ffa9cf2d80b5eae852867db9ba3743145f895",
+        "signature": "b3584bc5798ed422ce2516df360ffa9cf2d80b5eae852867db9ba3743145f895",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.dom.d.ts": {
+        "version": "feeeb1dd8a80fb76be42b0426e8f3ffa9bdef3c2f3c12c147e7660b1c5ba8b3b",
+        "signature": "feeeb1dd8a80fb76be42b0426e8f3ffa9bdef3c2f3c12c147e7660b1c5ba8b3b",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.webworker.importscripts.d.ts": {
+        "version": "7fac8cb5fc820bc2a59ae11ef1c5b38d3832c6d0dfaec5acdb5569137d09a481",
+        "signature": "7fac8cb5fc820bc2a59ae11ef1c5b38d3832c6d0dfaec5acdb5569137d09a481",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/typescript/lib/lib.scripthost.d.ts": {
+        "version": "097a57355ded99c68e6df1b738990448e0bf170e606707df5a7c0481ff2427cd",
+        "signature": "097a57355ded99c68e6df1b738990448e0bf170e606707df5a7c0481ff2427cd",
+        "affectsGlobalScope": true
+      },
+      "./src/apiresponse.ts": {
+        "version": "d4c827534b6f54b133a7dc7076677868d8aed4271cc27d313d0db3fc6008b9b2",
+        "signature": "407c444610a66c3335b50809c8ab4d37418bff606e119e4b469444f087e751be",
+        "affectsGlobalScope": false
+      },
+      "./src/index.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/joi/lib/index.d.ts": {
+        "version": "332bc92a89da24ef3a645208f2b3159292460a52fbe63c40eef64c2a63bb1e40",
+        "signature": "332bc92a89da24ef3a645208f2b3159292460a52fbe63c40eef64c2a63bb1e40",
+        "affectsGlobalScope": false
+      },
+      "./src/models/model.ts": {
+        "version": "929c226973071f7677370484174cad64a40d6508c5ed96d51dec2d6157a220ad",
+        "signature": "2a1b4c6d93d1420b46e0972328ea51666e320cb3f59445f51929ed2dc67738fd",
+        "affectsGlobalScope": false
+      },
+      "./src/models/name.ts": {
+        "version": "afae85ce21a8225e78a04d3051eaca8f1ddbc57e2bf3b96b351e24257ae45b59",
+        "signature": "102cabf780683861dc4802bcc6bbfa0e4650732d12638dad69a01dea35b5d7ba",
+        "affectsGlobalScope": false
+      },
+      "./src/models/project.ts": {
+        "version": "41b05bd77a22689eaeb70b71f068b25505547c9bd10f4229ce9743c1e2aa02d8",
+        "signature": "bdccdd1fda0629a8c93559fc999912093736f0738ac85699d34335e1c7c26f80",
+        "affectsGlobalScope": false
+      },
+      "./src/models/index.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      },
+      "./src/util/index.ts": {
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "affectsGlobalScope": false
+      }
+    },
+    "options": {
+      "incremental": true,
+      "target": 1,
+      "module": 1,
+      "outDir": "./lib",
+      "rootDir": "./src",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "project": "./",
+      "watch": true,
+      "configFilePath": "./tsconfig.json"
+    },
+    "referencedMap": {
+      "./src/models/model.ts": [
+        "./node_modules/joi/lib/index.d.ts"
+      ],
+      "./src/models/name.ts": [
+        "./node_modules/joi/lib/index.d.ts"
+      ],
+      "./src/models/project.ts": [
+        "./node_modules/joi/lib/index.d.ts",
+        "./src/models/model.ts",
+        "./src/models/name.ts"
+      ]
+    },
+    "exportedModulesMap": {
+      "./src/models/model.ts": [
+        "./node_modules/joi/lib/index.d.ts"
+      ],
+      "./src/models/name.ts": [
+        "./node_modules/joi/lib/index.d.ts"
+      ],
+      "./src/models/project.ts": [
+        "./node_modules/joi/lib/index.d.ts",
+        "./src/models/model.ts"
+      ]
+    },
+    "semanticDiagnosticsPerFile": [
+      "./node_modules/joi/lib/index.d.ts",
+      "./node_modules/typescript/lib/lib.d.ts",
+      "./node_modules/typescript/lib/lib.dom.d.ts",
+      "./node_modules/typescript/lib/lib.es5.d.ts",
+      "./node_modules/typescript/lib/lib.scripthost.d.ts",
+      "./node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "./src/apiresponse.ts",
+      "./src/index.ts",
+      "./src/models/index.ts",
+      "./src/models/model.ts",
+      "./src/models/name.ts",
+      "./src/models/project.ts",
+      "./src/util/index.ts"
+    ]
+  },
+  "version": "4.2.4"
+}

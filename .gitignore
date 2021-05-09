@@ -3,3 +3,5 @@
 .cache
 *.map
 node_modules
+common/lib
+server/lib
