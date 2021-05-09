@@ -3,13 +3,14 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     "rootDir": "..",
     /* Redirect output structure to the directory. */
     "outDir": "./dist",
-    "baseUrl": "..",
+    "baseUrl": "../",
     /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     "paths": {
       "@server/*": ["server/src/*"],
