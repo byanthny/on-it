@@ -1,4 +1,5 @@
 {
+  "include": ["src", "../common"],
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
@@ -12,8 +13,7 @@
     /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     "paths": {
       "@server/*": ["server/src/*"],
-      "@common/*": ["common/src/*"],
-      "@assets/*": ["common/assets/*"]
+      "@common/*": ["common/src/*"]
     },
     // "noImplicitAny": true,                       /* Raise error on expressions and declarations with an implied 'any' type. */
     /* Raise error on 'this' expressions with an implied 'any' type. */

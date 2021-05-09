@@ -1,0 +1,19 @@
+{
+  "errors": [
+    {
+      "position": [15, "else", "create_index"],
+      "code": "instance already exists",
+      "description": "Index already exists."
+    },
+    {
+      "position": [16, "else", "create_index"],
+      "code": "instance already exists",
+      "description": "Index already exists."
+    },
+    {
+      "position": [17, "else", "create_index"],
+      "code": "instance already exists",
+      "description": "Index already exists."
+    }
+  ]
+}

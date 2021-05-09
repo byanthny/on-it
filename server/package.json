@@ -4,6 +4,7 @@
   "description": "advanced schedulable, checkable TODOs",
   "main": "./dist/server/src/index.js",
   "scripts": {
+    "db:init": "node ./dbinit/index.js",
     "dev": "nodemon src/index.js",
     "build": "tsc -p .",
     "start": "ts-node src/"
@@ -37,9 +38,6 @@
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
   },
-  "files": [
-    "lib"
-  ],
   "types": "./lib/index.d.ts",
   "jsnext:main": "./es/index.js",
   "module": "./es/index.js"
