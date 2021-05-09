@@ -11,7 +11,7 @@ build-server:
   script:
     - cd server
     - npm install
-    - npm run build-full
+    - npm run build
   artifacts:
     untracked: true
     paths:
