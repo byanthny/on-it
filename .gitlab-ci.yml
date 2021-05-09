@@ -22,15 +22,12 @@ deploy-server:
   stage: deploy
   image: ruby:latest
   needs: [build-server]
-  dependencies:
-    - build
-    - docs
   script:
     - cd server
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=boil --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=on-it-api --api-key=$HEROKU_API_KEY
   only:
     refs:
       - master
