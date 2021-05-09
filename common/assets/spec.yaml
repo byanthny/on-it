@@ -5,6 +5,9 @@ info:
   version: 1.0.0
 
 servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/JonoAugustine/OnIt/1.0.0
   - url: https://onitapp.herku.com/api
 
 components:
@@ -438,7 +441,7 @@ paths:
           in: query
           schema:
             type: string
-            default: null
+            default: todo
             enum:
               - todo
               - done
@@ -578,7 +581,7 @@ paths:
                   payload:
                     type: array
                     items:
-                      $ref: "#components/schemas/Note"
+                      $ref: "#/components/schemas/Note"
     post:
       summary: Create a new Note
       tags:
