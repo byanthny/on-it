@@ -7,7 +7,7 @@
     "db:init": "node ./dbinit/index.js",
     "dev": "nodemon src/index.js",
     "build": "tsc -p .",
-    "start": "ts-node src/"
+    "start": "node ./dist/server/src/index.js"
   },
   "repository": {
     "type": "git",
