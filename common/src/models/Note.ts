@@ -1,5 +1,5 @@
 import Joi from "joi"
-import { idSchema } from "./Model"
+import { ID, idSchema } from "./Model"
 
 export const noteSchema = {
   uid: idSchema,
@@ -10,11 +10,11 @@ export const noteSchema = {
 }
 
 type Note = {
-  uid: string
-  parent: string
+  uid: ID
+  parent: ID
   title: string
   text: string
-  tags: string[]
+  tags: ID[]
 }
 
 export default Note

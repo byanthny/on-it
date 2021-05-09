@@ -1,5 +1,5 @@
 import Joi from "joi"
-import Snowflake, { idSchema } from "./Model"
+import Snowflake, { ID, idSchema } from "./Model"
 
 export const taskSchema = {
   uid: idSchema,
@@ -15,14 +15,14 @@ export const taskSchema = {
 export type TaskState = "todo" | "done" | "cancelled"
 
 type Task = Snowflake & {
-  uid: string
-  parent?: string
+  uid: ID
+  parent?: ID
   title: string
   state: TaskState
   due?: string
   reminders?: string[]
   pinned?: boolean
-  tags: string[]
+  tags: ID[]
 }
 
 export default Task

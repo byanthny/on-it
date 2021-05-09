@@ -1,7 +1,9 @@
 import Joi from "joi"
 
+export type ID = string
+
 type Snowflake = {
-  _id?: string
+  _id?: ID
   createdAt?: string | Date
   updateAt?: string | Date
 }
