@@ -3,7 +3,7 @@
   "private": true,
   "workspaces": {
     "packages": ["projects/*"],
-    "nohoist": ["*"]
+    "nohoist": ["**/**"]
   },
   "license": "GPL-3.0",
   "homepage": "https://gitlab.com/JonoAugustine/on-it#readme",
@@ -15,9 +15,9 @@
     "url": "https://gitlab.com/JonoAugustine/on-it/issues"
   },
   "scripts": {
-    "server": "yarn workspace @onit/server",
-    "common": "yarn workspace @onit/common",
-    "site": "yarn workspace @onit/site",
+    "server": "yarn workspace server",
+    "common": "yarn workspace common",
+    "site": "yarn workspace site",
     "root": "yarn -W"
   }
 }
