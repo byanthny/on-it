@@ -9,15 +9,6 @@ stages:
 before_script:
   - npx yarn install
 
-build-common:
-  stage: build
-  script:
-    - npx yarn common run build
-  artifacts:
-    untracked: true
-    paths:
-      - common/lib
-
 build-server:
   stage: build
   script:

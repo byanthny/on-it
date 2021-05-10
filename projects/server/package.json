@@ -14,7 +14,9 @@
   "main": "dist/index.js",
   "scripts": {
     "fauna:init": "node ./dbinit/index.js",
-    "dev": "nodemon src/index.ts -x ts-node"
+    "dev": "nodemon src/index.ts -x ts-node",
+    "build": "tsc --build",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "common": "*",
