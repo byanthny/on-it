@@ -1,11 +1,11 @@
 {
-  "name": "@onit/server",
+  "name": "server",
   "version": "0.1.0",
   "description": "advanced schedulable, checkable TODOs",
   "main": "./dist/server/src/index.js",
   "scripts": {
-    "db:init": "node ./dbinit/index.js",
-    "dev": "nodemon src/index.ts -x ts-node --require tsconfig-paths/register",
+    "fauna:init": "node ./dbinit/index.js",
+    "dev": "nodemon src/index.ts -x ts-node",
     "prepack": "tsc --project ./tsconfig.build.json",
     "build": "tsc --build -p .",
     "start": "yarn build && node dist/index.js"
