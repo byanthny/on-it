@@ -16,8 +16,7 @@ build-server:
   artifacts:
     untracked: true
     paths:
-      - server/dist
-      - server/Procfile
+      - projects/server/dist
 
 deploy-server:
   stage: deploy
