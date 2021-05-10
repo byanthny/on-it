@@ -1,25 +1,9 @@
 {
-  "extends": "./tsconfig.build.json",
-  "compilerOptions": {
-    /* Enable all strict type-checking options. */
-    "strict": true,
-    /* Raise error on expressions and declarations with an implied 'any' type. */
-    "noImplicitAny": true,
-    /* Raise error on 'this' expressions with an implied 'any' type. */
-    "noImplicitThis": true,
-    /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
-    "moduleResolution": "node",
-    /* Base directory to resolve non-absolute module names. */
-    "baseUrl": "./",
-    /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
-    "paths": {
-      "@onit/common*": ["projects/common/src/*"],
-      "@onit/server*": ["server/src*"]
-    },
-    /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-    "esModuleInterop": true,
-    // "allowUmdGlobalAccess": true,                /* Allow accessing UMD globals from modules. */
-    "skipLibCheck": true /* Skip type checking of declaration files. */,
-    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
-  }
+  /* ROOT TS CONFIG */
+  "references": [
+    { "path": "./projects/common" },
+    { "path": "./projects/server" },
+    { "path": "./projects/site" }
+  ],
+  "files": []
 }
