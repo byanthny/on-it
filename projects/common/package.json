@@ -1,12 +1,12 @@
 {
-  "name": "@onit/common",
+  "name": "common",
   "version": "1.0.0",
+  "scripts": {
+    "prepack": "tsc --project ./tsconfig.build.json"
+  },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "license": "GPL-3.0",
-  "scripts": {
-    "build": "tsc -p ."
-  },
+  "files": ["lib"],
   "dependencies": {
     "joi": "^17.4.0"
   },

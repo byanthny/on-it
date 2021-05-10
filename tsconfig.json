@@ -1,9 +1,0 @@
-{
-  /* ROOT TS CONFIG */
-  "references": [
-    { "path": "./projects/common" },
-    { "path": "./projects/server" },
-    { "path": "./projects/site" }
-  ],
-  "files": []
-}

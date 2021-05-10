@@ -1,7 +1,10 @@
 {
   "name": "on-it",
   "private": true,
-  "workspaces": ["projects/*"],
+  "workspaces": {
+    "packages": ["projects/*"],
+    "nohoist": ["*"]
+  },
   "license": "GPL-3.0",
   "homepage": "https://gitlab.com/JonoAugustine/on-it#readme",
   "repository": {
@@ -15,7 +18,6 @@
     "server": "yarn workspace @onit/server",
     "common": "yarn workspace @onit/common",
     "site": "yarn workspace @onit/site",
-    "root": "yarn -W",
-    "build": "tsc -b"
+    "root": "yarn -W"
   }
 }

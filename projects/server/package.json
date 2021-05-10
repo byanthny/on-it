@@ -6,6 +6,7 @@
   "scripts": {
     "db:init": "node ./dbinit/index.js",
     "dev": "nodemon src/index.ts -x ts-node --require tsconfig-paths/register",
+    "prepack": "tsc --project ./tsconfig.build.json",
     "build": "tsc --build -p .",
     "start": "yarn build && node dist/index.js"
   },
@@ -19,14 +20,14 @@
   },
   "homepage": "https://gitlab.com/JonoAugustine/on-it#readme",
   "dependencies": {
+    "@onit/common": "*",
     "cors": "^2.8.5",
     "dotenv": "^9.0.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "faunadb": "^4.2.0",
     "joi": "^17.4.0",
-    "winston": "^3.3.3",
-    "@onit/common": "*"
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
