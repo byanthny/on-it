@@ -11,7 +11,7 @@ import {
   Var,
 } from "faunadb"
 import { Document } from "../types/fauna"
-import { User } from "@onit/common/models"
+import { User } from "common"
 import db from "./root"
 import NAMES from "./names.json"
 import indexes from "./indexes"

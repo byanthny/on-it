@@ -18,6 +18,7 @@
     "server": "yarn workspace server",
     "common": "yarn workspace common",
     "site": "yarn workspace site",
-    "root": "yarn -W"
+    "root": "yarn -W",
+    "build": "tsc --build"
   }
 }
