@@ -6,17 +6,27 @@ stages:
   - test
   - deploy
 
-build-server:
+before_script:
+  - npx yarn install
+
+build-common:
   stage: build
   script:
-    - cd server
-    - npm install
-    - npm run build
+    - npx yarn common run build
   artifacts:
     untracked: true
     paths:
-      - dist/
-      - Procfile
+      - common/lib
+
+build-server:
+  stage: build
+  script:
+    - npx yarn server run build
+  artifacts:
+    untracked: true
+    paths:
+      - server/dist
+      - server/Procfile
 
 deploy-server:
   stage: deploy

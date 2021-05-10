@@ -6,3 +6,4 @@ node_modules
 common/lib
 common/src/**/*.js
 server/dist
+**/*.log

@@ -1,8 +1,20 @@
-import { Collection, Create, Let, Select, Tokens, Var } from "faunadb"
+import {
+  Collection,
+  Create,
+  Expr,
+  IsNonEmpty,
+  Let,
+  Match,
+  Paginate,
+  Select,
+  Tokens,
+  Var,
+} from "faunadb"
+import { Document } from "../types/fauna"
+import { User } from "@onit/common/models"
 import db from "./root"
 import NAMES from "./names.json"
-import { Document } from "../types/fauna"
-import { User } from "@common/models"
+import indexes from "./indexes"
 
 type Login = {
   user: User
@@ -37,4 +49,12 @@ export const register = async (
     user: { ...userDoc!.data, _id: userDoc.ref!.id },
     token: tokenDoc.secret,
   }
+}
+
+const existsByIndex = (index: Expr, identity: any) => {
+  return db.query<boolean>(IsNonEmpty(Paginate(Match(index, identity))))
+}
+
+export const existsByEmail = (email: string) => {
+  return existsByIndex(indexes.users.byEmail, email)
 }

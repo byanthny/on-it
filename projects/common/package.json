@@ -1,7 +1,8 @@
 {
-  "name": "on-it-common",
+  "name": "@onit/common",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "license": "GPL-3.0",
   "scripts": {
     "build": "tsc -p ."
