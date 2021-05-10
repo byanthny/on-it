@@ -14,6 +14,8 @@
   "scripts": {
     "server": "yarn workspace @onit/server",
     "common": "yarn workspace @onit/common",
-    "site": "yarn workspace @onit/site"
+    "site": "yarn workspace @onit/site",
+    "root": "yarn -W",
+    "build": "tsc -b"
   }
 }

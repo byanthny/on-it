@@ -1,9 +1,8 @@
 .env
-.firebase-key.json
 .cache
 *.map
 node_modules
-common/lib
-common/src/**/*.js
-server/dist
-**/*.log
+dist
+lib
+*.log
+*.tsbuildinfo
