@@ -1,5 +1,5 @@
 import { Request as ExpressRequest, Response as ExpressResponse } from "express"
-import { User } from "@common/models"
+import { User } from "common"
 
 export type Request = ExpressRequest & {
   token?: string

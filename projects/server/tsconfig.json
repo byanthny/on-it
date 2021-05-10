@@ -6,9 +6,9 @@
     "rootDir": "./src",
     "paths": {
       "common": ["../common"]
-    },
-    "resolveJsonModule": true
+    }
   },
   "references": [{ "path": "../common" }],
+  "include": ["src", "src/**/*.json"],
   "exclude": ["dist"]
 }
