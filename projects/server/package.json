@@ -2,14 +2,6 @@
   "name": "server",
   "version": "0.1.0",
   "description": "advanced schedulable, checkable TODOs",
-  "main": "./dist/server/src/index.js",
-  "scripts": {
-    "fauna:init": "node ./dbinit/index.js",
-    "dev": "nodemon src/index.ts -x ts-node",
-    "prepack": "tsc --project ./tsconfig.build.json",
-    "build": "tsc --build -p .",
-    "start": "yarn build && node dist/index.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/JonoAugustine/on-it.git"
@@ -19,8 +11,13 @@
     "url": "https://gitlab.com/JonoAugustine/on-it/issues"
   },
   "homepage": "https://gitlab.com/JonoAugustine/on-it#readme",
+  "main": "dist/index.js",
+  "scripts": {
+    "fauna:init": "node ./dbinit/index.js",
+    "dev": "nodemon src/index.ts -x ts-node"
+  },
   "dependencies": {
-    "@onit/common": "*",
+    "common": "*",
     "cors": "^2.8.5",
     "dotenv": "^9.0.0",
     "express": "^4.17.1",
