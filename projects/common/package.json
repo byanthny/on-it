@@ -1,12 +1,8 @@
 {
   "name": "common",
   "version": "1.0.0",
-  "scripts": {
-    "prepack": "tsc --project ./tsconfig.build.json"
-  },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
   "dependencies": {
     "joi": "^17.4.0"
   },
