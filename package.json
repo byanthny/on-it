@@ -15,6 +15,7 @@
     "url": "https://gitlab.com/JonoAugustine/on-it/issues"
   },
   "scripts": {
+    "start": "yarn workspace server start",
     "server": "yarn workspace server",
     "common": "yarn workspace common",
     "site": "yarn workspace site",
