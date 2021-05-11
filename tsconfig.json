@@ -1,7 +1,8 @@
 {
   "references": [
     { "path": "./projects/common" },
-    { "path": "./projects/server" }
+    { "path": "./projects/server" },
+    { "path": "./projects/site" }
   ],
   "files": []
 }
