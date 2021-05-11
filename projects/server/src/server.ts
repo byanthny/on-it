@@ -1,7 +1,7 @@
 import Express, { Application, Router } from "express"
 import cors from "cors"
 import routes from "./routes"
-import { attachPacketier, errorHandler } from "./middleware"
+import { attachPacketier, errorHandler, readToken } from "./middleware"
 
 export default (): Application => {
   const server = Express()
@@ -18,7 +18,7 @@ export default (): Application => {
   // setup API paths
   const api = Router()
   // Setup middleware
-  api.use(attachPacketier)
+  api.use(attachPacketier, readToken)
   // Add routes
   api.use("/users", routes.users)
   // TODO api.use("/tasks", routes.tasks)
