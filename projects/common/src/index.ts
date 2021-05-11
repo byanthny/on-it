@@ -10,6 +10,7 @@ import {
   Note,
   noteSchema,
 } from "./models"
+import { ApiResponse } from "./ApiResponse"
 
 export {
   nameSchema,
@@ -22,4 +23,5 @@ export {
   TaskState,
   Note,
   noteSchema,
+  ApiResponse,
 }
