@@ -6,25 +6,22 @@ stages:
   - test
   - deploy
 
-before_script:
-  - npx yarn install
-
 build-server:
   stage: build
+  before_script:
+    - npx yarn install
   script:
     - npx yarn server run build
   artifacts:
     untracked: true
     paths:
-      - server/dist
-      - server/Procfile
+      - projects/server/dist
 
 deploy-server:
   stage: deploy
   image: ruby:latest
   needs: [build-server]
   script:
-    - cd server
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
