@@ -3,7 +3,7 @@ import Snowflake from "./Model"
 import { nameSchema } from "./name"
 
 export const userSchema = {
-  email: Joi.string().email(),
+  email: Joi.string().email({ tlds: { allow: false } }),
   name: Joi.object({
     first: nameSchema.optional(),
     last: nameSchema.optional(),

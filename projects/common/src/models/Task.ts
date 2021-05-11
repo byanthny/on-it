@@ -5,7 +5,7 @@ export const taskSchema = {
   uid: idSchema,
   parent: idSchema.optional(),
   title: Joi.string().min(1).max(255),
-  state: Joi.string().valid(["todo", "done", "cancelled"]),
+  state: Joi.string().valid("todo", "done", "cancelled"),
   due: Joi.date(),
   reminders: Joi.array().items(Joi.date()),
   pinned: Joi.bool(),
