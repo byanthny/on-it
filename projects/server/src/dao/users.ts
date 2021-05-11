@@ -15,6 +15,7 @@ import { User } from "common"
 import db from "./root"
 import NAMES from "./names.json"
 import indexes from "./indexes"
+import logger from "winston"
 
 type Login = {
   user: User
@@ -30,6 +31,7 @@ export const register = async (
   email: string,
   password: string,
 ): Promise<Login> => {
+  logger.debug("DAO: register")
   const { userDoc, tokenDoc } = await db.query<FaunaAuthReturn>(
     Let(
       {

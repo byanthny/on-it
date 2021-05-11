@@ -2,8 +2,10 @@ import { object, string } from "joi"
 import { Request, Response } from "../../types/express"
 import { DuplicateError, MalformedContentError } from "../../errors"
 import dao from "../../dao"
+import logger from "winston"
 
 export const register = async (req: Request, res: Response) => {
+  logger.info("ROUTES: register")
   // validate incoming data
   const { value, error } = object({
     email: string().email().required(),

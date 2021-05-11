@@ -6,7 +6,5 @@ import logger from "winston"
 
 server().listen(process.env.PORT, () => {
   logger.info(`listening on port ${process.env.PORT}`)
-  if (process.env.STAGE !== "PRODUCTION") {
-    logger.info(`http://127.0.0.1:${process.env.PORT}`)
-  }
+  logger.debug(`http://127.0.0.1:${process.env.PORT}`)
 })
