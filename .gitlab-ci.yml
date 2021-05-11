@@ -22,7 +22,6 @@ deploy-server:
   image: ruby:latest
   needs: [build-server]
   script:
-    - cd projects/server
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
