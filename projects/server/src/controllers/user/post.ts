@@ -34,18 +34,12 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   // validate
   const { value, error } = object({
-    email: string().email(),
-    username: nameSchema,
+    identity: string().max(1024).required(),
     password: string().max(1024).required(),
-  })
-    .xor("email", "username")
-    .validate(req.body, { stripUnknown: true })
+  }).validate(req.body, { stripUnknown: true })
 
   if (error) throw new MalformedContentError(error.message)
 
-  const result = await (value.email
-    ? dao.users.loginWithEmail(value)
-    : dao.users.loginWithDisplayName(value))
-
+  const result = await dao.users.login(value.identity, value.password)
   res.pack(result)
 }
