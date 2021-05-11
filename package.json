@@ -2,8 +2,12 @@
   "name": "on-it",
   "private": true,
   "workspaces": {
-    "packages": ["projects/*"],
-    "nohoist": ["**/**"]
+    "packages": [
+      "projects/*"
+    ],
+    "nohoist": [
+      "**/**"
+    ]
   },
   "license": "GPL-3.0",
   "homepage": "https://gitlab.com/JonoAugustine/on-it#readme",
@@ -20,5 +24,8 @@
     "site": "yarn workspace site",
     "root": "yarn -W",
     "build": "tsc --build"
+  },
+  "dependencies": {
+    "typescript": "^4.2.4"
   }
 }
