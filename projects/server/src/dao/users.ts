@@ -2,8 +2,10 @@ import {
   Collection,
   Create,
   Expr,
+  Get,
   IsNonEmpty,
   Let,
+  Login,
   Match,
   Paginate,
   Select,
@@ -16,6 +18,7 @@ import db from "./root"
 import NAMES from "./names.json"
 import indexes from "./indexes"
 import logger from "winston"
+import user from "../controllers/user"
 
 type Login = {
   user: User
@@ -51,6 +54,46 @@ export const register = async (
     user: { ...userDoc!.data, _id: userDoc.ref!.id },
     token: tokenDoc.secret,
   }
+}
+
+const login = async (
+  { identity, password }: { identity: string; password: string },
+  index: Expr,
+): Promise<Login> => {
+  const { userDoc, tokenDoc } = await db.query<FaunaAuthReturn>(
+    Let(
+      { tokenDoc: Login(Match(index, identity), { password }) },
+      {
+        tokenDoc: Var("tokenDoc"),
+        userDoc: Get(Select("instance", Var("tokenDoc"))),
+      },
+    ),
+  )
+
+  return {
+    user: { ...userDoc.data, _id: userDoc.ref.id },
+    token: tokenDoc.secret,
+  }
+}
+
+export const loginWithDisplayName = ({
+  username,
+  password,
+}: {
+  username: string
+  password: string
+}) => {
+  return login({ password, identity: username }, indexes.users.byDisplayName)
+}
+
+export const loginWithEmail = ({
+  email,
+  password,
+}: {
+  email: string
+  password: string
+}) => {
+  return login({ password, identity: email }, indexes.users.byEmail)
 }
 
 const existsByIndex = (index: Expr, identity: any) => {

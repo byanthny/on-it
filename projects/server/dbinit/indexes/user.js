@@ -26,7 +26,7 @@ module.exports = [
     terms: [{ field: ["data", "name", "last"] }]
   }),
   createOrUpdateIndex({
-    name: NAMES.INDEXES.USER.NAME_DISPLAY,
+    name: NAMES.INDEXES.USER.UNIQUE_NAME_DISPLAY,
     source: Collection(NAMES.COLLECTIONS.USERS),
     unique: true,
     terms: [{ field: ["data", "name", "display"] }]

@@ -1,4 +1,4 @@
 import { attachPacketier } from "./extensions"
-import errorHandler from "./errors"
+import errorHandler from "./errorHandler"
 
 export { attachPacketier, errorHandler }

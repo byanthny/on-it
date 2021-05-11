@@ -11,7 +11,7 @@
       "UNIQUE_EMAIL": "user_unique_email",
       "NAME_FIRST": "user_name_first",
       "NAME_LAST": "user_name_last",
-      "NAME_DISPLAY": "user_name_display"
+      "UNIQUE_NAME_DISPLAY": "user_name_display"
     },
     "TASK": {
       "ALL": "all_tasks",
