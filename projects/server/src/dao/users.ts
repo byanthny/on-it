@@ -1,5 +1,6 @@
 import {
   Create,
+  Delete,
   Expr,
   Get,
   IsNonEmpty,
@@ -121,3 +122,9 @@ export const update = async (
 
   return { ...data, _id: id }
 }
+
+const deleteUser = async (uid: string): Promise<void> => {
+  await db.query(Delete(Ref(collections.users, uid)))
+}
+
+export { deleteUser as delete }

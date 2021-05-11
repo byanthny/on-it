@@ -10,5 +10,6 @@ router.post("/login", controllers.user.post.login)
 // RUD
 router.get("/:uid", controllers.user.get.one)
 router.patch("/:uid", requireUser, controllers.user.patch.one)
+router.delete("/:uid", requireUser, controllers.user.delete.one)
 
 export default router
