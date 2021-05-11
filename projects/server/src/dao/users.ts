@@ -1,5 +1,4 @@
 import {
-  Collection,
   Create,
   Expr,
   Get,
@@ -8,15 +7,17 @@ import {
   Login,
   Match,
   Paginate,
+  Ref,
   Select,
   Tokens,
   Union,
+  Update,
   Var,
 } from "faunadb"
 import { Document } from "../types/fauna"
 import { User } from "common"
 import db from "./root"
-import NAMES from "./names.json"
+import collections from "./collections"
 import indexes from "./indexes"
 import logger from "winston"
 
@@ -38,7 +39,7 @@ export const register = async (
   const { userDoc, tokenDoc } = await db.query<FaunaAuthReturn>(
     Let(
       {
-        userDoc: Create(Collection(NAMES.COLLECTIONS.USERS), {
+        userDoc: Create(collections.users, {
           credentials: { password: password },
           data: { email: email },
         }),
@@ -86,10 +87,37 @@ export const login = async (
   }
 }
 
+export const getByID = async (uid: string): Promise<User> => {
+  const {
+    data,
+    ref: { id },
+  } = await db.query<Document<User>>(Get(Ref(collections.users, uid)))
+
+  return { ...data, _id: id }
+}
+
 const existsByIndex = (index: Expr, identity: any) => {
   return db.query<boolean>(IsNonEmpty(Paginate(Match(index, identity))))
 }
 
 export const existsByEmail = (email: string) => {
   return existsByIndex(indexes.users.byUniqueEmail, email)
+}
+
+export const existsByDisplayName = (displayName: string) => {
+  return existsByIndex(indexes.users.byUniqueDisplayName, displayName)
+}
+
+export const update = async (
+  uid: string,
+  packet: Partial<User>,
+): Promise<User> => {
+  const {
+    data,
+    ref: { id },
+  } = await db.query<Document<User>>(
+    Update(Ref(collections.users, uid), { data: packet }),
+  )
+
+  return { ...data, _id: id }
 }

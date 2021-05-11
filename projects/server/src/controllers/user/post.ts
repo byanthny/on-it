@@ -3,7 +3,6 @@ import { Request, Response } from "../../types/express"
 import { DuplicateError, MalformedContentError } from "../../errors"
 import dao from "../../dao"
 import logger from "winston"
-import { nameSchema } from "common"
 
 export const register = async (req: Request, res: Response) => {
   logger.info("ROUTES: register")
