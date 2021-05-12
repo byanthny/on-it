@@ -1,7 +1,7 @@
-import { Response } from "express"
+import { Response } from "../types/express"
 
 export const attachPacketier = (_, res: Response, next) => {
-  res["pack"] = (payload: any) => res.json({ payload })
-  res["error"] = (error: string) => res.json({ error })
+  res.pack = (payload: any) => res.json({ payload })
+  res.error = (error: string) => res.json({ error })
   next()
 }

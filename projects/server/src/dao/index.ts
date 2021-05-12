@@ -2,6 +2,7 @@ import { User } from "common"
 import { Client, CurrentIdentity, Get } from "faunadb"
 import { Document } from "../types/fauna"
 import * as users from "./users"
+import * as projects from "./projects"
 
 /**
  * Attemps to get the User document for the given token
@@ -17,4 +18,4 @@ const identify = async (token: string): Promise<User> => {
   return { ...data, _id: id }
 }
 
-export default { users, identify }
+export default { identify, users, projects }

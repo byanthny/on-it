@@ -21,9 +21,9 @@ export default (): Application => {
   api.use(attachPacketier, readToken)
   // Add routes
   api.use("/users", routes.users)
+  api.use("/projects", routes.projects)
   // TODO api.use("/tasks", routes.tasks)
   // TODO api.use("/notes", routes.notes)
-  // TODO api.use("/projects", routes.projects)
   server.use("/api", api)
 
   // Handle errors

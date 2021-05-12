@@ -7,13 +7,14 @@ const errorHandler = (error: Error, _: Request, res: Response, __: any) => {
 
   if (error instanceof MalformedContentError) res.status(400)
   else if (error instanceof DuplicateError) res.status(409)
-  else if (error.message.match(/authentication failed/i)) res.status(401)
-  else {
+  else if (error.message.match(/(authentication\s+failed|unauthorized)/i)) {
+    res.status(401)
+  } else {
     logger.info("unknown error", { error })
     res.status(500)
   }
 
-  res.error(message)
+  res.json({ error: message })
 }
 
 export default errorHandler
