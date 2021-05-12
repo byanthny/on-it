@@ -4,7 +4,7 @@ import { Project } from "common"
 export const createProject = async (
   token: string,
   name: string,
-  color?: stirng,
+  color?: string,
 ): Promise<Project> =>
   apiRequest<Project>(
     axios.post("/projects", { name, color }, { headers: { token } }),
