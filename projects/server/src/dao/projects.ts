@@ -1,4 +1,4 @@
-import { Create } from "faunadb"
+import { Create, Get, Ref } from "faunadb"
 import { Document } from "../types/fauna"
 import { Project, User } from "common"
 import db from "./root"
@@ -17,5 +17,13 @@ export const create = async (
   } = await db.query<Document<Project>>(
     Create(collections.projects, { data: { uid, name, color } }),
   )
+  return { ...data, _id: id }
+}
+
+export const getByID = async (pid: string): Promise<Project> => {
+  const {
+    data,
+    ref: { id },
+  } = await db.query<Document<Project>>(Get(Ref(collections.projects, pid)))
   return { ...data, _id: id }
 }

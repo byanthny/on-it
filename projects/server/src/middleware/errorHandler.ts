@@ -14,7 +14,7 @@ const errorHandler = (error: Error, _: Request, res: Response, __: any) => {
     res.status(500)
   }
 
-  res.json({ error: message })
+  res.error(message)
 }
 
 export default errorHandler
