@@ -1,4 +1,5 @@
-import __axios from "axios"
+import __axios, { AxiosResponse } from "axios"
+import { ApiResponse } from "common"
 
 const API_URI = `http://${
   process.env.NODE_ENV === "production"
@@ -15,3 +16,13 @@ export const axios = __axios.create({
     return status > 0
   },
 })
+
+export const apiRequest = async <T>(
+  request: Promise<AxiosResponse<ApiResponse<T>>>,
+): Promise<T> => {
+  const {
+    data: { payload, error },
+  } = await request
+  if (error) throw new Error(error)
+  return payload!
+}
