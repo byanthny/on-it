@@ -10,7 +10,7 @@ export const one = async (req: Request, res: Response) => {
 
   const project = await dao.projects.getByID(pid)
 
-  if (project._id! === req.user!._id!) throw new AuthError()
+  if (project.uid !== req.user._id) throw new AuthError()
 
   res.pack(project)
 }
