@@ -1,7 +1,7 @@
 import { Request, Response } from "../../types/express"
 import logger from "winston"
 import dao from "../../dao"
-import { AuthError } from "../../errors"
+import ApiError from "../../errors"
 
 export const one = async (req: Request, res: Response) => {
   logger.info("ROUTES: projects get one")
@@ -10,7 +10,7 @@ export const one = async (req: Request, res: Response) => {
 
   const project = await dao.projects.getByID(pid)
 
-  if (project.uid !== req.user._id) throw new AuthError()
+  if (project.uid !== req.user._id) ApiError.Authorization()
 
   res.pack(project)
 }

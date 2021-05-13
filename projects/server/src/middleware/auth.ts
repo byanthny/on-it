@@ -1,5 +1,5 @@
 import dao from "../dao"
-import { AuthError } from "../errors"
+import ApiError from "../errors"
 import { Request } from "../types/express"
 
 /**
@@ -18,6 +18,7 @@ export const readToken = async (req: Request, _: any, next: any) => {
 
 /** Throws an AuthError if no user is set */
 export const requireUser = (req: Request, _: any, next: any) => {
-  if (!req.user) throw new AuthError()
+  if (!req.token) ApiError.Authentication("missing token")
+  if (!req.user) ApiError.Authentication("invalid token")
   next()
 }

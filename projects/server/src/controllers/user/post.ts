@@ -1,6 +1,6 @@
 import { object, string } from "joi"
 import { Request, Response } from "../../types/express"
-import { DuplicateError, MalformedContentError } from "../../errors"
+import ApiError from "../../errors"
 import dao from "../../dao"
 import logger from "winston"
 
@@ -16,12 +16,11 @@ export const register = async (req: Request, res: Response) => {
       .required(),
   }).validate(req.body, { stripUnknown: true })
 
-  if (error) throw new MalformedContentError(error.message)
+  if (error) ApiError.MalformedContent(error.message)
 
   // check for duplicates
   const { email } = value
-  if (await dao.users.existsByEmail(email))
-    throw new DuplicateError("email in use")
+  if (await dao.users.existsByEmail(email)) ApiError.Duplicate("email in use")
 
   // call registration functiona
   const result = await dao.users.register(email, value.password)
@@ -37,7 +36,7 @@ export const login = async (req: Request, res: Response) => {
     password: string().max(1024).required(),
   }).validate(req.body, { stripUnknown: true })
 
-  if (error) throw new MalformedContentError(error.message)
+  if (error) ApiError.MalformedContent(error.message)
 
   const result = await dao.users.login(value.identity, value.password)
   res.pack(result)

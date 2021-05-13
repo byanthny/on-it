@@ -1,27 +1,32 @@
-export class MalformedContentError extends Error {
-  constructor(msg?: string) {
-    super(msg)
+export default class ApiError {
+  code: number
+  message?: string
+  private constructor(code: number = 500, message?: string) {
+    this.message = message
+    this.code = code
   }
-}
 
-export class InternalError extends Error {
-  message = "Internal Error, try again later."
-}
-
-export class DuplicateError extends Error {
-  constructor(message?: string) {
-    super(message)
+  static MalformedContent(msg?: string) {
+    throw new ApiError(400, msg)
   }
-}
 
-export class AuthError extends Error {
-  constructor(message: string = "Unauthorized") {
-    super(message)
+  static Duplicate(msg?: string) {
+    throw new ApiError(409, msg)
   }
-}
 
-export class ResourceNotFoundError extends Error {
-  constructor(message: string = "Resource not found") {
-    super(message)
+  static Authentication(msg: string = "Authentication Failed") {
+    throw new ApiError(401, msg)
+  }
+
+  static Authorization(msg: string = "Unauthorized") {
+    throw new ApiError(403, msg)
+  }
+
+  static NotFound(msg: string = "Resource not found") {
+    throw new ApiError(404, msg)
+  }
+
+  static Internal(msg: string = "Internal Error, try again later") {
+    throw new ApiError(500, msg)
   }
 }

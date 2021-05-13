@@ -1,6 +1,5 @@
 import { Router } from "express"
 import controllers from "../controllers"
-import { requireUser } from "../middleware"
 
 const router = Router()
 
@@ -10,6 +9,8 @@ router.post("/", controllers.project.post.one)
 router.get("/:pid", controllers.project.get.one)
 // TODO project search
 // U
+router.patch("/:pid", controllers.project.patch.one)
 // D
+router.delete("/:pid", controllers.project.delete.one)
 
 export default router
