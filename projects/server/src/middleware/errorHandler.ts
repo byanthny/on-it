@@ -3,7 +3,6 @@ import { Request, Response } from "../types/express"
 import logger from "winston"
 
 const errorHandler = (error: any, _: Request, res: Response, __: any) => {
-  console.log(error instanceof ApiError)
   if (error instanceof ApiError) {
     res.error(error.message, error.code)
   } else if (error.message?.match(/(authentication\s+failed|unauthorized)/i)) {

@@ -9,10 +9,10 @@ export const one = async (req: Request, res: Response) => {
   logger.info("ROUTES: project update one")
   const { pid } = req.params
 
-  const { value, error } = object(projectSchema).validate(
-    { ...req.body },
-    { stripUnknown: true },
-  )
+  const { value, error } = object({
+    name: projectSchema.name.optional(),
+    color: projectSchema.color,
+  }).validate({ ...req.body }, { stripUnknown: true })
 
   if (error) ApiError.MalformedContent(error.message)
 
