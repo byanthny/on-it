@@ -9,7 +9,10 @@ export const userSchema = {
     last: nameSchema.optional(),
     display: nameSchema.optional(),
   }).optional(),
+  role: Joi.string().valid("GENERIC", "DEVELOPER", "ADMIN").optional(),
 }
+
+export type UserRole = "GENERIC" | "DEVELOPER" | "ADMIN"
 
 type User = Snowflake & {
   email: string
@@ -18,6 +21,7 @@ type User = Snowflake & {
     last?: string
     display?: string
   }
+  role?: UserRole
 }
 
 export default User
