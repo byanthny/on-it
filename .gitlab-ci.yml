@@ -16,6 +16,11 @@ build-server:
     untracked: true
     paths:
       - projects/server/dist
+  only:
+    changes:
+      - projects/server
+      - projects/common
+      - .gitlab-ci.yml
 
 deploy-server:
   stage: deploy
@@ -29,3 +34,6 @@ deploy-server:
   only:
     refs:
       - master
+    changes:
+      - projects/server
+      - projects/common
