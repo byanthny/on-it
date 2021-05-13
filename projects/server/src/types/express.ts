@@ -7,6 +7,9 @@ export type Request = ExpressRequest & {
 }
 
 export type Response = ExpressResponse & {
-  pack: (payload?: any) => ExpressResponse<any, Record<string, any>>
-  error: (error?: string) => ExpressResponse<any, Record<string, any>>
+  pack(payload?: any): ExpressResponse<any, Record<string, any>>
+  error(
+    error?: string,
+    code?: number,
+  ): ExpressResponse<any, Record<string, any>>
 }
