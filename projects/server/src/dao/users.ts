@@ -37,7 +37,13 @@ export const register = async (
   password: string,
 ): Promise<Login> => {
   logger.debug("DAO: register")
-  const { userDoc, tokenDoc } = await db.query<FaunaAuthReturn>(
+  const {
+    userDoc: {
+      data,
+      ref: { id },
+    },
+    tokenDoc,
+  } = await db.query<FaunaAuthReturn>(
     Let(
       {
         userDoc: Create(collections.users, {
@@ -53,7 +59,7 @@ export const register = async (
   )
 
   return {
-    user: { ...userDoc!.data, _id: userDoc.ref!.id },
+    user: { ...data, id },
     token: tokenDoc.secret,
   }
 }
@@ -62,7 +68,13 @@ export const login = async (
   identity: string,
   password: string,
 ): Promise<Login> => {
-  const { userDoc, tokenDoc } = await db.query<FaunaAuthReturn>(
+  const {
+    userDoc: {
+      data,
+      ref: { id },
+    },
+    tokenDoc,
+  } = await db.query<FaunaAuthReturn>(
     Let(
       {
         tokenDoc: Login(
@@ -83,7 +95,7 @@ export const login = async (
   )
 
   return {
-    user: { ...userDoc.data, _id: userDoc.ref.id },
+    user: { ...data, id },
     token: tokenDoc.secret,
   }
 }
@@ -94,7 +106,7 @@ export const getByID = async (uid: string): Promise<User> => {
     ref: { id },
   } = await db.query<Document<User>>(Get(Ref(collections.users, uid)))
 
-  return { ...data, _id: id }
+  return { ...data, id }
 }
 
 const existsByIndex = (index: Expr, identity: any) => {
@@ -120,7 +132,7 @@ export const update = async (
     Update(Ref(collections.users, uid), { data: packet }),
   )
 
-  return { ...data, _id: id }
+  return { ...data, id }
 }
 
 const deleteUser = async (uid: string): Promise<void> => {

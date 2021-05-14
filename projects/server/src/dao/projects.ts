@@ -1,4 +1,4 @@
-import { Create, Delete, Get, Ref, Update } from "faunadb"
+import { Create, Delete, Exists, Get, Ref, Update } from "faunadb"
 import { Document } from "../types/fauna"
 import { Project } from "common"
 import db from "./root"
@@ -15,7 +15,7 @@ export const create = async (
   } = await db.query<Document<Project>>(
     Create(collections.projects, { data: { uid, name, color } }),
   )
-  return { ...data, _id: id }
+  return { ...data, id }
 }
 
 export const getByID = async (pid: string): Promise<Project> => {
@@ -23,7 +23,11 @@ export const getByID = async (pid: string): Promise<Project> => {
     data,
     ref: { id },
   } = await db.query<Document<Project>>(Get(Ref(collections.projects, pid)))
-  return { ...data, _id: id }
+  return { ...data, id }
+}
+
+export const existsByID = (pid: string): Promise<boolean> => {
+  return db.query<boolean>(Exists(Ref(collections.projects, pid)))
 }
 
 export const update = async (
@@ -37,7 +41,7 @@ export const update = async (
   } = await db.query<Document<Project>>(
     Update(Ref(collections.projects, pid), { data: { name, color } }),
   )
-  return { ...data, _id: id }
+  return { ...data, id }
 }
 
 const _delete = async (pid: string): Promise<Project> => {
@@ -45,7 +49,7 @@ const _delete = async (pid: string): Promise<Project> => {
     data,
     ref: { id },
   } = await db.query<Document<Project>>(Delete(Ref(collections.projects, pid)))
-  return { ...data, _id: id }
+  return { ...data, id }
 }
 
 export { _delete as delete }

@@ -30,7 +30,7 @@ export default (): Application => {
   // Add routes
   api.use("/users", routes.users)
   api.use("/projects", requireUser, routes.projects)
-  // TODO api.use("/tasks", routes.tasks)
+  api.use("/tasks", requireUser, routes.tasks)
   // TODO api.use("/notes", routes.notes)
   server.use("/api", api)
 

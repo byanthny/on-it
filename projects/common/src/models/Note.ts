@@ -2,7 +2,6 @@ import Joi from "joi"
 import { ID, idSchema } from "./Model"
 
 export const noteSchema = {
-  uid: idSchema,
   parent: idSchema,
   title: Joi.string().min(1).max(255).default("Untitled"),
   text: Joi.string().max(5120),

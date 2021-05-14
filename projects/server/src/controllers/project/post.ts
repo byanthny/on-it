@@ -9,7 +9,7 @@ export const one = async (req: Request, res: Response) => {
   logger.info("ROUTES: project create one")
 
   const { value, error } = object(projectSchema).validate(
-    { ...req.body, uid: req.user!._id! },
+    { ...req.body, uid: req.user!.id! },
     { stripUnknown: true },
   )
 

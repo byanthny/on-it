@@ -10,7 +10,7 @@ export const one = async (req: Request, res: Response) => {
 
   const project = await dao.projects.getByID(pid)
 
-  if (project.uid !== req.user._id) ApiError.Authorization()
+  if (project.uid !== req.user.id) ApiError.Authorization()
 
   res.pack(project)
 }

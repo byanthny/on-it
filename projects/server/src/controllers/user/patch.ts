@@ -9,7 +9,7 @@ export const one = async (req: Request, res: Response) => {
   logger.info("ROUTES: user patch one")
   const { uid } = req.params
 
-  if (uid !== req.user!._id!) ApiError.Authorization()
+  if (uid !== req.user!.id!) ApiError.Authorization()
 
   const { value, error } = Joi.object(userSchema).validate(req.body, {
     stripUnknown: true,
