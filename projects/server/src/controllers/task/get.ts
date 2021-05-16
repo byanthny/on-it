@@ -1,9 +1,9 @@
 import { Request, Response } from "../../types/express"
-import { object } from "joi"
-import { Task, taskSchema, ID } from "common"
+import Joi from "joi"
+import { idSchema, TaskState } from "common"
 import ApiError from "../../errors"
 import dao from "../../dao"
-import { populateTask } from "./util"
+import { populateTask, populateTasks } from "./util"
 import logger from "winston"
 
 export const one = async ({ params, user }: Request, { pack }: Response) => {
@@ -24,4 +24,35 @@ export const one = async ({ params, user }: Request, { pack }: Response) => {
 
 export const many = async ({ query, user }: Request, { pack }: Response) => {
   logger.info("ROUTES: task get many", { query })
+
+  const { value, error } = Joi.object({
+    parent: idSchema.optional(),
+    state: Joi.string()
+      .valid(TaskState.TODO, TaskState.CANCELLED, TaskState.DONE)
+      .optional(),
+    tags: Joi.string()
+      .trim()
+      .optional()
+      .custom((value: string) => {
+        const split = value.split(",").filter((s) => s.length > 0)
+        for (const s of split) {
+          if (
+            s !== TaskState.TODO &&
+            s !== TaskState.DONE &&
+            s !== TaskState.CANCELLED
+          ) {
+            ApiError.MalformedContent(`invalid task state: ${s}`)
+          }
+        }
+        return split
+      }),
+  }).validate(query, { stripUnknown: true })
+
+  if (error) ApiError.MalformedContent(error.message)
+
+  const searchResult = await dao.tasks.searchForTask(user.id!, value)
+
+  const tasks = await populateTasks(searchResult)
+
+  pack(tasks)
 }

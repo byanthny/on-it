@@ -23,7 +23,18 @@ export const taskSchema = {
     .optional(),
 }
 
-export type TaskState = "todo" | "done" | "cancelled"
+export enum TaskState {
+  TODO = "todo",
+  DONE = "done",
+  CANCELLED = "cancelled",
+}
+
+// TODO Task Date Range Search
+export type TaskSearch = {
+  parent?: ID
+  state?: TaskState[]
+  tags?: ID[]
+}
 
 type Task<Tag extends Project | string = Project> = Snowflake & {
   uid: ID

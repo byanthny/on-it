@@ -7,9 +7,11 @@ import {
   Task,
   taskSchema,
   TaskState,
+  TaskSearch,
   Note,
   noteSchema,
   ID,
+  idSchema,
 } from "./models"
 import { ApiResponse } from "./ApiResponse"
 
@@ -22,6 +24,8 @@ export {
   Task,
   taskSchema,
   TaskState,
+  TaskSearch,
+  idSchema,
   Note,
   noteSchema,
   ID,

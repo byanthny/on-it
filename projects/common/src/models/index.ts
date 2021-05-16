@@ -1,9 +1,9 @@
 import { nameSchema } from "./name"
 import User, { userSchema } from "./User"
 import Project, { projectSchema } from "./Project"
-import Task, { taskSchema, TaskState } from "./Task"
+import Task, { taskSchema, TaskState, TaskSearch } from "./Task"
 import Note, { noteSchema } from "./Note"
-import { ID } from "./Model"
+import { ID, idSchema } from "./Model"
 
 export {
   nameSchema,
@@ -14,7 +14,9 @@ export {
   Task,
   taskSchema,
   TaskState,
+  TaskSearch,
   Note,
   noteSchema,
   ID,
+  idSchema
 }
