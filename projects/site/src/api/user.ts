@@ -27,5 +27,9 @@ export const getUser = async (
 ): Promise<User | undefined> =>
   apiRequest<User>(axios.get(`/users/${uid}`, { headers: { token } }))
 
-export const updateUser = async (token: string, uid: ID, user: Partial<User>) =>
+export const updateUser = async (
+  token: string,
+  uid: ID,
+  user: Partial<User>,
+): Promise<User> =>
   apiRequest(axios.patch(`/users/${uid}`, user, { headers: { token } }))
