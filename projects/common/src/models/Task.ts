@@ -23,7 +23,7 @@ export enum TaskState {
 // TODO Task Date Range Search
 export type TaskSearch = {
   parent?: ID
-  state?: TaskState[]
+  state?: TaskState
   tags?: ID[]
 }
 
