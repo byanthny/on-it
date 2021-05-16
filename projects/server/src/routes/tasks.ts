@@ -7,7 +7,7 @@ const router = Router()
 // C
 router.post("/", controllers.task.post.one)
 // R
-// TODO task get one
+router.get("/:tid", controllers.task.get.one)
 // TODO task search
 // U
 // TODO task update
