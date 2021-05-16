@@ -1,5 +1,5 @@
 import { apiRequest, axios } from "./axios"
-import { User } from "common"
+import { ID, User } from "common"
 
 export const register = async (
   email: string,
@@ -23,6 +23,13 @@ export const login = async (
 
 export const getUser = async (
   token: string,
-  uid: string,
+  uid: ID,
 ): Promise<User | undefined> =>
   apiRequest<User>(axios.get(`/users/${uid}`, { headers: { token } }))
+
+export const updateUser = async (
+  token: string,
+  uid: ID,
+  user: Partial<User>,
+): Promise<User> =>
+  apiRequest(axios.patch(`/users/${uid}`, user, { headers: { token } }))

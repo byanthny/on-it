@@ -37,3 +37,22 @@ deploy-server:
     changes:
       - projects/server
       - projects/common
+
+pages:
+  stage: deploy
+  before_script:
+    - npx yarn install
+  script:
+    - npx yarn site build
+    - rm -rf public
+    - cp projects/site/build/index.html projects/site/build/404.html
+    - mv projects/site/build public
+  artifacts:
+    paths:
+      - public
+  only:
+    refs:
+      - master
+    changes:
+      - projects/common
+      - projects/site
