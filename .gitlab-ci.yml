@@ -56,3 +56,4 @@ pages:
     changes:
       - projects/common
       - projects/site
+      - .gitlab-ci.yml
