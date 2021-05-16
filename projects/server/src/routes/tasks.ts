@@ -12,6 +12,6 @@ router.get("/:tid", requireUser, controllers.task.get.one)
 // U
 router.patch("/:tid", requireUser, controllers.task.patch.one)
 // D
-// TODO task delete
+router.delete("/:tid", requireUser, controllers.task.delete.one)
 
 export default router

@@ -1,5 +1,6 @@
 import {
   Create,
+  Delete,
   Exists,
   Expr,
   Get,
@@ -63,6 +64,7 @@ export const searchForTask = async (
 
   return data.map(({ data, ref: { id } }) => ({ ...data, id }))
 }
+
 export const update = async (
   tid: string,
   task: Partial<Task<ID>>,
@@ -75,3 +77,13 @@ export const update = async (
   )
   return { ...data, id }
 }
+
+const _delete = async (tid: ID): Promise<Task<ID>> => {
+  const {
+    data,
+    ref: { id },
+  } = await db.query<Document<Task<ID>>>(Delete(Ref(collections.tasks, tid)))
+  return { ...data, id }
+}
+
+export { _delete as delete }
