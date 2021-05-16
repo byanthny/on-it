@@ -18,9 +18,9 @@ export const one = async (req: Request, res: Response) => {
   // Relational Validation
   const preTask = value as Task<ID>
   // Validate Project references
-  validateTags(preTask)
+  await validateTags(preTask)
   // Validate parent
-  validateParent(preTask)
+  await validateParent(preTask)
 
   const newTask = await dao.tasks.create({ ...preTask, uid: req.user.id! })
 

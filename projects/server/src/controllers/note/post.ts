@@ -19,9 +19,9 @@ export const one = async ({ body, user }: Request, { pack }: Response) => {
   // Relationabl validation
   const preNote = value as Note<ID>
   // Validate Project references
-  validateTags(preNote)
+  await validateTags(preNote)
   // Validate parent
-  validateParent(preNote)
+  await validateParent(preNote)
 
   const newNote = await dao.notes.create({ ...preNote, uid: user.id! })
 
