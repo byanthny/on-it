@@ -6,10 +6,13 @@ import dao from "../../dao"
 import { populateTask } from "./util"
 import logger from "winston"
 
-export const one = async (req: Request, res: Response) => {
+export const one = async (
+  { user, body, params: { tid } }: Request,
+  { pack }: Response,
+) => {
   logger.info("ROUTES: tasks create one")
 
-  const { value, error } = object(taskSchema).validate(req.body, {
+  const { value, error } = object(taskSchema).validate(body, {
     stripUnknown: true,
   })
 
@@ -29,12 +32,14 @@ export const one = async (req: Request, res: Response) => {
     const exists = await dao.tasks.existsByID(preTask.parent!)
     if (!exists) {
       ApiError.NotFound(`Parent task with ID ${preTask.parent} not found`)
+    } else if (preTask.parent === tid) {
+      ApiError.MalformedContent("Task cannot be it's own parent")
     }
   }
 
-  const newTask = await dao.tasks.create({ ...preTask, uid: req.user!.id! })
+  const newTask = await dao.tasks.update(tid, { ...preTask, uid: user!.id! })
 
   const task = await populateTask(newTask)
 
-  res.pack(task)
+  pack(task)
 }

@@ -9,6 +9,7 @@ import {
   Match,
   Paginate,
   Ref,
+  Update,
   Var,
 } from "faunadb"
 import { Document } from "../types/fauna"
@@ -61,4 +62,16 @@ export const searchForTask = async (
   )
 
   return data.map(({ data, ref: { id } }) => ({ ...data, id }))
+}
+export const update = async (
+  tid: string,
+  task: Partial<Task<ID>>,
+): Promise<Task<ID>> => {
+  const {
+    data,
+    ref: { id },
+  } = await db.query<Document<Task<ID>>>(
+    Update(Ref(collections.tasks, tid), { data: task }),
+  )
+  return { ...data, id }
 }

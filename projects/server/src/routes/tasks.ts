@@ -10,7 +10,7 @@ router.post("/", requireUser, controllers.task.post.one)
 router.get("/", requireUser, controllers.task.get.many)
 router.get("/:tid", requireUser, controllers.task.get.one)
 // U
-// TODO task update
+router.patch("/:tid", requireUser, controllers.task.patch.one)
 // D
 // TODO task delete
 
