@@ -4,6 +4,8 @@ import Project, { projectSchema } from "./Project"
 import Task, { taskSchema, TaskState, TaskSearch } from "./Task"
 import Note, { noteSchema } from "./Note"
 import { ID, idSchema } from "./Model"
+import Taggable from "./Taggable"
+import Nestable from "./Nestable"
 
 export {
   nameSchema,
@@ -18,5 +20,7 @@ export {
   Note,
   noteSchema,
   ID,
-  idSchema
+  idSchema,
+  Taggable,
+  Nestable,
 }

@@ -3,7 +3,7 @@ import { object } from "joi"
 import { Task, taskSchema, ID } from "common"
 import ApiError from "../../errors"
 import dao from "../../dao"
-import { populateTask } from "./util"
+import { populateTaggable, validateParent, validateTags } from "../util"
 import logger from "winston"
 
 export const one = async (
@@ -21,25 +21,13 @@ export const one = async (
   // Relational Validation
   const preTask = value as Task<ID>
   // Validate Project references
-  if (preTask.tags) {
-    for (const pid of preTask.tags) {
-      const exists = await dao.projects.existsByID(pid)
-      if (!exists) ApiError.NotFound(`Project Tag with ID ${pid} not found`)
-    }
-  }
+  validateTags(preTask)
   // Validate parent
-  if (preTask.parent) {
-    const exists = await dao.tasks.existsByID(preTask.parent!)
-    if (!exists) {
-      ApiError.NotFound(`Parent task with ID ${preTask.parent} not found`)
-    } else if (preTask.parent === tid) {
-      ApiError.MalformedContent("Task cannot be it's own parent")
-    }
-  }
+  validateParent(preTask, tid)
 
   const newTask = await dao.tasks.update(tid, { ...preTask, uid: user!.id! })
 
-  const task = await populateTask(newTask)
+  const task = await populateTaggable(newTask)
 
   pack(task)
 }

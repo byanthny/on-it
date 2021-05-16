@@ -3,7 +3,7 @@ import Joi from "joi"
 import { idSchema, TaskState } from "common"
 import ApiError from "../../errors"
 import dao from "../../dao"
-import { populateTask, populateTasks } from "./util"
+import { populateTaggable, populateTaggables } from "../util"
 import logger from "winston"
 
 export const one = async ({ params, user }: Request, { pack }: Response) => {
@@ -17,7 +17,7 @@ export const one = async ({ params, user }: Request, { pack }: Response) => {
     ApiError.Authorization("only owners can access their tasks")
   }
 
-  const out = await populateTask(task)
+  const out = await populateTaggable(task)
 
   pack(out)
 }
@@ -52,7 +52,7 @@ export const many = async ({ query, user }: Request, { pack }: Response) => {
 
   const searchResult = await dao.tasks.searchForTask(user.id!, value)
 
-  const tasks = await populateTasks(searchResult)
+  const tasks = await populateTaggables(searchResult)
 
   pack(tasks)
 }

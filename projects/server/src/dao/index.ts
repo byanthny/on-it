@@ -4,6 +4,7 @@ import { Document } from "../types/fauna"
 import * as users from "./users"
 import * as projects from "./projects"
 import * as tasks from "./tasks"
+import * as notes from "./notes"
 import db from "./root"
 
 /**
@@ -17,4 +18,4 @@ const identify = async (token: string): Promise<User> => {
   return { ...data, id }
 }
 
-export default { identify, users, projects, tasks }
+export default { identify, users, projects, tasks, notes }
