@@ -13,4 +13,10 @@ export default Object.freeze({
     byState: Index(INDEXES.TASK.STATE),
     byTagID: Index(INDEXES.TASK.TAG_ID),
   },
+  projects: {
+    all: Index(INDEXES.PROJECT.ALL),
+    byName: Index(INDEXES.PROJECT.NAME),
+    byUserID: Index(INDEXES.PROJECT.USER_ID),
+    byUniqueNameAndUserID: Index(INDEXES.PROJECT.UNIQUE_NAME_AND_USER),
+  },
 })
