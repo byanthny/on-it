@@ -1,8 +1,8 @@
 import Joi from "joi"
 import Snowflake, { ID, idSchema } from "./Model"
-import Nestable from "./Nestable"
+import Nestable, { NestableSearch } from "./Nestable"
 import Project from "./Project"
-import Taggable, { taggableSchema } from "./Taggable"
+import Taggable, { taggableSchema, TaggableSearch } from "./Taggable"
 
 export const taskSchema = {
   ...taggableSchema,
@@ -21,11 +21,10 @@ export enum TaskState {
 }
 
 // TODO Task Date Range Search
-export type TaskSearch = {
-  parent?: ID
-  state?: TaskState
-  tags?: ID[]
-}
+export type TaskSearch = TaggableSearch &
+  NestableSearch & {
+    state?: TaskState
+  }
 
 type Task<Tag extends Project | string = Project> = Snowflake &
   Nestable &

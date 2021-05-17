@@ -1,5 +1,5 @@
 import Joi from "joi"
-import { idSchema } from "./Model"
+import { idSchema, ID } from "./Model"
 import Project from "./Project"
 
 export const taggableSchema = {
@@ -16,6 +16,8 @@ export const taggableSchema = {
     })
     .optional(),
 }
+
+export type TaggableSearch = { tags?: ID[] }
 
 type Taggable<T = Project> = {
   tags?: T[]

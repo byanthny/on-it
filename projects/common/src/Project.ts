@@ -1,5 +1,5 @@
 import Joi from "joi"
-import Snowflake, { idSchema } from "./Model"
+import Snowflake from "./Model"
 import { nameSchema } from "./name"
 
 export const projectSchema = {
@@ -8,6 +8,8 @@ export const projectSchema = {
     .regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)
     .optional(),
 }
+
+export type ProjectSearch = { name: string }
 
 type Project = Snowflake & {
   uid: string

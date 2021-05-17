@@ -1,4 +1,6 @@
-export type ApiResponse<T = any> = {
+type ApiResponse<T = any> = {
   payload?: T
   error?: string
 }
+
+export default ApiResponse
