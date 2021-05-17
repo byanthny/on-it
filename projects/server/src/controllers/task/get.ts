@@ -32,20 +32,9 @@ export const many = async ({ query, user }: Request, { pack }: Response) => {
       .optional(),
     tags: Joi.string()
       .trim()
-      .optional()
-      .custom((value: string) => {
-        const split = value.split(",").filter((s) => s.length > 0)
-        for (const s of split) {
-          if (
-            s !== TaskState.TODO &&
-            s !== TaskState.DONE &&
-            s !== TaskState.CANCELLED
-          ) {
-            ApiError.MalformedContent(`invalid task state: ${s}`)
-          }
-        }
-        return split
-      }),
+      .regex(/^\d+(,\d+)*$/)
+      .custom((value: string) => value.split(",").filter((s) => s.length > 0))
+      .optional(),
   }).validate(query, { stripUnknown: true })
 
   if (error) ApiError.MalformedContent(error.message)
