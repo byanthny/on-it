@@ -1,6 +1,6 @@
-// import * as get from "./get"
+import * as get from "./get"
 import * as post from "./post"
-// import * as patch from "./patch"
-// import * as _delete from "./delete"
+import * as patch from "./patch"
+import * as _delete from "./delete"
 
-export default {post}
+export default { post, get, delete: _delete, patch }

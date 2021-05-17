@@ -28,3 +28,11 @@ export const create = async (note: Note<ID>): Promise<Note<ID>> => {
   )
   return { ...data, id }
 }
+
+export const getByID = async (nid: ID): Promise<Note<ID>> => {
+  const {
+    data,
+    ref: { id },
+  } = await db.query<Document<Note<ID>>>(Get(Ref(collections.notes, nid)))
+  return { ...data, id }
+}

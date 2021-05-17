@@ -29,4 +29,8 @@ export default class ApiError {
   static Internal(msg: string = "Internal Error, try again later") {
     throw new ApiError(500, msg)
   }
+
+  static TODO(msg: string = "Unimplemented") {
+    ApiError.Internal(msg)
+  }
 }

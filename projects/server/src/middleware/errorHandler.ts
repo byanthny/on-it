@@ -7,6 +7,8 @@ const errorHandler = (error: any, _: Request, res: Response, __: any) => {
     res.error(error.message, error.code)
   } else if (error.message?.match(/(authentication\s+failed|unauthorized)/i)) {
     res.error(error.message, 401)
+  } else if (error.message?.match(/instance\s+not\s+found/i)) {
+    res.error(error.message, 404)
   } else {
     logger.info("unknown error", { error })
     res.error(error.message)
