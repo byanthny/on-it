@@ -1,8 +1,27 @@
-import { Create, Delete, Exists, Get, Ref, Update } from "faunadb"
+import {
+  ContainsStr,
+  Create,
+  Delete,
+  Exists,
+  Expr,
+  Filter,
+  Get,
+  Intersection,
+  Lambda,
+  LowerCase,
+  Map,
+  Match,
+  Paginate,
+  Ref,
+  Select,
+  Update,
+  Var,
+} from "faunadb"
 import { Document } from "../types/fauna"
-import { Project } from "common"
+import { ID, Project, ProjectSearch } from "common"
 import db from "./root"
 import collections from "./collections"
+import indexes from "./indexes"
 
 export const create = async (
   uid: string,
@@ -28,6 +47,33 @@ export const getByID = async (pid: string): Promise<Project> => {
 
 export const existsByID = (pid: string): Promise<boolean> => {
   return db.query<boolean>(Exists(Ref(collections.projects, pid)))
+}
+
+export const search = async (
+  uid: ID,
+  search: ProjectSearch,
+): Promise<Project[]> => {
+  let expression = Map(
+    Paginate(Match(indexes.projects.byUserID, uid)),
+    Lambda("ref", Get(Var("ref"))),
+  )
+
+  if (search.name) {
+    expression = Filter(
+      expression,
+      Lambda(
+        "doc",
+        ContainsStr(
+          LowerCase(Select(["data", "name"], Var("doc"))),
+          search.name.toLowerCase(),
+        ),
+      ),
+    )
+  }
+
+  const { data } = await db.query<{ data: Document<Project>[] }>(expression)
+
+  return data.map(({ data, ref: { id } }) => ({ ...data, id }))
 }
 
 export const update = async (
