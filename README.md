@@ -10,5 +10,6 @@ Presenting On-It our solution to managing simpleton task. You can create project
 [Anamoly Detected] Ah duty calls, we must save the universe once again. You'll find other relevant information below and updates in the changelog. Godspeed.
 
 ---
+https://jonoaugustine.gitlab.io/on-it
 
 https://on-it-api.herokuapp.com/
