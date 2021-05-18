@@ -1,6 +1,7 @@
 import dao from "../dao"
 import ApiError from "../errors"
 import { Request } from "../types/express"
+import logger from "winston"
 
 /**
  * Attempts to set token and user onto Request.
@@ -12,6 +13,7 @@ export const readToken = async (req: Request, _: any, next: any) => {
     req.token = token
     // get user
     req.user = await dao.identify(token)
+    logger.debug("Authenticated", { user: req.user })
   }
   next()
 }
