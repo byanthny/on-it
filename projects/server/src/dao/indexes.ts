@@ -22,5 +22,7 @@ export default Object.freeze({
   notes: {
     all: Index(INDEXES.NOTE.ALL),
     byUserID: Index(INDEXES.NOTE.USER_ID),
+    byParentID: Index(INDEXES.NOTE.PARENT_ID),
+    byTagID: Index(INDEXES.NOTE.TAG_ID),
   },
 })

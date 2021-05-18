@@ -48,11 +48,11 @@ export const search = async (
   uid: ID,
   search: NoteSearch,
 ): Promise<Note<ID>[]> => {
-  const qs: Expr[] = [Match(indexes.tasks.byUserID, uid)]
+  const qs: Expr[] = [Match(indexes.notes.byUserID, uid)]
 
-  if (search.parent) qs.push(Match(indexes.tasks.byParentID, search.parent))
+  if (search.parent) qs.push(Match(indexes.notes.byParentID, search.parent))
   if (search.tags) {
-    for (const pid of search.tags) qs.push(Match(indexes.tasks.byTagID, pid))
+    for (const pid of search.tags) qs.push(Match(indexes.notes.byTagID, pid))
   }
 
   let expr = Map(Paginate(Intersection(...qs)), Lambda("ref", Get(Var("ref"))))
@@ -82,8 +82,6 @@ export const search = async (
       ),
     )
   }
-
-  logger.debug("note search", { search, expr })
 
   const { data } = await db.query<{ data: Document<Note<ID>>[] }>(expr)
 
