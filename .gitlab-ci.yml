@@ -47,6 +47,11 @@ build-pages:
   artifacts:
     paths:
       - project/site/build
+  only:
+    changes:
+      - projects/site
+      - projects/common
+      - .gitlab-ci.yml
 
 pages:
   stage: deploy
