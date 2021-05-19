@@ -1,10 +1,12 @@
 require("dotenv").config()
 require("./logger")
-import "express-async-errors"
+require("express-async-errors")
 import server from "./server"
 import logger from "winston"
 
-server().listen(process.env.PORT, () => {
-  logger.info(`listening on port ${process.env.PORT}`)
-  logger.debug(`http://127.0.0.1:${process.env.PORT}`)
+const port = process.env.PORT ?? 7000
+
+server().listen(port, () => {
+  logger.info(`listening on port ${port}`)
+  logger.debug(`http://127.0.0.1:${port}`)
 })
