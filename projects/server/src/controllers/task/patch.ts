@@ -8,10 +8,17 @@ import logger from "winston"
 
 export const one = async (
   { user, body, params: { tid } }: Request,
-  { pack }: Response,
+  { pack }: Response
 ) => {
-  logger.info("ROUTES: tasks create one")
+  logger.info("ROUTES: tasks update one")
 
+  // get task
+  const oldTask = await dao.tasks.getByID(tid)
+
+  // Verify
+  if (oldTask.uid !== user.id!) ApiError.Authorization()
+
+  // Validate
   const { value, error } = object(taskSchema).validate(body, {
     stripUnknown: true,
   })

@@ -6,10 +6,11 @@ import dao from "../../dao"
 import { populateTaggable, validateParent, validateTags } from "../util"
 import logger from "winston"
 
-export const one = async (req: Request, res: Response) => {
+export const one = async ({ body, user }: Request, { pack }: Response) => {
   logger.info("ROUTES: tasks create one")
 
-  const { value, error } = object(taskSchema).validate(req.body, {
+  // Validate
+  const { value, error } = object(taskSchema).validate(body, {
     stripUnknown: true,
   })
 
@@ -22,9 +23,10 @@ export const one = async (req: Request, res: Response) => {
   // Validate parent
   await validateParent(preTask)
 
-  const newTask = await dao.tasks.create({ ...preTask, uid: req.user.id! })
+  // Create
+  const newTask = await dao.tasks.create({ ...preTask, uid: user.id! })
 
   const task = await populateTaggable(newTask)
 
-  res.pack(task)
+  pack(task)
 }

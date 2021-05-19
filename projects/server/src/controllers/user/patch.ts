@@ -5,21 +5,26 @@ import { User, userSchema } from "common"
 import Joi from "joi"
 import ApiError from "../../errors"
 
-export const one = async (req: Request, res: Response) => {
+export const one = async (
+  { params: { uid }, body, user }: Request,
+  { pack }: Response
+) => {
   logger.info("ROUTES: user patch one")
-  const { uid } = req.params
 
-  if (uid !== req.user!.id!) ApiError.Authorization()
+  // Verify
+  if (uid !== user.id!) ApiError.Authorization()
 
-  const { value, error } = Joi.object(userSchema).validate(req.body, {
+  // validate
+  const { value, error } = Joi.object(userSchema).validate(body, {
     stripUnknown: true,
   })
 
   if (error) ApiError.MalformedContent(error.message)
 
+  // update
   const packet = value as Partial<User>
 
-  const user = await dao.users.update(uid, packet)
+  const updatedUser = await dao.users.update(uid, packet)
 
-  res.pack(user)
+  pack(updatedUser)
 }
