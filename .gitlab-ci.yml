@@ -38,12 +38,20 @@ deploy-server:
       - projects/server
       - projects/common
 
-pages:
-  stage: deploy
+build-pages:
+  stage: build
   before_script:
     - npx yarn install
   script:
     - npx yarn site build
+  artifacts:
+    paths:
+      - project/site/build
+
+pages:
+  stage: deploy
+  needs: [build-pages]
+  script:
     - rm -rf public
     - cp projects/site/build/index.html projects/site/build/404.html
     - mv projects/site/build public
@@ -55,4 +63,3 @@ pages:
       - master
     changes:
       - projects/site
-      
