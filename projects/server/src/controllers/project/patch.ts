@@ -5,17 +5,27 @@ import dao from "../../dao"
 import { projectSchema } from "common"
 import logger from "winston"
 
-export const one = async (req: Request, res: Response) => {
+export const one = async (
+  { user, params: { pid }, body }: Request,
+  res: Response
+) => {
   logger.info("ROUTES: project update one")
-  const { pid } = req.params
 
+  // get project
+  const oldProject = await dao.projects.getByID(pid)
+
+  // verify
+  if (oldProject.uid !== user.id!) ApiError.Authorization()
+
+  // Validate
   const { value, error } = object({
     name: projectSchema.name.optional(),
     color: projectSchema.color,
-  }).validate({ ...req.body }, { stripUnknown: true })
+  }).validate(body, { stripUnknown: true })
 
   if (error) ApiError.MalformedContent(error.message)
 
+  // update
   const project = await dao.projects.update(pid, value.name, value.color)
 
   res.pack(project)

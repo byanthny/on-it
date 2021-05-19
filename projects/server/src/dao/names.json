@@ -24,7 +24,8 @@
       "ALL": "all_notes",
       "USER_ID": "note_user_id",
       "PARENT_ID": "note_parent_id",
-      "TAG_ID": "note_tag_id"
+      "TAG_ID": "note_tag_id",
+      "TITLE": "note_title"
     },
     "PROJECT": {
       "ALL": "all_projects",

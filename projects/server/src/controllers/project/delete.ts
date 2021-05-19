@@ -1,12 +1,22 @@
 import { Request, Response } from "../../types/express"
 import dao from "../../dao"
 import logger from "winston"
+import ApiError from "../../errors"
 
-export const one = async (req: Request, res: Response) => {
+export const one = async (
+  { user, params: { pid } }: Request,
+  { pack }: Response
+) => {
   logger.info("ROUTES: project delete one")
-  const { pid } = req.params
 
-  const project = await dao.projects.delete(pid)
+  // get
+  const project = await dao.projects.getByID(pid)
 
-  res.pack(project)
+  // verify
+  if (project.uid !== user.id!) ApiError.Authorization()
+
+  // delete
+  await dao.projects.delete(pid)
+
+  pack(project)
 }

@@ -1,11 +1,18 @@
 import { Request, Response } from "../../types/express"
 import dao from "../../dao"
 import logger from "winston"
+import ApiError from "../../errors"
 
-// TODO Secure user:get:one route (?)
-export const one = async (req: Request, res: Response) => {
+export const one = async (
+  { user, params: { uid } }: Request,
+  { pack }: Response
+) => {
   logger.info("ROUTES: user get one")
-  const { uid } = req.params
-  const user = await dao.users.getByID(uid)
-  res.pack(user)
+
+  // Verify
+  if (uid !== user.id!) ApiError.Authorization()
+
+  // Get
+  const userData = await dao.users.getByID(uid)
+  pack(userData)
 }

@@ -1,15 +1,19 @@
-import { Request, Response } from "../../types/express"
-import dao from "../../dao"
-import logger from "winston"
-import ApiError from "../../errors"
+import { Request, Response } from "../../types/express";
+import dao from "../../dao";
+import logger from "winston";
+import ApiError from "../../errors";
 
-export const one = async (req: Request, res: Response) => {
-  logger.info("ROUTES: user patch one")
-  const { uid } = req.params
+export const one = async (
+  { params: { uid }, user }: Request,
+  { pack }: Response
+) => {
+  logger.info("ROUTES: user patch one");
 
-  if (uid !== req.user!.id!) ApiError.Authorization()
+  // Verify
+  if (uid !== user.id!) ApiError.Authorization();
 
-  await dao.users.delete(uid)
+  // delete
+  await dao.users.delete(uid);
 
-  res.pack("User deleted")
-}
+  pack("User deleted");
+};

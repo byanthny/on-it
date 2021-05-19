@@ -1,27 +1,32 @@
 import { Nestable, ID, Project, Taggable } from "common"
 import dao from "../dao"
 import ApiError from "../errors"
+import logger from "winston"
 
 export const populateTaggable = async (
   task: Taggable<ID>,
 ): Promise<Taggable> => {
-  let projects: Project[] = []
+  const projects: Project[] = []
   if (task.tags) {
-    projects = await Promise.all(task.tags.map(dao.projects.getByID))
+    for (const t of task.tags) {
+      try {
+        const p = await dao.projects.getByID(t)
+        projects.push(p)
+      } catch (error) {
+        logger.info(error.message, error)
+      }
+    }
   }
   return { ...task, tags: projects }
 }
 
 export const populateTaggables = async (
-  tasks: Taggable<ID>[],
+  taggables: Taggable<ID>[],
 ): Promise<Taggable[]> => {
   const out: Taggable[] = []
-  for (const task of tasks) {
-    let projects: Project[] = []
-    if (task.tags) {
-      projects = await Promise.all(task.tags.map(dao.projects.getByID))
-    }
-    out.push({ ...task, tags: projects })
+  for (const t of taggables) {
+    const n = await populateTaggable(t)
+    out.push(n)
   }
   return out
 }
