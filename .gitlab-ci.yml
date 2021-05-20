@@ -38,25 +38,12 @@ deploy-server:
       - projects/server
       - projects/common
 
-build-pages:
-  stage: build
+pages:
+  stage: deploy
   before_script:
     - npx yarn install
   script:
     - npx yarn site build
-  artifacts:
-    paths:
-      - project/site/build
-  only:
-    changes:
-      - projects/site
-      - projects/common
-      - .gitlab-ci.yml
-
-pages:
-  stage: deploy
-  needs: [build-pages]
-  script:
     - rm -rf public
     - cp projects/site/build/index.html projects/site/build/404.html
     - mv projects/site/build public
