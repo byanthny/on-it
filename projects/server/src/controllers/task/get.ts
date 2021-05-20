@@ -39,7 +39,7 @@ export const many = async ({ query, user }: Request, { pack }: Response) => {
 
   if (error) ApiError.MalformedContent(error.message)
 
-  const searchResult = await dao.tasks.searchForTask(user.id!, value)
+  const searchResult = await dao.tasks.search(user.id!, value)
 
   const tasks = await populateTaggables(searchResult)
 

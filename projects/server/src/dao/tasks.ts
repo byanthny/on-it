@@ -41,7 +41,7 @@ export const existsByID = async (tid: ID): Promise<boolean> => {
   return db.query(Exists(Ref(collections.tasks, tid)))
 }
 
-export const searchForTask = async (
+export const search = async (
   uid: ID,
   search: TaskSearch,
 ): Promise<Task<ID>[]> => {
