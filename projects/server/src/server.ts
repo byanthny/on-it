@@ -11,12 +11,12 @@ import {
 export default (): Application => {
   const server = Express()
 
-  // Setup external middleware
-  server.use(Express.json())
-  server.use(cors())
-
   // Custom middleware
   server.use(attachPacketier)
+
+  // Setup external middleware
+  server.use(Express.json({ strict: true }))
+  server.use(cors())
 
   // Setup docs path
   server.use("/docs", (_, res) => {
