@@ -54,4 +54,5 @@ pages:
     refs:
       - master
     changes:
+      - projects/common
       - projects/site

@@ -1,12 +1,12 @@
-import { nameSchema } from "./name"
-import User, { userSchema } from "./User"
-import Project, { projectSchema, ProjectSearch } from "./Project"
-import Task, { taskSchema, TaskState, TaskSearch } from "./Task"
-import Note, { noteSchema } from "./Note"
 import { ID, idSchema } from "./Model"
-import Taggable from "./Taggable"
-import Nestable from "./Nestable"
+import { nameSchema } from "./name"
 import ApiResponse from "./ApiResponse"
+import Nestable from "./Nestable"
+import Note, { noteSchema, NoteSearch } from "./Note"
+import Project, { projectSchema, ProjectSearch } from "./Project"
+import Taggable from "./Taggable"
+import Task, { taskSchema, TaskState, TaskSearch } from "./Task"
+import User, { userSchema } from "./User"
 
 export {
   ApiResponse,
@@ -16,8 +16,10 @@ export {
   Nestable,
   Note,
   noteSchema,
+  NoteSearch
   Project,
   projectSchema,
+  ProjectSearch,
   Taggable,
   Task,
   taskSchema,
@@ -25,5 +27,4 @@ export {
   TaskState,
   User,
   userSchema,
-  ProjectSearch,
 }

@@ -9,7 +9,7 @@ import {
   TaskSearch,
   User,
 } from "common"
-import { NoteSearch } from "common/src/Note"
+import { NoteSearch } from "common"
 
 const API_URI = `http://${
   process.env.NODE_ENV === "production"
