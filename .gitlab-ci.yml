@@ -18,8 +18,8 @@ build-server:
       - projects/server/dist
   only:
     changes:
-      - projects/server
-      - projects/common
+      - projects/server/**/*
+      - projects/common/**/*
       - .gitlab-ci.yml
 
 deploy-server:
@@ -35,8 +35,8 @@ deploy-server:
     refs:
       - master
     changes:
-      - projects/server
-      - projects/common
+      - projects/server/**/*
+      - projects/common/**/*
 
 pages:
   stage: deploy
@@ -54,5 +54,5 @@ pages:
     refs:
       - master
     changes:
-      - projects/common
-      - projects/site
+      - projects/common/**/*
+      - projects/site/**/*
