@@ -109,7 +109,7 @@ export const getByID = async (uid: string): Promise<User> => {
   return { ...data, id }
 }
 
-const existsByIndex = (index: Expr, identity: any) => {
+const existsByIndex = (index: Expr, identity: any): Promise<boolean> => {
   return db.query<boolean>(IsNonEmpty(Paginate(Match(index, identity))))
 }
 
@@ -119,6 +119,19 @@ export const existsByEmail = (email: string) => {
 
 export const existsByDisplayName = (displayName: string) => {
   return existsByIndex(indexes.users.byUniqueDisplayName, displayName)
+}
+
+export const existsByNameOrEmail = (identity: string) => {
+  return db.query<boolean>(
+    IsNonEmpty(
+      Paginate(
+        Union(
+          Match(indexes.users.byUniqueDisplayName, identity),
+          Match(indexes.users.byUniqueEmail, identity),
+        ),
+      ),
+    ),
+  )
 }
 
 export const update = async (

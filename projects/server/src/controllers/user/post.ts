@@ -38,6 +38,11 @@ export const login = async (req: Request, res: Response) => {
 
   if (error) ApiError.MalformedContent(error.message)
 
+  // User exists
+  const exists = await dao.users.existsByNameOrEmail(value.identity)
+
+  if (!exists) ApiError.NotFound("User not found")
+
   const result = await dao.users.login(value.identity, value.password)
   res.pack(result)
 }

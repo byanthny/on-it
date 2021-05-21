@@ -7,7 +7,7 @@ export const one = async (
   { params: { uid }, user }: Request,
   { pack }: Response
 ) => {
-  logger.info("ROUTES: user patch one");
+  logger.info("ROUTES: user delete one");
 
   // Verify
   if (uid !== user.id!) ApiError.Authorization();
