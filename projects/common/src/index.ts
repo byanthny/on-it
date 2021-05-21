@@ -16,7 +16,7 @@ export {
   Nestable,
   Note,
   noteSchema,
-  NoteSearch
+  NoteSearch,
   Project,
   projectSchema,
   ProjectSearch,

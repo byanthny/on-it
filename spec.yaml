@@ -5,10 +5,10 @@ info:
   version: 1.0.0
 
 servers:
-  # Added by API Auto Mocking Plugin
+  - url: https://on-it-api.herku.com/api
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/JonoAugustine/OnIt/1.0.0
-  - url: https://onitapp.herku.com/api
+  
 
 components:
   securitySchemes:
@@ -81,7 +81,8 @@ components:
           minLength: 1
           description: The name or title of the task
         due:
-          type: number
+          type: string
+          format: date-time
           description: The date this task is due
         reminders:
           type: array
@@ -164,8 +165,6 @@ paths:
       description: Logs a user in with email or username and passowrd
       tags:
         - user
-      security:
-        - token: []
       requestBody:
         content:
           application/json:
@@ -187,7 +186,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: User updated
           content:
             application/json:
@@ -207,8 +206,6 @@ paths:
       summary: Create a new User
       tags:
         - user
-      security:
-        - token: []
       requestBody:
         content:
           application/json:
@@ -223,7 +220,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: User updated
           content:
             application/json:
@@ -252,7 +249,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: The User
           content:
             application/json:
@@ -280,7 +277,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: User updated
           content:
             application/json:
@@ -297,7 +294,7 @@ paths:
       tags:
         - user
       responses:
-        200:
+        "200":
           description: User deleted
         default:
           $ref: "#/components/responses/Error"
@@ -319,7 +316,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: OK
           content:
             application/json:
@@ -341,11 +338,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Project"
+              properties:
+                name:
+                  type: string
+                color:
+                  type: string
+              required:
+                - name
       responses:
         default:
           $ref: "#/components/responses/Error"
-        201:
+        "201":
           description: Project created
           content:
             application/json:
@@ -372,7 +375,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: A user's projects
           content:
             application/json:
@@ -396,7 +399,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: Project Updated
           content:
             application/json:
@@ -415,7 +418,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: Project deleted
   # TASKS
   /tasks:
@@ -449,7 +452,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: OK
           content:
             application/json:
@@ -476,7 +479,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        201:
+        "201":
           description: Task created
           content:
             application/json:
@@ -503,7 +506,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: Returns the Task matching the given ID
           content:
             application/json:
@@ -527,7 +530,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: Task updated
           content:
             application/json:
@@ -546,7 +549,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: Task deleted
   # NOTES
   /notes:
@@ -562,6 +565,21 @@ paths:
           in: query
           schema:
             type: string
+        - name: title
+          description: Note title
+          in: query
+          schema:
+            type: string
+        - name: text
+          description: Note text content
+          in: query
+          schema:
+            type: string
+        - name: tags
+          description: Note project tags
+          in: query
+          schema:
+            type: string
         - name: parent
           description: ID of the Parent Task
           in: query
@@ -570,7 +588,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: User's Notes
           content:
             application/json:
@@ -596,7 +614,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        201:
+        "201":
           description: Note created
           content:
             application/json:
@@ -623,7 +641,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: Returns the requested note
           content:
             application/json:
@@ -647,7 +665,7 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: Note updated
           content:
             application/json:
@@ -666,5 +684,5 @@ paths:
       responses:
         default:
           $ref: "#/components/responses/Error"
-        200:
+        "200":
           description: Note Deleted
