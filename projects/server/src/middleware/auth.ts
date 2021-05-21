@@ -8,7 +8,7 @@ import logger from "winston"
  */
 export const readToken = async (req: Request, _: any, next: any) => {
   const { token } = req.headers
-  if (typeof token === "string") {
+  if (typeof token === "string" && token.length > 0) {
     // set token
     req.token = token
     // get user
