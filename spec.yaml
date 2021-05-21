@@ -5,7 +5,10 @@ info:
   version: 1.0.0
 
 servers:
-  - url: https://on-it-api.herku.com/api
+  - description: Production
+    url: https://on-it-api.herku.com/api
+  - description: Postman Mock
+    url: https://7d8aef91-ebd2-4280-af1b-adf7b67e4e21.mock.pstmn.io
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/JonoAugustine/OnIt/1.0.0
   
@@ -169,17 +172,10 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - type: object
-                  properties:
-                    email:
-                      type: string
-                      format: email
-                - type: object
-                  properties:
-                    username:
-                      $ref: "#/components/schemas/Name"
               properties:
+                identity:
+                  type: string
+                  description: User display name or email
                 password:
                   type: string
                   pattern: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$

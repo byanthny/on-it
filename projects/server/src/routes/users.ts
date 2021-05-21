@@ -9,7 +9,6 @@ router.post("/register", controllers.user.post.register)
 router.post("/login", controllers.user.post.login)
 // R
 router.get("/:uid", requireUser, controllers.user.get.one)
-// TODO user search (?)
 // U
 router.patch("/:uid", requireUser, controllers.user.patch.one)
 // D
