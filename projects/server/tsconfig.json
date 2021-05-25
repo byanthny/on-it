@@ -6,9 +6,13 @@
     "rootDir": "./src",
     "paths": {
       "common": ["../common"]
-    }
+    },
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
   "references": [{ "path": "../common" }],
   "include": ["src", "src/**/*.json", "ApiError.ts"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["./dist", "./node_modules"]
 }

@@ -1,24 +1,21 @@
-import { Request, Response } from "../../types/express";
-import ApiError from "../../ApiError";
-import dao from "../../dao";
-import logger from "winston";
-import Joi from "joi";
-import { ID, Note, noteSchema } from "common";
-import { populateTaggable, validateParent, validateTags } from "../util";
+import { Request, Response } from "../../types/express"
+import ApiError from "../../ApiError"
+import dao from "../../dao"
+import logger from "winston"
 
 export const one = async (
-  { user, params: { nid }, body }: Request,
-  { pack }: Response
+  { user, params: { nid } }: Request,
+  { pack }: Response,
 ) => {
-  logger.info("ROUTES: note delete one");
+  logger.info("ROUTES: note delete one")
 
   // get note
-  const note = await dao.notes.getByID(nid);
+  const note = await dao.notes.getByID(nid)
 
   // Verify
-  if (note.uid !== user.id!) ApiError.Authorization();
+  if (note.uid !== user.id!) ApiError.Authorization()
 
-  await dao.notes.delete(nid);
+  await dao.notes.delete(nid)
 
-  pack("Note deleted");
-};
+  pack("Note deleted")
+}
