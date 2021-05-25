@@ -1,7 +1,7 @@
 import { Request, Response } from "../../types/express"
 import logger from "winston"
 import dao from "../../dao"
-import ApiError from "../../errors"
+import ApiError from "../../ApiError"
 import Joi from "joi"
 import { nameSchema } from "common"
 

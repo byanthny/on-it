@@ -1,5 +1,5 @@
 import dao from "../dao"
-import ApiError from "../errors"
+import ApiError from "../ApiError"
 import { Request } from "../types/express"
 import logger from "winston"
 

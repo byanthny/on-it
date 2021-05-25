@@ -1,6 +1,6 @@
 import { Nestable, ID, Project, Taggable } from "common"
 import dao from "../dao"
-import ApiError from "../errors"
+import ApiError from "../ApiError"
 import logger from "winston"
 
 export const populateTaggable = async (

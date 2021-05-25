@@ -9,6 +9,6 @@
     }
   },
   "references": [{ "path": "../common" }],
-  "include": ["src", "src/**/*.json"],
+  "include": ["src", "src/**/*.json", "ApiError.ts"],
   "exclude": ["dist", "node_modules"]
 }

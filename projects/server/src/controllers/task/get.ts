@@ -1,7 +1,7 @@
 import { Request, Response } from "../../types/express"
 import Joi from "joi"
 import { idSchema, TaskState } from "common"
-import ApiError from "../../errors"
+import ApiError from "../../ApiError"
 import dao from "../../dao"
 import { populateTaggable, populateTaggables } from "../util"
 import logger from "winston"

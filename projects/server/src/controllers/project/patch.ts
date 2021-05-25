@@ -1,6 +1,6 @@
 import { object } from "joi"
 import { Request, Response } from "../../types/express"
-import ApiError from "../../errors"
+import ApiError from "../../ApiError"
 import dao from "../../dao"
 import { projectSchema } from "common"
 import logger from "winston"

@@ -1,4 +1,4 @@
-import ApiError from "../errors"
+import ApiError from "../ApiError"
 import { Request, Response } from "../types/express"
 import logger from "winston"
 

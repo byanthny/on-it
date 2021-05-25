@@ -1,6 +1,6 @@
 import { Request, Response } from "../../types/express"
 import { ID, Task } from "common"
-import ApiError from "../../errors"
+import ApiError from "../../ApiError"
 import dao from "../../dao"
 import logger from "winston"
 

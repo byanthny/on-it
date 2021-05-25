@@ -3,7 +3,7 @@ import dao from "../../dao"
 import logger from "winston"
 import { User, userSchema } from "common"
 import Joi from "joi"
-import ApiError from "../../errors"
+import ApiError from "../../ApiError"
 
 export const one = async (
   { params: { uid }, body, user }: Request,
