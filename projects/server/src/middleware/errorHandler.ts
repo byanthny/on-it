@@ -9,6 +9,8 @@ const errorHandler = (error: any, _: Request, res: Response, __: any) => {
     res.error(error.message, 401)
   } else if (error.message?.match(/instance\s+not\s+found/i)) {
     res.error(error.message, 404)
+  } else if (error.message?.match(/instance\s+not\s+unique/i)) {
+    res.error(error.message, 409)
   } else {
     logger.info("unknown error", { error })
     res.error(error.message)

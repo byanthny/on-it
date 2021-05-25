@@ -11,7 +11,7 @@ export const taggableSchema = {
         for (const v of value) {
           out.push(typeof v !== "string" ? v.id : v)
         }
-        return out
+        return out.filter((s) => s)
       }
     })
     .optional(),
