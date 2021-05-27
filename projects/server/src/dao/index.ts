@@ -7,9 +7,7 @@ import * as tasks from "./tasks"
 import * as notes from "./notes"
 import db from "./root"
 
-/**
- * Attemps to get the User document for the given token
- */
+/** Attempts to get the User document for the given token */
 const identify = async (token: string): Promise<User> => {
   const {
     data,
