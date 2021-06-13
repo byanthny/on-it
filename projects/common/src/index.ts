@@ -7,6 +7,7 @@ import Project, { projectSchema, ProjectSearch } from "./Project"
 import Taggable from "./Taggable"
 import Task, { taskSchema, TaskState, TaskSearch } from "./Task"
 import User, { userSchema } from "./User"
+import * as OnIt from "./OnIt"
 
 export {
   ApiResponse,
@@ -27,4 +28,5 @@ export {
   TaskState,
   User,
   userSchema,
+  OnIt
 }
