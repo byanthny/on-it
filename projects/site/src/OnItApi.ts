@@ -30,7 +30,7 @@ export class OnItApi {
     },
   })
   private client: AxiosInstance
-  private token: string
+  readonly token: string
 
   constructor(token: string) {
     this.token = token
