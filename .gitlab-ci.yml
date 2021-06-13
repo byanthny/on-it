@@ -43,6 +43,7 @@ pages:
   before_script:
     - npx yarn install
   script:
+    - npx yarn build
     - npx yarn site build
     - rm -rf public
     - cp projects/site/build/index.html projects/site/build/404.html
