@@ -5,7 +5,11 @@ import logger from "winston"
 const errorHandler = (error: any, _: Request, res: Response, __: any) => {
   if (error instanceof ApiError) {
     res.error(error.message, error.code)
-  } else if (error.message?.match(/(authentication\s+failed|unauthorized)/i)) {
+  } else {
+    logger.debug("Non-native Error")
+  }
+  
+  if (error.message?.match(/(authentication\s+failed|unauthorized)/i)) {
     res.error(error.message, 401)
   } else if (error.message?.match(/instance\s+not\s+found/i)) {
     res.error(error.message, 404)

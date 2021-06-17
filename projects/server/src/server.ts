@@ -6,17 +6,27 @@ import {
   errorHandler,
   readToken,
   requireUser,
+  logger
 } from "./middleware"
+import { OnIt } from "common"
 
 export default (): Application => {
   const server = Express()
 
   // Custom middleware
   server.use(attachPacketier)
+  server.use(logger)
 
   // Setup external middleware
   server.use(Express.json({ strict: true }))
-  server.use(cors())
+  server.use(
+    cors({
+      origin: [
+        OnIt.productionUrl,
+        process.env.NODE_ENV === "DEVELOPMENT" ? "localhost" : undefined,
+      ],
+    }),
+  )
 
   // Setup docs path
   server.use("/docs", (_, res) => {

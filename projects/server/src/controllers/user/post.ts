@@ -2,10 +2,8 @@ import { object, string } from "joi"
 import { Request, Response } from "../../types/express"
 import ApiError from "../../ApiError"
 import dao from "../../dao"
-import logger from "winston"
 
 export const register = async (req: Request, res: Response) => {
-  logger.info("ROUTES: register")
   // validate incoming data
   const { value, error } = object({
     email: string().email().required(),

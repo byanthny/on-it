@@ -1,6 +1,6 @@
 require("dotenv").config()
 require("./logger")
-require("express-async-ApiError")
+require("express-async-errors")
 import server from "./server"
 import logger from "winston"
 
