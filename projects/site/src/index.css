@@ -7,7 +7,8 @@ body,
   margin: 0;
 }
 
-#root, .app {
+#root,
+.app {
   background-color: #333;
   color: whitesmoke;
   position: relative;
@@ -20,7 +21,6 @@ body,
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
 }
 
 a {
