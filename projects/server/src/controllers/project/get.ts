@@ -10,7 +10,7 @@ export const one = async (req: Request, res: Response) => {
 
   const { pid } = req.params
 
-  const project = await dao.projects.getByID(pid)
+  const project = await dao.projects.get(pid)
 
   if (project.uid !== req.user.id) ApiError.Authorization()
 
@@ -26,7 +26,7 @@ export const many = async ({ query, user }: Request, { pack }: Response) => {
 
   if (error) ApiError.MalformedContent(error.message)
 
-  const searchResult = await dao.projects.search(user.id!, value)
+  const searchResult = await dao.projects.search({ ...value, uid: user.id! })
 
   pack(searchResult)
 }

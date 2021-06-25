@@ -1,4 +1,11 @@
+import { UserRole } from "./User"
+
+/**
+ * Defines entity count limits for a specific {@link UserRole}
+ */
 export type Limits = {
+  /** The {@link UserRole} which this {@link Limits} applies to */
+  readonly role: UserRole
   readonly projects: {
     readonly max: number
   }
