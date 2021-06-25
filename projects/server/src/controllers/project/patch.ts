@@ -7,12 +7,12 @@ import logger from "winston"
 
 export const one = async (
   { user, params: { pid }, body }: Request,
-  res: Response,
+  res: Response
 ) => {
   logger.info("ROUTES: project update one")
 
   // get project
-  const oldProject = await dao.projects.get(pid)
+  const oldProject = await dao.projects.getByID(pid)
 
   // verify
   if (oldProject.uid !== user.id!) ApiError.Authorization()
@@ -26,7 +26,7 @@ export const one = async (
   if (error) ApiError.MalformedContent(error.message)
 
   // update
-  const project = await dao.projects.update(pid, value)
+  const project = await dao.projects.update(pid, value.name, value.color)
 
   res.pack(project)
 }

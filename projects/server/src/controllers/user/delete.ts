@@ -16,7 +16,7 @@ export const one = async (
   await dao.users.delete(uid)
 
   // get all projects and delete
-  const projects = await dao.projects.search({ uid })
+  const projects = await dao.projects.search(uid, {})
 
   for (const { id: pid } of projects) {
     try {

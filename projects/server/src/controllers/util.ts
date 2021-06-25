@@ -10,7 +10,7 @@ export const populateTaggable = async (
   if (task.tags) {
     for (const t of task.tags) {
       try {
-        const p = await dao.projects.get(t)
+        const p = await dao.projects.getByID(t)
         projects.push(p)
       } catch (error) {
         logger.info(error.message, error)
@@ -35,7 +35,7 @@ export const populateTaggables = async (
 export const validateTags = async ({ tags }: Taggable<ID>) => {
   if (!tags) return
   for (const pid of tags) {
-    const exists = await dao.projects.exists(pid)
+    const exists = await dao.projects.existsByID(pid)
     if (!exists) ApiError.NotFound(`Project Tag with ID ${pid} not found`)
   }
 }

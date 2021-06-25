@@ -5,12 +5,12 @@ import ApiError from "../../ApiError"
 
 export const one = async (
   { user, params: { pid } }: Request,
-  { pack }: Response,
+  { pack }: Response
 ) => {
   logger.info("ROUTES: project delete one")
 
   // get
-  const project = await dao.projects.get(pid)
+  const project = await dao.projects.getByID(pid)
 
   // verify
   if (project.uid !== user.id!) ApiError.Authorization()
