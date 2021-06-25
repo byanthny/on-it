@@ -18,8 +18,6 @@ export const one = async (req: Request, res: Response) => {
 }
 
 export const many = async ({ query, user }: Request, { pack }: Response) => {
-  logger.info("ROUTES: projects get many", { query })
-
   const { value, error } = Joi.object({ name: nameSchema }).validate(query, {
     stripUnknown: true,
   })

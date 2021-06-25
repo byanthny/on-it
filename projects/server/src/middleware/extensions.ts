@@ -11,5 +11,6 @@ export const attachPacketier = (_: any, res: Response, next: any) => {
 
 export const logger = (req: Request, _: Response, next: any) => {
   log.info(`${req.method} ${req.path}`)
+  log.debug("", { params: req.params, query: req.query })
   next()
 }
