@@ -18,4 +18,5 @@ module.exports = [
   createOrReplaceCollection({ name: COLLECTIONS.TASKS }),
   createOrReplaceCollection({ name: COLLECTIONS.NOTES }),
   createOrReplaceCollection({ name: COLLECTIONS.PROJECTS }),
+  createOrReplaceCollection({ name: COLLECTIONS.LIMITS }),
 ]

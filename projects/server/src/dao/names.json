@@ -3,7 +3,8 @@
     "USERS": "USERS",
     "TASKS": "TASKS",
     "NOTES": "NOTES",
-    "PROJECTS": "PROJECTS"
+    "PROJECTS": "PROJECTS",
+    "LIMITS": "LIMITS"
   },
   "INDEXES": {
     "USER": {
@@ -32,6 +33,10 @@
       "USER_ID": "project_user_id",
       "NAME": "project_name",
       "UNIQUE_NAME_AND_USER": "project_unique_name_and_user"
+    },
+    "LIMIT": {
+      "ALL": "all_limits",
+      "UNIQUE_ROLE": "limit_role"
     }
   },
   "ROLES": {
