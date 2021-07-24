@@ -8,12 +8,15 @@ import Taggable from "./Taggable"
 import Task, { taskSchema, TaskState, TaskSearch } from "./Task"
 import User, { userSchema } from "./User"
 import * as OnIt from "./OnIt"
+import Limits, { limitsSchema } from "./Limits"
 
 export {
   ApiResponse,
   ID,
   idSchema,
   nameSchema,
+  Limits,
+  limitsSchema,
   Nestable,
   Note,
   noteSchema,
@@ -28,5 +31,5 @@ export {
   TaskState,
   User,
   userSchema,
-  OnIt
+  OnIt,
 }

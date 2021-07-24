@@ -25,4 +25,8 @@ export default Object.freeze({
     byParentID: Index(INDEXES.NOTE.PARENT_ID),
     byTagID: Index(INDEXES.NOTE.TAG_ID),
   },
+  limits: {
+    all: Index(INDEXES.LIMIT.ALL),
+    byUniqueRole: Index(INDEXES.LIMIT.UNIQUE_ROLE),
+  },
 })

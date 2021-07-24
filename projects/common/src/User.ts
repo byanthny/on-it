@@ -12,7 +12,11 @@ export const userSchema = {
   role: Joi.string().valid("GENERIC", "DEVELOPER", "ADMIN").optional(),
 }
 
-export type UserRole = "GENERIC" | "DEVELOPER" | "ADMIN"
+export enum UserRole {
+  GENERIC = "GENERIC",
+  DEVELOPER = "DEVELOPER",
+  ADMIN = "ADMIN",
+}
 
 type User = Snowflake & {
   email: string

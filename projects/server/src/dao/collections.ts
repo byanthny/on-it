@@ -6,4 +6,5 @@ export default Object.freeze({
   projects: Collection(COLLECTIONS.PROJECTS),
   tasks: Collection(COLLECTIONS.TASKS),
   notes: Collection(COLLECTIONS.NOTES),
+  limits: Collection(COLLECTIONS.LIMITS),
 })

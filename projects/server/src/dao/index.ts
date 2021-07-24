@@ -5,6 +5,7 @@ import * as users from "./users"
 import * as projects from "./projects"
 import * as tasks from "./tasks"
 import * as notes from "./notes"
+import { LimitDao } from "./internal"
 import db from "./root"
 
 /** Attempts to get the User document for the given token */
@@ -16,4 +17,11 @@ const identify = async (token: string): Promise<User> => {
   return { ...data, id }
 }
 
-export default { identify, users, projects, tasks, notes }
+export default {
+  identify,
+  users,
+  projects,
+  tasks,
+  notes,
+  internal: { limits: new LimitDao() },
+}
