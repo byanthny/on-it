@@ -3,12 +3,13 @@ import { Request, Response } from "../types/express"
 import logger from "winston"
 
 const errorHandler = (error: any, _: Request, res: Response, __: any) => {
+  console.log(error)
   if (error instanceof ApiError) {
     res.error(error.message, error.code)
   } else {
-    logger.debug("Non-native Error")
+    logger.debug("Non-native Error", { error })
   }
-  
+
   if (error.message?.match(/(authentication\s+failed|unauthorized)/i)) {
     res.error(error.message, 401)
   } else if (error.message?.match(/instance\s+not\s+found/i)) {

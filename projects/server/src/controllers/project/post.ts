@@ -1,4 +1,4 @@
-import { object } from "joi"
+import joi from "joi"
 import { Request, Response } from "../../types/express"
 import ApiError from "../../ApiError"
 import dao from "../../dao"
@@ -8,7 +8,7 @@ import logger from "winston"
 export const one = async ({ user, body }: Request, res: Response) => {
   logger.info("ROUTES: project create one")
 
-  const { value, error } = object(projectSchema).validate(body, {
+  const { value, error } = joi.object(projectSchema).validate(body, {
     stripUnknown: true,
   })
 

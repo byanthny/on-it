@@ -1,5 +1,5 @@
 import { Request, Response } from "../../types/express"
-import { object } from "joi"
+import joi from "joi"
 import { Task, taskSchema, ID } from "common"
 import ApiError from "../../ApiError"
 import dao from "../../dao"
@@ -19,7 +19,7 @@ export const one = async (
   if (oldTask.uid !== user.id!) ApiError.Authorization()
 
   // Validate
-  const { value, error } = object(taskSchema).validate(body, {
+  const { value, error } = joi.object(taskSchema).validate(body, {
     stripUnknown: true,
   })
 

@@ -1,13 +1,13 @@
-import { object, string } from "joi"
+import joi from "joi"
 import { Request, Response } from "../../types/express"
 import ApiError from "../../ApiError"
 import dao from "../../dao"
 
 export const register = async (req: Request, res: Response) => {
   // validate incoming data
-  const { value, error } = object({
-    email: string().email().required(),
-    password: string()
+  const { value, error } = joi.object({
+    email: joi.string().email().required(),
+    password: joi.string()
       .min(8)
       .max(32)
       .pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/)
@@ -29,9 +29,9 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   // validate
-  const { value, error } = object({
-    identity: string().max(1024).required(),
-    password: string().max(1024).required(),
+  const { value, error } = joi.object({
+    identity: joi.string().max(1024).required(),
+    password: joi.string().max(1024).required(),
   }).validate(req.body, { stripUnknown: true })
 
   if (error) ApiError.MalformedContent(error.message)

@@ -1,5 +1,5 @@
 import { Request, Response } from "../../types/express"
-import { object } from "joi"
+import joi from "joi"
 import { Task, taskSchema, ID } from "common"
 import ApiError from "../../ApiError"
 import dao from "../../dao"
@@ -10,7 +10,7 @@ export const one = async ({ body, user }: Request, { pack }: Response) => {
   logger.info("ROUTES: tasks create one")
 
   // Validate
-  const { value, error } = object(taskSchema).validate(body, {
+  const { value, error } = joi.object(taskSchema).validate(body, {
     stripUnknown: true,
   })
 

@@ -1,4 +1,4 @@
-import { object } from "joi"
+import joi from "joi"
 import { Request, Response } from "../../types/express"
 import ApiError from "../../ApiError"
 import dao from "../../dao"
@@ -18,7 +18,7 @@ export const one = async (
   if (oldProject.uid !== user.id!) ApiError.Authorization()
 
   // Validate
-  const { value, error } = object({
+  const { value, error } = joi.object({
     name: projectSchema.name.optional(),
     color: projectSchema.color,
   }).validate(body, { stripUnknown: true })
