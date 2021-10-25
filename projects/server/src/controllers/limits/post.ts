@@ -12,7 +12,7 @@ export const one: Handler = async ({ body }, { pack }) => {
 
   if (error) ApiError.MalformedContent(error.message)
 
-  const limits = await dao.internal.limits.create(value)
+  const limits = await dao.limits.create(value)
 
   pack(limits)
 }

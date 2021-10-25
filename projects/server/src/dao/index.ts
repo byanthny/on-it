@@ -5,7 +5,7 @@ import * as users from "./users"
 import * as projects from "./projects"
 import * as tasks from "./tasks"
 import * as notes from "./notes"
-import { LimitDao } from "./internal"
+import * as limits  from "./limits"
 import db from "./root"
 
 /** Attempts to get the User document for the given token */
@@ -23,5 +23,5 @@ export default {
   projects,
   tasks,
   notes,
-  internal: { limits: new LimitDao() },
+  limits,
 }

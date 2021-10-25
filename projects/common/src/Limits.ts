@@ -2,7 +2,9 @@ import Joi from "joi"
 import { UserRole } from "./User"
 
 export const limitsSchema = {
-  role: Joi.string().valid(...Object.keys(UserRole)).required(),
+  role: Joi.string()
+    .valid(...Object.keys(UserRole))
+    .required(),
   projects: Joi.object({
     max: Joi.number().integer().min(0).optional(),
   }).optional(),
@@ -17,6 +19,7 @@ export const limitsSchema = {
  * Defines entity count limits for a specific {@link UserRole}
  */
 type Limits = {
+  readonly id: String
   /** The {@link UserRole} which this {@link Limits} applies to */
   readonly role: UserRole
   readonly projects: {
