@@ -13,3 +13,15 @@ Presenting On-It our solution to managing simpleton task. You can create project
 https://jonoaugustine.gitlab.io/on-it
 
 https://on-it-api.herokuapp.com/
+
+---
+
+## Usage
+
+```bash
+/on-it
+$ yarn install
+$ yarn build
+$ yarn server <dev|start> # runs server in dev or prod mode
+$ yarn site start # runs frontend
+```
