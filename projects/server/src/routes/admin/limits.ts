@@ -4,4 +4,7 @@ import ctrlr from "../../controllers"
 export default Router()
   // C
   .post("/", ctrlr.limits.post.one)
-// RUD
+  // R
+  .get("/", ctrlr.limits.get.all)
+  .get("/:role", ctrlr.limits.get.one)
+// UD
