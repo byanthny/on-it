@@ -1,4 +1,4 @@
-import { Create, Get, Match, Update } from "faunadb"
+import { Map, Create, Get, Match, Paginate, Update, Var, Lambda } from "faunadb"
 import { Document } from "../types/fauna"
 import { Limits } from "common"
 import db from "./root"
@@ -24,6 +24,14 @@ export const get = async (role: UserRole) => {
     Get(Match(indexes.limits.byUniqueRole, role)),
   )
   return { ...data, id }
+}
+
+export const getAll = async (): Promise<Limits[]> => {
+  const { data } = await db.query<{ data: Document<Limits>[] }>(
+    Map(Paginate(Match(indexes.limits.all)), Lambda("ref", Get(Var("ref")))),
+  )
+
+  return data.map(({ data, ref: { id } }) => ({ ...data, id }))
 }
 
 export const update = async (role: UserRole, limits: Partial<Limits>) => {
