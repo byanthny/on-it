@@ -1,14 +1,12 @@
-import { Route, Switch } from "react-router";
-import { Component } from 'react';
-import Login from "./pages/Login";
-import Main from "./pages/Main";
-// import Api from "./OnItApi"
-// import { OnIt } from "common"
+import { Route, Switch } from "react-router"
+import { Component } from 'react'
+import Login from "./pages/Login"
+import Main from "./pages/Main"
 
 class App extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       auth: false
     }
@@ -19,9 +17,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/test">
           <div className="app">
-            <a /*href={OnIt.sourceUrl}*/>
-              Testing...
-            </a>
+            Testing...
           </div>
         </Route>
         <Route path="/login">
@@ -36,4 +32,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
