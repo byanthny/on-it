@@ -1,7 +1,7 @@
 import { Request, Response } from "../../types/express"
 import dao from "../../dao"
 import logger from "winston"
-import { UserRole } from "common/src/User"
+import { UserRole } from "common"
 
 export const one = async (
   { params: { role } }: Request,

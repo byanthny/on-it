@@ -4,7 +4,7 @@ import { Limits } from "common"
 import db from "./root"
 import collections from "./collections"
 import indexes from "./indexes"
-import { UserRole } from "common/src/User"
+import { UserRole } from "common"
 
 export const create = async (limits: Limits): Promise<Limits> => {
   const {

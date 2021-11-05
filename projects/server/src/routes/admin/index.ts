@@ -1,4 +1,4 @@
-import { UserRole } from "common/src/User"
+import { UserRole } from "common"
 import { Router } from "express"
 import { requireRole } from "../../middleware/auth"
 import limits from "./limits"

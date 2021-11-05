@@ -2,7 +2,7 @@ import dao from "../dao"
 import ApiError from "../ApiError"
 import { Handler, Request } from "../types/express"
 import logger from "winston"
-import { UserRole } from "common/src/User"
+import { UserRole } from "common"
 
 /**
  * Attempts to set token and user onto Request.
