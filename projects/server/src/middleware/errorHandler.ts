@@ -7,7 +7,7 @@ const errorHandler = (error: any, _: Request, res: Response, __: any) => {
   if (error instanceof ApiError) {
     res.error(error.message, error.code)
   } else {
-    logger.debug("Non-native Error", { error })
+    logger.debug("Non-native Error, continuing...", { error })
   }
 
   if (error.message?.match(/(authentication\s+failed|unauthorized)/i)) {

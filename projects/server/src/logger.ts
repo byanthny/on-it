@@ -1,7 +1,7 @@
 import { transports, configure, format } from "winston"
 
 configure({
-  level: process.env.STAGE === "PRODUCTION" ? "info" : "debug",
+  level: process.env.STAGE === "DEVELOPMENT" ? "debug" : "info",
   transports: [new transports.Console()],
   format: format.combine(
     format.colorize(),
