@@ -6,7 +6,7 @@ import Note, { noteSchema, NoteSearch } from "./Note"
 import Project, { projectSchema, ProjectSearch } from "./Project"
 import Taggable from "./Taggable"
 import Task, { taskSchema, TaskState, TaskSearch } from "./Task"
-import User, { userSchema } from "./User"
+import User, { userSchema, UserRole } from "./User"
 import * as OnIt from "./OnIt"
 import Limits, { limitsSchema } from "./Limits"
 
@@ -14,13 +14,14 @@ export {
   ApiResponse,
   ID,
   idSchema,
-  nameSchema,
   Limits,
   limitsSchema,
+  nameSchema,
   Nestable,
   Note,
   noteSchema,
   NoteSearch,
+  OnIt,
   Project,
   projectSchema,
   ProjectSearch,
@@ -30,6 +31,6 @@ export {
   TaskSearch,
   TaskState,
   User,
+  UserRole,
   userSchema,
-  OnIt,
 }
