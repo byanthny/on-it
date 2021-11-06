@@ -1,18 +1,12 @@
 import { Route, Switch } from "react-router"
-import { Component } from 'react'
+import { Component, useState } from 'react'
 import Login from "./pages/Login"
 import Main from "./pages/Main"
 
-class App extends Component {
+function App() {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      auth: false
-    }
-  }
+  const [auth, setAuth] = useState("");
 
-  render() {
     return (
       <Switch>
         <Route exact path="/test">
@@ -29,7 +23,6 @@ class App extends Component {
         </Route>
       </Switch>
     )
-  }
 }
 
 export default App

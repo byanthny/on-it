@@ -1,8 +1,6 @@
-import { Container, Form, Button } from "react-bootstrap";
-
 function Login() {
-    return (
-        < Container>
+    return (<></>);
+        {/* < Container>
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -23,8 +21,7 @@ function Login() {
                     Submit
                 </Button>
             </Form>
-        </Container>
-    );
+        </Container> */}
 }
 
 export default Login;
