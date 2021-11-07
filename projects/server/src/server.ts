@@ -41,8 +41,8 @@ export default (): Application => {
   api.use("/users", routes.users)
   api.use("/projects", requireUser, routes.projects)
   api.use("/tasks", requireUser, routes.tasks)
-  api.use("/admin", requireUser, routes.admin)
   api.use("/notes", requireUser, routes.notes)
+  api.use("/admin", requireUser, routes.admin)
   server.use("/api", api)
 
   // Handle errors

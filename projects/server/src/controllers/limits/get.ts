@@ -9,7 +9,7 @@ export const one = async (
 ) => {
   logger.info("ROUTES: limits get one")
 
-  const limits = await dao.limits.get(role as UserRole)
+  const limits = await dao.limits.get(role.toUpperCase() as UserRole)
 
   pack(limits)
 }
