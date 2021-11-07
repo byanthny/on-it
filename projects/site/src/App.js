@@ -1,7 +1,10 @@
 import { Route, Switch } from "react-router"
-import { Component, useState } from 'react'
-import Login from "./pages/Login"
+import { useState } from 'react'
+import Login from "./pages/auth/Login"
 import Main from "./pages/Main"
+import Dev from "./pages/Dev"
+
+const urlBase = "/on-it"
 
 function App() {
 
@@ -9,16 +12,14 @@ function App() {
 
     return (
       <Switch>
-        <Route exact path="/test">
-          <div className="app">
-            Testing...
-          </div>
+        <Route exact path={`${urlBase}/dev`}>
+          <Dev /> {/* Use for testing things */}
         </Route>
-        <Route path="/login">
+        <Route path={`${urlBase}/login`}>
           <Login />
         </Route>
-        <Route exact path="/">
-          {/* TODO PrivateRoute if user is authorized.*/}
+        <Route exact path={`${urlBase}`}>
+          {/* TODO Route if user is authorized.*/}
           <Main />
         </Route>
       </Switch>
