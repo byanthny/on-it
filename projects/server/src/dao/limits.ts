@@ -36,10 +36,13 @@ export const getAll = async (): Promise<Limits[]> => {
 
 export const update = async (role: UserRole, limits: Partial<Limits>) => {
   const {
-    data,
-    ref: { id },
-  } = await db.query<Document<Limits>>(
-    Update(Match(indexes.limits.byUniqueRole, role), { data: limits }),
+    data: [doc],
+  } = await db.query<{ data: Document<Limits>[] }>(
+    Map(
+      Paginate(Match(indexes.limits.byUniqueRole, role)),
+      Lambda("ref", Update(Var("ref"), { data: limits })),
+    ),
   )
-  return { ...data, id }
+
+  return { ...doc.data, id: doc.ref?.id }
 }

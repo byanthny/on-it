@@ -7,4 +7,6 @@ export default Router()
   // R
   .get("/", ctrlr.limits.get.all)
   .get("/:role", ctrlr.limits.get.one)
-// UD
+  // U
+  .patch("/:role", ctrlr.limits.patch.one)
+//D
