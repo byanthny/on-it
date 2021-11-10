@@ -1,5 +1,6 @@
 import {
   ContainsStr,
+  Count,
   Create,
   Delete,
   Exists,
@@ -72,6 +73,10 @@ export const search = async (
   const { data } = await db.query<{ data: Document<Project>[] }>(expression)
 
   return data.map(({ data, ref: { id } }) => ({ ...data, id }))
+}
+
+export const count = async (uid: ID): Promise<number> => {
+  return db.query<number>(Count(Match(indexes.projects.byUserID, uid)))
 }
 
 export const update = async (
