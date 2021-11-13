@@ -1398,6 +1398,21 @@
   dependencies:
     "@chakra-ui/utils" "1.8.4"
 
+"@chakra-ui/icon@1.2.1":
+  "integrity" "sha512-uZxFsiY4Tld+LvGIX7cky0H6oMRac8udPMQRzIk/UQeNZcsWisGetatbQsew3y1lWV/iH/8+TlDuW13GWGyGGQ=="
+  "resolved" "https://registry.npmjs.org/@chakra-ui/icon/-/icon-1.2.1.tgz"
+  "version" "1.2.1"
+  dependencies:
+    "@chakra-ui/utils" "1.9.1"
+
+"@chakra-ui/icons@^1.1.1":
+  "integrity" "sha512-/+u6euCOFw6J1DZW7NcVFtib4mygJBoqRdsKiU1Z3uiTC+zQTBzcCt54NQ+kK8rhuNzJ+odahnt/AbjBJgZ+5A=="
+  "resolved" "https://registry.npmjs.org/@chakra-ui/icons/-/icons-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "@chakra-ui/icon" "1.2.1"
+    "@types/react" "^17.0.15"
+
 "@chakra-ui/image@1.0.22":
   "integrity" "sha512-+WRYWhZU0izZehwX5x52snIALd61NEY/9mHM/xWMEPl8kTivBhC6VrLv5xuhv5vJc21Witu8zuSttqF3j0V1iw=="
   "resolved" "https://registry.npmjs.org/@chakra-ui/image/-/image-1.0.22.tgz"
@@ -1773,6 +1788,16 @@
   "integrity" "sha512-lMk+FD70zgI8Fn6Ee5h6T2FJdJLnYIYaRQI+Au5izjl8e3V2OZ/Tdi72LW9FnHlQyFZ5N24HGefZlNxOEDUjmw=="
   "resolved" "https://registry.npmjs.org/@chakra-ui/utils/-/utils-1.8.4.tgz"
   "version" "1.8.4"
+  dependencies:
+    "@types/lodash.mergewith" "4.6.6"
+    "css-box-model" "1.2.1"
+    "framesync" "5.3.0"
+    "lodash.mergewith" "4.6.2"
+
+"@chakra-ui/utils@1.9.1":
+  "integrity" "sha512-Tue8JfpzOqeHd8vSqAnX1l/Y3Gg456+BXFP/TH6mCIeqMAMbrvv25vDskds0wlXRjMYdmpqHxCEzkalFrscGHA=="
+  "resolved" "https://registry.npmjs.org/@chakra-ui/utils/-/utils-1.9.1.tgz"
+  "version" "1.9.1"
   dependencies:
     "@types/lodash.mergewith" "4.6.6"
     "css-box-model" "1.2.1"
@@ -2519,7 +2544,7 @@
   "resolved" "https://registry.npmjs.org/@types/q/-/q-1.5.4.tgz"
   "version" "1.5.4"
 
-"@types/react@^16.8.0 || ^17.0.0":
+"@types/react@^16.8.0 || ^17.0.0", "@types/react@^17.0.15":
   "integrity" "sha512-pLWntxXpDPaU+RTAuSGWGSEL2FRTNyRQOjSWDke/rxRg14ncsZvx8AKWMWZqvc1UOaJIAoObdZhAWvRaHFi5rw=="
   "resolved" "https://registry.npmjs.org/@types/react/-/react-17.0.33.tgz"
   "version" "17.0.33"

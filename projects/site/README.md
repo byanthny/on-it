@@ -2,3 +2,6 @@
 
 This project holds the deployed web-app which serves
 as the users' interface with *On It*.
+
+Notes:
+https://app.swaggerhub.com/apis-docs/JonoAugustine/OnIt/1.0.0#/user/get_users__uid_
