@@ -1,29 +1,17 @@
-import { Route, Switch } from "react-router"
-import { useState } from 'react'
-import Login from "./pages/auth/Login"
-import Main from "./pages/Main"
-import Dev from "./pages/Dev"
-
-const urlBase = "/on-it"
+import { Box, Flex } from "@chakra-ui/react";
+import Login from "./pages/auth/Login";
+import ModeToggle from "src/components/ModeToggle";
 
 function App() {
-
-  const [auth, setAuth] = useState("");
-
-    return (
-      <Switch>
-        <Route exact path={`${urlBase}/dev`}>
-          <Dev /> {/* Use for testing things */}
-        </Route>
-        <Route path={`${urlBase}/login`}>
-          <Login signup={false}/>
-        </Route>
-        <Route exact path={`${urlBase}`}>
-          {/* TODO Route if user is authorized.*/}
-          <Main />
-        </Route>
-      </Switch>
-    )
+    return(
+        <Flex width="100vw" height="100vh" pt={30}>
+            <Box pos="absolute" bottom="5" right="5">
+                < ModeToggle />
+            </Box>
+            <Login signup={false} />
+            {/* <Text fontSize="md" textAlign="center">Coming Soon!</Text> */}
+        </Flex>
+    );
 }
 
-export default App
+export default App;
