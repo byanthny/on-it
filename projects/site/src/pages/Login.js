@@ -1,4 +1,3 @@
-import ModeToggle from "../components/ModeToggle";
 import {
     Flex,
     Box,
@@ -13,40 +12,39 @@ import {
   } from '@chakra-ui/react';
 import { useState } from "react";
 import api from "../services/OnItApi";
-//from "@chakra-ui/react";
 
 /* https://blog.logrocket.com/how-to-create-forms-with-chakra-ui-in-react-apps/ */
 
 function Login(props) {
 
-    //var api = new OnItApi();
-
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState(props.auth.email);
     const [password, setPassword] = useState("");
     const [confpassword, setConfPassword] = useState("");
     const [signup, setSignup] = useState(props.signup);
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async () => {
-        //TODO Contact API
-        //Send necessary info back to parent
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         setLoading(true);
         if(signup) {
             try{
-                //console.log(api.register(email, password));
+                console.log(await api.register(email, password));
+                setLoading(false);
                 props.auth(true);
-            } catch (err) {
-                console.log(err);
+            } catch (error) {
+                console.log(error);
             }
         } else {
             try{
-                //console.log(api.login(email, password));
+                console.log(await api.login(email, password));
+                setLoading(false);
                 props.auth(true);
-            } catch(err) {
-                console.log(err);
+            } catch(error) {
+                console.log(error);
             }
+            setLoading(false);
         }
-        //TODO Error Handling
+        //TODO Error Handling + Input Validation
     }
 
     return (<>
