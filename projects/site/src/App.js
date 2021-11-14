@@ -16,7 +16,7 @@ function App() {
           <Dev /> {/* Use for testing things */}
         </Route>
         <Route path={`${urlBase}/login`}>
-          <Login />
+          <Login signup={false}/>
         </Route>
         <Route exact path={`${urlBase}`}>
           {/* TODO Route if user is authorized.*/}
