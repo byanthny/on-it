@@ -1,11 +1,26 @@
 .navbar {
-    display: flex;
-    width: 100%;
-    padding: 1rem;
-    justify-content: space-around;
+    width: 100vw;
     position: absolute;
     bottom: 0;
 
-    a {
+    .innerbox {
+        display: flex;
+        width: 90%;
+        justify-content: space-around;
+        background-color: black;
+        border-radius: 15px;
+        color: white;
+        margin: 5%;
+
+        a {
+            color: white;
+            flex-grow: 1;
+            text-align: center;
+            padding: 15px;
+        }
+        
+        button {
+            flex-grow: 1;
+        }
     }
 }
