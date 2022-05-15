@@ -1,13 +1,11 @@
 import React from "react";
-import ToDo from "../components/ToDo/ToDo";
+import NavBar from "../components/navigation/NavBar/NavBar"
 
 const devPage = () => (
-<div>
+<>
     <h1>Testing!</h1>
-    <form>
-        <ToDo />
-    </form>
-</div>
+    <NavBar />
+</>
 );
 
 export default devPage;
