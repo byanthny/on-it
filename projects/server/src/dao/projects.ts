@@ -18,9 +18,10 @@ import {
 } from "faunadb"
 import { Document } from "../types/fauna"
 import { ID, Project, ProjectSearch } from "common"
-import db from "./root"
+import db from "./client"
 import collections from "./collections"
 import indexes from "./indexes"
+
 
 export const create = async (
   uid: string,

@@ -1,5 +1,5 @@
 import {
-  ContainsStr,
+  ContainsStr, Count,
   Create,
   Delete,
   Expr,
@@ -18,9 +18,14 @@ import {
 } from "faunadb"
 import { Document } from "../types/fauna"
 import { ID, Note, NoteSearch } from "common"
-import db from "./root"
+import db from "./client"
 import collections from "./collections"
 import indexes from "./indexes"
+
+
+export const count = async (taskID: ID): Promise<number> => {
+  return db.query<number>(Count(Match(indexes.notes.byParentID, taskID)))
+}
 
 export const create = async (note: Note<ID>): Promise<Note<ID>> => {
   const {

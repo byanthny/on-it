@@ -1,7 +1,7 @@
 import { Map, Create, Get, Match, Paginate, Update, Var, Lambda } from "faunadb"
 import { Document } from "../types/fauna"
 import { Limits } from "common"
-import db from "./root"
+import db from "./client"
 import collections from "./collections"
 import indexes from "./indexes"
 import { UserRole } from "common"
