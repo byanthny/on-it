@@ -1,4 +1,5 @@
 export default class ApiError {
+  name: string = "ApiError"
   code: number
   message?: string
   private constructor(code: number = 500, message?: string) {

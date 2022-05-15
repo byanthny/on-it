@@ -3,12 +3,10 @@ import controllers from "../controllers"
 import { authentication } from "../middleware"
 
 
-const router = Router()
+export default Router()
+  .post("/register", controllers.user.post.register)
+  .post("/login", controllers.user.post.login)
+  .get("/:uid", authentication(), controllers.user.get.one)
+  .patch("/:uid", authentication(), controllers.user.patch.one)
+  .delete("/:uid", authentication(), controllers.user.delete.one)
 
-router.post("/register", controllers.user.post.register)
-router.post("/login", controllers.user.post.login)
-router.get("/:uid", authentication(), controllers.user.get.one)
-router.patch("/:uid", authentication(), controllers.user.patch.one)
-router.delete("/:uid", authentication(), controllers.user.delete.one)
-
-export default router

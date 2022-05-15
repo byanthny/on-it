@@ -14,6 +14,7 @@ export function authentication(required: boolean | UserRole = true): Handler {
   return async (req: Request, _: Response, next: Function) => {
     const { token } = req.headers
     if (typeof token === "string" && token.length > 0) {
+      logger.debug("Token found", { token })
       // set token
       req.token = token
       // get user
