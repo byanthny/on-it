@@ -1,10 +1,20 @@
 import React from "react";
 import NavBar from "../components/navigation/NavBar/NavBar"
+import utils from "../utils/utils";
 
-const homePage = () => (
+const homePage = () => {
+
+const date = new Date();
+const dateString = `${utils.convertMonthNum(date.getMonth())} ${date.getDate()}`
+
+return(
 <>
-    <h1>Homepage!</h1>
     <NavBar />
-</>);
+    <div className="main-content">
+        <h1>{dateString}</h1>
+    </div>
+</>
+);
+}
 
 export default homePage;
