@@ -1,28 +1,48 @@
+@import "../../../styles/variables.scss";
+
 .navbar {
     width: 100vw;
     position: absolute;
     bottom: 0;
+}
 
-    .innerbox {
-        display: flex;
-        width: 90%;
-        justify-content: space-around;
-        background-color: rgb(22, 22, 22);
-        border-radius: 15px;
-        color: white;
-        margin-left: 5%;
-        margin-right: 5%;
-        margin-bottom: 25px;
+.innerbox {
+    display: flex;
+    width: 90%;
+    justify-content: space-around;
+    background-color: $dark;
+    border-radius: 15px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 25px;
 
-        a {
-            color: white;
-            flex-grow: 1;
-            text-align: center;
-            padding: 15px;
+    a {
+        flex-grow: 1;
+        text-align: center;
+        padding: 15px;
+        color: $light;
+
+        .light {
+            color: $light;
         }
-        
-        button {
-            flex-grow: 1;
+
+        .dark {
+            color: $dark;
         }
     }
+    
+    button {
+        flex-grow: 1;
+    }
+
+    .light {
+        background-color: $dark;
+        color: $dark;
+    }
+
+    .dark {
+        background-color: $light;
+        color: $light;
+    }
+
 }
