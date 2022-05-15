@@ -3,8 +3,10 @@ import NavBar from "../components/navigation/NavBar/NavBar"
 
 const notesPage = () => (
 <>
-    <h1>Notes Page!</h1>
     <NavBar />
+    <div className="main-content">
+        <h1>Notes</h1>
+    </div>
 </>);
 
 export default notesPage;

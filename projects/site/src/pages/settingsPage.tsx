@@ -3,8 +3,10 @@ import NavBar from "../components/navigation/NavBar/NavBar"
 
 const settingsPage = () => (
 <>
-    <h1>Settings Page!</h1>
     <NavBar />
+    <div className="main-content">
+        <h1>Settings</h1>
+    </div>
 </>);
 
 export default settingsPage;
