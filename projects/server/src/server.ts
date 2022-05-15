@@ -2,13 +2,12 @@ import Express, { Application, Router } from "express"
 import cors from "cors"
 import routes from "./routes"
 import {
-  attachPacketier,
+  attachPacketier, authentication,
   errorHandler,
-  readToken,
-  requireUser,
   logger,
 } from "./middleware"
 import { OnIt } from "common"
+
 
 export default (): Application => {
   const server = Express()
@@ -35,14 +34,12 @@ export default (): Application => {
 
   // setup API paths
   const api = Router()
-  // Setup middleware
-  api.use(readToken)
   // Add routes
   api.use("/users", routes.users)
-  api.use("/projects", requireUser, routes.projects)
-  api.use("/tasks", requireUser, routes.tasks)
-  api.use("/notes", requireUser, routes.notes)
-  api.use("/admin", requireUser, routes.admin)
+  api.use("/projects", authentication(), routes.projects)
+  api.use("/tasks", authentication(), routes.tasks)
+  api.use("/notes", authentication(), routes.notes)
+  api.use("/admin", authentication(), routes.admin)
   server.use("/api", api)
 
   // Handle errors
