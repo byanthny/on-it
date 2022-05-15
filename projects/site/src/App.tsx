@@ -6,10 +6,10 @@ const urlBase = "/on-it";
 
 const App = () => (
   <Routes>
-    <Route exact path={`${urlBase}/dev`}>
+    <Route path={`${urlBase}/dev`}>
       <Dev /> {/* Use for testing things */}
     </Route>
-    <Route exact path={`${urlBase}`}>
+    <Route path={`${urlBase}`}>
       <h1>Hello World</h1>
     </Route>
   </Routes>
