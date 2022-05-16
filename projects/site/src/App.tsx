@@ -10,13 +10,11 @@ import NotesPage from "./pages/notesPage";
 import SettingsPage from "./pages/settingsPage";
 import TodoPage from "./pages/todoPage";
 
-// const urlBase = "/on-it";
-
 const App = () => {
 const { theme }= useContext(ThemeContext);
 return(
   <div className={`${theme} background`}>
-    <Router>
+    <Router basename="/on-it">
       <Routes>
         <Route path="/dev" element={<DevPage />} />
         <Route path="/login" element={<LoginPage />} />
