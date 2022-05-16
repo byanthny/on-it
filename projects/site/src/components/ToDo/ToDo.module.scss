@@ -1,10 +1,11 @@
+@import "../../styles/variables.scss";
+
 .todo {
   display: flex;
   gap: 1rem;
+  margin: $margin;
 }
 
-.light {
-}
-
-.dark {
+.checkbox {
+    vertical-align: middle;
 }
