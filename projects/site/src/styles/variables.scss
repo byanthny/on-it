@@ -1,12 +1,14 @@
-$light: rgb(237, 237, 227);
+$light: rgb(241, 241, 231);
 $dark: rgb(22, 22, 22);
+
 $navbar-color-light: scale-color($dark, $lightness: -5%);
 $navbar-color-dark: scale-color($dark, $lightness: +5%);
+$add-button: scale-color($light, $lightness: +10%);
 
 .light {
-    --navbar-color: #{$navbar-color-light};
+    // --navbar-color: #{$navbar-color-light};
 }
 
 .dark {
-    --navbar-color: #{$navbar-color-dark};
+    // --navbar-color: #{$navbar-color-dark};
 }
