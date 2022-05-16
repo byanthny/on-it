@@ -6,7 +6,8 @@ import "./styles/global.scss";
 import "./styles/typography.scss";
 
 ReactDOM.render(
-<ThemeProvider>
+  <ThemeProvider>
     <App />
-</ThemeProvider>, 
-document.getElementById("root"));
+  </ThemeProvider>,
+  document.getElementById("root"),
+);

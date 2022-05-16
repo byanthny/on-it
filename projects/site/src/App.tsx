@@ -11,21 +11,21 @@ import SettingsPage from "./pages/settingsPage";
 import TodoPage from "./pages/todoPage";
 
 const App = () => {
-const { theme }= useContext(ThemeContext);
-return(
-  <div className={`${theme} background`}>
-    <Router basename="/on-it">
-      <Routes>
-        <Route path="/dev" element={<DevPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/notes" element={<NotesPage />} />
-        <Route path="/todo" element={<TodoPage />} />
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </Router>
-  </div>
-);
-}
+  const { theme } = useContext(ThemeContext);
+  return (
+    <div className={`${theme} background`}>
+      <Router basename="/on-it">
+        <Routes>
+          <Route path="/dev" element={<DevPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/todo" element={<TodoPage />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Router>
+    </div>
+  );
+};
 
 export default App;
