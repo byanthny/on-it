@@ -17,10 +17,9 @@ import {
 } from "faunadb"
 import { Document } from "../types/fauna"
 import { User } from "common"
-import db from "./root"
+import db from "./client"
 import collections from "./collections"
 import indexes from "./indexes"
-import logger from "winston"
 
 type Login = {
   user: User
@@ -36,7 +35,6 @@ export const register = async (
   email: string,
   password: string,
 ): Promise<Login> => {
-  logger.debug("DAO: register")
   const {
     userDoc: {
       data,

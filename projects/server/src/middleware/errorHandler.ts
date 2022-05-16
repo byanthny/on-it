@@ -2,13 +2,14 @@ import ApiError from "../ApiError"
 import { Request, Response } from "../types/express"
 import logger from "winston"
 
+
 const errorHandler = (error: any, _: Request, res: Response, __: any) => {
-  console.log(error)
-  if (error instanceof ApiError) {
+  if (error.name == ApiError.name) {
     res.error(error.message, error.code)
-  } else {
-    logger.debug("Non-native Error, continuing...", { error })
+    return
   }
+
+  logger.debug("Non-native Error, continuing...", { error })
 
   if (error.message?.match(/(authentication\s+failed|unauthorized)/i)) {
     res.error(error.message, 401)
