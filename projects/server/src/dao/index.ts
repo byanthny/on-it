@@ -6,7 +6,7 @@ import * as projects from "./projects"
 import * as tasks from "./tasks"
 import * as notes from "./notes"
 import * as limits  from "./limits"
-import db from "./root"
+import db from "./client"
 
 /** Attempts to get the User document for the given token */
 const identify = async (token: string): Promise<User> => {

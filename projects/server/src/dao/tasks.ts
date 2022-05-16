@@ -1,4 +1,5 @@
 import {
+  Count,
   Create,
   Delete,
   Exists,
@@ -15,9 +16,14 @@ import {
 } from "faunadb"
 import { Document } from "../types/fauna"
 import { Task, ID, TaskSearch } from "common"
-import db from "./root"
+import db from "./client"
 import collections from "./collections"
 import indexes from "./indexes"
+
+
+export const count = async (uid: ID): Promise<number> => {
+  return db.query<number>(Count(Match(indexes.tasks.byUserID, uid)))
+}
 
 export const create = async (task: Task<ID>): Promise<Task<ID>> => {
   const {

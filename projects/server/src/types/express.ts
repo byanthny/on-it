@@ -14,4 +14,4 @@ export type Response = ExpressResponse & {
   ): ExpressResponse<any, Record<string, any>>
 }
 
-export type Handler = (req: Request, res: Response, next: Function) => unknown
+export type Handler = (req: Request, res: Response, next: Function) => any

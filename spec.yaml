@@ -26,8 +26,13 @@ components:
       properties:
         payload:
           type: object
+          nullable: true
         error:
           type: string
+          nullable: true
+        meta:
+          type: object
+          nullable: true
     Name:
       type: string
       pattern: ^[A-Za-z][A-Za-z0-9_\-]{0,13}$

@@ -7,3 +7,5 @@ lib
 *.tsbuildinfo
 .vscode
 .faunarc
+.idea
+fauna-dev.bash

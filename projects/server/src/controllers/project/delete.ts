@@ -7,7 +7,7 @@ export const one = async (
   { user, params: { pid } }: Request,
   { pack }: Response
 ) => {
-  logger.info("ROUTES: project delete one")
+  logger.debug("ROUTES: project delete one")
 
   // get
   const project = await dao.projects.getByID(pid)
