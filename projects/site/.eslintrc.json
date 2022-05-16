@@ -23,6 +23,7 @@
   "ignorePatterns": ["services/"],
   "rules": {
     "quotes": ["error", "double"],
+    "import/no-named-as-default": 0,
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "import/extensions": [
       "error",

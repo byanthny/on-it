@@ -15,7 +15,7 @@ import TodoPage from "./pages/todoPage";
 const App = () => {
 const { theme }= useContext(ThemeContext);
 return(
-  <div className={theme} id="background">
+  <div className={`${theme} background`}>
     <Router>
       <Routes>
         <Route path="/dev" element={<DevPage />} />
