@@ -4,9 +4,14 @@
   margin: 0;
 }
 
+p, h1 {
+  transition: $theme-transition;
+}
+
 .background {
   width: 100vw;
   height: 100vh;
+  transition: $theme-transition;
 }
 
 .light {
@@ -27,4 +32,21 @@
 
 .main-content {
   padding: 25px;
+}
+
+.secondary-content {
+  padding: 25px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: var(--button-background-color);
+  color: var(--text-color);
+  border-radius: $border-radius;
+  border-style: none;
+  transition: $theme-transition;
+
+  &:hover {
+    background-color: var(--button-background-hover-color);
+  }
 }

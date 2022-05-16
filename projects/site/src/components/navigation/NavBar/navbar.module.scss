@@ -12,7 +12,7 @@
   justify-content: space-around;
   //background-color: var(--navbar-color);
   background-color: $navbar-color-dark;
-  border-radius: 10px;
+  border-radius: $border-radius;
   margin: 0 auto;
   margin-bottom: 25px;
   max-width: 600px;
@@ -26,29 +26,30 @@
     color: $light;
     font-size: clamp(0.15rem, 0.25rem + 3vw, 1.5rem);
   }
+}
 
-  button {
-    flex-grow: 1;
-    border-style: none;
-    background-color: transparent;
+.addbutton {
+  flex-grow: 1;
+  border-style: none;
+  background-color: transparent;
 
-    svg {
-      background-color: $add-button;
-      font-size: clamp(0.55rem, 0.75rem + 3vw, 2rem);
-      padding: 25% 25%;
-      border-radius: 10px;
-      text-align: center;
-      @include box-shadow(0px, 2px, 5px, 0px, rgba(0, 0, 0, 0.264));
-    }
+  svg {
+    background-color: $add-button;
+    font-size: clamp(0.55rem, 0.75rem + 3vw, 2rem);
+    padding: 25% 25%;
+    border-radius: 10px;
+    text-align: center;
+    color: $black;
+    @include box-shadow(0px, 2px, 5px, 0px, rgba(0, 0, 0, 0.264));
   }
 }
 
-.buttonwrapper {
+.addbuttonwrapper {
   position: relative;
   width: 100%;
 }
 
-.buttonfixed {
+.addbuttonfixed {
   position: absolute;
   margin-left: auto;
   margin-right: auto;

@@ -15,10 +15,12 @@ const settingsPage = () => {
     <>
       <NavBar />
       <div className="main-content">
-        <h1>Settings</h1>
+      <h1>Settings</h1>
+        <div className="secondary-content">
         <button type="button" onClick={changeTheme}>
           toggle theme
         </button>
+        </div>
       </div>
     </>
   );
