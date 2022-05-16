@@ -25,13 +25,28 @@
     padding: 3% 0;
     color: $light;
     font-size: clamp(0.15rem, 0.25rem + 3vw, 1.5rem);
+    border-radius: $border-radius;
+    transition: $theme-transition;
+  
+    &:hover {
+      background-color: scale-color($navbar-color-dark, $lightness: $darken);
+    }
   }
+
 }
 
 .addbutton {
   flex-grow: 1;
   border-style: none;
   background-color: transparent;
+
+  &:hover {
+    background-color: scale-color($navbar-color-dark, $lightness: $darken);
+
+    svg {
+      background-color: scale-color($add-button, $lightness: -2%);
+    }
+  }
 
   svg {
     background-color: $add-button;
