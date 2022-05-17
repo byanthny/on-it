@@ -1,0 +1,30 @@
+@import "./variables.scss";
+
+* {
+  margin: 0;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+}
+
+.light {
+  color: $dark;
+
+  &.background {
+    background-color: $light;
+  }
+}
+
+.dark {
+  color: $light;
+
+  &.background {
+    background-color: $dark;
+  }
+}
+
+.main-content {
+  padding: 25px;
+}

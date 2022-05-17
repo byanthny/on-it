@@ -2,8 +2,12 @@
   "name": "on-it",
   "private": true,
   "workspaces": {
-    "packages": ["projects/*"],
-    "nohoist": ["**/**"]
+    "packages": [
+      "projects/*"
+    ],
+    "nohoist": [
+      "**/**"
+    ]
   },
   "license": "GPL-3.0",
   "homepage": "https://gitlab.com/JonoAugustine/on-it#readme",
@@ -22,7 +26,6 @@
     "build": "lerna run build --stream"
   },
   "dependencies": {
-    "bootstrap": "^5.1.3",
     "typescript": "^4.2.4"
   },
   "devDependencies": {

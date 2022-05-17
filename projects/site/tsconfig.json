@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.settings.json",
   "compilerOptions": {
+    "lib": ["dom"],
     "baseUrl": ".",
     "outDir": "./dist",
     "rootDir": "./src",
@@ -20,11 +21,6 @@
       "path": "../common"
     }
   ],
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "build",
-    "node_modules"
-  ]
+  "include": ["src"],
+  "exclude": ["build", "node_modules"]
 }
