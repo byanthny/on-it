@@ -2,7 +2,18 @@
 
 This project contains the monolithic server/back-end for *On It*.
 The deployed server itself as well as scripts for database
-configuration.## Authentication
+configuration.
+
+## DB Schema
+
+```mermaid
+erDiagram
+    USER ||--o{ PROJECT: "has many"
+    USER ||--o{ TASK: "has many"
+    TASK ||--o{ PROJECT: references
+    TASK ||--o{ TASK: "has many"
+    TASK ||--o{ NOTE: "has many" 
+```
 
 ## Authentication
 
@@ -10,8 +21,8 @@ configuration.## Authentication
 sequenceDiagram
     actor C as client
     participant S as Server
-    participant R as Redis
-    participant M as Mongo
+    participant R as Session DB
+    participant M as Entity DB
 
     C->>S: POST /register
     Note right of C: email, password
