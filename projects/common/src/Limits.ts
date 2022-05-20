@@ -1,6 +1,7 @@
 import Joi from "joi"
 import { UserRole } from "./User"
 
+
 export const limitsSchema = {
   role: Joi.string()
     .valid(...Object.keys(UserRole))
@@ -13,6 +14,9 @@ export const limitsSchema = {
     maxProjects: Joi.number().integer().min(0).optional(),
     maxNotes: Joi.number().integer().min(0).optional(),
   }).optional(),
+  notes: Joi.object({
+    maxLength: Joi.number().integer().min(0).optional(),
+  }),
 }
 
 /**
@@ -32,7 +36,9 @@ type Limits = {
     /** Max number of Notes a Task can have */
     readonly maxNotes: number
   }
-  // Maximum number of notes is (task.max * tasks.maxNotes)
+  readonly notes: {
+    readonly maxLength: number
+  }
 }
 
 export default Limits
