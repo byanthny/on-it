@@ -2,7 +2,7 @@ import Joi from "joi"
 
 export type ID = string
 
-type Snowflake = { id?: ID }
+type Snowflake = { _id?: ID }
 
 export const idSchema = Joi.string().regex(/\d+/)
 
