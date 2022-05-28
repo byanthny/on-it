@@ -11,6 +11,7 @@ p, h1 {
 .background {
   width: 100vw;
   height: 100vh;
+  height: -webkit-fill-available;
   transition: $theme-transition;
 }
 
