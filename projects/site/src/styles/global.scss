@@ -33,6 +33,9 @@ p, h1 {
 
 .main-content {
   padding: 25px;
+  max-width: $content-max-width;
+  margin: 0 auto;
+  padding-top: clamp(25px, 10vh, 150px);
 }
 
 .secondary-content {
@@ -42,7 +45,7 @@ p, h1 {
 button {
   padding: 10px 15px;
   background-color: var(--button-background-color);
-  color: var(--text-color);
+  color: var(--inverse-text-color);
   border-radius: $border-radius;
   border-style: none;
   transition: $theme-transition;

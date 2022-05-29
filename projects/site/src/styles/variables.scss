@@ -11,6 +11,8 @@ $navbar-color-dark: scale-color($dark, $lightness: +5%);
 
 $add-button: scale-color($light, $lightness: +10%);
 
+$nav-max-width: 600px;
+
 /* Buttons */
 $button-color-light: scale-color($dark, $lightness: -5%);
 $button-color-dark: scale-color($light, $lightness: -5%);
@@ -24,17 +26,21 @@ $theme-transition: background-color 0.5s ease;
 
 $margin: 15px;
 
+$content-max-width: 1250px;
+
 /* Themes */
 .light {
   // --navbar-color: #{$navbar-color-light};
   --button-background-color: #{$button-color-light};
   --button-background-hover-color: #{scale-color($button-color-light, $lightness: $darken)};
-  --text-color: #{$white};
+  --text-color: #{$black};
+  --inverse-text-color: #{$white};
 }
 
 .dark {
   // --navbar-color: #{$navbar-color-dark};
   --button-background-color: #{$button-color-dark};
   --button-background-hover-color: #{scale-color($button-color-dark, $lightness: $lighten)};
-  --text-color: #{$black};
+  --text-color: #{$white};
+  --inverse-text-color: #{$black};
 }
