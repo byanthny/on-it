@@ -17,12 +17,17 @@ $nav-max-width: 600px;
 $button-color-light: scale-color($dark, $lightness: -5%);
 $button-color-dark: scale-color($light, $lightness: -5%);
 
+/* To Do */
+$todo-color-light: scale-color($dark, $lightness: -5%);
+$todo-color-dark: scale-color($light, $lightness: -5%);
+
 /* Misc */
 $lighten: +20%;
 $darken: -20%;
 
 $border-radius: 10px;
 $theme-transition: background-color 0.5s ease;
+$todo-transition: background-color 0.5s ease, padding 0.25s ease-in;
 
 $margin: 15px;
 
@@ -31,10 +36,12 @@ $content-max-width: 1250px;
 /* Themes */
 .light {
   // --navbar-color: #{$navbar-color-light};
-  --button-background-color: #{$button-color-light};
   --button-background-hover-color: #{scale-color($button-color-light, $lightness: $darken)};
+  --button-background-color: #{$button-color-light};
   --text-color: #{$black};
   --inverse-text-color: #{$white};
+  --todo-background-hover-color: #{scale-color($todo-color-dark, $lightness: $lighten)};
+  --todo-background-color: #{$todo-color-light};
 }
 
 .dark {
@@ -43,4 +50,6 @@ $content-max-width: 1250px;
   --button-background-hover-color: #{scale-color($button-color-dark, $lightness: $lighten)};
   --text-color: #{$white};
   --inverse-text-color: #{$black};
+  --todo-background-hover-color: #{scale-color($todo-color-light, $lightness: $lighten)};
+  --todo-background-color: #{$todo-color-dark};
 }

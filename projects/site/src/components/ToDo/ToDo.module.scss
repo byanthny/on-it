@@ -4,8 +4,37 @@
   display: flex;
   gap: 1rem;
   margin: $margin;
+  width: 100%;
+  transition: $todo-transition;
+  padding: 10px;
+
+  &:focus-within, &:hover {
+    border-radius: $border-radius;
+  }
+
+  &:focus-within {
+    background-color: var(--todo-background-color)!important;
+    padding: 20px 10px ;
+
+    .todoText {
+      color: var(--inverse-text-color);
+    }
+  }
+
+  &:hover {
+    background-color: var(--todo-background-hover-color);
+  }
 }
 
 .checkbox {
     vertical-align: middle;
+}
+
+.todoText {
+  width: 100%;
+  background-color: transparent;
+  border-style: none;
+  font-family: sans-serif;
+  color: var(--text-color);
+
 }

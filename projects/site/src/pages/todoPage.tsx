@@ -65,9 +65,18 @@ const fakedata = [
   }
 ]
 
+const updateTile = (title: string) => {
+  console.log(title);
+  // communicate to API
+}
+
+// const updateStatus = (e: amy) =>  {
+//   console.log("Updated Status");
+// }
+
 const todoPage = () => {
   const todoList = fakedata.map(({title, state}) => 
-    <ToDo text={title} status={state} />
+    <ToDo text={title} status={state} update={updateTile} />
   );
   return(<>
     <NavBar />

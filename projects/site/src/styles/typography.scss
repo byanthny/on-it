@@ -6,3 +6,7 @@
 h1 {
   font-size: clamp(1rem, 1.5rem + 10vw, 4rem);
 }
+
+p, input {
+  font-size: clamp(.15rem, .75rem + 5vw, 1.20rem);
+}
