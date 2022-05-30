@@ -12,17 +12,24 @@ interface PropTypes {
 const ToDo = ({text, status, update}:  PropTypes) => {
 
   const [title, setTitle] = useState(text);
+  const [focused, setFocused] = useState(false);
 
   const updateText = (e: any) => {
-    if (e.key === "Enter") {
+    const { key } = e;
+    
+    if (key === "Enter") {
       update(title);
+      setFocused(false);
+    } 
+    else if (key === "Esc") {
+      setFocused(false);
     }
   }
 
   return(
-    <div className={styles.todo}>
+    <div className={focused ? styles.todoFocused : styles.todo}>
       <input type="checkbox" id="something" value="something" className={styles.checkbox} />
-      <input className={styles.todoText} type="text" onChange={(e) => setTitle(e.target.value)} onKeyPress={updateText} defaultValue={`${title} status: ${status}`}/>
+      <input className={styles.todoText} type="text" onBlur={() => setFocused(false)} onFocus={()=>setFocused(true)} onChange={(e) => setTitle(e.target.value)} onKeyPress={updateText} defaultValue={`${title} status: ${status}`}/>
     </div>
   );
 }
