@@ -32,7 +32,7 @@ const fakedata = [
     "reminders": [
       "2022-05-16T23:09:56.903Z"
     ],
-    "state": "todo",
+    "state": "done",
     "pinned": false,
     "tags": [
       {
@@ -65,8 +65,8 @@ const fakedata = [
   }
 ]
 
-const updateTile = (title: string) => {
-  console.log(title);
+const updateTile = (title: string, status: string) => {
+  console.log(`${title} ${status}`);
   // communicate to API
 }
 

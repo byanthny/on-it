@@ -5,7 +5,6 @@
 .todo, .todoFocused {
   display: flex;
   gap: 1rem;
-  margin: $margin;
   width: 100%;
   transition: $todo-transition;
   padding: 10px;
@@ -21,7 +20,7 @@
   padding: 20px 10px;
   @include box-shadow(0px, 2px, 5px, 0px, rgba(0, 0, 0, 0.264));
 
-  .todoText {
+  .todoText, .todoDone {
     color: var(--inverse-text-color);
   }
 }
@@ -30,11 +29,34 @@
     vertical-align: middle;
 }
 
-.todoText {
+.todoText, .todoDone {
   width: 100%;
   background-color: transparent;
   border-style: none;
   font-family: sans-serif;
   color: var(--text-color);
   outline: 0;
+}
+
+.todoDone {
+  text-decoration: line-through;
+}
+
+input[type="checkbox"] {
+  position: relative;
+  width: 1em;
+  height: 1em;
+  color: $black;
+  border: 1px solid gray;
+  border-radius: 4px;
+  appearance: none;
+  outline: 0;
+  margin: .5em 0;
+  cursor: pointer;
+  transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
+  &:checked {
+    color: $white;
+    border-color: $pastel-blue;
+    background: $pastel-blue;
+  }
 }
