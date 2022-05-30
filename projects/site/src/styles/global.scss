@@ -1,4 +1,5 @@
 @import "./variables.scss";
+@import "./mixins.scss";
 
 * {
   margin: 0;
@@ -35,7 +36,12 @@ p, h1 {
   padding: 25px;
   max-width: $content-max-width;
   margin: 0 auto;
-  padding-top: clamp(25px, 10vh, 150px);
+  padding-top: clamp(25px, 10vh, 150px)!important;
+
+  @include md {
+    padding: 5rem;
+  }
+
 }
 
 .secondary-content {

@@ -1,5 +1,36 @@
+@import "./variables.scss";
+
 @mixin box-shadow($top, $left, $blur, $size, $color) {
   -webkit-box-shadow: $top $left $blur $size $color;
   -moz-box-shadow: $top $left $blur $size $color;
   box-shadow: $top $left $blur $size $color;
+}
+
+/* Media Queries */ 
+// Small
+@mixin sm {
+  @media (min-width: #{$sm-screen}) {
+      @content;
+  }
+}
+
+// Medium
+@mixin md {
+  @media (min-width: #{$md-screen}) {
+      @content;
+  }
+}
+
+// Large
+@mixin lg {
+  @media (min-width: #{$lg-screen}) {
+      @content;
+  }
+}
+
+// Custom
+@mixin rwd($screen) {
+  @media (min-width: ($screen + 'px')) {
+      @content;
+  }
 }
