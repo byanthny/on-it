@@ -75,8 +75,8 @@ const updateTile = (title: string, status: string) => {
 // }
 
 const todoPage = () => {
-  const todoList = fakedata.map(({title, state}) => 
-    <ToDo text={title} status={state} update={updateTile} />
+  const todoList = fakedata.map(({title, state, reminders}) => 
+    <ToDo text={title} status={state} update={updateTile} reminder={reminders[0]} />
   );
   return(<>
     <NavBar />
