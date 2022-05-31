@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import styles from "./ToDo.module.scss";
 
 interface PropTypes {
-  text: string;
+  title: string;
   status: string;
   update: Function;
   reminder: string
 }
-const ToDo = ({text, status, update, reminder}:  PropTypes) => {
+const ToDo = ({title, status, update, reminder}:  PropTypes) => {
 
-  const [title, setTitle] = useState(text);
+  const [text, setText] = useState(title);
   const [focused, setFocused] = useState(false);
   const [checked, setChecked] = useState((status === "done"));
 
@@ -19,7 +19,7 @@ const ToDo = ({text, status, update, reminder}:  PropTypes) => {
     const { key } = e;
     
     if (key === "Enter") {
-      update(title, status);
+      update(text, status);
       setFocused(false);
       // TODO unfocus input
     }
@@ -28,13 +28,13 @@ const ToDo = ({text, status, update, reminder}:  PropTypes) => {
   const updateStatus = (e: any) => {
     const updatedChecked = e.target.checked
     setChecked(updatedChecked);
-    update(title, updatedChecked ? "done" : "todo")
+    update(text, updatedChecked ? "done" : "todo")
   }
 
   return(
     <div className={focused ? styles.todoFocused : styles.todo}>
       <input type="checkbox" defaultChecked={checked} onChange={updateStatus} className={styles.checkbox} />
-      <input className={checked ? styles.todoDone : styles.todoText} type="text" onBlur={() => setFocused(false)} onFocus={()=>setFocused(true)} onChange={(e) => setTitle(e.target.value)} onKeyPress={updateText} defaultValue={`${title} status: ${checked}`} />
+      <input className={checked ? styles.todoDone : styles.todoText} type="text" onBlur={() => setFocused(false)} onFocus={()=>setFocused(true)} onChange={(e) => setText(e.target.value)} onKeyPress={updateText} defaultValue={`${text}`} />
       <p className={styles.todoReminder}>{`in ${daysTillDue} days`}</p>
     </div>
   );

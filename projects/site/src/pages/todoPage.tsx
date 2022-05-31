@@ -65,18 +65,15 @@ const fakedata = [
   }
 ]
 
-const updateTile = (title: string, status: string) => {
+const updateTodo = (title: string, status: string) => {
+  // eslint-disable-next-line no-console
   console.log(`${title} ${status}`);
   // communicate to API
 }
 
-// const updateStatus = (e: amy) =>  {
-//   console.log("Updated Status");
-// }
-
 const todoPage = () => {
   const todoList = fakedata.map(({title, state, reminders}) => 
-    <ToDo text={title} status={state} update={updateTile} reminder={reminders[0]} />
+    <ToDo title={title} status={state} update={updateTodo} reminder={reminders[0]} />
   );
   return(<>
     <NavBar />
