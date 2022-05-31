@@ -8,8 +8,13 @@ const convertMonthNum = (date: number) => {
   return monthShort[date];
 };
 
+const daysTillDue = (date: string) => Math.ceil(
+  (new Date(date).getTime() - Date.now()) / (1000 * 60 * 60 * 24),
+);
+
 const utils = {
   convertMonthNum,
+  daysTillDue
 };
 
 export default utils;

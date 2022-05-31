@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./ToDo.module.scss";
+import utils from "../../utils/utils";
 
 interface PropTypes {
   title: string;
@@ -12,17 +13,12 @@ const ToDo = ({ title, status, update, reminder }: PropTypes) => {
   const [focused, setFocused] = useState(false);
   const [checked, setChecked] = useState(status === "done");
 
-  const daysTillDue = Math.ceil(
-    (new Date(reminder).getTime() - Date.now()) / (1000 * 60 * 60 * 24),
-  );
-
   const updateText = (e: any) => {
     const { key } = e;
 
     if (key === "Enter") {
       update(text, status);
       setFocused(false);
-      // TODO unfocus input
     }
   };
 
@@ -49,9 +45,9 @@ const ToDo = ({ title, status, update, reminder }: PropTypes) => {
         onChange={(e) => setText(e.currentTarget.innerText)}
         onKeyPress={updateText}
         tabIndex={0}
-        contentEditable
+        contentEditable={focused}
       >{`${text}`}</span>
-      <p className={styles.todoReminder}>{`${daysTillDue} days`}</p>
+      <p className={styles.todoReminder}>{`${utils.daysTillDue(reminder)} days`}</p>
     </div>
   );
 };
