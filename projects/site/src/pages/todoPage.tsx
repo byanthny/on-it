@@ -2,6 +2,7 @@ import React from "react";
 import ToDo from "../components/ToDo/ToDo";
 import NavBar from "../components/navigation/NavBar/NavBar";
 
+// TODO Remove fake data and use API
 const fakedata = [
   {
     _id: "string",

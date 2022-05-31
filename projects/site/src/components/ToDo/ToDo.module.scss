@@ -5,7 +5,6 @@
 .todoFocused {
   display: flex;
   gap: 1rem;
-  width: 100%;
   transition: $todo-transition;
   padding: 10px;
   border-radius: $border-radius;
