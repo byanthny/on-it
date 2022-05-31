@@ -34,8 +34,8 @@ const ToDo = ({title, status, update, reminder}:  PropTypes) => {
   return(
     <div className={focused ? styles.todoFocused : styles.todo}>
       <input type="checkbox" defaultChecked={checked} onChange={updateStatus} className={styles.checkbox} />
-      <input className={checked ? styles.todoDone : styles.todoText} type="text" onBlur={() => setFocused(false)} onFocus={()=>setFocused(true)} onChange={(e) => setText(e.target.value)} onKeyPress={updateText} defaultValue={`${text}`} />
-      <p className={styles.todoReminder}>{`in ${daysTillDue} days`}</p>
+      <textarea className={checked ? styles.todoDone : styles.todoText} onBlur={() => setFocused(false)} onFocus={()=>setFocused(true)} onChange={(e) => setText(e.target.value)} onKeyPress={updateText} defaultValue={`${text}`} />
+      <p className={styles.todoReminder}>{`${daysTillDue} days`}</p>
     </div>
   );
 }
