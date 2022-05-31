@@ -6,7 +6,8 @@
   caret-color: scale-color($pastel-blue, $lightness: +5%);
 }
 
-p, h1 {
+p,
+h1 {
   transition: $theme-transition;
 }
 
@@ -37,12 +38,11 @@ p, h1 {
   padding: 25px;
   max-width: $content-max-width;
   margin: 0 auto;
-  padding-top: clamp(25px, 10vh, 150px)!important;
+  padding-top: clamp(25px, 10vh, 150px) !important;
 
   @include md {
     padding: 5rem;
   }
-
 }
 
 .secondary-content {

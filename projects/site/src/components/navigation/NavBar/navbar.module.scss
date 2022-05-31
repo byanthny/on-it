@@ -27,12 +27,11 @@
     font-size: clamp(0.15rem, 0.25rem + 3vw, 1.5rem);
     border-radius: $border-radius;
     transition: $theme-transition;
-  
+
     &:hover {
       background-color: scale-color($navbar-color-dark, $lightness: $darken);
     }
   }
-
 }
 
 .addbutton {

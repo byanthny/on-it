@@ -5,39 +5,52 @@ interface PropTypes {
   title: string;
   status: string;
   update: Function;
-  reminder: string
+  reminder: string;
 }
-const ToDo = ({title, status, update, reminder}:  PropTypes) => {
-
+const ToDo = ({ title, status, update, reminder }: PropTypes) => {
   const [text, setText] = useState(title);
   const [focused, setFocused] = useState(false);
-  const [checked, setChecked] = useState((status === "done"));
+  const [checked, setChecked] = useState(status === "done");
 
-  const daysTillDue = Math.ceil(((new Date(reminder).getTime()) - Date.now())/(1000*60*60*24));
+  const daysTillDue = Math.ceil(
+    (new Date(reminder).getTime() - Date.now()) / (1000 * 60 * 60 * 24),
+  );
 
   const updateText = (e: any) => {
     const { key } = e;
-    
+
     if (key === "Enter") {
       update(text, status);
       setFocused(false);
       // TODO unfocus input
     }
-  }
+  };
 
   const updateStatus = (e: any) => {
-    const updatedChecked = e.target.checked
+    const updatedChecked = e.target.checked;
     setChecked(updatedChecked);
-    update(text, updatedChecked ? "done" : "todo")
-  }
+    update(text, updatedChecked ? "done" : "todo");
+  };
 
-  return(
+  return (
     <div className={focused ? styles.todoFocused : styles.todo}>
-      <input type="checkbox" defaultChecked={checked} onChange={updateStatus} className={styles.checkbox} />
-      <textarea className={checked ? styles.todoDone : styles.todoText} onBlur={() => setFocused(false)} onFocus={()=>setFocused(true)} onChange={(e) => setText(e.target.value)} onKeyPress={updateText} defaultValue={`${text}`} />
+      <input
+        type="checkbox"
+        defaultChecked={checked}
+        onChange={updateStatus}
+        className={styles.checkbox}
+      />
+      <textarea
+        className={checked ? styles.todoDone : styles.todoText}
+        onBlur={() => setFocused(false)}
+        onFocus={() => setFocused(true)}
+        onChange={(e) => setText(e.target.value)}
+        onKeyPress={updateText}
+        defaultValue={`${text}`}
+      />
       <p className={styles.todoReminder}>{`${daysTillDue} days`}</p>
     </div>
   );
-}
+};
 
 export default ToDo;

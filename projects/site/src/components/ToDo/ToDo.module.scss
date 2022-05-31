@@ -1,8 +1,8 @@
 @import "../../styles/variables.scss";
 @import "../../styles/mixins.scss";
 
-
-.todo, .todoFocused {
+.todo,
+.todoFocused {
   display: flex;
   gap: 1rem;
   width: 100%;
@@ -16,15 +16,18 @@
 }
 
 .todoFocused {
-  background-color: var(--todo-background-color)!important;
+  background-color: var(--todo-background-color) !important;
   padding: 20px 10px;
   @include box-shadow(0px, 2px, 5px, 0px, rgba(0, 0, 0, 0.264));
 
-  .todoText, .todoDone, .todoReminder {
+  .todoText,
+  .todoDone,
+  .todoReminder {
     color: var(--inverse-text-color);
   }
 
-  .todoText, .todoDone {
+  .todoText,
+  .todoDone {
     white-space: pre-wrap;
     overflow-y: scroll;
     // height: 50px;
@@ -32,10 +35,11 @@
 }
 
 .checkbox {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
-.todoText, .todoDone {
+.todoText,
+.todoDone {
   width: 100%;
   height: 25px;
   background-color: transparent;

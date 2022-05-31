@@ -7,6 +7,8 @@ h1 {
   font-size: clamp(1rem, 1.5rem + 10vw, 4rem);
 }
 
-p, input, textarea {
-  font-size: clamp(.15rem, .75rem + 5vw, 1.20rem);
+p,
+input,
+textarea {
+  font-size: clamp(0.15rem, 0.75rem + 5vw, 1.2rem);
 }

@@ -6,31 +6,31 @@
   box-shadow: $top $left $blur $size $color;
 }
 
-/* Media Queries */ 
+/* Media Queries */
 // Small
 @mixin sm {
   @media (min-width: #{$sm-screen}) {
-      @content;
+    @content;
   }
 }
 
 // Medium
 @mixin md {
   @media (min-width: #{$md-screen}) {
-      @content;
+    @content;
   }
 }
 
 // Large
 @mixin lg {
   @media (min-width: #{$lg-screen}) {
-      @content;
+    @content;
   }
 }
 
 // Custom
 @mixin rwd($screen) {
-  @media (min-width: ($screen + 'px')) {
-      @content;
+  @media (min-width: ($screen + "px")) {
+    @content;
   }
 }
