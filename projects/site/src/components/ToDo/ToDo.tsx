@@ -9,15 +9,14 @@ interface PropTypes {
   reminder: string;
 }
 const ToDo = ({ title, status, update, reminder }: PropTypes) => {
-  const [text, setText] = useState(title);
+  const [text,  setText] = useState(title);
   const [focused, setFocused] = useState(false);
   const [checked, setChecked] = useState(status === "done");
 
-  const updateText = (e: any) => {
-    const { key } = e;
-
-    if (key === "Enter") {
-      update(text, status);
+  const updateText = (toUpdate: boolean, newText: string) => {
+    if (toUpdate) {
+      setText(newText);
+      update(newText, status);
       setFocused(false);
     }
   };
@@ -40,13 +39,12 @@ const ToDo = ({ title, status, update, reminder }: PropTypes) => {
         role="textbox"
         aria-label="click to edit todo"
         className={checked ? styles.todoDone : styles.todoText}
-        onBlur={() => setFocused(false)}
+        onBlur={(e) => {setFocused(false); updateText(true, e.currentTarget.innerText)}}
         onFocus={() => setFocused(true)}
-        onChange={(e) => setText(e.currentTarget.innerText)}
-        onKeyPress={updateText}
+        onKeyPress={(e) => updateText(e.key==="Enter", e.currentTarget.innerText)}
         tabIndex={0}
         contentEditable={focused}
-      >{`${text}`}</span>
+      >{text}</span>
       <p className={styles.todoReminder}>{`${utils.daysTillDue(reminder)} days`}</p>
     </div>
   );
