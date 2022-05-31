@@ -40,7 +40,7 @@
 .todoText,
 .todoDone {
   width: 100%;
-  height: 25px;
+  height: 20px;
   background-color: transparent;
   border-style: none;
   font-family: sans-serif;
@@ -49,6 +49,7 @@
   resize: none;
   white-space: nowrap;
   overflow: hidden;
+  padding-top: 5px;
 }
 
 .todoDone {

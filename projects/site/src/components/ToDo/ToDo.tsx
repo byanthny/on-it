@@ -42,7 +42,7 @@ const ToDo = ({ title, status, update, reminder }: PropTypes) => {
       />
       <span
         role="textbox"
-        aria-label="Mute volume"
+        aria-label="click to edit todo"
         className={checked ? styles.todoDone : styles.todoText}
         onBlur={() => setFocused(false)}
         onFocus={() => setFocused(true)}
