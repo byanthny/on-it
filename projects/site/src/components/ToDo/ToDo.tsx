@@ -40,14 +40,17 @@ const ToDo = ({ title, status, update, reminder }: PropTypes) => {
         onChange={updateStatus}
         className={styles.checkbox}
       />
-      <textarea
+      <span
+        role="textbox"
+        aria-label="Mute volume"
         className={checked ? styles.todoDone : styles.todoText}
         onBlur={() => setFocused(false)}
         onFocus={() => setFocused(true)}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => setText(e.currentTarget.innerText)}
         onKeyPress={updateText}
-        defaultValue={`${text}`}
-      />
+        tabIndex={0}
+        contentEditable
+      >{`${text}`}</span>
       <p className={styles.todoReminder}>{`${daysTillDue} days`}</p>
     </div>
   );

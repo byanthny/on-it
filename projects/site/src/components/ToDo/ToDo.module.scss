@@ -29,8 +29,7 @@
   .todoText,
   .todoDone {
     white-space: pre-wrap;
-    overflow-y: scroll;
-    // height: 50px;
+    height: fit-content;
   }
 }
 
@@ -48,8 +47,8 @@
   color: var(--text-color);
   outline: 0;
   resize: none;
-  overflow-x: hidden;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .todoDone {
