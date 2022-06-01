@@ -13,6 +13,7 @@ export default {
         tasks: "tasks",
         limits: "limits",
         tags: "tags",
+        notes: "notes",
       },
     },
   },

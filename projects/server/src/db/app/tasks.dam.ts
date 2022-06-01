@@ -1,11 +1,11 @@
 import { nanoid } from "nanoid"
 import { Filter, SearchOptions } from "../types"
-import { ID, Task } from "common"
+import { Task } from "common"
 import client from "../client"
 import names from "../names"
 import { WithId } from "mongodb"
 
-type TaskDoc = WithId<Task.type<ID>>
+type TaskDoc = WithId<Task>
 
 const col = client.app.collection<TaskDoc>(names.dbs.app.collections.tasks)
 
@@ -19,11 +19,10 @@ async function init() {
 
   return await col.createIndexes([
     { name: "user_id", key: { uid: 1 } },
-    { name: "title", key: { title: "text" } },
+    { name: "title_w_description", key: { title: "text", description: "text" } },
     { name: "state", key: { state: 1 } },
     { name: "parents", key: { parent: 1 } },
     { name: "tags", key: { tags: 1 } },
-    { name: "notes", key: { notes: "text" } },
     { name: "pinned", key: { pinned: 1 }, sparse: true },
   ])
 }
@@ -48,13 +47,13 @@ async function count(filter: Filter<TaskDoc>): Promise<number> {
   return col.aggregate().match(filter).bufferedCount()
 }
 
-async function create(task: Task.type): Promise<TaskDoc> {
+async function create(task: Task): Promise<TaskDoc> {
   const res = await col.insertOne({ _id: nanoid(), ...task })
   if (!res.insertedId) return null
   return await get({ _id: res.insertedId })
 }
 
-async function update(_id: string, packet: Filter<Task.type>): Promise<TaskDoc> {
+async function update(_id: string, packet: Filter<Task>): Promise<TaskDoc> {
   delete packet._id
   const res = await col.findOneAndUpdate({ _id }, { $set: packet })
   return res.value

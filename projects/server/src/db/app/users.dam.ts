@@ -17,8 +17,8 @@ async function init() {
   if (!exists) await client.app.createCollection(names.dbs.app.collections.users)
 
   return await col.createIndexes([
-    { name: "email_unique", key: { email: "text" }, unique: true },
-    { name: "full_name", key: { name: "text" } },
+    { name: "email_unique", key: { email: 1 }, unique: true },
+    { name: "role", key: { role: 1 } },
   ])
 }
 
