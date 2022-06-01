@@ -252,6 +252,14 @@ paths:
                 properties:
                   payload:
                     $ref: "#/components/schemas/User"
+  /users/logout:
+    post:
+      description: logout and clear user session
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: user logged out
   /users/{uid}:
     parameters:
       - name: uid
@@ -315,7 +323,7 @@ paths:
         default:
           $ref: "#/components/responses/Error"
   # Tags
-  /Tag:
+  /tag:
     get:
       summary: Get all of a user's tags
       tags:
@@ -377,7 +385,6 @@ paths:
         - name: ids
           in: query
           style: form
-          explode: false
           schema:
             type: array
             items:
@@ -396,7 +403,7 @@ paths:
                   payload:
                     description: number of deleted tags
                     type: integer
-  /Tag/{pid}:
+  /tag/{pid}:
     parameters:
       - name: pid
         description: Tag ID
@@ -467,11 +474,18 @@ paths:
       security:
         - session: []
       parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          schema:
+            type: integer
         - name: parents
           description: Parent task IDs
           in: query
           style: form
-          explode: false
           schema:
             type: array
             items:
@@ -480,14 +494,12 @@ paths:
           description: tag IDs
           in: query
           style: form
-          explode: false
           schema:
             type: array
         - name: state
           description: The completion state of the tasks
           in: query
           style: form
-          explode: false
           schema:
             type: array
             maxLength: 3
@@ -505,7 +517,6 @@ paths:
         - name: due
           in: query
           style: form
-          explode: false
           schema:
             type: object
             properties:
@@ -574,7 +585,6 @@ paths:
         - name: ids
           in: query
           style: form
-          explode: false
           schema:
             type: array
             items:
@@ -673,7 +683,6 @@ paths:
           description: tag IDs
           in: query
           style: form
-          explode: false
           schema:
             type: array
         - name: parent
@@ -730,7 +739,6 @@ paths:
         - name: ids
           in: query
           style: form
-          explode: false
           schema:
             type: array
             items:
