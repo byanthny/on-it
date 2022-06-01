@@ -3,11 +3,13 @@ import { ID, idSchema, Snowflake } from "./Model"
 import { Note } from "./Note"
 import { nameSchema } from "./name"
 import { Tag } from "./Tag"
+import { SearchOptions } from "../Net"
 
 export const taskSchema = {
   tags: Joi.array().items(nameSchema).optional(),
   parents: Joi.array().items(idSchema).optional(),
   title: Joi.string().min(1).max(255),
+  description: Joi.string().max(255).optional(),
   state: Joi.string().valid("todo", "done", "cancelled").default("todo"),
   due: Joi.date().raw().optional(),
   reminders: Joi.array().items(Joi.date().raw()).optional(),
@@ -26,12 +28,24 @@ export type Task<TagType = ID> = Snowflake & {
   uid: ID
   title: string
   state: TaskState,
+  description?: string
   parents?: string[]
   tags?: Tag[]
-  notes?: Note[]
   due?: string
   reminders?: string[]
   pinned?: boolean
 }
 
+export type TaskWithNotes = Task<Tag> & { notes?: Note[] }
+
+export type TaskSearch = SearchOptions & {
+  parents?: string[] | string
+  tags?: string[] | string
+  state?: TaskState[] | TaskState
+  text?: string
+  due?: {
+    before?: string
+    after?: string
+  }
+}
 
