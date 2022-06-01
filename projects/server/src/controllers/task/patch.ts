@@ -27,7 +27,7 @@ export const one = async (
 
   // Relational Validation
   const preTask = value as Task<ID>
-  // Validate Project references
+  // Validate Tags references
   await validateTags(preTask)
   // Validate parent
   await validateParent(preTask, tid)

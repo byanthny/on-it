@@ -1,15 +1,23 @@
 import Express, { Application, Router } from "express"
+import session from "express-session"
+import db from "./db"
+import MongoStore from "connect-mongo"
 import cors from "cors"
 import routes from "./routes"
-import {
-  attachPacketier, authentication,
-  errorHandler,
-  logger,
-} from "./middleware"
-import { OnIt } from "common"
+import { attachPacketier, authentication, errorHandler, logger } from "./middleware"
+import { OnIt, UserRole } from "common"
 
+async function setupMongo() {
+  const mongo = await db.client.connect()
+  await db.users.init()
+  await db.tasks.init()
+  await db.limits.init()
+  return mongo
+}
 
-export default (): Application => {
+export default async (): Promise<Application> => {
+  const mongoClient = await setupMongo()
+
   const server = Express()
 
   // Custom middleware
@@ -35,11 +43,24 @@ export default (): Application => {
   // setup API paths
   const api = Router()
   // Add routes
-  api.use("/users", routes.users)
-  api.use("/projects", authentication(), routes.projects)
+  api.use(session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: false,
+    resave: false,
+    unset: "destroy",
+    cookie: {
+      secure: process.env.STAGE !== "DEVELOPMENT",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+    store: MongoStore.create({
+      client: mongoClient,
+      crypto: { secret: process.env.SESSION_SECRET },
+    }),
+  }))
+  api.use("/users", /* auth handled in router */routes.users)
+  api.use("/tags", authentication(), routes.tags)
   api.use("/tasks", authentication(), routes.tasks)
-  api.use("/notes", authentication(), routes.notes)
-  api.use("/admin", authentication(), routes.admin)
+  api.use("/admin", authentication([UserRole.ADMIN, UserRole.DEVELOPER]), routes.admin)
   server.use("/api", api)
 
   // Handle errors

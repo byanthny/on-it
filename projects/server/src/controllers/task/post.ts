@@ -1,31 +1,29 @@
 import { Request, Response } from "../../types/express"
 import joi from "joi"
-import { Task, taskSchema, ID, UserRole } from "common"
+import { Task, taskSchema, UserRole } from "common"
 import ApiError from "../../ApiError"
-import dao from "../../dao"
+import db from "../../db"
 import { populateTaggable, validateParent, validateTags } from "../util"
 import logger from "winston"
-
 
 export const one = async ({ body, user }: Request, { pack }: Response) => {
   logger.info("ROUTES: tasks create one")
 
   // Validate
-  const { value, error } = joi.object(taskSchema).validate(body, {
-    stripUnknown: true,
-  })
+  const { value, error } = joi.object(taskSchema)
+    .validate(body, { stripUnknown: true })
 
   if (error) ApiError.MalformedContent(error.message)
 
-  const preTask = value as Task<ID>
+  const preTask = value as Task
   // Validate parent
   await validateParent(preTask)
 
   // check limits
-  const limit = await dao.limits.get(user.role || UserRole.GENERIC)
-  const count = await dao.tasks.count(user.id!)
+  const limit = await db.limits.get(user.role || UserRole.GENERIC)
+  const count = await db.tasks.search({ uid: user._id }, { limit: limit.tasks.max })
 
-  if (count >= limit.tasks.max) {
+  if (count.length >= limit.tasks.max) {
     ApiError.MalformedContent(`max tasks reached ${ limit.tasks.max }`)
   }
 
@@ -35,11 +33,11 @@ export const one = async ({ body, user }: Request, { pack }: Response) => {
     )
   }
 
-  // Validate Project references
+  // Validate Tags references
   await validateTags(preTask)
 
   // Create
-  const newTask = await dao.tasks.create({ ...preTask, uid: user.id! })
+  const newTask = await db.tasks.create({ ...preTask, uid: user._id! })
 
   const task = await populateTaggable(newTask)
 

@@ -1,32 +1,25 @@
-import dao from "../dao"
+import dao from "../db"
 import ApiError from "../ApiError"
 import { Handler, Request, Response } from "../types/express"
 import logger from "winston"
 import { UserRole } from "common"
 
-
 /**
- *
  * @param required - Whether authentication is required. Pass a [UserRole] to
  *                    require authorization
  */
-export function authentication(required: boolean | UserRole = true): Handler {
+export function authentication(required: boolean | UserRole[] | "self" = true): Handler {
   return async (req: Request, _: Response, next: Function) => {
-    const { token } = req.headers
-    if (typeof token === "string" && token.length > 0) {
-      logger.debug("Token found", { token })
-      // set token
-      req.token = token
-      // get user
-      req.user = await dao.identify(token)
-      logger.debug("Authenticated", { user: req.user })
+    if (req.session) {
+      logger.debug("session provided", { session: req.session })
+      req.user = await dao.users.get({ _id: req.session.uid })
     }
 
     if (required) {
-      if (!req.token) ApiError.Authentication("missing token")
-      if (!req.user) ApiError.Authentication("invalid token")
+      if (!req.session) ApiError.Authentication("unknown session")
+      if (!req.user) ApiError.Authentication("unknown user")
 
-      if (typeof required !== "boolean" && req.user!.role !== required) {
+      if (typeof required !== "boolean" && !required.includes(req.session.role)) {
         ApiError.Authorization("missing required user role")
       }
     }

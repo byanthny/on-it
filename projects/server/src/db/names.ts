@@ -11,6 +11,8 @@ export default {
       collections: {
         users: "users",
         tasks: "tasks",
+        limits: "limits",
+        tags: "tags",
       },
     },
   },

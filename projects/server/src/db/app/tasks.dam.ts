@@ -1,37 +1,39 @@
 import { nanoid } from "nanoid"
-import { Document, SearchOptions } from "../types"
-import { Task } from "common"
-import db from "../client"
+import { Filter, SearchOptions } from "../types"
+import { ID, Task } from "common"
+import client from "../client"
 import names from "../names"
+import { WithId } from "mongodb"
 
+type TaskDoc = WithId<Task.type<ID>>
 
-type TaskDoc = Document & Task
-
-const col = db.app.collection<TaskDoc>(names.dbs.app.collections.tasks)
+const col = client.app.collection<TaskDoc>(names.dbs.app.collections.tasks)
 
 async function init() {
-  const exists = (await db.app.listCollections().toArray())
+  const exists = (await client.app.listCollections().toArray())
     .map(c => c.name)
     .includes(names.dbs.app.collections.tasks)
 
   if (!exists)
-    await db.app.createCollection(names.dbs.app.collections.tasks)
+    await client.app.createCollection(names.dbs.app.collections.tasks)
 
   return await col.createIndexes([
-    { name: "parent_id", key: { parent: 1 } },
-    { name: "tags", key: { tags: 1 } },
     { name: "user_id", key: { uid: 1 } },
+    { name: "title", key: { title: "text" } },
+    { name: "state", key: { state: 1 } },
+    { name: "parents", key: { parent: 1 } },
+    { name: "tags", key: { tags: 1 } },
+    { name: "notes", key: { notes: "text" } },
+    { name: "pinned", key: { pinned: 1 }, sparse: true },
   ])
 }
 
-async function get(filter: Partial<TaskDoc>): Promise<TaskDoc> {
-  const res = await col.findOne(filter)
-  if (!res) return null
-  return res
+async function get(filter: Filter<TaskDoc>): Promise<TaskDoc> {
+  return await col.findOne(filter)
 }
 
 async function search(
-  filter: Partial<TaskDoc>,
+  filter: Filter<TaskDoc>,
   options: SearchOptions = null,
 ): Promise<TaskDoc[]> {
   return await col.aggregate<TaskDoc>([
@@ -42,22 +44,26 @@ async function search(
   ]).toArray()
 }
 
-async function create(task: Task): Promise<TaskDoc> {
+async function count(filter: Filter<TaskDoc>): Promise<number> {
+  return col.aggregate().match(filter).bufferedCount()
+}
+
+async function create(task: Task.type): Promise<TaskDoc> {
   const res = await col.insertOne({ _id: nanoid(), ...task })
   if (!res.insertedId) return null
   return await get({ _id: res.insertedId })
 }
 
-async function update(_id: string, packet: Partial<Task>): Promise<TaskDoc> {
+async function update(_id: string, packet: Filter<Task.type>): Promise<TaskDoc> {
   delete packet._id
-  await col.updateOne({ _id }, { $set: packet })
-  return get({ _id })
+  const res = await col.findOneAndUpdate({ _id }, { $set: packet })
+  return res.value
 }
 
 export default {
-  init, find: get, search, create, update,
-  async delete(_id: string): Promise<boolean> {
-    const res = await col.deleteOne({ _id })
-    return res.acknowledged && res.deletedCount === 1
+  init, get, search, create, update, count,
+  async delete(filter: Filter<TaskDoc>): Promise<number> {
+    const res = await col.deleteMany({ ...filter, parents: { $set: filter.parents } })
+    return res.deletedCount
   },
 }
