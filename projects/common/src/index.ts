@@ -7,13 +7,20 @@ import {
   Note,
   ID,
   Limits,
+  TaskSearch,
   Schemae as schemas,
 } from "./models"
 import { ApiResponse, SearchOptions, SearchQuery, searchOptionSchema } from "./Net"
 import OnIt from "./OnIt"
 import { validate } from "./util"
 
-const Schemae = { ...schemas, searchOption: searchOptionSchema }
+const Schemae = {
+  ...schemas,
+  search: {
+    ...schemas.search,
+    options: searchOptionSchema,
+  },
+}
 
 export {
   OnIt,
@@ -25,9 +32,10 @@ export {
   Tag,
   Task,
   TaskState,
+  TaskSearch,
   Note,
   ID,
   Schemae,
   Limits,
-  validate
+  validate,
 }

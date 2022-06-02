@@ -1,6 +1,6 @@
 import { HandlerGroup, Request, Response } from "../types/express"
 import db from "../db"
-import { Limits, limitsSchema, UserRole } from "common"
+import { Limits, Schemae, UserRole } from "common"
 import Joi from "joi"
 import ApiError from "../ApiError"
 
@@ -22,7 +22,7 @@ const patch: HandlerGroup = {
     const limit = await db.limits.get(role.toUpperCase() as UserRole)
 
     // validate incoming
-    const { value, error } = Joi.object(limitsSchema).validate(
+    const { value, error } = Joi.object(Schemae.admin.limit).validate(
       { ...body, role: limit.role },
       { stripUnknown: true },
     )
@@ -45,7 +45,7 @@ const patch: HandlerGroup = {
 const post: HandlerGroup = {
   one: async ({ body }, { pack }) => {
     // validate
-    const { value, error } = Joi.object(limitsSchema)
+    const { value, error } = Joi.object(Schemae.admin.limit)
       .validate(body, { stripUnknown: true })
 
     if (error) ApiError.MalformedContent(error.message)

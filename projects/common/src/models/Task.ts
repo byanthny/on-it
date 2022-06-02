@@ -3,7 +3,7 @@ import { ID, idSchema, Snowflake } from "./Model"
 import { Note } from "./Note"
 import { nameSchema } from "./name"
 import { Tag } from "./Tag"
-import { SearchOptions } from "../Net"
+import { SearchOptions, searchOptionSchema } from "../Net"
 
 export const taskSchema = {
   tags: Joi.array().items(nameSchema).optional(),
@@ -31,7 +31,7 @@ export type Task<TagType = ID> = Snowflake & {
   description?: string
   parents?: string[]
   tags?: Tag[]
-  due?: string
+  due?: Date
   reminders?: string[]
   pinned?: boolean
 }
@@ -39,6 +39,7 @@ export type Task<TagType = ID> = Snowflake & {
 export type TaskWithNotes = Task<Tag> & { notes?: Note[] }
 
 export type TaskSearch = SearchOptions & {
+  uid?: string
   parents?: string[] | string
   tags?: string[] | string
   state?: TaskState[] | TaskState
@@ -49,3 +50,14 @@ export type TaskSearch = SearchOptions & {
   }
 }
 
+export const taskSearchSchema = {
+  ...searchOptionSchema,
+  parents: Joi.allow(idSchema, Joi.array().items(idSchema)).optional(),
+  tags: Joi.allow(idSchema, Joi.array().items(idSchema)).optional(),
+  state: Joi.allow(taskSchema.state, Joi.array().items(taskSchema.state)).optional(),
+  text: Joi.string().max(255).optional(),
+  due: Joi.object({
+    before: Joi.string().isoDate().optional(),
+    after: Joi.string().isoDate().optional(),
+  }),
+}

@@ -2,10 +2,9 @@ import { HandlerGroup, Request, Response } from "../types/express"
 import db from "../db"
 import dao from "../db"
 import ApiError from "../ApiError"
-import { ID, idSchema, Tag, Task } from "common"
-import Joi from "joi"
+import { Schemae, Tag, Task, TaskSearch, validate } from "common"
 
-async function populateTags(task: Task.type<ID>): Promise<Task.type<Tag.type>> {
+async function populateTags(task: Task): Promise<Task<Tag>> {
   if (!task.tags) return task
   const tags = await Promise.all(task.tags?.map(pid => db.tags.get({ _id: pid })))
   return { ...task, tags }
@@ -24,24 +23,16 @@ const get: HandlerGroup = {
   /**
    * GET /tasks?<TaskSearch>,SearchOptions
    */
-  search: async ({ query, user }: Request, { pack }: Response) => {
-    const { value, error } = Joi.object({
-      parent: idSchema.optional(),
-      state: Joi.string()
-        .valid(Task.State.TODO, Task.State.CANCELLED, Task.State.DONE)
-        .optional(),
-      tags: Joi.string()
-        .trim()
-        .regex(/^\d+(,\d+)*$/)
-        .custom((value: string) => value.split(",").filter((s) => s.length > 0))
-        .optional(),
-    }).validate(query, { stripUnknown: true })
+  search: async ({ query, session: { uid } }: Request, { pack }: Response) => {
+    const valRes = await validate<TaskSearch>(Schemae.search.task, query)
+    if (typeof valRes === "string") return ApiError.MalformedContent(valRes)
 
-    if (error) ApiError.MalformedContent(error.message)
+    const searchResult = await dao.tasks.search(
+      { ...valRes, uid },
+      { limit: valRes.limit, skip: valRes.skip },
+    )
 
-    const searchResult = await dao.tasks.search(user.id!, value)
-
-    const tasks: Task.type<Tag.type>[] =
+    const tasks: Task<Tag>[] =
       await Promise.all(searchResult.map(t => populateTags(t)))
 
     pack(tasks)

@@ -1,8 +1,8 @@
-import { Request, Response } from "../../types/express"
+import { Request, Response } from "../src/types/express"
 import joi from "joi"
 import { Task, taskSchema, UserRole } from "common"
-import ApiError from "../../ApiError"
-import db from "../../db"
+import ApiError from "../src/ApiError"
+import db from "../src/db"
 import { populateTaggable, validateParent, validateTags } from "../util"
 import logger from "winston"
 

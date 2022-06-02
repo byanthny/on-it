@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid"
 import { Filter, SearchOptions } from "../types"
-import { User } from "common"
+import { User, UserRole } from "common"
 import client from "../client"
 import names from "../names"
 import { WithId } from "mongodb"
@@ -50,17 +50,14 @@ async function search(
   })
 }
 
-async function count(filter: Filter<UserDoc>): Promise<number> {
-  return col.aggregate().match(filter).bufferedCount()
-}
-
 async function create(email: string, password: string): Promise<UserDoc> {
-  const res = await col.findOneAndUpdate(
-    { _id: nanoid() },
-    { $set: { email, password } },
-    { upsert: true },
-  )
-  return res.value
+  const res = await col.insertOne({
+    _id: nanoid(),
+    email,
+    password,
+    role: UserRole.GENERIC,
+  })
+  return get({ _id: res.insertedId })
 }
 
 async function update(_id: string, packet: Partial<UserDoc>): Promise<UserDoc> {
@@ -70,7 +67,7 @@ async function update(_id: string, packet: Partial<UserDoc>): Promise<UserDoc> {
 }
 
 export default {
-  init, get, search, create, update, count,
+  init, get, search, create, update,
   async delete(filter: Filter<User>): Promise<number> {
     const res = await col.deleteMany(filter)
     return res.deletedCount

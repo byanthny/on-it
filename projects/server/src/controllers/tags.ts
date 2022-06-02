@@ -1,9 +1,8 @@
 import { HandlerGroup } from "../types/express"
 import db from "../db"
 import ApiError from "../ApiError"
-import { searchOptionSchema, SearchQuery, Tag, validate } from "common"
-import joi from "joi"
-import Joi from "joi"
+import { Schemae, SearchQuery, Tag, validate } from "common"
+import joi from "Joi"
 
 const get: HandlerGroup = {
   /**
@@ -20,9 +19,9 @@ const get: HandlerGroup = {
    * SELF
    */
   search: async ({ session: { uid }, query }, { pack }) => {
-    const valRes = await validate<SearchQuery<Partial<Tag.type>>>({
-      search: Joi.object(Tag.schema),
-      options: Joi.object(searchOptionSchema),
+    const valRes = await validate<SearchQuery<Partial<Tag>>>({
+      ...Schemae.tag,
+      ...Schemae.search.options,
     }, query as any, true)
     if (typeof valRes === "string") return ApiError.MalformedContent(valRes)
     const tags = await db.tags.search({ ...valRes.search, uid }, valRes.options)
@@ -39,7 +38,7 @@ const post: HandlerGroup = {
    * TODO should duplicate names be allowed? prob not
    */
   one: async ({ body, session: { uid } }, { pack }) => {
-    const { value, error }: { value: Tag.type, error: any } = joi.object(Tag.schema)
+    const { value, error }: { value: Tag, error: any } = joi.object(Schemae.tag)
       .validate(body, { stripUnknown: true })
     if (error) ApiError.MalformedContent(error.message)
 
@@ -57,8 +56,8 @@ const patch: HandlerGroup = {
    */
   one: async ({ session: { uid }, body, params: { pid } }, { pack }) => {
     // validate
-    const { value, error }: { value: Partial<Tag.type>, error: any } =
-      joi.object(Tag.schema).validate(body, { stripUnknown: true })
+    const { value, error }: { value: Partial<Tag>, error: any } =
+      joi.object(Schemae.tag).validate(body, { stripUnknown: true })
     if (error) ApiError.MalformedContent(error.message)
 
     const updated = await db.tags.update({ uid, _id: pid }, value)
@@ -82,7 +81,8 @@ const _delete: HandlerGroup = {
    * SELF
    */
   many: async ({ session: { uid }, query }, { pack }) => {
-    const { name, ids } = (query as TagSearch & { ids: string })
+    ApiError.TODO()
+    const { name, ids } = (query as Tag & { ids: string })
     const filter: Record<any, any> = {}
     if (name) filter.name = name
     if (ids) filter._id = ids.split(",").filter(s => s.length > 0)

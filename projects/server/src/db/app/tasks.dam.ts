@@ -1,9 +1,10 @@
 import { nanoid } from "nanoid"
 import { Filter, SearchOptions } from "../types"
-import { Task } from "common"
+import { Task, TaskSearch } from "common"
 import client from "../client"
 import names from "../names"
-import { WithId } from "mongodb"
+import { Document, WithId } from "mongodb"
+import logger from "winston"
 
 type TaskDoc = WithId<Task>
 
@@ -24,7 +25,23 @@ async function init() {
     { name: "parents", key: { parent: 1 } },
     { name: "tags", key: { tags: 1 } },
     { name: "pinned", key: { pinned: 1 }, sparse: true },
+    { name: "due_date", key: { due: 1 }, sparse: true },
   ])
+}
+
+function coerceSearch(search: TaskSearch): Document {
+  const out: Document = {}
+  if (search.text) out.$text = { $search: search.text }
+  if (search.parents)
+    if (typeof search.parents === "string") out.parents = search.parents
+    else out.parents = { $all: search.parents }
+  if (search.due)
+    out.due = {
+      $lt: search.due?.before && new Date(search.due!.before),
+      $gt: search.due?.after && new Date(search.due!.after),
+    }
+  logger.debug("search coercion", { search, out })
+  return out
 }
 
 async function get(filter: Filter<TaskDoc>): Promise<TaskDoc> {
@@ -32,15 +49,21 @@ async function get(filter: Filter<TaskDoc>): Promise<TaskDoc> {
 }
 
 async function search(
-  filter: Filter<TaskDoc>,
+  search: TaskSearch,
   options: SearchOptions = null,
 ): Promise<TaskDoc[]> {
-  return await col.aggregate<TaskDoc>([
-    { $match: filter },
-    { $skip: options?.skip || 0 },
-    { $limit: options?.limit || 50 },
-    { sort: { email: 1, "name.display": 1 } },
-  ]).toArray()
+  return await col.aggregate<TaskDoc>()
+    .match(coerceSearch(search))
+    .skip(options?.skip || 0)
+    .limit(options?.limit || 50)
+    .sort({ email: 1, "name.display": 1 })
+    .lookup({
+      from: names.dbs.app.collections.tags,
+      localField: "tags",
+      foreignField: "_id",
+      as: "tags",
+    })
+    .toArray()
 }
 
 async function count(filter: Filter<TaskDoc>): Promise<number> {

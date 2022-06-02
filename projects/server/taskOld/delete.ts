@@ -1,6 +1,6 @@
-import { Request, Response } from "../../types/express"
-import ApiError from "../../ApiError"
-import dao from "../../db"
+import { Request, Response } from "../src/types/express"
+import ApiError from "../src/ApiError"
+import dao from "../src/db"
 
 /** Deletes a task and all entities with it marked as it's parent */
 export const one = async (
