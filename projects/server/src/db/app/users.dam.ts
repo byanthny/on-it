@@ -68,8 +68,8 @@ async function update(_id: string, packet: Partial<UserDoc>): Promise<UserDoc> {
 
 export default {
   init, get, search, create, update,
-  async delete(filter: Filter<User>): Promise<number> {
-    const res = await col.deleteMany(filter)
+  async delete(...ids: string[]): Promise<number> {
+    const res = await col.deleteMany({ _id: { $in: ids } })
     return res.deletedCount
   },
 }

@@ -84,8 +84,8 @@ async function update(_id: string, packet: Filter<Task>): Promise<TaskDoc> {
 
 export default {
   init, get, search, create, update, count,
-  async delete(filter: Filter<TaskDoc>): Promise<number> {
-    const res = await col.deleteMany({ ...filter, parents: { $set: filter.parents } })
+  async delete(filter: TaskSearch): Promise<number> {
+    const res = await col.deleteMany(coerceSearch(filter))
     return res.deletedCount
   },
 }

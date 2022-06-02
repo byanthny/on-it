@@ -107,8 +107,8 @@ const _delete: HandlerGroup = {
     { pack }: Response,
   ) => {
     if (uid !== session.uid) ApiError.Authorization()
-    const userDeleted = await db.users.delete({ _id: uid })
-    if (userDeleted === 0) ApiError.Internal("failed to delete user")
+    const userDeleted = await db.users.delete(uid)
+    if (userDeleted === 0) ApiError.Internal("failed to delete users")
     const tasksDeleted = await db.tasks.delete({ uid })
     pack({ userDeleted, tasksDeleted })
   },

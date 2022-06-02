@@ -8,7 +8,7 @@ const errorHandler = (error: any, _: Request, res: Response, __: any) => {
     res.error(error.message, error.code)
     return
   } else {
-    logger.info("unknown error", error)
+    logger.error("unknown error", { error })
     res.error("an unknown error", 500)
   }
 }

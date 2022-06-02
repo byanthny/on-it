@@ -48,6 +48,7 @@ export default async (): Promise<Application> => {
     saveUninitialized: false,
     resave: false,
     unset: "destroy",
+    name: "onit.app.session",
     cookie: {
       secure: process.env.STAGE !== "DEVELOPMENT",
       maxAge: 1000 * 60 * 60 * 24 * 7,
