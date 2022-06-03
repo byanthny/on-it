@@ -1,11 +1,12 @@
 import Express, { Application, Router } from "express"
-import session from "express-session"
-import db from "./db"
 import MongoStore from "connect-mongo"
+import session from "express-session"
+import { OnIt, UserRole } from "common"
+import { attachPacketier, authentication, errorHandler, callLogger } from "./middleware"
+import db from "./db"
 import cors from "cors"
 import routes from "./routes"
-import { attachPacketier, authentication, errorHandler, logger } from "./middleware"
-import { OnIt, UserRole } from "common"
+import logger from "winston"
 
 async function setupMongo() {
   const mongo = await db.client.connect()
@@ -16,24 +17,24 @@ async function setupMongo() {
 }
 
 export default async (): Promise<Application> => {
+  logger.info("connecting mongo client")
   const mongoClient = await setupMongo()
 
+  logger.info("express setup")
   const server = Express()
 
   // Custom middleware
   server.use(attachPacketier)
-  server.use(logger)
+  server.use(callLogger)
 
   // Setup external middleware
   server.use(Express.json({ strict: true }))
-  server.use(
-    cors({
-      origin: [
-        OnIt.productionUrl,
-        process.env.NODE_ENV === "DEVELOPMENT" ? "localhost" : undefined,
-      ],
-    }),
-  )
+  const corsOrigin = [
+    OnIt.productionUrl,
+    process.env.NODE_ENV === "DEVELOPMENT" ? "localhost" : undefined,
+  ]
+  logger.info("cors origins set", { corsOrigin })
+  server.use(cors({ origin: corsOrigin }))
 
   // Setup docs path
   server.use("/docs", (_, res) => {

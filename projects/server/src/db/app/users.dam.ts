@@ -62,8 +62,8 @@ async function create(email: string, password: string): Promise<UserDoc> {
 
 async function update(_id: string, packet: Partial<UserDoc>): Promise<UserDoc> {
   delete packet._id
-  const res = await col.findOneAndUpdate({ _id }, { $set: packet })
-  return res.value
+  const res = await col.updateOne({ _id }, { $set: packet })
+  return (res.acknowledged && res.modifiedCount === 1) && get({ _id })
 }
 
 export default {

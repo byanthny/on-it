@@ -13,7 +13,7 @@ const get: HandlerGroup = {
    */
   one: async ({ session, params: { uid } }, { pack }) => {
     if (uid !== session.uid) ApiError.Authorization()
-    const userData = await db.users.get({ _id: uid })
+    const userData = await db.users.get({ _id: uid }, ["password"])
     if (!userData) ApiError.NotFound()
     pack(userData)
   },
@@ -74,7 +74,7 @@ const post: HandlerGroup = {
     // check password
     let valid = false
     try {
-      valid = await bcrypt.compare(body.email, user.password)
+      valid = await bcrypt.compare(body.password, user.password)
     } catch (error) {
       logger.error("failed to compare passwords", { error })
       ApiError.Internal()
@@ -97,7 +97,11 @@ const patch: HandlerGroup = {
     if (typeof valResult === "string") ApiError.MalformedContent(valResult)
     else if (valResult.email && (await db.users.get({ email: valResult.email }))) {
       ApiError.Duplicate("email already in use")
-    } else pack(await db.users.update(uid, valResult))
+    } else {
+      const user = await db.users.update(uid, valResult)
+      delete user.password
+      pack(user)
+    }
   },
 }
 

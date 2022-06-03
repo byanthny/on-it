@@ -9,8 +9,8 @@ export const attachPacketier = (_: any, res: Response, next: any) => {
   next()
 }
 
-export const logger = (req: Request, _: Response, next: any) => {
+export const callLogger = (req: Request, _: Response, next: any) => {
   log.info(`${ req.method } ${ req.path }`)
-  log.debug("", { params: req.params, query: req.query })
+  log.debug("", { params: req.params, query: req.query, body: req.body })
   next()
 }
