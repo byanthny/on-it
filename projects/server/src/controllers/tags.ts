@@ -37,14 +37,14 @@ const post: HandlerGroup = {
    *
    * TODO should duplicate names be allowed? prob not
    */
-  one: async ({ body, session: { uid } }, { pack }) => {
-    const { value, error }: { value: Tag, error: any } = joi.object(Schemae.tag)
-      .validate(body, { stripUnknown: true })
-    if (error) ApiError.MalformedContent(error.message)
-
-    const tag = await db.tags.create(uid, value.name, value.color)
-    if (!tag) ApiError.Internal("failed to create new tag")
-    pack(tag)
+  one: async ({ body, session: { uid } }, { status }) => {
+    const valRes = validate<Tag>(Schemae.tag, body)
+    if (typeof valRes === "string") ApiError.MalformedContent(valRes)
+    else {
+      const tag = await db.tags.create(uid, valRes.name, valRes.color)
+      if (!tag) ApiError.Internal("failed to create new tag")
+      status(201).pack(tag)
+    }
   },
 }
 
