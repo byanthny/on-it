@@ -1,5 +1,5 @@
 import { WithId } from "mongodb"
-import { Tag } from "common"
+import { Tag, TagSearch } from "common"
 import names from "../names"
 import client from "../client"
 import { Filter, SearchOptions } from "../types"
@@ -21,6 +21,7 @@ async function init() {
   return await col.createIndexes([
     { name: "name", key: { name: "text" } },
     { name: "user_id", key: { uid: 1 } },
+    { name: "user_tag_name_unique", key: { uid: 1, name: 1 }, unique: true },
   ])
 }
 
@@ -34,16 +35,19 @@ async function get(filter: Filter<TagDoc>): Promise<TagDoc> {
   return await col.findOne(filter)
 }
 
-async function search(filter: Filter<TagDoc>, options: SearchOptions): Promise<TagDoc[]> {
-  const coercedFilter = {
-    ...filter,
-    $text: filter.name && { $search: filter.name },
-  }
-  return await col.aggregate<TagDoc>([
-    { $match: coercedFilter },
-    { $skip: options?.skip || 0 },
-    { $limit: options?.limit || 50 },
-  ]).toArray()
+function coerceSearch(search: TagSearch): Record<string, any> {
+  const filter: Record<string, any> = {}
+  if (search.uid) filter.uid = search.uid
+  if (search.name) filter.$text = { $search: search.name }
+  return filter
+}
+
+async function search(filter: TagSearch, options: SearchOptions): Promise<TagDoc[]> {
+  return await col.aggregate<TagDoc>()
+    .match(coerceSearch(filter))
+    .skip(options?.skip || 0)
+    .limit(options?.limit || 50)
+    .toArray()
 }
 
 async function count(filter: Filter<TagDoc>): Promise<number> {
@@ -51,11 +55,11 @@ async function count(filter: Filter<TagDoc>): Promise<number> {
 }
 
 async function update(filter: Filter<TagDoc>, packet: Partial<Tag>): Promise<TagDoc> {
-  const res = await col.findOneAndUpdate(
-    clearUndefinedOrNull(filter, ["_id"]),
+  const res = await col.updateOne(
+    clearUndefinedOrNull(filter, ["_id", "uid"]),
     { $set: packet },
   )
-  return res.value
+  return res.acknowledged && res.matchedCount > 0 ? await get(filter) : null
 }
 
 export default {

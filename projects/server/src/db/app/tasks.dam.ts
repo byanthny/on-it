@@ -31,6 +31,7 @@ async function init() {
 
 function coerceSearch(search: TaskSearch): Document {
   const out: Document = {}
+  if (search.uid) out.uid = search.uid
   if (search.text) out.$text = { $search: search.text }
   if (search.parents)
     if (typeof search.parents === "string") out.parents = search.parents

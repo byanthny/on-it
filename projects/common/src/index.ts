@@ -4,13 +4,20 @@ import {
   Tag,
   Task,
   TaskState,
+  TagSearch,
   Note,
   ID,
   Limits,
   TaskSearch,
   Schemae as schemas,
 } from "./models"
-import { ApiResponse, SearchOptions, SearchQuery, searchOptionSchema } from "./Net"
+import {
+  ApiResponse,
+  SearchOptions,
+  SearchQuery,
+  searchOptionSchema,
+  ApiError,
+} from "./Net"
 import OnIt from "./OnIt"
 import { validate } from "./util"
 
@@ -38,4 +45,6 @@ export {
   Schemae,
   Limits,
   validate,
+  ApiError,
+  TagSearch,
 }

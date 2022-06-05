@@ -6,7 +6,7 @@ export const limitsSchema = {
   role: Joi.string()
     .valid(...Object.keys(UserRole))
     .required(),
-  projects: Joi.object({
+  tags: Joi.object({
     max: Joi.number().integer().min(0).optional(),
   }).optional(),
   tasks: Joi.object({
@@ -16,7 +16,7 @@ export const limitsSchema = {
   }).optional(),
   notes: Joi.object({
     maxLength: Joi.number().integer().min(0).optional(),
-  }),
+  }).optional(),
 }
 
 /**
@@ -25,18 +25,18 @@ export const limitsSchema = {
 export type Limits = Snowflake & {
   /** The {@link UserRole} which this {@link Limits} applies to */
   readonly role: UserRole
-  readonly tags: {
-    readonly max: number
+  readonly tags?: {
+    readonly max?: number
   }
-  readonly tasks: {
-    readonly max: number
+  readonly tasks?: {
+    readonly max?: number
     /** Max number of Projects a Task can have */
-    readonly maxProjects: number
+    readonly maxProjects?: number
     /** Max number of Notes a Task can have */
-    readonly maxNotes: number
+    readonly maxNotes?: number
   }
-  readonly notes: {
-    readonly maxLength: number
+  readonly notes?: {
+    readonly maxLength?: number
   }
 }
 

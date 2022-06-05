@@ -1,37 +1,15 @@
-export default class ApiError {
-  name: string = "ApiError"
-  code: number
-  message?: string
-  private constructor(code: number = 500, message?: string) {
-    this.message = message
-    this.code = code
-  }
+import { ApiError } from "common"
 
-  static MalformedContent(msg?: string) {
-    throw new ApiError(400, msg)
-  }
+export function errorOf(code: number, message?: string): ApiError {
+  return { code, message }
+}
 
-  static Duplicate(msg?: string) {
-    throw new ApiError(409, msg)
-  }
-
-  static Authentication(msg: string = "Authentication Failed") {
-    throw new ApiError(401, msg)
-  }
-
-  static Authorization(msg: string = "Unauthorized") {
-    throw new ApiError(403, msg)
-  }
-
-  static NotFound(msg: string = "Resource not found") {
-    throw new ApiError(404, msg)
-  }
-
-  static Internal(msg: string = "Internal Error, try again later") {
-    throw new ApiError(500, msg)
-  }
-
-  static TODO(msg: string = "Unimplemented") {
-    ApiError.Internal(msg)
-  }
+export const ApiErrors = {
+  MalformedContent: (message?: string) => errorOf(400, message),
+  Authentication: (message = "Authentication Failed") => errorOf(401, message),
+  Authorization: (message = "Unauthorized") => errorOf(403, message),
+  NotFound: (message?: string) => errorOf(404, message),
+  Duplicate: (message?: string) => errorOf(409, message),
+  Internal: (message = "Internal Error") => errorOf(500, message),
+  TODO: (message = "Unimplemented") => errorOf(501, message),
 }

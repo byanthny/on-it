@@ -3,7 +3,12 @@ import Joi from "joi"
 export type ApiResponse<T = any> = {
   payload?: T
   meta?: any
-  error?: string
+  error?: ApiError
+}
+
+export type ApiError = {
+  readonly code: number
+  readonly message?: string
 }
 
 export type SearchQuery<T> = {

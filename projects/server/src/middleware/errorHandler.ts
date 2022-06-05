@@ -1,16 +1,10 @@
-import ApiError from "../ApiError"
+import { ApiErrors } from "../ApiError"
 import { Request, Response } from "../types/express"
 import logger from "winston"
 
 const errorHandler = (error: any, _: Request, res: Response, __: any) => {
-  if (error.name == ApiError.name) {
-    logger.debug("known error", { error })
-    res.error(error.message, error.code)
-    return
-  } else {
-    logger.error("unknown error", { error })
-    res.error("an unknown error", 500)
-  }
+  logger.error("unknown error", { error })
+  res.error(ApiErrors.Internal("an unknown error"))
 }
 
 export default errorHandler

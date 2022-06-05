@@ -2,7 +2,7 @@ import Express, { Application, Router } from "express"
 import MongoStore from "connect-mongo"
 import session from "express-session"
 import { OnIt, UserRole } from "common"
-import { attachPacketier, authentication, errorHandler, callLogger } from "./middleware"
+import { attachPacketier, authentication, callLogger, errorHandler } from "./middleware"
 import db from "./db"
 import cors from "cors"
 import routes from "./routes"
@@ -12,6 +12,8 @@ async function setupMongo() {
   const mongo = await db.client.connect()
   await db.users.init()
   await db.tasks.init()
+  await db.tags.init()
+  await db.notes.init()
   await db.limits.init()
   return mongo
 }

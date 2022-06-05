@@ -5,11 +5,11 @@ export function validate<T>(
   schema: { [k: string]: Joi.Schema },
   incoming: T,
   partial: boolean = false,
-): T | string {
+): { result?: T, error?: string } {
   const { value, error } = Joi.object(schema)
     .validate(incoming, {
       stripUnknown: true,
       presence: partial ? "optional" : undefined,
     })
-  return value || error.message || "validation failed"
+  return { result: value, error: error?.message }
 }

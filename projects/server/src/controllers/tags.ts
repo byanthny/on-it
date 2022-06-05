@@ -1,31 +1,30 @@
 import { HandlerGroup } from "../types/express"
 import db from "../db"
-import ApiError from "../ApiError"
-import { Schemae, SearchQuery, Tag, validate } from "common"
-import joi from "Joi"
+import { ApiErrors } from "../ApiError"
+import { Schemae, Tag, TagSearch, validate } from "common"
 
 const get: HandlerGroup = {
   /**
    * GET /tags/:pid
    * SELF
    */
-  one: async ({ session, params: { pid } }, { pack }) => {
+  one: async ({ session, params: { pid } }, res) => {
     const tag = await db.tags.get({ _id: pid, uid: session.uid })
-    if (!tag) ApiError.NotFound()
-    pack(tag)
+    if (tag) res.pack(tag)
+    else res.error(ApiErrors.NotFound())
   },
   /**
    * GET /tags/?<TagSearch>
    * SELF
    */
-  search: async ({ session: { uid }, query }, { pack }) => {
-    const valRes = await validate<SearchQuery<Partial<Tag>>>({
-      ...Schemae.tag,
-      ...Schemae.search.options,
-    }, query as any, true)
-    if (typeof valRes === "string") return ApiError.MalformedContent(valRes)
-    const tags = await db.tags.search({ ...valRes.search, uid }, valRes.options)
-    pack(tags)
+  search: async ({ session: { uid }, query }, res) => {
+    const { result, error } = validate<TagSearch>(Schemae.search.tag, query as any, true)
+    if (error) return res.error(ApiErrors.MalformedContent(error))
+    const tags = await db.tags.search(
+      { ...result, uid },
+      { limit: result.limit, skip: result.skip },
+    )
+    res.pack(tags)
   },
 }
 
@@ -34,17 +33,15 @@ const post: HandlerGroup = {
    * POST /tags
    * SELF
    * BODY: TAG
-   *
-   * TODO should duplicate names be allowed? prob not
    */
-  one: async ({ body, session: { uid } }, { status }) => {
-    const valRes = validate<Tag>(Schemae.tag, body)
-    if (typeof valRes === "string") ApiError.MalformedContent(valRes)
-    else {
-      const tag = await db.tags.create(uid, valRes.name, valRes.color)
-      if (!tag) ApiError.Internal("failed to create new tag")
-      status(201).pack(tag)
-    }
+  one: async ({ body, session: { uid } }, res) => {
+    const { result, error } = validate<Tag>(Schemae.tag, body)
+    if (error) return res.error(ApiErrors.MalformedContent(error))
+    if ((await db.tags.get({ uid, name: result.name })) !== null)
+      return res.error(ApiErrors.Duplicate("duplicate name"))
+    const tag = await db.tags.create(uid, result.name, result.color)
+    if (tag) res.status(201).pack(tag)
+    else res.error(ApiErrors.Internal("failed to create new tag"))
   },
 }
 
@@ -54,15 +51,13 @@ const patch: HandlerGroup = {
    * SELF
    * BODY: Tag
    */
-  one: async ({ session: { uid }, body, params: { pid } }, { pack }) => {
+  one: async ({ session: { uid }, body, params: { pid } }, res) => {
     // validate
-    const { value, error }: { value: Partial<Tag>, error: any } =
-      joi.object(Schemae.tag).validate(body, { stripUnknown: true })
-    if (error) ApiError.MalformedContent(error.message)
-
-    const updated = await db.tags.update({ uid, _id: pid }, value)
-    if (!updated) ApiError.NotFound()
-    pack(updated)
+    const { result, error } = validate<Partial<Tag>>(Schemae.tag, body)
+    if (error) return res.error(ApiErrors.MalformedContent(error))
+    const updated = await db.tags.update({ uid, _id: pid }, result)
+    if (updated) res.pack(updated)
+    else res.error(ApiErrors.NotFound())
   },
 }
 
@@ -71,23 +66,17 @@ const _delete: HandlerGroup = {
    * DELETE /tags/:pid
    * SELF
    */
-  one: async ({ session: { uid }, params: { pid } }, { pack }) => {
+  one: async ({ session: { uid }, params: { pid } }, res) => {
     const deleteCount = await db.tags.delete({ uid, _id: pid })
-    if (deleteCount === 0) ApiError.NotFound()
-    pack(deleteCount)
+    if (deleteCount === 1) res.pack(deleteCount)
+    else res.error(ApiErrors.NotFound())
   },
   /**
    * DELETE /tags?<TagSearch>,ids=,,,
    * SELF
    */
-  many: async ({ session: { uid }, query }, { pack }) => {
-    ApiError.TODO()
-    const { name, ids } = (query as Tag & { ids: string })
-    const filter: Record<any, any> = {}
-    if (name) filter.name = name
-    if (ids) filter._id = ids.split(",").filter(s => s.length > 0)
-    const deleteCount = await db.tags.delete({ uid, name, _id: ids })
-    pack(deleteCount)
+  many: async (__, res) => {
+    return res.error(ApiErrors.TODO())
   },
 }
 
