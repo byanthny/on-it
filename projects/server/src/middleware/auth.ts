@@ -3,6 +3,7 @@ import { ApiErrors } from "../ApiError"
 import { Handler, Request, Response } from "../types/express"
 import logger from "winston"
 import { UserRole } from "common"
+import { DBResultStatus } from "../db/types"
 
 /**
  * @param required - Whether authentication is required. Pass a [UserRole] to
@@ -12,8 +13,11 @@ export function authentication(required: boolean | UserRole[] | "self" = true): 
   return async (req: Request, { error }: Response, next: Function) => {
     if (req.session) {
       logger.debug("session provided", { session: req.session })
-      req.session.user = await dao.users.get({ _id: req.session.uid })
-      if (req.session.user) req.session.role = req.session.user.role
+      const { status, data } = await dao.users.get({ _id: req.session.uid })
+      if (status === DBResultStatus.SUCCESS) {
+        req.session.user = data
+        req.session.role = req.session.user.role
+      }
     }
 
     if (required) {

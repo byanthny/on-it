@@ -1,9 +1,10 @@
 import { nanoid } from "nanoid"
-import { Filter, SearchOptions } from "../types"
+import { DBResult, DBResultStatus, Filter, SearchOptions } from "../types"
 import { User, UserRole } from "common"
 import client from "../client"
 import names from "../names"
 import { WithId } from "mongodb"
+import logger from "winston"
 
 type UserDoc = WithId<User> & { password: string }
 
@@ -25,51 +26,82 @@ async function init() {
 async function get(
   filter: Filter<UserDoc>,
   stripKeys: (keyof UserDoc)[] = [],
-): Promise<UserDoc> {
-  const res = await col.findOne(filter)
-  if (!res) return null
-  for (let key of stripKeys) delete res[key]
-  return res
+): Promise<DBResult<UserDoc>> {
+  try {
+    const res = await col.findOne(filter)
+    if (!res) return { status: DBResultStatus.FAILURE_NO_MATCH }
+    for (let key of stripKeys) delete res[key]
+    return { status: DBResultStatus.SUCCESS, data: res }
+  } catch (error) {
+    logger.error("user.dam.get", { error })
+    return { status: DBResultStatus.FAILURE_INTERNAL }
+  }
 }
 
 async function search(
   filter: Filter<UserDoc>,
   options: SearchOptions = null,
   stripKeys: (keyof UserDoc)[] = [],
-): Promise<UserDoc[]> {
-  const res = await col.aggregate<UserDoc>()
-    .match(filter)
-    .skip(options?.skip || 0)
-    .limit(options?.limit || 50)
-    .sort({ email: 1, "name.display": 1 })
-    .toArray()
+): Promise<DBResult<UserDoc[]>> {
+  try {
+    const res = await col.aggregate<UserDoc>()
+      .match(filter)
+      .skip(options?.skip || 0)
+      .limit(options?.limit || 50)
+      .sort({ email: 1, "name.display": 1 })
+      .map(d => {
+        for (let key of stripKeys) delete d[key]
+        return d
+      })
+      .toArray()
 
-  return res.map(d => {
-    for (let key of stripKeys) delete d[key]
-    return d
-  })
+    return { status: DBResultStatus.SUCCESS, data: res }
+  } catch (error) {
+    logger.error("user.dam.search", { error })
+    return { status: DBResultStatus.FAILURE_INTERNAL }
+  }
 }
 
-async function create(email: string, password: string): Promise<UserDoc> {
-  const res = await col.insertOne({
-    _id: nanoid(),
-    email,
-    password,
-    role: UserRole.GENERIC,
-  })
-  return get({ _id: res.insertedId })
+async function create(email: string, password: string): Promise<DBResult<UserDoc>> {
+  try {
+    const res = await col.insertOne({
+      _id: nanoid(),
+      email,
+      password,
+      role: UserRole.GENERIC,
+    })
+    return get({ _id: res.insertedId })
+  } catch (error) {
+    logger.error("user.dam.create", { error })
+    return { status: DBResultStatus.FAILURE_INTERNAL }
+  }
 }
 
-async function update(_id: string, packet: Partial<UserDoc>): Promise<UserDoc> {
+async function update(_id: string, packet: Partial<UserDoc>): Promise<DBResult<UserDoc>> {
   delete packet._id
-  const res = await col.updateOne({ _id }, { $set: packet })
-  return (res.acknowledged && res.modifiedCount === 1) && get({ _id })
+  try {
+    const res = await col.updateOne({ _id }, { $set: packet })
+    if (res.matchedCount === 0) return { status: DBResultStatus.FAILURE_NO_MATCH }
+    else if (res.modifiedCount === 0) {
+      logger.error("user.dam.update failed to modify")
+      return { status: DBResultStatus.FAILURE_INTERNAL }
+    } else return get({ _id })
+  } catch (error) {
+    logger.error("user.dam.update", { error })
+    return { status: DBResultStatus.FAILURE_INTERNAL }
+  }
 }
 
 export default {
   init, get, search, create, update,
-  async delete(...ids: string[]): Promise<number> {
-    const res = await col.deleteMany({ _id: { $in: ids } })
-    return res.deletedCount
+  async delete(...ids: string[]): Promise<DBResult<number>> {
+    try {
+      const res = await col.deleteMany({ _id: { $in: ids } })
+      if (!res.acknowledged) return { status: DBResultStatus.FAILURE_INTERNAL }
+      if (res.deletedCount === 0) return { status: DBResultStatus.FAILURE_NO_MATCH }
+      return { status: DBResultStatus.SUCCESS, data: res.deletedCount }
+    } catch (error) {
+      return { status: DBResultStatus.FAILURE_INTERNAL }
+    }
   },
 }

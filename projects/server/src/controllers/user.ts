@@ -4,20 +4,29 @@ import { ApiErrors } from "../ApiError"
 import joi from "Joi"
 import logger from "winston"
 import bcrypt from "bcryptjs"
-import { Schemae, User, UserRole, validate } from "common"
+  import { Schemae, User, validate } from "common"
+import { DBResultStatus } from "../db/types"
 
 const get: HandlerGroup = {
   /**
    * GET /users/:uid
    * SELF
    */
-  one: async ({ session, params: { uid } }, { pack, error }) => {
-    if (uid !== session.uid) return error(ApiErrors.Authorization())
+  one: async ({ session, params: { uid } }, res) => {
+    if (uid !== session.uid) return res.error(ApiErrors.Authorization())
 
-    const userData = await db.users.get({ _id: uid }, ["password"])
-    if (userData) pack(userData)
-    else error(ApiErrors.NotFound())
-
+    const { status, data } = await db.users.get({ _id: uid }, ["password"])
+    switch (status) {
+      case DBResultStatus.SUCCESS:
+        res.pack(data)
+        break
+      case DBResultStatus.FAILURE_NO_MATCH:
+        res.error(ApiErrors.NotFound())
+        break
+      case DBResultStatus.FAILURE_INTERNAL:
+        res.error(ApiErrors.Internal())
+        break
+    }
   },
   /**
    * GET /users?<UserSearch>
@@ -56,22 +65,33 @@ const post: HandlerGroup = {
     )
 
     // check duplicate emails
-    if (await db.users.get({ email: result.email }))
+    if ((await db.users.get({ email: result.email })).status === DBResultStatus.SUCCESS)
       return res.error(ApiErrors.Duplicate("email already in use"))
 
     let passHash: string = await bcrypt.hash(result.password, 10)
-    const user = await db.users.create(result.email, passHash)
-    delete user.password
-    req.session.uid = user._id
-    res.status(201).pack(user)
+    const { status, data: user } = await db.users.create(result.email, passHash)
+    switch (status) {
+      case DBResultStatus.SUCCESS:
+        delete user.password
+        req.session.uid = user._id
+        res.status(201).pack(user)
+        break
+      case DBResultStatus.FAILURE_INTERNAL:
+        res.error(ApiErrors.Internal())
+    }
   },
-  login: async ({ body, session }, { pack, error }) => {
-    if (!body.email) return error(ApiErrors.MalformedContent("missing email"))
-    else if (!body.password) return error(ApiErrors.MalformedContent("missing password"))
+  login: async ({ body, session }, res) => {
+    if (!body.email) return res.error(ApiErrors.MalformedContent("missing email"))
+    else if (!body.password) return res.error(ApiErrors.MalformedContent("missing password"))
 
     // get user
-    const user = await db.users.get({ email: body.email })
-    if (!user) return error(ApiErrors.NotFound("user does not exist"))
+    const { status, data: user } = await db.users.get({ email: body.email })
+    switch (status) {
+      case DBResultStatus.FAILURE_NO_MATCH:
+        return res.error(ApiErrors.NotFound("user does not exist"))
+      case DBResultStatus.FAILURE_INTERNAL:
+        return res.error(ApiErrors.Internal())
+    }
 
     // check password
     let valid = false
@@ -81,10 +101,10 @@ const post: HandlerGroup = {
       logger.error("failed to compare passwords", { error })
       return error(ApiErrors.Internal())
     }
-    if (!valid) return error(ApiErrors.Authentication("incorrect password"))
+    if (!valid) return res.error(ApiErrors.Authentication("incorrect password"))
     delete user.password
     session.uid = user._id
-    pack(user)
+    res.pack(user)
   },
   logout: async (req, { pack }) => {
     delete req.session.uid
@@ -97,21 +117,37 @@ const patch: HandlerGroup = {
     if (uid !== session.uid) return res.error(ApiErrors.Authorization())
     const { result, error } = validate<Partial<User>>(Schemae.user, body)
     if (error) return res.error(ApiErrors.MalformedContent(error))
-    if (result.email && (await db.users.get({ email: result.email })))
+    if (result.email && (await db.users.get({ email: result.email })).data)
       return res.error(ApiErrors.Duplicate("email already in use"))
-    // TODO
-    result.role = UserRole.ADMIN
-    const user = await db.users.update(uid, result)
-    delete user.password
-    res.pack(user)
+    // TODO this wont allow anyone to change user roles
+    const { status, data: user } = await db.users.update(
+      uid, { ...result, role: session.role },
+    )
+    switch (status) {
+      case DBResultStatus.SUCCESS:
+        delete user.password
+        res.pack(user)
+        break
+      case DBResultStatus.FAILURE_NO_MATCH:
+        res.error(ApiErrors.NotFound())
+        break
+      case DBResultStatus.FAILURE_INTERNAL:
+        res.error(ApiErrors.Internal())
+        break
+    }
   },
 }
 
 const _delete: HandlerGroup = {
   async one({ params: { uid }, session }: Request, res: Response) {
     if (uid !== session.uid) return res.error(ApiErrors.Authorization())
-    const userDeleted = await db.users.delete(uid)
-    if (userDeleted === 0) return res.error(ApiErrors.Internal("failed to delete users"))
+    const { status, data: userDeleted } = await db.users.delete(uid)
+    switch (status) {
+      case DBResultStatus.FAILURE_NO_MATCH:
+        return res.error(ApiErrors.NotFound())
+      case DBResultStatus.FAILURE_INTERNAL:
+        return res.error(ApiErrors.Internal())
+    }
     const tasksDeleted = await db.tasks.delete({ uid })
     const tagsDeleted = await db.tags.delete({ uid })
     const notesDeleted = await db.notes.delete({ uid })
