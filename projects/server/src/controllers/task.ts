@@ -35,4 +35,16 @@ const get: HandlerGroup = {
   },
 }
 
-export default { get }
+const patch: HandlerGroup = {
+  async one({ session, body, params: { tid } }, res) {
+    const { result, error } = validate<Partial<Task>>(Schemae.task, body)
+    if (error) return res.error(ApiErrors.MalformedContent(error))
+    const old = await dao.tasks.get({ _id: tid })
+    if (session.uid !== old.uid) return res.error(ApiErrors.Authorization())
+    const updated = await dao.tasks.update(tid, result)
+    if (updated) res.pack(updated, { old })
+    else res.error(ApiErrors.Internal())
+  },
+}
+
+export default { get, patch }
