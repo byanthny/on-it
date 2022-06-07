@@ -1,9 +1,10 @@
 import { nanoid } from "nanoid"
-import { Filter, SearchOptions } from "../types"
+import { DBResult, DBResultStatus, Filter, SearchOptions } from "../types"
 import { Note } from "common"
 import client from "../client"
 import names from "../names"
 import { WithId } from "mongodb"
+import logger from "winston"
 
 type NoteDoc = WithId<Note>
 
@@ -40,8 +41,14 @@ async function search(
   ]).toArray()
 }
 
-async function count(filter: Filter<NoteDoc>): Promise<number> {
-  return col.aggregate().match(filter).bufferedCount()
+async function count(filter: Filter<NoteDoc>): Promise<DBResult<number>> {
+  try {
+    const count = await col.countDocuments(filter)
+    return { status: DBResultStatus.SUCCESS, data: count }
+  } catch (error) {
+    logger.error("notes.dam.count", { error })
+    return { status: DBResultStatus.FAILURE_INTERNAL }
+  }
 }
 
 async function create(note: Note): Promise<NoteDoc> {
@@ -58,7 +65,7 @@ async function update(_id: string, packet: Partial<Note>): Promise<NoteDoc> {
 
 export default {
   init, get, search, create, update, count,
-  async delete(filter: Filter<NoteDoc>): Promise<number> {
+  async deleteMany(filter: Filter<NoteDoc>): Promise<number> {
     const res = await col.deleteMany(filter)
     return res.deletedCount
   },

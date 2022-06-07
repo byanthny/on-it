@@ -23,6 +23,16 @@ async function init() {
   ])
 }
 
+async function count(filter: Filter<UserDoc>): Promise<DBResult<number>> {
+  try {
+    const count = await col.countDocuments(filter)
+    return { status: DBResultStatus.SUCCESS, data: count }
+  } catch (error) {
+    logger.error("users.dam.count", { error })
+    return { status: DBResultStatus.FAILURE_INTERNAL }
+  }
+}
+
 async function get(
   filter: Filter<UserDoc>,
   stripKeys: (keyof UserDoc)[] = [],
@@ -70,6 +80,7 @@ async function create(email: string, password: string): Promise<DBResult<UserDoc
       password,
       role: UserRole.GENERIC,
     })
+    if (!res.acknowledged) return { status: DBResultStatus.FAILURE_INTERNAL }
     return get({ _id: res.insertedId })
   } catch (error) {
     logger.error("user.dam.create", { error })
@@ -93,14 +104,15 @@ async function update(_id: string, packet: Partial<UserDoc>): Promise<DBResult<U
 }
 
 export default {
-  init, get, search, create, update,
-  async delete(...ids: string[]): Promise<DBResult<number>> {
+  init, get, search, create, update, count,
+  async deleteMany(...ids: string[]): Promise<DBResult<number>> {
     try {
       const res = await col.deleteMany({ _id: { $in: ids } })
       if (!res.acknowledged) return { status: DBResultStatus.FAILURE_INTERNAL }
       if (res.deletedCount === 0) return { status: DBResultStatus.FAILURE_NO_MATCH }
       return { status: DBResultStatus.SUCCESS, data: res.deletedCount }
     } catch (error) {
+      logger.error("users.dam.delete", { error })
       return { status: DBResultStatus.FAILURE_INTERNAL }
     }
   },

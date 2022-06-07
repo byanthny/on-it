@@ -2,6 +2,7 @@ import { HandlerGroup, Request, Response } from "../types/express"
 import db from "../db"
 import { Limits, Schemae, UserRole, validate } from "common"
 import { ApiErrors } from "../ApiError"
+import { DBResultStatus } from "../db/types"
 
 const get: HandlerGroup = {
   one: async ({ params: { role } }: Request, { pack }: Response) => {
@@ -18,7 +19,14 @@ const patch: HandlerGroup = {
   /** PATCH /limits/:role */
   one: async ({ body, params: { role } }, res) => {
     // get limit
-    const limit = await db.limits.get(role.toUpperCase() as UserRole)
+    const { status, data: limit } = await db.limits.get(role.toUpperCase() as UserRole)
+
+    switch (status) {
+      case DBResultStatus.FAILURE_NO_MATCH:
+        return res.error(ApiErrors.NotFound())
+      case DBResultStatus.FAILURE_INTERNAL:
+        return res.error(ApiErrors.Internal())
+    }
 
     // validate incoming
     const { result, error } = validate<Partial<Limits>>(

@@ -141,16 +141,16 @@ const patch: HandlerGroup = {
 const _delete: HandlerGroup = {
   async one({ params: { uid }, session }: Request, res: Response) {
     if (uid !== session.uid) return res.error(ApiErrors.Authorization())
-    const { status, data: userDeleted } = await db.users.delete(uid)
+    const { status, data: userDeleted } = await db.users.deleteMany(uid)
     switch (status) {
       case DBResultStatus.FAILURE_NO_MATCH:
         return res.error(ApiErrors.NotFound())
       case DBResultStatus.FAILURE_INTERNAL:
         return res.error(ApiErrors.Internal())
     }
-    const tasksDeleted = await db.tasks.delete({ uid })
-    const tagsDeleted = await db.tags.delete({ uid })
-    const notesDeleted = await db.notes.delete({ uid })
+    const tasksDeleted = await db.tasks.deleteMany({ uid })
+    const tagsDeleted = await db.tags.deleteMany({ uid })
+    const notesDeleted = await db.notes.deleteMany({ uid })
     res.pack({ userDeleted, tasksDeleted, notesDeleted, tagsDeleted })
   },
 }
