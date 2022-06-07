@@ -29,7 +29,7 @@ export type Task<TagType = ID> = Snowflake & {
   title: string
   state: TaskState,
   description?: string
-  parents?: string[]
+  parent?: string
   tags?: Tag[]
   due?: Date
   reminders?: string[]

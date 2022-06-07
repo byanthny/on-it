@@ -30,8 +30,8 @@ export type Limits = Snowflake & {
   }
   readonly tasks?: {
     readonly max?: number
-    /** Max number of Projects a Task can have */
-    readonly maxProjects?: number
+    /** Max number of Tags a Task can have */
+    readonly maxTags?: number
     /** Max number of Notes a Task can have */
     readonly maxNotes?: number
   }
