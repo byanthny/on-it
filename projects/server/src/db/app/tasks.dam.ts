@@ -1,5 +1,13 @@
 import { nanoid } from "nanoid"
-import { DBResult, DBResultStatus, Filter, SearchOptions } from "../types"
+import {
+  DBResult,
+  Filter,
+  InternalFailureResult,
+  NoMatchResult,
+  runCatching,
+  SearchOptions,
+  successResultOf,
+} from "../types"
 import { Tag, Task, TaskSearch } from "common"
 import client from "../client"
 import names from "../names"
@@ -53,35 +61,28 @@ function coerceSearch(search: TaskSearch): Document {
 }
 
 async function count(filter: Filter<TaskDoc>): Promise<DBResult<number>> {
-  try {
+  return runCatching("tasks.dam.count", async () => {
     const count = await col.countDocuments(filter)
-    return { status: DBResultStatus.SUCCESS, data: count }
-  } catch (error) {
-    logger.error("tasks.dam.count", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+    return successResultOf(count)
+  })
 }
 
 async function get(filter: Filter<TaskDoc>): Promise<DBResult<TaskDoc<Tag>>> {
-  try {
+  return runCatching("tasks.dam.get", async () => {
     const res = await col.aggregate<TaskDoc>()
       .match(filter)
       .lookup(tagLookup)
       .limit(1)
       .next()
-    if (!res) return { status: DBResultStatus.FAILURE_NO_MATCH }
-    return { status: DBResultStatus.SUCCESS, data: res }
-  } catch (error) {
-    logger.error("tasks.dam.get", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+    return res ? successResultOf(res) : NoMatchResult
+  })
 }
 
 async function search(
   search: TaskSearch,
   options: SearchOptions = null,
 ): Promise<DBResult<TaskDoc<Tag>[]>> {
-  try {
+  return runCatching("tasks.dam.search", async () => {
     const res = await col.aggregate<TaskDoc>()
       .match(coerceSearch(search))
       .skip(options?.skip || 0)
@@ -89,61 +90,53 @@ async function search(
       .sort({ email: 1, "name.display": 1 })
       .lookup(tagLookup)
       .toArray()
-    return { status: DBResultStatus.SUCCESS, data: res }
-  } catch (error) {
-    logger.error("tasks.dam.search", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+    return successResultOf(res)
+  })
 }
 
 async function create(task: Task): Promise<DBResult<TaskDoc<Tag>>> {
-  try {
+  return runCatching("tasks.dam.create", async () => {
     const res = await col.insertOne({ _id: nanoid(), ...task })
-    if (!res.insertedId) return { status: DBResultStatus.FAILURE_INTERNAL }
+    if (!res.insertedId) return InternalFailureResult
     return await get({ _id: res.insertedId })
-  } catch (error) {
-    logger.error("tasks.dam.create", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+  })
 }
 
 async function update(
   filter: Filter<TaskDoc>,
   packet: Filter<Task>,
 ): Promise<DBResult<TaskDoc<Tag>>> {
-  try {
+  return runCatching("tasks.dam.update", async () => {
     const res = await col.updateOne(filter, { $set: packet })
-    if (!res.acknowledged) return { status: DBResultStatus.FAILURE_INTERNAL }
-    if (res.matchedCount === 0) return { status: DBResultStatus.FAILURE_NO_MATCH }
-    if (res.modifiedCount === 0) return { status: DBResultStatus.FAILURE_INTERNAL }
+    if (!res.acknowledged) return InternalFailureResult
+    if (res.matchedCount === 0) return NoMatchResult
+    if (res.modifiedCount === 0) return InternalFailureResult
     return get(filter)
-  } catch (error) {
-    logger.error("tasks.dam.update", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+  })
 }
 
 export default {
   init, get, search, create, update, count,
   async delete(filter: Filter<TaskDoc>): Promise<DBResult<void>> {
-    try {
+    return runCatching("tasks.dam.delete", async () => {
       const res = await col.deleteOne(filter)
-      if (!res.acknowledged) return { status: DBResultStatus.FAILURE_INTERNAL }
-      if (res.deletedCount === 0) return { status: DBResultStatus.FAILURE_NO_MATCH }
-      return { status: DBResultStatus.SUCCESS }
-    } catch (error) {
-      logger.error("tasks.dam.delete", { error })
-      return { status: DBResultStatus.FAILURE_INTERNAL }
-    }
+      if (!res.acknowledged) return InternalFailureResult
+      if (res.deletedCount === 0) return NoMatchResult
+      return successResultOf()
+    })
+  },
+  async deleteManyByID(...ids: string[]): Promise<DBResult<number>> {
+    return runCatching("tasks.dam.deleteManyByID", async () => {
+      const res = await col.deleteMany({ _id: { $in: ids } })
+      if (!res.acknowledged) return InternalFailureResult
+      return successResultOf(res.deletedCount)
+    })
   },
   async deleteMany(filter: TaskSearch): Promise<DBResult<number>> {
-    try {
+    return runCatching("tasks.dam.deleteMany", async () => {
       const res = await col.deleteMany(coerceSearch(filter))
-      if (!res.acknowledged) return { status: DBResultStatus.FAILURE_INTERNAL }
-      return { status: DBResultStatus.SUCCESS, data: res.deletedCount }
-    } catch (error) {
-      logger.error("tasks.dam.deleteMany", { error })
-      return { status: DBResultStatus.FAILURE_INTERNAL }
-    }
+      if (!res.acknowledged) return InternalFailureResult
+      return successResultOf(res.deletedCount)
+    })
   },
 }

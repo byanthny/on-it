@@ -1,5 +1,13 @@
 import { nanoid } from "nanoid"
-import { DBResult, DBResultStatus, Filter, SearchOptions } from "../types"
+import {
+  DBResult,
+  Filter,
+  InternalFailureResult,
+  NoMatchResult,
+  runCatching,
+  SearchOptions,
+  successResultOf,
+} from "../types"
 import { User, UserRole } from "common"
 import client from "../client"
 import names from "../names"
@@ -24,28 +32,22 @@ async function init() {
 }
 
 async function count(filter: Filter<UserDoc>): Promise<DBResult<number>> {
-  try {
+  return runCatching("user.dam.count", async () => {
     const count = await col.countDocuments(filter)
-    return { status: DBResultStatus.SUCCESS, data: count }
-  } catch (error) {
-    logger.error("users.dam.count", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+    return successResultOf(count)
+  })
 }
 
 async function get(
   filter: Filter<UserDoc>,
   stripKeys: (keyof UserDoc)[] = [],
 ): Promise<DBResult<UserDoc>> {
-  try {
+  return runCatching("user.dam.get", async () => {
     const res = await col.findOne(filter)
-    if (!res) return { status: DBResultStatus.FAILURE_NO_MATCH }
+    if (!res) return NoMatchResult
     for (let key of stripKeys) delete res[key]
-    return { status: DBResultStatus.SUCCESS, data: res }
-  } catch (error) {
-    logger.error("user.dam.get", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+    return successResultOf(res)
+  })
 }
 
 async function search(
@@ -53,7 +55,7 @@ async function search(
   options: SearchOptions = null,
   stripKeys: (keyof UserDoc)[] = [],
 ): Promise<DBResult<UserDoc[]>> {
-  try {
+  return runCatching("user.dam.search", async () => {
     const res = await col.aggregate<UserDoc>()
       .match(filter)
       .skip(options?.skip || 0)
@@ -64,56 +66,42 @@ async function search(
         return d
       })
       .toArray()
-
-    return { status: DBResultStatus.SUCCESS, data: res }
-  } catch (error) {
-    logger.error("user.dam.search", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+    return successResultOf(res)
+  })
 }
 
 async function create(email: string, password: string): Promise<DBResult<UserDoc>> {
-  try {
+  return runCatching("user.dam.create", async () => {
     const res = await col.insertOne({
       _id: nanoid(),
       email,
       password,
       role: UserRole.GENERIC,
     })
-    if (!res.acknowledged) return { status: DBResultStatus.FAILURE_INTERNAL }
+    if (!res.acknowledged) return InternalFailureResult
     return get({ _id: res.insertedId })
-  } catch (error) {
-    logger.error("user.dam.create", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+  })
 }
 
 async function update(_id: string, packet: Partial<UserDoc>): Promise<DBResult<UserDoc>> {
-  delete packet._id
-  try {
+  return runCatching("user.dam.update", async () => {
     const res = await col.updateOne({ _id }, { $set: packet })
-    if (res.matchedCount === 0) return { status: DBResultStatus.FAILURE_NO_MATCH }
+    if (res.matchedCount === 0) return NoMatchResult
     else if (res.modifiedCount === 0) {
       logger.error("user.dam.update failed to modify")
-      return { status: DBResultStatus.FAILURE_INTERNAL }
+      return InternalFailureResult
     } else return get({ _id })
-  } catch (error) {
-    logger.error("user.dam.update", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+  })
 }
 
 export default {
   init, get, search, create, update, count,
   async deleteMany(...ids: string[]): Promise<DBResult<number>> {
-    try {
+    return runCatching("users.dam.delete", async () => {
       const res = await col.deleteMany({ _id: { $in: ids } })
-      if (!res.acknowledged) return { status: DBResultStatus.FAILURE_INTERNAL }
-      if (res.deletedCount === 0) return { status: DBResultStatus.FAILURE_NO_MATCH }
-      return { status: DBResultStatus.SUCCESS, data: res.deletedCount }
-    } catch (error) {
-      logger.error("users.dam.delete", { error })
-      return { status: DBResultStatus.FAILURE_INTERNAL }
-    }
+      if (!res.acknowledged) return InternalFailureResult
+      if (res.deletedCount === 0) return NoMatchResult
+      return successResultOf(res.deletedCount)
+    })
   },
 }

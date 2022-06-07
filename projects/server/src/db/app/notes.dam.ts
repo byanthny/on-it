@@ -1,10 +1,17 @@
 import { nanoid } from "nanoid"
-import { DBResult, DBResultStatus, Filter, SearchOptions } from "../types"
+import {
+  DBResult,
+  Filter,
+  InternalFailureResult,
+  NoMatchResult,
+  runCatching,
+  SearchOptions,
+  successResultOf,
+} from "../types"
 import { Note } from "common"
 import client from "../client"
 import names from "../names"
 import { WithId } from "mongodb"
-import logger from "winston"
 
 type NoteDoc = WithId<Note>
 
@@ -25,48 +32,59 @@ async function init() {
   ])
 }
 
-async function get(filter: Filter<NoteDoc>): Promise<NoteDoc> {
-  return await col.findOne(filter)
+async function get(filter: Filter<NoteDoc>): Promise<DBResult<NoteDoc>> {
+  return runCatching("notes.dam.get", async () => {
+    const res = await col.findOne(filter)
+    return res ? successResultOf(res) : NoMatchResult
+  })
 }
 
 async function search(
   filter: Filter<NoteDoc>,
   options: SearchOptions = null,
-): Promise<NoteDoc[]> {
-  return await col.aggregate<NoteDoc>([
-    { $match: filter },
-    { $skip: options?.skip || 0 },
-    { $limit: options?.limit || 50 },
-    { sort: { order: 1 } },
-  ]).toArray()
+): Promise<DBResult<NoteDoc[]>> {
+  return runCatching("notes.dam.search", async () => {
+    const res = await col.aggregate<NoteDoc>([
+      { $match: filter },
+      { $skip: options?.skip || 0 },
+      { $limit: options?.limit || 50 },
+      { sort: { order: 1 } },
+    ]).toArray()
+    return successResultOf(res)
+  })
 }
 
 async function count(filter: Filter<NoteDoc>): Promise<DBResult<number>> {
-  try {
+  return runCatching("notes.dam.count", async () => {
     const count = await col.countDocuments(filter)
-    return { status: DBResultStatus.SUCCESS, data: count }
-  } catch (error) {
-    logger.error("notes.dam.count", { error })
-    return { status: DBResultStatus.FAILURE_INTERNAL }
-  }
+    return successResultOf(count)
+  })
 }
 
-async function create(note: Note): Promise<NoteDoc> {
-  const res = await col.insertOne({ _id: nanoid(), ...note })
-  if (!res.insertedId) return null
-  return await get({ _id: res.insertedId })
+async function create(note: Note): Promise<DBResult<NoteDoc>> {
+  return runCatching("notes.dam.create", async () => {
+    const res = await col.insertOne({ _id: nanoid(), ...note })
+    return res.insertedId ? get({ _id: res.insertedId }) : InternalFailureResult
+  })
 }
 
-async function update(_id: string, packet: Partial<Note>): Promise<NoteDoc> {
-  delete packet._id
-  const res = await col.findOneAndUpdate({ _id }, { $set: packet })
-  return res.value
+async function update(_id: string, packet: Partial<Note>): Promise<DBResult<NoteDoc>> {
+  return runCatching("notes.dam.update", async () => {
+    const res = await col.updateOne({ _id }, { $set: packet })
+    if (!res.acknowledged) return InternalFailureResult
+    if (res.matchedCount === 0) return NoMatchResult
+    if (res.modifiedCount === 0) return InternalFailureResult
+    return get({ _id })
+  })
 }
 
 export default {
   init, get, search, create, update, count,
-  async deleteMany(filter: Filter<NoteDoc>): Promise<number> {
-    const res = await col.deleteMany(filter)
-    return res.deletedCount
+  async deleteMany(filter: Filter<NoteDoc>): Promise<DBResult<number>> {
+    return runCatching("notes.dam.deleteMany", async () => {
+      const res = await col.deleteMany(filter)
+      if (!res.acknowledged) return InternalFailureResult
+      return successResultOf(res.deletedCount)
+    })
   },
 }
