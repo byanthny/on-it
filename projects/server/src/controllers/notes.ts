@@ -4,6 +4,7 @@ import { reduceDBResultStatus } from "./util"
 import { ApiErrors } from "../ApiError"
 import { Note, NoteSearch, Schemae, validate } from "common"
 import { DBResultStatus } from "../db/types"
+import Joi from "joi"
 
 const get: HandlerGroup = {
   async one({ params: { nid }, session }, res) {
@@ -70,6 +71,15 @@ const patch: HandlerGroup = {
 const _delete: HandlerGroup = {
   async one({ params: { nid }, session }, res) {
     const { status, data } = await db.notes.deleteMany({ _id: nid, uid: session.uid })
+    const dbErr = reduceDBResultStatus(status)
+    if (dbErr) return res.error(dbErr)
+    res.pack(data)
+  },
+  async many({ query, session: { uid } }, res) {
+    const { result, error } =
+      validate<{ ids: string[] }>({ ids: Joi.array().items(Schemae.id) }, query as any)
+    if (error) return res.error(ApiErrors.MalformedContent(error))
+    const { status, data } = await db.notes.deleteManyByID(result.ids, uid)
     const dbErr = reduceDBResultStatus(status)
     if (dbErr) return res.error(dbErr)
     res.pack(data)
