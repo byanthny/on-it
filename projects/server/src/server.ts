@@ -31,12 +31,13 @@ export default async (): Promise<Application> => {
 
   // Setup external middleware
   server.use(Express.json({ strict: true }))
-  const corsOrigin = [
-    OnIt.productionUrl,
-    process.env.NODE_ENV === "DEVELOPMENT" ? "localhost" : undefined,
-  ]
-  logger.info("cors origins set", { corsOrigin })
-  server.use(cors({ origin: corsOrigin }))
+  server.use(
+    cors({
+      origin: process.env.NODE_ENV === "DEVELOPMENT" ? true : OnIt.productionUrl,
+      methods: ["GET", "PATCH", "POST", "DELETE"],
+      allowedHeaders: ["accept", "content-type"],
+    }),
+  )
 
   // Setup docs path
   server.use("/docs", (_, res) => {
