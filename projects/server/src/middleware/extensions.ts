@@ -1,10 +1,14 @@
 import { Request, Response } from "../types/express"
 import log from "winston"
 import { ApiError } from "common"
+import logger from "winston"
 
 export const attachPacketier = (_: any, res: Response, next: any) => {
   res.pack = (payload?: any, meta?: any) => res.json({ payload, meta })
-  res.error = (error: ApiError) => res.status(error.code).json({ error })
+  res.error = (error: ApiError) => {
+    logger.debug("error response", { error })
+    return res.status(error.code).json({ error })
+  }
   next()
 }
 

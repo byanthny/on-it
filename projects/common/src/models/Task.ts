@@ -1,11 +1,11 @@
 import Joi from "joi"
-import { ID, idSchema, Snowflake, nameSchema } from "./Model"
+import { ID, idSchema, Snowflake } from "./Model"
 import { Note } from "./Note"
 import { Tag } from "./Tag"
 import { SearchOptions, searchOptionSchema } from "../Net"
 
 export const taskSchema = {
-  tags: Joi.array().items(nameSchema).optional(),
+  tags: Joi.array().items(idSchema).optional(),
   parents: Joi.array().items(idSchema).optional(),
   title: Joi.string().min(1).max(255),
   description: Joi.string().max(255).optional(),

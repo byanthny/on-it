@@ -75,7 +75,7 @@ const post: HandlerGroup = {
 
 const patch: HandlerGroup = {
   async one({ session, body, params: { tid } }, res) {
-    const { result, error } = validate<Partial<Task>>(Schemae.task, body)
+    const { result, error } = validate<Partial<Task>>(Schemae.task, body, true)
     if (error) return res.error(ApiErrors.MalformedContent(error))
     // TODO validate parent changes
     const { status, data } = await dao.tasks.update(

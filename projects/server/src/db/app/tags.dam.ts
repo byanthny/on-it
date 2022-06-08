@@ -14,6 +14,7 @@ import {
 } from "../types"
 import { nanoid } from "nanoid"
 import { clearUndefinedOrNull } from "../../util"
+import logger from "winston"
 
 type TagDoc = WithId<Tag>
 
@@ -91,7 +92,10 @@ async function update(
       { $set: packet },
     )
     if (res.matchedCount === 0) return NoMatchResult
-    if (!res.acknowledged || res.modifiedCount === 0) return InternalFailureResult
+    if (!res.acknowledged || res.modifiedCount === 0) {
+      logger.error("failed to modify tag")
+      return InternalFailureResult
+    }
     return await get(filter)
   })
 }

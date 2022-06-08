@@ -60,9 +60,10 @@ const patch: HandlerGroup = {
     // validate
     const { result, error } = validate<Partial<Tag>>(Schemae.tag, body)
     if (error) return res.error(ApiErrors.MalformedContent(error))
+    delete result._id
     const { status, data } = await db.tags.update({ uid, _id: pid }, result)
     const dbErr = reduceDBResultStatus(status)
-    if (db) return res.error(dbErr)
+    if (dbErr) return res.error(dbErr)
     res.pack(data)
   },
 }
