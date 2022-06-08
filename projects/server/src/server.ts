@@ -36,6 +36,7 @@ export default async (): Promise<Application> => {
       origin: process.env.NODE_ENV === "DEVELOPMENT" ? true : OnIt.productionUrl,
       methods: ["GET", "PATCH", "POST", "DELETE"],
       allowedHeaders: ["accept", "content-type"],
+      credentials: true
     }),
   )
 
