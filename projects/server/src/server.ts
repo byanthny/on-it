@@ -64,6 +64,7 @@ export default async (): Promise<Application> => {
   api.use("/users", /* auth handled in router */routes.users)
   api.use("/tags", authentication(), routes.tags)
   api.use("/tasks", authentication(), routes.tasks)
+  api.use("/notes", authentication(), routes.notes)
   api.use("/admin", authentication([UserRole.ADMIN, UserRole.DEVELOPER]), routes.admin)
   server.use("/api", api)
 
