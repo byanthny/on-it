@@ -48,9 +48,7 @@ function coerceSearch(search: TaskSearch): Document {
   const out: Document = {}
   if (search.uid) out.uid = search.uid
   if (search.text) out.$text = { $search: search.text }
-  if (search.parents)
-    if (typeof search.parents === "string") out.parents = search.parents
-    else out.parents = { $all: search.parents }
+  if (search.parent) out.parents = search.parent
   if (search.due)
     out.due = {
       $lt: search.due?.before && new Date(search.due!.before),

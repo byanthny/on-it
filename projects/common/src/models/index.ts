@@ -1,7 +1,7 @@
 import { authSchema, User, UserRole, userSchema } from "./User"
 import { Tag, tagSchema, tagSearchSchema, TagSearch } from "./Tag"
 import { Task, taskSchema, TaskSearch, taskSearchSchema, TaskState } from "./Task"
-import { Note, noteSchema } from "./Note"
+import { Note, noteSchema, noteSearchSchema, NoteSearch } from "./Note"
 import { ID, idSchema, nameSchema } from "./Model"
 import { Limits, limitsSchema } from "./Limits"
 
@@ -17,6 +17,7 @@ const Schemae = {
   search: {
     task: taskSearchSchema,
     tag: tagSearchSchema,
+    note: noteSearchSchema,
   },
 }
 
@@ -28,6 +29,7 @@ export {
   TaskState,
   TagSearch,
   Note,
+  NoteSearch,
   ID,
   Limits,
   TaskSearch,

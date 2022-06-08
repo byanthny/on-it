@@ -8,10 +8,11 @@ import {
   SearchOptions,
   successResultOf,
 } from "../types"
-import { Note } from "common"
+import { Note, NoteSearch } from "common"
 import client from "../client"
 import names from "../names"
-import { WithId } from "mongodb"
+import { Document, WithId } from "mongodb"
+import logger from "winston"
 
 type NoteDoc = WithId<Note>
 
@@ -39,17 +40,24 @@ async function get(filter: Filter<NoteDoc>): Promise<DBResult<NoteDoc>> {
   })
 }
 
+function coerceSearch(search: NoteSearch): Document {
+  const filter: Document = { ...search }
+  if (search.text) filter.$text = { $search: search.text }
+  logger.debug("search coerce", { filter })
+  return filter
+}
+
 async function search(
-  filter: Filter<NoteDoc>,
+  search: NoteSearch,
   options: SearchOptions = null,
 ): Promise<DBResult<NoteDoc[]>> {
   return runCatching("notes.dam.search", async () => {
-    const res = await col.aggregate<NoteDoc>([
-      { $match: filter },
-      { $skip: options?.skip || 0 },
-      { $limit: options?.limit || 50 },
-      { sort: { order: 1 } },
-    ]).toArray()
+    const res = await col.aggregate<NoteDoc>()
+      .match(coerceSearch(search))
+      .skip(options?.skip || 0)
+      .limit(options?.limit || 50)
+      .sort({ order: 1 })
+      .toArray()
     return successResultOf(res)
   })
 }
@@ -68,13 +76,16 @@ async function create(note: Note): Promise<DBResult<NoteDoc>> {
   })
 }
 
-async function update(_id: string, packet: Partial<Note>): Promise<DBResult<NoteDoc>> {
+async function update(
+  filter: Filter<Note>,
+  packet: Partial<Note>,
+): Promise<DBResult<NoteDoc>> {
   return runCatching("notes.dam.update", async () => {
-    const res = await col.updateOne({ _id }, { $set: packet })
+    const res = await col.updateOne(filter, { $set: packet })
     if (!res.acknowledged) return InternalFailureResult
     if (res.matchedCount === 0) return NoMatchResult
     if (res.modifiedCount === 0) return InternalFailureResult
-    return get({ _id })
+    return get(filter)
   })
 }
 

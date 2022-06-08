@@ -3,6 +3,9 @@ info:
   title: On It API Spec
   description: REST API for On It
   version: 2.0.0
+security:
+  - session: []
+
 
 servers:
   - description: Production
@@ -17,7 +20,7 @@ components:
     session:
       type: apiKey
       in: cookie
-      name: sessionID
+      name: session
   schemas:
     packet:
       type: object
@@ -86,11 +89,9 @@ components:
         uid:
           type: string
           description: Owning User's ID
-        parents:
-          type: array
-          items:
-            type: string
-          description: IDs of parent tasks in order of relation
+        parent:
+          type: string
+          description: ID of parent task
           default: null
         title:
           type: string
@@ -482,20 +483,19 @@ paths:
           in: query
           schema:
             type: integer
-        - name: parents
-          description: Parent task IDs
+        - name: parent
+          description: Parent task ID
           in: query
-          style: form
           schema:
-            type: array
-            items:
-              type: string
+            type: string
         - name: tags
           description: tag IDs
           in: query
           style: form
           schema:
             type: array
+            items:
+              type: string
         - name: state
           description: The completion state of the tasks
           in: query
@@ -685,6 +685,8 @@ paths:
           style: form
           schema:
             type: array
+            items:
+              type: string
         - name: parent
           description: ID of the Parent Task
           in: query
@@ -710,7 +712,7 @@ paths:
       tags:
         - note
       security:
-        - token: []
+        - session: []
       requestBody:
         content:
           application/json:
@@ -770,7 +772,7 @@ paths:
       tags:
         - note
       security:
-        - token: []
+        - session: []
       responses:
         default:
           $ref: "#/components/responses/Error"
@@ -789,7 +791,7 @@ paths:
       tags:
         - note
       security:
-        - token: []
+        - session: []
       requestBody:
         content:
           application/json:
@@ -813,7 +815,7 @@ paths:
       tags:
         - note
       security:
-        - token: []
+        - session: []
       responses:
         default:
           $ref: "#/components/responses/Error"

@@ -77,10 +77,18 @@ const patch: HandlerGroup = {
   async one({ session, body, params: { tid } }, res) {
     const { result, error } = validate<Partial<Task>>(Schemae.task, body, true)
     if (error) return res.error(ApiErrors.MalformedContent(error))
-    // TODO validate parent changes
+    if (result.parent) {
+      const { status } = await db.tasks.get({ uid: session.uid, _id: result.parent })
+      switch (status) {
+        case DBResultStatus.FAILURE_NO_MATCH:
+          return res.error(ApiErrors.MalformedContent("parent does not exist"))
+        case DBResultStatus.FAILURE_INTERNAL:
+          return res.error(ApiErrors.Internal())
+      }
+    }
     const { status, data } = await dao.tasks.update(
       { _id: tid, uid: session.uid },
-      result,
+      { ...result, uid: session.uid },
     )
     const dbErr = reduceDBResultStatus(status)
     if (dbErr) return res.error(dbErr)

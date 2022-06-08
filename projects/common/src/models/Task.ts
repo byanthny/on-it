@@ -39,8 +39,8 @@ export type TaskWithNotes = Task<Tag> & { notes?: Note[] }
 
 export type TaskSearch = SearchOptions & {
   uid?: string
-  parents?: string[] | string
-  tags?: string[] | string
+  parent?: string
+  tags?: string[]
   state?: TaskState[] | TaskState
   text?: string
   due?: {
@@ -51,8 +51,9 @@ export type TaskSearch = SearchOptions & {
 
 export const taskSearchSchema = {
   ...searchOptionSchema,
-  parents: Joi.allow(idSchema, Joi.array().items(idSchema)).optional(),
-  tags: Joi.allow(idSchema, Joi.array().items(idSchema)).optional(),
+  uid: idSchema.optional(),
+  parent: idSchema.optional(),
+  tags: Joi.array().items(idSchema).optional(),
   state: Joi.allow(taskSchema.state, Joi.array().items(taskSchema.state)).optional(),
   text: Joi.string().max(255).optional(),
   due: Joi.object({
