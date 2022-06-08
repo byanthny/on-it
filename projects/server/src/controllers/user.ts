@@ -88,6 +88,8 @@ const patch: HandlerGroup = {
     const dbError = reduceDBResultStatus(status)
     if (error) return res.error(dbError)
     delete user.password
+    session.user = user
+    session.role = user.role
     res.pack(user)
   },
 }
