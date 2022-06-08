@@ -105,7 +105,7 @@ const _delete: HandlerGroup = {
       const error = reduceDBResultStatus(status)
       if (error) return res.error(error)
     }
-    res.pack({ userDeleted, tasksDeleted, notesDeleted, tagsDeleted })
+    res.pack({ userDeleted: userDeleted === 1, tasksDeleted, notesDeleted, tagsDeleted })
   },
 }
 
