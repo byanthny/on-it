@@ -1,17 +1,21 @@
-import { HandlerGroup, Request, Response } from "../types/express"
+import { HandlerGroup } from "../types/express"
 import db from "../db"
 import { Limits, Schemae, UserRole, validate } from "common"
 import { ApiErrors } from "../ApiError"
-import { DBResultStatus } from "../db/types"
+import { reduceDBResultStatus } from "./util"
 
 const get: HandlerGroup = {
-  one: async ({ params: { role } }: Request, { pack }: Response) => {
-    const limits = await db.limits.get(role.toUpperCase() as UserRole)
-    pack(limits)
+  async one({ params: { role } }, res) {
+    const { status, data } = await db.limits.get(role.toUpperCase() as UserRole)
+    const err = reduceDBResultStatus(status)
+    if (err) return res.error(err)
+    res.pack(data)
   },
-  all: async (_: Request, { pack }: Response) => {
-    const limits = await db.limits.getAll()
-    pack(limits)
+  async all(_, res) {
+    const { status, data } = await db.limits.getAll()
+    const err = reduceDBResultStatus(status)
+    if (err) return res.error(err)
+    res.pack(data)
   },
 }
 
@@ -20,13 +24,8 @@ const patch: HandlerGroup = {
   one: async ({ body, params: { role } }, res) => {
     // get limit
     const { status, data: limit } = await db.limits.get(role.toUpperCase() as UserRole)
-
-    switch (status) {
-      case DBResultStatus.FAILURE_NO_MATCH:
-        return res.error(ApiErrors.NotFound())
-      case DBResultStatus.FAILURE_INTERNAL:
-        return res.error(ApiErrors.Internal())
-    }
+    const dbErr = reduceDBResultStatus(status)
+    if (dbErr) return res.error(dbErr)
 
     // validate incoming
     const { result, error } = validate<Partial<Limits>>(
@@ -36,8 +35,13 @@ const patch: HandlerGroup = {
     )
     if (error) return res.error(ApiErrors.MalformedContent(error))
     // update limit
-    const newLimit = await db.limits.upsert(role.toUpperCase() as UserRole, result)
-    res.pack(newLimit)
+    const {
+      status: B,
+      data,
+    } = await db.limits.upsert(role.toUpperCase() as UserRole, result)
+    const dbErr2 = reduceDBResultStatus(B)
+    if (dbErr2) return res.error(dbErr2)
+    res.pack(data)
   },
 }
 
@@ -45,8 +49,10 @@ const post: HandlerGroup = {
   one: async ({ body }, res) => {
     const { result, error } = validate<Limits>(Schemae.admin.limit, body)
     if (error) return res.error(ApiErrors.MalformedContent(error))
-    const limits = await db.limits.upsert(result.role, result)
-    res.status(201).pack(limits)
+    const { status, data } = await db.limits.upsert(result.role, result)
+    const dbErr = reduceDBResultStatus(status)
+    if (dbErr) return res.error(dbErr)
+    res.status(201).pack(data)
   },
 }
 

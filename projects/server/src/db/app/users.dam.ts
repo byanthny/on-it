@@ -70,7 +70,11 @@ async function search(
   })
 }
 
-async function create(email: string, password: string): Promise<DBResult<UserDoc>> {
+async function create(
+  email: string,
+  password: string,
+  stripKeys: (keyof UserDoc)[] = [],
+): Promise<DBResult<UserDoc>> {
   return runCatching("user.dam.create", async () => {
     const res = await col.insertOne({
       _id: nanoid(),
@@ -79,7 +83,7 @@ async function create(email: string, password: string): Promise<DBResult<UserDoc
       role: UserRole.GENERIC,
     })
     if (!res.acknowledged) return InternalFailureResult
-    return get({ _id: res.insertedId })
+    return get({ _id: res.insertedId }, stripKeys)
   })
 }
 

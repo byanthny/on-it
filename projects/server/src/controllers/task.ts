@@ -4,6 +4,7 @@ import dao from "../db"
 import { ApiErrors } from "../ApiError"
 import { Schemae, Task, TaskSearch, validate } from "common"
 import { DBResultStatus } from "../db/types"
+import { reduceDBResultStatus } from "./util"
 
 const get: HandlerGroup = {
   /**
@@ -11,14 +12,9 @@ const get: HandlerGroup = {
    */
   one: async ({ params: { tid }, session }, res) => {
     const { status, data } = await db.tasks.get({ _id: tid, uid: session.uid })
-    switch (status) {
-      case DBResultStatus.SUCCESS:
-        return res.pack(data)
-      case DBResultStatus.FAILURE_NO_MATCH:
-        return res.error(ApiErrors.NotFound())
-      case DBResultStatus.FAILURE_INTERNAL:
-        return res.error(ApiErrors.Internal())
-    }
+    const err = reduceDBResultStatus(status)
+    if (err) return res.error(err)
+    res.pack(data)
   },
   /**
    * GET /tasks?<TaskSearch>,SearchOptions
@@ -30,14 +26,9 @@ const get: HandlerGroup = {
       { ...result, uid },
       { limit: result.limit, skip: result.skip },
     )
-    switch (status) {
-      case DBResultStatus.SUCCESS:
-        return res.pack(data)
-      case DBResultStatus.FAILURE_NO_MATCH:
-        return res.error(ApiErrors.NotFound())
-      case DBResultStatus.FAILURE_INTERNAL:
-        return res.error(ApiErrors.Internal())
-    }
+    const dbErr = reduceDBResultStatus(status)
+    if (dbErr) return res.error(dbErr)
+    res.pack(data)
   },
 }
 
@@ -91,28 +82,18 @@ const patch: HandlerGroup = {
       { _id: tid, uid: session.uid },
       result,
     )
-    switch (status) {
-      case DBResultStatus.SUCCESS:
-        return res.pack(data)
-      case DBResultStatus.FAILURE_NO_MATCH:
-        return res.error(ApiErrors.NotFound())
-      case DBResultStatus.FAILURE_INTERNAL:
-        return res.error(ApiErrors.Internal())
-    }
+    const dbErr = reduceDBResultStatus(status)
+    if (dbErr) return res.error(dbErr)
+    res.pack(data)
   },
 }
 
 const _delete: HandlerGroup = {
   async one({ session, params: { tid } }, res) {
     const { status } = await db.tasks.delete({ uid: session.uid, _id: tid })
-    switch (status) {
-      case DBResultStatus.SUCCESS:
-        return res.status(200).end()
-      case DBResultStatus.FAILURE_NO_MATCH:
-        return res.error(ApiErrors.NotFound())
-      case DBResultStatus.FAILURE_INTERNAL:
-        return res.error(ApiErrors.Internal())
-    }
+    const error = reduceDBResultStatus(status)
+    if (error) return res.error(error)
+    res.pack(true)
   },
 }
 
