@@ -1,6 +1,6 @@
 import { authentication } from "./auth"
-import { attachPacketier, logger } from "./extensions"
+import { attachPacketier, callLogger } from "./extensions"
 import errorHandler from "./errorHandler"
 
 
-export { attachPacketier, errorHandler, authentication, logger }
+export { attachPacketier, errorHandler, authentication, callLogger }

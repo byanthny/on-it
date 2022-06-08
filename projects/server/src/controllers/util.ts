@@ -1,51 +1,19 @@
-import { Nestable, ID, Project, Taggable } from "common"
-import dao from "../dao"
-import ApiError from "../ApiError"
-import logger from "winston"
+import { ApiError } from "common"
+import { DBResultStatus } from "../db/types"
+import { ApiErrors } from "../ApiError"
 
-export const populateTaggable = async (
-  task: Taggable<ID>,
-): Promise<Taggable> => {
-  const projects: Project[] = []
-  if (task.tags) {
-    for (const t of task.tags) {
-      try {
-        const p = await dao.projects.getByID(t)
-        projects.push(p)
-      } catch (error) {
-        logger.info(error.message, error)
-      }
-    }
-  }
-  return { ...task, tags: projects }
-}
-
-export const populateTaggables = async (
-  taggables: Taggable<ID>[],
-): Promise<Taggable[]> => {
-  const out: Taggable[] = []
-  for (const t of taggables) {
-    const n = await populateTaggable(t)
-    out.push(n)
-  }
-  return out
-}
-
-/** Ensures a {@link Taggable}'s tags exist */
-export const validateTags = async ({ tags }: Taggable<ID>) => {
-  if (!tags) return
-  for (const pid of tags) {
-    const exists = await dao.projects.existsByID(pid)
-    if (!exists) ApiError.NotFound(`Project Tag with ID ${pid} not found`)
-  }
-}
-
-/** Ensures a {@link Nestable}'s parent exists */
-export const validateParent = async ({ parent }: Nestable, selfID?: ID) => {
-  if (!parent) return
-  const exists = await dao.tasks.existsByID(parent)
-  if (!exists) ApiError.NotFound(`Parent task with ID ${parent} not found`)
-  else if (selfID && parent === selfID) {
-    ApiError.MalformedContent("Nestable tyeps cannot be their own parent")
+/**
+ * Returns the appropriate ApiError or null if successful
+ */
+export function reduceDBResultStatus(status: DBResultStatus): ApiError | null {
+  switch (status) {
+    case DBResultStatus.SUCCESS:
+      return null
+    case DBResultStatus.FAILURE_NO_MATCH:
+      return ApiErrors.NotFound()
+    case DBResultStatus.FAILURE_INTERNAL:
+      return ApiErrors.Internal()
+    default:
+      return ApiErrors.Internal()
   }
 }
