@@ -8,7 +8,7 @@ import {
   SearchOptions,
   successResultOf,
 } from "../types"
-import { Tag, Task, TaskSearch } from "common"
+import { ID, Tag, Task, TaskSearch } from "common"
 import client from "../client"
 import names from "../names"
 import { Document, WithId } from "mongodb"
@@ -123,9 +123,9 @@ export default {
       return successResultOf()
     })
   },
-  async deleteManyByID(...ids: string[]): Promise<DBResult<number>> {
+  async deleteManyByID(ids: string[], uid: ID): Promise<DBResult<number>> {
     return runCatching("tasks.dam.deleteManyByID", async () => {
-      const res = await col.deleteMany({ _id: { $in: ids } })
+      const res = await col.deleteMany({ _id: { $in: ids }, uid })
       if (!res.acknowledged) return InternalFailureResult
       return successResultOf(res.deletedCount)
     })

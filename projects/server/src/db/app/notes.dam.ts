@@ -8,7 +8,7 @@ import {
   SearchOptions,
   successResultOf,
 } from "../types"
-import { Note, NoteSearch } from "common"
+import { ID, Note, NoteSearch } from "common"
 import client from "../client"
 import names from "../names"
 import { Document, WithId } from "mongodb"
@@ -91,6 +91,13 @@ async function update(
 
 export default {
   init, get, search, create, update, count,
+  async deleteManyByID(ids: string[], uid: ID): Promise<DBResult<number>> {
+    return runCatching("tasks.dam.deleteManyByID", async () => {
+      const res = await col.deleteMany({ _id: { $in: ids }, uid })
+      if (!res.acknowledged) return InternalFailureResult
+      return successResultOf(res.deletedCount)
+    })
+  },
   async deleteMany(filter: Filter<NoteDoc>): Promise<DBResult<number>> {
     return runCatching("notes.dam.deleteMany", async () => {
       const res = await col.deleteMany(filter)

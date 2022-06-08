@@ -5,6 +5,7 @@ import { ApiErrors } from "../ApiError"
 import { Schemae, Task, TaskSearch, validate } from "common"
 import { DBResultStatus } from "../db/types"
 import { reduceDBResultStatus } from "./util"
+import Joi from "joi"
 
 const get: HandlerGroup = {
   /**
@@ -102,6 +103,15 @@ const _delete: HandlerGroup = {
     const error = reduceDBResultStatus(status)
     if (error) return res.error(error)
     res.pack(true)
+  },
+  async many({ query, session: { uid } }, res) {
+    const { result, error } =
+      validate<{ ids: string[] }>({ ids: Joi.array().items(Schemae.id) }, query as any)
+    if (error) return res.error(ApiErrors.MalformedContent(error))
+    const { status, data } = await db.tasks.deleteManyByID(result.ids, uid)
+    const dbErr = reduceDBResultStatus(status)
+    if (dbErr) return res.error(dbErr)
+    res.pack(data)
   },
 }
 

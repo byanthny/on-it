@@ -1,5 +1,5 @@
 import { WithId } from "mongodb"
-import { Tag, TagSearch } from "common"
+import { ID, Tag, TagSearch } from "common"
 import names from "../names"
 import client from "../client"
 import {
@@ -102,6 +102,13 @@ async function update(
 
 export default {
   init, get, search, update, create, count,
+  async deleteManyByID(ids: string[], uid: ID): Promise<DBResult<number>> {
+    return runCatching("tags.dam.deleteManyByID", async () => {
+      const res = await col.deleteMany({ _id: { $in: ids }, uid })
+      if (!res.acknowledged) return InternalFailureResult
+      return successResultOf(res.deletedCount)
+    })
+  },
   async deleteMany(filter: Filter<TagDoc>): Promise<DBResult<number>> {
     return runCatching("tags.dam.delete", async () => {
       const newFilter = clearUndefinedOrNull(filter)
