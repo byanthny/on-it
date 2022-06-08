@@ -1,7 +1,6 @@
 import Joi from "joi"
-import { ID, idSchema, Snowflake } from "./Model"
+import { ID, idSchema, Snowflake, nameSchema } from "./Model"
 import { Note } from "./Note"
-import { nameSchema } from "./name"
 import { Tag } from "./Tag"
 import { SearchOptions, searchOptionSchema } from "../Net"
 

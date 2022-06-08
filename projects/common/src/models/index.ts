@@ -1,9 +1,8 @@
-import { User, UserRole, userSchema } from "./User"
+import { authSchema, User, UserRole, userSchema } from "./User"
 import { Tag, tagSchema, tagSearchSchema, TagSearch } from "./Tag"
 import { Task, taskSchema, TaskSearch, taskSearchSchema, TaskState } from "./Task"
 import { Note, noteSchema } from "./Note"
-import { nameSchema } from "./name"
-import { ID, idSchema } from "./Model"
+import { ID, idSchema, nameSchema } from "./Model"
 import { Limits, limitsSchema } from "./Limits"
 
 const Schemae = {
@@ -13,6 +12,7 @@ const Schemae = {
   note: noteSchema,
   name: nameSchema,
   id: idSchema,
+  auth: authSchema,
   admin: { limit: limitsSchema },
   search: {
     task: taskSearchSchema,

@@ -1,10 +1,9 @@
 import Joi from "joi"
-import { ID, idSchema } from "./Model"
+import { ID, idSchema, nameSchema } from "./Model"
 import { SearchOptions, searchOptionSchema } from "../Net"
-import { nameSchema } from "./name"
 
 export const tagSchema = {
-  name: Joi.string().regex(/^[A-Za-z][A-Za-z0-9_\-\s]{0,13}$/),
+  name: nameSchema,
   color: Joi.string()
     .regex(/^([A-Fa-f\d]{6}|[A-Fa-f\d]{3})$/)
     .optional(),
