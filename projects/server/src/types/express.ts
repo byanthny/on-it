@@ -1,17 +1,23 @@
 import { Request as ExpressRequest, Response as ExpressResponse } from "express"
-import { User } from "common"
+import { Session } from "express-session"
+import { User, UserRole, ApiError } from "common"
 
-export type Request = ExpressRequest & {
-  token?: string
+export type OnitSession = Session & {
+  uid?: string
+  role?: UserRole
   user?: User
 }
 
+export type Request = ExpressRequest & {
+  sessionID?: string
+  session?: OnitSession
+}
+
 export type Response = ExpressResponse & {
-  pack(payload?: any): ExpressResponse<any, Record<string, any>>
-  error(
-    error?: string,
-    code?: number,
-  ): ExpressResponse<any, Record<string, any>>
+  pack(payload?: any, meta?: any): void
+  error(error: ApiError): void
 }
 
 export type Handler = (req: Request, res: Response, next: Function) => any
+
+export type HandlerGroup = { [key: string]: Handler }

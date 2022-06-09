@@ -1,7 +1,4 @@
-import users from "./users"
-import projects from "./projects"
-import tasks from "./tasks"
-import notes from "./notes"
+import { users, tags, tasks, notes } from "./app"
 import admin from "./admin"
 
-export default { users, projects, tasks, notes, admin }
+export default { users, tags, tasks, notes, admin }

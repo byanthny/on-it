@@ -1,7 +1,7 @@
 import user from "./user"
-import project from "./project"
 import task from "./task"
-import note from "./note"
+import tags from "./tags"
+import notes from "./notes"
 import limits from "./limits"
 
-export default { user, project, task, note, limits }
+export default { user, task, limits, notes, tags }

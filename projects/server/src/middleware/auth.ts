@@ -1,34 +1,32 @@
-import dao from "../dao"
-import ApiError from "../ApiError"
+import dao from "../db"
+import { ApiErrors } from "../ApiError"
 import { Handler, Request, Response } from "../types/express"
 import logger from "winston"
 import { UserRole } from "common"
-
+import { DBResultStatus } from "../db/types"
 
 /**
- *
  * @param required - Whether authentication is required. Pass a [UserRole] to
  *                    require authorization
  */
-export function authentication(required: boolean | UserRole = true): Handler {
-  return async (req: Request, _: Response, next: Function) => {
-    const { token } = req.headers
-    if (typeof token === "string" && token.length > 0) {
-      logger.debug("Token found", { token })
-      // set token
-      req.token = token
-      // get user
-      req.user = await dao.identify(token)
-      logger.debug("Authenticated", { user: req.user })
+export function authentication(required: boolean | UserRole[] | "self" = true): Handler {
+  return async (req: Request, { error }: Response, next: Function) => {
+    if (req.session) {
+      logger.debug("session provided", { session: req.session })
+      const { status, data } = await dao.users.get({ _id: req.session.uid })
+      if (status === DBResultStatus.SUCCESS) {
+        req.session.user = data
+        req.session.role = req.session.user.role
+      }
     }
 
     if (required) {
-      if (!req.token) ApiError.Authentication("missing token")
-      if (!req.user) ApiError.Authentication("invalid token")
-
-      if (typeof required !== "boolean" && req.user!.role !== required) {
-        ApiError.Authorization("missing required user role")
-      }
+      if (!req.session) return error(ApiErrors.Authentication("missing session"))
+      else if (!req.session.uid) return error(ApiErrors.Authentication("missing user id"))
+      else if (!req.session.user) return error(ApiErrors.Authentication("unknown user"))
+      else if (typeof required !== "boolean" && !required.includes(req.session.role)) {
+        return error(ApiErrors.Authorization("missing required user role"))
+      } else logger.debug("required auth validated")
     }
 
     next()
