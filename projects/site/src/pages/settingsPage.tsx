@@ -16,9 +16,11 @@ const settingsPage = () => {
       <NavBar />
       <div className="main-content">
         <h1>Settings</h1>
-        <button type="button" onClick={changeTheme}>
-          toggle theme
-        </button>
+        <div className="secondary-content">
+          <button type="button" onClick={changeTheme}>
+            toggle theme
+          </button>
+        </div>
       </div>
     </>
   );

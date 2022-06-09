@@ -18,9 +18,9 @@ const Navbar = () => (
       <Link aria-label="to do" to="/todo">
         <RiCheckboxFill />
       </Link>
-      <button aria-label="add" type="button" onClick={() => {}}>
-        <div className={styles.buttonwrapper}>
-          <div className={styles.buttonfixed}>
+      <button aria-label="add" type="button" className={styles.addbutton} onClick={() => {}}>
+        <div className={styles.addbuttonwrapper}>
+          <div className={styles.addbuttonfixed}>
             <RiAddFill />
           </div>
         </div>

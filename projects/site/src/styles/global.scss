@@ -1,12 +1,21 @@
 @import "./variables.scss";
+@import "./mixins.scss";
 
 * {
   margin: 0;
+  caret-color: scale-color($pastel-blue, $lightness: +5%);
+}
+
+p,
+h1 {
+  transition: $theme-transition;
 }
 
 .background {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  transition: $theme-transition;
+  overflow: hidden;
 }
 
 .light {
@@ -27,4 +36,28 @@
 
 .main-content {
   padding: 25px;
+  max-width: $content-max-width;
+  margin: 0 auto;
+  padding-top: clamp(25px, 10vh, 150px) !important;
+
+  @include md {
+    padding: 5rem;
+  }
+}
+
+.secondary-content {
+  padding: 15px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: var(--button-background-color);
+  color: var(--inverse-text-color);
+  border-radius: $border-radius;
+  border-style: none;
+  transition: $theme-transition;
+
+  &:hover {
+    background-color: var(--button-background-hover-color);
+  }
 }
