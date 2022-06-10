@@ -9,6 +9,15 @@ h1 {
 
 p,
 input,
-textarea {
+textarea,
+button {
   font-size: clamp(0.15rem, 0.75rem + 5vw, 1.2rem);
+}
+
+a {
+  color: var(--text-color);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
