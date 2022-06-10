@@ -7,9 +7,9 @@ const authPage = () => {
   return (
     <div className="main-content" >
       <div className="secondary-content-xs authPage">
-        <h1>{login ? "Login" : "Sign Up"}</h1>
+        <h1>On-It</h1>
         <AuthForm loginState={login} />
-        <button type="button" onClick={()=>setLogin(!login)}>{login ? "Dont have an account?" : "Already have an account?"}</button>
+        <button className="buttonLink" type="button" onClick={()=>setLogin(!login)}>{login ? "Dont have an account?" : "Already have an account?"}</button>
       </div>
     </div>
 
