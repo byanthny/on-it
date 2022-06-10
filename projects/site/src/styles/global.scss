@@ -45,8 +45,13 @@ h1 {
   }
 }
 
-.secondary-content {
+.secondary-content, .secondary-content-xs {
   padding: 15px;
+}
+
+.secondary-content-xs {
+  max-width: min(100vw, 650px);
+  margin: 0 auto;
 }
 
 button {
@@ -60,4 +65,12 @@ button {
   &:hover {
     background-color: var(--button-background-hover-color);
   }
+}
+
+/* Page Specific */
+
+// AuthPage 
+// TODO Organize this better
+.authPage {
+  text-align: center;
 }
