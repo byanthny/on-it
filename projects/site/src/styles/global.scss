@@ -15,7 +15,6 @@ h1 {
   width: 100vw;
   min-height: 100vh;
   transition: $theme-transition;
-  overflow: hidden;
 }
 
 .light {
@@ -39,6 +38,7 @@ h1 {
   max-width: $content-max-width;
   margin: 0 auto;
   padding-top: clamp(25px, 10vh, 150px) !important;
+  background-color: inherit;
 
   @include md {
     padding: 5rem;

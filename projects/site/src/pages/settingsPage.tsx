@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 // import CurrentUserContext from "../context/UserContext";
 
@@ -17,18 +18,18 @@ const settingsPage = () => {
     console.log("logging out apparently");
     // const { setUser } = useContext(CurrentUserContext.Provider);
     // setUser(null);
-  }
+  };
 
   return (
     <>
       <NavBar />
       <div className="main-content">
-        <h1>Settings</h1>
+        <Header title="Settings" />
         <div className="secondary-content">
           <button type="button" onClick={changeTheme}>
             toggle theme
           </button>
-          <br/>
+          <br />
           <button type="button" onClick={logout}>
             logout
           </button>
