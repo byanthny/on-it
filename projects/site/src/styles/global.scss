@@ -47,6 +47,12 @@ h1 {
 
 .secondary-content {
   padding: 15px;
+  display: block;
+}
+
+.secondary-content-xs {
+  max-width: min(100vw, 650px);
+  margin: 0 auto;
 }
 
 button {
@@ -56,8 +62,58 @@ button {
   border-radius: $border-radius;
   border-style: none;
   transition: $theme-transition;
+  margin: 5px;
 
   &:hover {
     background-color: var(--button-background-hover-color);
+    cursor: pointer;
   }
+
+  &.buttonLink {
+    background-color: transparent;
+    color: var(--text-color);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+input {
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 0;
+  border-radius: 5px;
+  background-color: rgba(128, 128, 128, 0.12);
+  color: white;
+  border: none;
+  padding: 10px 8px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 25px;
+}
+
+.right {
+  position: absolute;
+  right: 25px;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+/* Page Specific */
+// AuthPage
+// TODO Organize this better
+.authPage {
+  h1 {
+    text-align: center;
+  }
+
+  text-align: center;
 }

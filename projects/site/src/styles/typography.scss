@@ -12,3 +12,15 @@ input,
 textarea {
   font-size: clamp(0.15rem, 0.75rem + 5vw, 1.2rem);
 }
+
+button {
+  font-size: clamp(0.15rem, 0.75rem + 5vw, 1rem);
+}
+
+a {
+  color: var(--text-color);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

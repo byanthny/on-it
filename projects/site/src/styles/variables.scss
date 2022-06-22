@@ -48,6 +48,7 @@ $content-max-width: 1250px;
   --inverse-text-color: #{$white};
   --todo-background-hover-color: #{$todo-color-dark};
   --todo-background-color: #{scale-color($todo-color-light, $lightness: +3%)};
+  --login-background: #{scale-color($dark, $alpha: -50%)};
 }
 
 .dark {
@@ -58,4 +59,5 @@ $content-max-width: 1250px;
   --inverse-text-color: #{$black};
   --todo-background-hover-color: #{scale-color($todo-color-light, $lightness: $lighten)};
   --todo-background-color: #{$todo-color-dark};
+  --login-background: #{scale-color($light, $alpha: -50%)};
 }

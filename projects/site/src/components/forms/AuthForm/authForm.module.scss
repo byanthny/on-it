@@ -1,0 +1,18 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.authForm {
+  display: block;
+  text-align: center;
+  margin: 25px 0;
+  background-color: $white;
+  border-radius: $border-radius;
+  padding: 35px 25px;
+  @include box-shadow(0px, 0px, 25px, 0px, rgba(0, 0, 0, 0.08));
+
+  h2 {
+    text-align: left;
+    margin-bottom: 25px;
+  }
+
+}
