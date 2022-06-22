@@ -23,7 +23,8 @@
     "common": "yarn workspace common",
     "site": "yarn workspace site",
     "root": "yarn -W",
-    "build": "lerna run build --stream"
+    "build": "lerna run build --stream",
+    "clean": "lerna clean"
   },
   "dependencies": {
     "typescript": "^4.2.4"
