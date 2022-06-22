@@ -12,7 +12,7 @@ h1 {
 }
 
 .background {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   transition: $theme-transition;
 }
@@ -48,6 +48,7 @@ h1 {
 .secondary-content {
   padding: 15px;
   display: block;
+  overflow: hidden;
 }
 
 .secondary-content-xs {
