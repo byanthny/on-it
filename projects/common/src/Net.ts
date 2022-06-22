@@ -1,6 +1,6 @@
 import Joi from "joi"
 
-export type ApiResponse<T = any> = {
+export type ApiResponse<T = void> = {
   payload?: T
   meta?: any
   error?: ApiError
