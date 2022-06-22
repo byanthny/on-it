@@ -1,5 +1,5 @@
 import React from "react";
-import Note from "../components/notes/Note/Note";
+import NoteCollection from "../components/notes/NoteCollection/NoteCollection";
 import NavBar from "../components/navigation/NavBar/NavBar";
 import Header from "../components/navigation/Header/Header";
 
@@ -91,22 +91,20 @@ const fakedata = [
   },
 ];
 
-const notesPage = () => {
-  const notesList = fakedata.map(({ title, text, tags, updatedAt }) => (
-    <Note title={title} text={text} tags={tags} updatedAt={updatedAt} />
-  ));
-
-  return (
+const notesPage = () => (
     <>
       <NavBar />
       <div className="main-content">
         <Header title="Notes" />
         <div className="secondary-content">
-          <div>{notesList}</div>
+          <NoteCollection collectionTitle="General" data={fakedata} />
+          <NoteCollection collectionTitle="General" data={fakedata} />
+          <NoteCollection collectionTitle="General" data={fakedata} />
+          <NoteCollection collectionTitle="General" data={fakedata} />
+
         </div>
       </div>
     </>
-  );
-};
+);
 
 export default notesPage;
