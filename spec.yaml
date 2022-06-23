@@ -205,9 +205,9 @@ paths:
           application/json:
             schema:
               properties:
-                identity:
+                email:
                   type: string
-                  description: User display name or email
+                  description: User email
                 password:
                   type: string
                   pattern: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$
