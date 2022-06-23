@@ -16,7 +16,7 @@
     "fauna:init": "node ./dbinit/index.js",
     "dev": "nodemon src/index.ts -x ts-node",
     "build": "tsc --build",
-    "start": "node dist/index.js"
+    "start": "yarn build && node dist/index.js"
   },
   "dependencies": {
     "@types/express": "^4.17.11",
