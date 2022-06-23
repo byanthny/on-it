@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./toDo.module.scss";
+import styles from "./ToDo.module.scss";
 import utils from "../../utils/utils";
 
 interface PropTypes {

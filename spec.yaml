@@ -6,7 +6,6 @@ info:
 security:
   - session: []
 
-
 servers:
   - description: Production
     url: https://on-it-api.herku.com/api
@@ -205,12 +204,15 @@ paths:
           application/json:
             schema:
               properties:
-                identity:
+                email:
                   type: string
-                  description: User display name or email
+                  description: User email
                 password:
                   type: string
-                  pattern: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$
+                  pattern: ^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$
+              example:
+                email: user@email.com
+                password: blorgtown123
       responses:
         default:
           $ref: "#/components/responses/Error"
@@ -239,7 +241,10 @@ paths:
                   format: email
                 password:
                   type: string
-                  pattern: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$
+                  pattern: ^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$
+              example:
+                email: user@email.com
+                passowrd: blorgtown123
       responses:
         default:
           $ref: "#/components/responses/Error"
