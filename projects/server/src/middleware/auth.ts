@@ -18,9 +18,10 @@ export function authentication(required: boolean | UserRole[] | "self" = true): 
         req.session.user = data
         req.session.role = req.session.user.role
       }
-    }
+    } else logger.debug("no session")
 
     if (required) {
+      logger.debug("validating required session")
       if (!req.session) return error(ApiErrors.Authentication("missing session"))
       else if (!req.session.uid) return error(ApiErrors.Authentication("missing user id"))
       else if (!req.session.user) return error(ApiErrors.Authentication("unknown user"))

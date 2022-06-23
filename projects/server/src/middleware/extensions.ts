@@ -4,6 +4,7 @@ import { ApiError } from "common"
 import logger from "winston"
 
 export const attachPacketier = (_: any, res: Response, next: any) => {
+  logger.debug("attaching packetier")
   res.pack = (payload?: any, meta?: any) => res.json({ payload, meta })
   res.error = (error: ApiError) => {
     logger.debug("error response", { error })
