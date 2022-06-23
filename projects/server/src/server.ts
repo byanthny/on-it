@@ -36,7 +36,7 @@ export default async (): Promise<Application> => {
       origin: process.env.NODE_ENV === "DEVELOPMENT" ? true : OnIt.productionUrl,
       methods: ["GET", "PATCH", "POST", "DELETE"],
       allowedHeaders: ["accept", "content-type"],
-      credentials: true
+      credentials: true,
     }),
   )
 
@@ -60,6 +60,8 @@ export default async (): Promise<Application> => {
     },
     store: MongoStore.create({
       client: mongoClient,
+      dbName: "auth",
+      collectionName: "sessions",
       crypto: { secret: process.env.SESSION_SECRET },
     }),
   }))
