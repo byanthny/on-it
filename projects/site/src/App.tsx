@@ -9,9 +9,11 @@ import HomePage from "./pages/homePage";
 import NotesPage from "./pages/notesPage";
 import SettingsPage from "./pages/settingsPage";
 import TodoPage from "./pages/todoPage";
+import PageNoteFound from "./pages/pageNotFound"
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
+
   return (
     <div className={`${theme} background`}>
       <Router basename="/on-it">
@@ -22,6 +24,7 @@ const App = () => {
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/todo" element={<TodoPage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<PageNoteFound />} />
         </Routes>
       </Router>
     </div>
