@@ -14,7 +14,8 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const submitForm = (e:string, p: string, cp:string) => {
+  const submitForm = (event:any, e:string, p: string, cp:string) => {
+    event.preventDefault();
     if (!loginState && p !== cp) {
       console.log("password don't match")
       return
@@ -28,7 +29,7 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
     <input type="email" placeholder="email" onChange={e=>setEmail(e.target.value)}/>
     <input type="password" placeholder="password" onChange={e=>setPassword(e.target.value)}/>
     {!loginState ? <input type="password" placeholder="confirm password" onChange={e=>setConfirmPassword(e.target.value)}/> : ""}
-    <button type="submit" aria-label="submit form" onClick={()=>submitForm(email, password, confirmPassword)}>
+    <button type="submit" aria-label="submit form" onClick={(e)=>submitForm(e, email, password, confirmPassword)}>
       {loginState ? "Login" : "Sign Up"}
     </button>
   </form>);
