@@ -30,7 +30,7 @@ const authPage = () => {
       email: response.payload?.email!
     }
     setUser(newUser);
-    
+
   }
 
   return (

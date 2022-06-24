@@ -9,7 +9,7 @@ import "./styles/typography.scss";
 ReactDOM.render(
   <ThemeProvider>
     <UserProvider>
-    <App />
+      <App />
     </UserProvider>
   </ThemeProvider>,
   document.getElementById("root"),
