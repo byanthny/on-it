@@ -2,7 +2,7 @@
 
 import React, { createContext, useState } from "react";
 
-const intialTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "light";
+const intialTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark";
 interface ThemeProviderProps {
   children: React.ReactNode
 };
