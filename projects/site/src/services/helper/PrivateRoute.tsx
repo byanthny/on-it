@@ -1,4 +1,4 @@
-import { Navigate, useLocation } from 'react-router';
+import { Navigate, useLocation } from "react-router";
 
 export type PrivateRouteProps = {
   loggedIn: boolean;
@@ -6,10 +6,10 @@ export type PrivateRouteProps = {
   component: JSX.Element;
 };
 
-export const PrivateRoute = ({loggedIn, authPath, component}: PrivateRouteProps) => {
+export const PrivateRoute = ({ loggedIn, authPath, component }: PrivateRouteProps) => {
   const currentLocation = useLocation();
 
-  if(loggedIn) {
+  if (loggedIn) {
     return component;
   } else {
     return <Navigate to={{ pathname: authPath }} />;

@@ -4,17 +4,13 @@ import React, { createContext, useState } from "react";
 
 const intialTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark";
 interface ThemeProviderProps {
-  children: React.ReactNode
-};
+  children: React.ReactNode;
+}
 
 export const ThemeContext = createContext<any>(intialTheme);
 
-export const ThemeProvider = ({ children }:ThemeProviderProps) => {
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState(intialTheme);
-  const value = {theme, setTheme}
-  return (
-  <ThemeContext.Provider value={value}>
-    {children}
-    </ThemeContext.Provider>
-    );
+  const value = { theme, setTheme };
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

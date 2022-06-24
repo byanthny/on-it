@@ -18,10 +18,10 @@ const settingsPage = () => {
     const loggedOutUser: User = {
       loggedIn: false,
       id: "",
-      email: ""
-    }
+      email: "",
+    };
     setUser(loggedOutUser);
-  }
+  };
 
   return (
     <>
@@ -32,7 +32,7 @@ const settingsPage = () => {
           <button type="button" onClick={changeTheme}>
             toggle theme
           </button>
-          <br/>
+          <br />
           <button type="button" onClick={logout}>
             logout
           </button>

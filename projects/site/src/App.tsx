@@ -10,7 +10,7 @@ import HomePage from "./pages/homePage";
 import NotesPage from "./pages/notesPage";
 import SettingsPage from "./pages/settingsPage";
 import TodoPage from "./pages/todoPage";
-import PageNoteFound from "./pages/pageNotFound"
+import PageNoteFound from "./pages/pageNotFound";
 import { UserContext } from "./context/UserContext";
 import { PrivateRoute, PrivateRouteProps } from "./services/helper/PrivateRoute";
 
@@ -29,10 +29,22 @@ const App = () => {
         <Routes>
           <Route path="/dev" element={<DevPage />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/settings" element={<PrivateRoute {...defaultPrivateRouteProps} component={<SettingsPage />} />} />
-          <Route path="/notes" element={<PrivateRoute {...defaultPrivateRouteProps} component={<NotesPage />} />} />
-          <Route path="/todo" element={<PrivateRoute {...defaultPrivateRouteProps} component={<TodoPage />} />} />
-          <Route path="/" element={<PrivateRoute {...defaultPrivateRouteProps} component={<HomePage />} />} />
+          <Route
+            path="/settings"
+            element={<PrivateRoute {...defaultPrivateRouteProps} component={<SettingsPage />} />}
+          />
+          <Route
+            path="/notes"
+            element={<PrivateRoute {...defaultPrivateRouteProps} component={<NotesPage />} />}
+          />
+          <Route
+            path="/todo"
+            element={<PrivateRoute {...defaultPrivateRouteProps} component={<TodoPage />} />}
+          />
+          <Route
+            path="/"
+            element={<PrivateRoute {...defaultPrivateRouteProps} component={<HomePage />} />}
+          />
           <Route path="*" element={<PageNoteFound />} />
         </Routes>
       </Router>
