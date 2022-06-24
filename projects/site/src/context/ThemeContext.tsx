@@ -2,11 +2,19 @@
 
 import React, { createContext, useState } from "react";
 
-const storedTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "light";
+const intialTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "light";
+interface ThemeProviderProps {
+  children: React.ReactNode
+};
 
-export const ThemeContext = createContext<any>({ theme: storedTheme, undefined });
+export const ThemeContext = createContext<any>(intialTheme);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState(storedTheme);
-  return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
+export const ThemeProvider = ({ children }:ThemeProviderProps) => {
+  const [theme, setTheme] = useState(intialTheme);
+  const value = {theme, setTheme}
+  return (
+  <ThemeContext.Provider value={value}>
+    {children}
+    </ThemeContext.Provider>
+    );
 };
