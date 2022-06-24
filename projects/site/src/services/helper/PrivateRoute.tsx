@@ -1,20 +1,17 @@
-// https://github.com/openscript/react-router-private-protected-routes/blob/react-router-6/src/components/ProtectedRoute.tsx
-
-import { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router';
 
-export type ProtectedRouteProps = {
+export type PrivateRouteProps = {
   loggedIn: boolean;
-  authenticationPath: string;
+  authPath: string;
   component: JSX.Element;
 };
 
-export default function ProtectedRoute({loggedIn, authenticationPath, component}: ProtectedRouteProps) {
+export const PrivateRoute = ({loggedIn, authPath, component}: PrivateRouteProps) => {
   const currentLocation = useLocation();
 
   if(loggedIn) {
     return component;
   } else {
-    return <Navigate to={{ pathname: authenticationPath }} />;
+    return <Navigate to={{ pathname: authPath }} />;
   }
 };

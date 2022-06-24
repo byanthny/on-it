@@ -12,15 +12,15 @@ import SettingsPage from "./pages/settingsPage";
 import TodoPage from "./pages/todoPage";
 import PageNoteFound from "./pages/pageNotFound"
 import { UserContext } from "./context/UserContext";
-import ProtectedRoute, { ProtectedRouteProps } from "./services/helper/PrivateRoute";
+import { PrivateRoute, PrivateRouteProps } from "./services/helper/PrivateRoute";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
   const { user } = useContext(UserContext);
 
-  const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "component"> = {
+  const defaultPrivateRouteProps: Omit<PrivateRouteProps, "component"> = {
     loggedIn: user.loggedIn,
-    authenticationPath: "/auth",
+    authPath: "/auth",
   };
 
   return (
@@ -29,10 +29,10 @@ const App = () => {
         <Routes>
           <Route path="/dev" element={<DevPage />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/settings" element={<ProtectedRoute {...defaultProtectedRouteProps} component={<SettingsPage />} />} />
-          <Route path="/notes" element={<ProtectedRoute {...defaultProtectedRouteProps} component={<NotesPage />} />} />
-          <Route path="/todo" element={<ProtectedRoute {...defaultProtectedRouteProps} component={<TodoPage />} />} />
-          <Route path="/" element={<ProtectedRoute {...defaultProtectedRouteProps} component={<HomePage />} />} />
+          <Route path="/settings" element={<PrivateRoute {...defaultPrivateRouteProps} component={<SettingsPage />} />} />
+          <Route path="/notes" element={<PrivateRoute {...defaultPrivateRouteProps} component={<NotesPage />} />} />
+          <Route path="/todo" element={<PrivateRoute {...defaultPrivateRouteProps} component={<TodoPage />} />} />
+          <Route path="/" element={<PrivateRoute {...defaultPrivateRouteProps} component={<HomePage />} />} />
           <Route path="*" element={<PageNoteFound />} />
         </Routes>
       </Router>
