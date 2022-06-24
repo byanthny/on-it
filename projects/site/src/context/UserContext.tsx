@@ -9,7 +9,7 @@ export interface User {
 }
 
 const initalUser: User = {
-    loggedIn: false,
+    loggedIn: process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT",
     id: "null",
     email: "null"
 } 
