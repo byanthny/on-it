@@ -6,6 +6,7 @@ import { UserContext, User } from "../context/UserContext";
 
 const settingsPage = () => {
   const { theme, setTheme } = useContext(ThemeContext);
+  const { setUser } = useContext(UserContext);
 
   const changeTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -14,7 +15,6 @@ const settingsPage = () => {
   };
 
   const logout = () => {
-    const { setUser } = useContext(UserContext);
     const loggedOutUser: User = {
       loggedIn: false,
       id: "",
