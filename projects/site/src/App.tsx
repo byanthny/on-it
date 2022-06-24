@@ -23,7 +23,6 @@ const App = () => {
     authenticationPath: "/auth",
   };
 
-
   return (
     <div className={`${theme} background`}>
       <Router basename="/on-it">

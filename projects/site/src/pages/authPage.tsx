@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/forms/AuthForm/AuthForm";
 import {UserContext, User} from "../context/UserContext"
 import OnItApi from "../services/OnItApi";
@@ -7,6 +8,8 @@ import OnItApi from "../services/OnItApi";
 const authPage = () => {
   const [login, setLogin] = useState(true);
   const {setUser} = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const submitForm = async (email:string, password:string) => {
     let response;
@@ -31,6 +34,8 @@ const authPage = () => {
     }
     setUser(newUser);
 
+    // const navigate = useNavigate();
+    navigate("../", { replace: true })
   }
 
   return (
