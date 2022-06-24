@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import NavBar from "../components/navigation/NavBar/NavBar";
+import { UserContext, User } from "../context/UserContext";
 // import CurrentUserContext from "../context/UserContext";
 
 const settingsPage = () => {
@@ -13,10 +14,13 @@ const settingsPage = () => {
   };
 
   const logout = () => {
-    // eslint-disable-next-line no-console
-    console.log("logging out apparently");
-    // const { setUser } = useContext(CurrentUserContext.Provider);
-    // setUser(null);
+    const { setUser } = useContext(UserContext);
+    const loggedOutUser: User = {
+      loggedIn: false,
+      id: "",
+      email: ""
+    }
+    setUser(loggedOutUser);
   }
 
   return (

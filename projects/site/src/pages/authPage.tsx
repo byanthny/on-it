@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext, useState } from "react";
 import AuthForm from "../components/forms/AuthForm/AuthForm";
-import {UserContext} from "../context/UserContext"
+import {UserContext, User} from "../context/UserContext"
 import OnItApi from "../services/OnItApi";
 
 const authPage = () => {
@@ -9,14 +9,28 @@ const authPage = () => {
   const {setUser} = useContext(UserContext);
 
   const submitForm = async (email:string, password:string) => {
-    if(login) {
-      const response = await OnItApi.login( email, password);
-      console.log(response);
+    let response;
+    try {
+      if(login) {
+        response = await OnItApi.login( email, password);
+      }
+      else {
+        response = await OnItApi.register( email, password);
+      }
     }
-    else {
-      const response = await OnItApi.register( email, password);
-      console.log(response);
+    catch(error) {
+      console.log(error);
+      return;
     }
+
+    const newUser: User = {
+      loggedIn: true,
+      // eslint-disable-next-line no-underscore-dangle
+      id: response.payload?._id!,
+      email: response.payload?.email!
+    }
+    setUser(newUser);
+    
   }
 
   return (

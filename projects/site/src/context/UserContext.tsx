@@ -2,18 +2,16 @@
 
 import React, { createContext, useState } from "react";
 
-interface User {
+export interface User {
     loggedIn: boolean
     id: string,
-    email: string,
-    password: string
+    email: string
 }
 
 const initalUser: User = {
     loggedIn: false,
     id: "null",
-    email: "null",
-    password: "null"
+    email: "null"
 } 
 interface UserProviderProps {
   children: React.ReactNode
