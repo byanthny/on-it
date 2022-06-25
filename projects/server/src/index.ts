@@ -1,10 +1,10 @@
-require("dotenv").config()
 require("express-async-errors")
 import server from "./server"
 import logger, { format, transports } from "winston"
+import Env from "./types/env"
 
 logger.configure({
-  level: process.env.STAGE === "DEVELOPMENT" ? "debug" : "info",
+  level: Env.NODE_ENV === "DEVELOPMENT" ? "debug" : "info",
   transports: [new transports.Console()],
   format: format.combine(
     format.colorize(),
@@ -19,12 +19,10 @@ logger.configure({
   ),
 })
 
-const port = process.env.PORT ?? 7100
-
 async function main() {
-  (await server()).listen(port, () => {
-    logger.info(`listening on port ${ port }`)
-    logger.debug(`http://127.0.0.1:${ port }`)
+  (await server()).listen(Env.PORT, () => {
+    logger.info(`listening on port ${ Env.PORT }`)
+    logger.debug(`http://127.0.0.1:${ Env.PORT }`)
   })
 }
 

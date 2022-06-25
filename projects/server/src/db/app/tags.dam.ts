@@ -13,7 +13,7 @@ import {
   successResultOf,
 } from "../types"
 import { nanoid } from "nanoid"
-import { clearUndefinedOrNull } from "../../util"
+import { clearUndefinedOrNull, stripKeys } from "../../util"
 import logger from "winston"
 
 type TagDoc = WithId<Tag>
@@ -89,11 +89,11 @@ async function update(
   return runCatching("tags.dam.update", async () => {
     const res = await col.updateOne(
       clearUndefinedOrNull(filter, ["_id", "uid"]),
-      { $set: packet },
+      { $set: stripKeys(packet, "_id") },
     )
     if (res.matchedCount === 0) return NoMatchResult
     if (!res.acknowledged || res.modifiedCount === 0) {
-      logger.error("failed to modify tag")
+      logger.error("failed to modify tag", { res, packet })
       return InternalFailureResult
     }
     return await get(filter)
