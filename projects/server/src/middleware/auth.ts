@@ -13,7 +13,7 @@ export function authentication(required: boolean | UserRole[] | "self" = true): 
   return async (req: Request, { error }: Response, next: Function) => {
     if (req.session) {
       logger.debug("session provided", { session: req.session })
-      const { status, data } = await dao.users.get({ _id: req.session.uid })
+      const { status, data } = await dao.users.get({ _id: req.session.uid }, ["password"])
       if (status === DBResultStatus.SUCCESS) {
         req.session.user = data
         req.session.role = req.session.user.role
