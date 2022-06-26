@@ -2,4 +2,9 @@
     position: relative;
     display: flex;
     overflow-x: scroll;
+    transition: 0.4s;
+}
+
+.noteCollectionClosed {
+    height: 0;
 }
