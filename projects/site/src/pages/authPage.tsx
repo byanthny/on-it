@@ -21,7 +21,7 @@ const authPage = () => {
         response = await OnItApi.register(email, password);
       }
 
-      if(response.error) {
+      if (response.error) {
         throw response.error;
       }
 
@@ -34,9 +34,8 @@ const authPage = () => {
 
       setUser(newUser);
       navigate("../", { replace: true });
-
-    } catch (error:any) {
-      setError({error: true, errorMessage: error.message})
+    } catch (error: any) {
+      setError({ error: true, errorMessage: error.message });
     }
   };
 

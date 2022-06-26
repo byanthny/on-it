@@ -1,4 +1,4 @@
-import { Navigate, useLocation } from "react-router";
+import { Navigate } from "react-router";
 
 export type PrivateRouteProps = {
   loggedIn: boolean;
@@ -7,8 +7,6 @@ export type PrivateRouteProps = {
 };
 
 export const PrivateRoute = ({ loggedIn, authPath, component }: PrivateRouteProps) => {
-  const currentLocation = useLocation();
-
   if (loggedIn) {
     return component;
   } else {
