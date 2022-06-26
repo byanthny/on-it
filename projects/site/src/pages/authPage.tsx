@@ -11,29 +11,33 @@ const authPage = () => {
 
   const navigate = useNavigate();
 
-  const submitForm = async (email: string, password: string) => {
-    let response;
+  const submitForm = async (email: string, password: string, setError: Function) => {
     try {
+      let response;
+
       if (login) {
         response = await OnItApi.login(email, password);
       } else {
         response = await OnItApi.register(email, password);
       }
-    } catch (error) {
-      console.log(error);
-      return;
+
+      if(response.error) {
+        throw response.error;
+      }
+
+      const newUser: User = {
+        loggedIn: true,
+        // eslint-disable-next-line no-underscore-dangle
+        id: response.payload?._id!,
+        email: response.payload?.email!,
+      };
+
+      setUser(newUser);
+      navigate("../", { replace: true });
+
+    } catch (error:any) {
+      setError({error: true, errorMessage: error.message})
     }
-
-    const newUser: User = {
-      loggedIn: true,
-      // eslint-disable-next-line no-underscore-dangle
-      id: response.payload?._id!,
-      email: response.payload?.email!,
-    };
-    setUser(newUser);
-
-    // const navigate = useNavigate();
-    navigate("../", { replace: true });
   };
 
   return (

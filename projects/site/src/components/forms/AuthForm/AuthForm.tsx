@@ -6,25 +6,29 @@ interface PropTypes {
   submit: Function;
 }
 
-// TODO api + update usercontext
+interface ErrorMessage {
+  error: boolean,
+  errorMessage: string
+}
 
 const AuthForm = ({ loginState, submit }: PropTypes) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState<ErrorMessage>({error: false, errorMessage: ""});
 
   const submitForm = (event: any, submittedEmail: string, submittedPassword: string, submittedConfirmPassword: string) => {
     event.preventDefault();
     if (!loginState && submittedPassword !== submittedConfirmPassword) {
-      console.log("password don't match");
+      setError({error:true, errorMessage: "passwords don't match"})
       return;
     }
-    submit(submittedEmail, submittedPassword);
+    submit(submittedEmail, submittedPassword, setError);
   };
 
   return (
     <form className={`${styles.authForm} light`}>
-      {/* <h2>{loginState ? "Login" : "Sign Up"}</h2> */}
+
       <input type="email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
       {!loginState ? (
@@ -36,6 +40,7 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
       ) : (
         ""
       )}
+      {error.error ? (<p className={styles.errorMessage}>{error.errorMessage}</p>) : ""}
       <button
         type="submit"
         aria-label="submit form"
