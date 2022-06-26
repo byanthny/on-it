@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint  prefer-template: 0 */
 
 import React, { useContext } from "react";
@@ -9,19 +10,42 @@ import HomePage from "./pages/homePage";
 import NotesPage from "./pages/notesPage";
 import SettingsPage from "./pages/settingsPage";
 import TodoPage from "./pages/todoPage";
+import PageNoteFound from "./pages/pageNotFound";
+import { UserContext } from "./context/UserContext";
+import { PrivateRoute, PrivateRouteProps } from "./services/helper/PrivateRoute";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
+  const { user } = useContext(UserContext);
+
+  const defaultPrivateRouteProps: Omit<PrivateRouteProps, "component"> = {
+    loggedIn: user.loggedIn,
+    authPath: "/auth",
+  };
+
   return (
     <div className={`${theme} background`}>
       <Router basename="/on-it">
         <Routes>
           <Route path="/dev" element={<DevPage />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/notes" element={<NotesPage />} />
-          <Route path="/todo" element={<TodoPage />} />
-          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/settings"
+            element={<PrivateRoute {...defaultPrivateRouteProps} component={<SettingsPage />} />}
+          />
+          <Route
+            path="/notes"
+            element={<PrivateRoute {...defaultPrivateRouteProps} component={<NotesPage />} />}
+          />
+          <Route
+            path="/todo"
+            element={<PrivateRoute {...defaultPrivateRouteProps} component={<TodoPage />} />}
+          />
+          <Route
+            path="/"
+            element={<PrivateRoute {...defaultPrivateRouteProps} component={<HomePage />} />}
+          />
+          <Route path="*" element={<PageNoteFound />} />
         </Routes>
       </Router>
     </div>
