@@ -5,7 +5,7 @@
   display: block;
   text-align: center;
   margin: 25px 0;
-  background-color: $white;
+  background-color: scale-color($dark, $lightness: +3%);
   border-radius: $border-radius;
   padding: 35px 25px;
   @include box-shadow(0px, 0px, 25px, 0px, rgba(0, 0, 0, 0.08));
