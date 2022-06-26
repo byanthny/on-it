@@ -13,13 +13,13 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const submitForm = (event: any, e: string, p: string, cp: string) => {
+  const submitForm = (event: any, submittedEmail: string, submittedPassword: string, submittedConfirmPassword: string) => {
     event.preventDefault();
-    if (!loginState && p !== cp) {
+    if (!loginState && submittedPassword !== submittedConfirmPassword) {
       console.log("password don't match");
       return;
     }
-    submit(e, p);
+    submit(submittedEmail, submittedPassword);
   };
 
   return (
