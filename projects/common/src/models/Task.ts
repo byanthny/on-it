@@ -31,7 +31,7 @@ export type Task<TagType = ID> = Snowflake & {
   parent?: string
   tags?: Tag[]
   due?: Date
-  reminders?: string[]
+  reminders?: Date[]
   pinned?: boolean
 }
 
