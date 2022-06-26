@@ -1,21 +1,20 @@
-import { config } from "dotenv"
 import logger from "winston"
 
 export type Env = {
-  readonly PORT: number
+  readonly PORT: string | number
   readonly NODE_ENV: "DEVELOPMENT" | "PRODUCTION"
   readonly MONGO_URI?: string
   readonly SESSION_SECRET: string
 }
 
-const { parsed, error } = config()
+const { parsed, error } = require("dotenv").config()
 
 if (error) {
   logger.error("failed to load env variables", { error })
 }
 
 const env: Env = {
-  PORT: parseInt(parsed.PORT ?? "7100"),
+  PORT: parsed?.PORT ?? 7100,
   NODE_ENV: parsed.NODE_ENV?.toUpperCase() === "DEVELOPMENT" ? "DEVELOPMENT" : "PRODUCTION",
   MONGO_URI: parsed.MONGO_URI,
   SESSION_SECRET: (() => {
