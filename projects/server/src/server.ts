@@ -34,7 +34,7 @@ export default async (): Promise<Application> => {
   server.use(Express.json({ strict: true }))
   server.use(
     cors({
-      origin: Env.NODE_ENV === "DEVELOPMENT" || "https://jonoaugustine.gitlab.io/",
+      origin: true,//Env.NODE_ENV === "DEVELOPMENT" || "https://jonoaugustine.gitlab.io/",
       methods: ["GET", "PATCH", "POST", "DELETE"],
       allowedHeaders: ["accept", "content-type"],
       credentials: true,
