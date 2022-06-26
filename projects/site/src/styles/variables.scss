@@ -35,6 +35,7 @@ $darken: -20%;
 $border-radius: 10px;
 $theme-transition: background-color 0.5s ease;
 $todo-transition: background-color 0.5s ease, padding 0.25s ease-in;
+$note-transition: background-color 0.5s ease;
 
 $margin: 15px;
 
@@ -50,6 +51,8 @@ $content-max-width: 1250px;
   --todo-background-hover-color: #{$todo-color-dark};
   --todo-background-color: #{scale-color($todo-color-light, $lightness: +3%)};
   --input-background: #{scale-color($light, $lightness: $lighten)};
+  --note-background: #{scale-color($dark, $lightness: $lighten*.25)};
+  --note-hover-background: #{scale-color($dark, $lightness: $lighten*.75)};
 }
 
 .dark {
@@ -61,4 +64,6 @@ $content-max-width: 1250px;
   --todo-background-hover-color: #{scale-color($todo-color-light, $lightness: $lighten)};
   --todo-background-color: #{$todo-color-dark};
   --input-background: #{scale-color($dark, $lightness: $lighten*.75)};
+  --note-background:#{scale-color($dark, $lightness: $lighten*.25)};
+  --note-hover-background: #{scale-color($dark, $lightness: $lighten*.75)};
 }
