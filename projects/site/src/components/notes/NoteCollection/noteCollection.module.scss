@@ -1,8 +1,14 @@
+@import "../../../styles/mixins.scss";
+
 .noteCollection {
     position: relative;
     display: flex;
     overflow-x: scroll;
     transition: 0.4s;
+
+    @include md {
+        flex-wrap: wrap;
+    }
 }
 
 .noteCollectionClosed {
