@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../components/interactive/Button/Button";
 import AuthForm from "../components/forms/AuthForm/AuthForm";
 import { UserContext, User } from "../context/UserContext";
 import OnItApi from "../services/OnItApi";
@@ -45,9 +46,7 @@ const authPage = () => {
         <div className="secondary-content-xs authPage">
           <h1>On-It</h1>
           <AuthForm loginState={login} submit={submitForm} />
-          <button className="buttonLink" type="button" onClick={() => setLogin(!login)}>
-            {login ? "Dont have an account?" : "Already have an account?"}
-          </button>
+          <Button variant="transparent" onClickFunction={()=>setLogin(!login)}>{login ? "Dont have an account?" : "Already have an account?"}</Button>
         </div>
       </div>
       <a

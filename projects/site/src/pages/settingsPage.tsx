@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import Button from "../components/interactive/Button/Button";
 import { ThemeContext } from "../context/ThemeContext";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
@@ -30,13 +31,9 @@ const settingsPage = () => {
       <div className="main-content">
         <Header title="Settings" />
         <div className="secondary-content">
-          <button type="button" onClick={changeTheme}>
-            toggle theme
-          </button>
-          <br />
-          <button type="button" onClick={logout}>
-            logout
-          </button>
+          <Button variant="normal" onClickFunction={changeTheme}>toggle theme</Button>
+          <br/>
+          <Button variant="normal" onClickFunction={logout}>logout</Button>
         </div>
       </div>
     </>

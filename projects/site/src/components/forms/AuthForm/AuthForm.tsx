@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "../../interactive/Button/Button";
 import styles from "./authForm.module.scss";
 
 interface PropTypes {
@@ -45,13 +46,7 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
         ""
       )}
       {error.error ? <p className={styles.errorMessage}>{error.errorMessage}</p> : ""}
-      <button
-        type="submit"
-        aria-label="submit form"
-        onClick={(e) => submitForm(e, email, password, confirmPassword)}
-      >
-        {loginState ? "Login" : "Sign Up"}
-      </button>
+      <Button variant="normal" onClickFunction={(e:any)=>submitForm(e, email, password, confirmPassword)}>{loginState ? "Login" : "Sign Up"}</Button>
     </form>
   );
 };

@@ -58,8 +58,8 @@ h1 {
 
 button {
   padding: 10px 15px;
-  background-color: var(--button-background-color);
-  color: var(--inverse-text-color);
+  background-color: grey;
+  color: black;
   border-radius: $border-radius;
   border-style: none;
   transition: $theme-transition;
@@ -68,15 +68,6 @@ button {
   &:hover {
     background-color: var(--button-background-hover-color);
     cursor: pointer;
-  }
-
-  &.buttonLink {
-    background-color: transparent;
-    color: var(--text-color);
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 }
 
