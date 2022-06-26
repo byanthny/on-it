@@ -1,7 +1,7 @@
 import Express, { Application, Router } from "express"
 import MongoStore from "connect-mongo"
 import session from "express-session"
-import { OnIt, UserRole } from "common"
+import { UserRole } from "common"
 import { attachPacketier, authentication, callLogger, errorHandler } from "./middleware"
 import db from "./db"
 import cors from "cors"
@@ -34,7 +34,7 @@ export default async (): Promise<Application> => {
   server.use(Express.json({ strict: true }))
   server.use(
     cors({
-      origin: Env.NODE_ENV === "DEVELOPMENT" || OnIt.productionUrl,
+      origin: Env.NODE_ENV === "DEVELOPMENT" || "https://jonoaugustine.gitlab.io/",
       methods: ["GET", "PATCH", "POST", "DELETE"],
       allowedHeaders: ["accept", "content-type"],
       credentials: true,
