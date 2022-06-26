@@ -61,7 +61,7 @@ const post: HandlerGroup = {
       logger.error("failed to compare passwords", { error })
       return res.error(ApiErrors.Internal())
     }
-    if (!valid) return res.error(ApiErrors.Authentication("incorrect password"))
+    if (!valid) return res.error(ApiErrors.Authentication("email and password do not match"))
     delete user.password
     session.uid = user._id
     res.pack(user)
