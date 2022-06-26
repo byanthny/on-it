@@ -55,7 +55,7 @@ const authPage = () => {
         href="https://gitlab.com/JonoAugustine/on-it"
         className="bottom right textCenter"
       >
-        made with 💙 by jono and anthony
+       ?
       </a>
     </>
   );
