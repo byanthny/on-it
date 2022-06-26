@@ -1,3 +1,4 @@
+require("dotenv").config()
 require("express-async-errors")
 import server from "./server"
 import logger, { format, transports } from "winston"

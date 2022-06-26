@@ -1,6 +1,7 @@
 /* Colors */
 $light: rgb(239, 239, 231);
 $dark: rgb(22, 22, 22);
+$darker: scale-color($dark, $lightness: -30%);
 
 $black: black;
 $white: white;
@@ -48,7 +49,7 @@ $content-max-width: 1250px;
   --inverse-text-color: #{$white};
   --todo-background-hover-color: #{$todo-color-dark};
   --todo-background-color: #{scale-color($todo-color-light, $lightness: +3%)};
-  --login-background: #{scale-color($dark, $alpha: -50%)};
+  --input-background: #{scale-color($light, $lightness: $lighten)};
 }
 
 .dark {
@@ -59,5 +60,5 @@ $content-max-width: 1250px;
   --inverse-text-color: #{$black};
   --todo-background-hover-color: #{scale-color($todo-color-light, $lightness: $lighten)};
   --todo-background-color: #{$todo-color-dark};
-  --login-background: #{scale-color($light, $alpha: -50%)};
+  --input-background: #{scale-color($dark, $lightness: $lighten*.75)};
 }

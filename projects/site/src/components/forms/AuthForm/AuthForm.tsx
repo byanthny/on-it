@@ -32,7 +32,7 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
   };
 
   return (
-    <form className={`${styles.authForm} light`}>
+    <form className={`${styles.authForm}`}>
       <input type="email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
       {!loginState ? (
