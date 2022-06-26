@@ -35,7 +35,7 @@ const post: HandlerGroup = {
       validate<{ email: string, password: string }>(Schemae.auth, req.body)
     if (error) return res.error(ApiErrors.MalformedContent(error))
     // check duplicate emails
-    if ((await db.users.get({ email: result.email })).status === DBResultStatus.SUCCESS)
+    if ((await db.users.count({ email: result.email })).data === 1)
       return res.error(ApiErrors.Duplicate("email already in use"))
 
     let passHash: string = await bcrypt.hash(result.password, 10)
@@ -50,8 +50,12 @@ const post: HandlerGroup = {
 
     // get user
     const { status, data: user } = await db.users.get({ email: body.email })
-    const error = reduceDBResultStatus(status)
-    if (error) return res.error(error)
+    switch (status) {
+      case DBResultStatus.FAILURE_NO_MATCH:
+        return res.error(ApiErrors.NotFound(`no user found with email ${ body.email }`))
+      case DBResultStatus.FAILURE_INTERNAL:
+        return res.error(ApiErrors.Internal())
+    }
 
     // check password
     let valid = false
