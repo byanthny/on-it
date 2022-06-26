@@ -10,10 +10,12 @@ interface PropTypes {
 
 const Note = ({ title, text, tags, updatedAt }: PropTypes) => (
   <div className={styles.note}>
-    <p>{title}</p>
-    <p>{text}</p>
-    <p>{tags.toString()}</p>
-    <p>{updatedAt}</p>
+    <div>
+      <p>{title}</p>
+      <p>{text}</p>
+      <p>{tags.toString()}</p>
+      <p>{updatedAt}</p>
+    </div>
   </div>
 );
 
