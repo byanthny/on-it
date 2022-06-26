@@ -7,6 +7,7 @@ import db from "./db"
 import cors from "cors"
 import routes from "./routes"
 import logger from "winston"
+import Env from "./types/env"
 
 async function setupMongo() {
   const mongo = await db.client.connect()
@@ -33,10 +34,10 @@ export default async (): Promise<Application> => {
   server.use(Express.json({ strict: true }))
   server.use(
     cors({
-      origin: process.env.NODE_ENV === "DEVELOPMENT" ? true : OnIt.productionUrl,
+      origin: Env.NODE_ENV === "DEVELOPMENT" || OnIt.productionUrl,
       methods: ["GET", "PATCH", "POST", "DELETE"],
       allowedHeaders: ["accept", "content-type"],
-      credentials: true
+      credentials: true,
     }),
   )
 
@@ -49,18 +50,20 @@ export default async (): Promise<Application> => {
   const api = Router()
   // Add routes
   api.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: Env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
     unset: "destroy",
     name: "onit.app.session",
     cookie: {
-      secure: process.env.STAGE !== "DEVELOPMENT",
+      secure: Env.NODE_ENV !== "DEVELOPMENT",
       maxAge: 1000 * 60 * 60 * 24 * 7,
     },
     store: MongoStore.create({
       client: mongoClient,
-      crypto: { secret: process.env.SESSION_SECRET },
+      dbName: "auth",
+      collectionName: "sessions",
+      crypto: { secret: Env.SESSION_SECRET },
     }),
   }))
   api.use("/users", /* auth handled in router */routes.users)

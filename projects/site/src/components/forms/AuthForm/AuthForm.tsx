@@ -1,22 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./authForm.module.scss";
 
 interface PropTypes {
   loginState: boolean;
+  submit: Function;
 }
 
-// TODO api + update usercontext
+interface ErrorMessage {
+  error: boolean;
+  errorMessage: string;
+}
 
-const LoginForm = ({ loginState }: PropTypes) => (
-  <form className={`${styles.authForm} light`}>
-    {/* <h2>{loginState ? "Login" : "Sign Up"}</h2> */}
-    <input type="email" placeholder="email" />
-    <input type="password" placeholder="password" />
-    {!loginState ? <input type="password" placeholder="confirm password" /> : ""}
-    <button type="submit" aria-label="submit form">
-      {loginState ? "Login" : "Sign Up"}
-    </button>
-  </form>
-);
+const AuthForm = ({ loginState, submit }: PropTypes) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState<ErrorMessage>({ error: false, errorMessage: "" });
 
-export default LoginForm;
+  const submitForm = (
+    event: any,
+    submittedEmail: string,
+    submittedPassword: string,
+    submittedConfirmPassword: string,
+  ) => {
+    event.preventDefault();
+    if (!loginState && submittedPassword !== submittedConfirmPassword) {
+      setError({ error: true, errorMessage: "passwords don't match" });
+      return;
+    }
+    submit(submittedEmail, submittedPassword, setError);
+  };
+
+  return (
+    <form className={`${styles.authForm} light`}>
+      <input type="email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+      <input type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+      {!loginState ? (
+        <input
+          type="password"
+          placeholder="confirm password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+      ) : (
+        ""
+      )}
+      {error.error ? <p className={styles.errorMessage}>{error.errorMessage}</p> : ""}
+      <button
+        type="submit"
+        aria-label="submit form"
+        onClick={(e) => submitForm(e, email, password, confirmPassword)}
+      >
+        {loginState ? "Login" : "Sign Up"}
+      </button>
+    </form>
+  );
+};
+
+export default AuthForm;

@@ -62,6 +62,12 @@ const patch: HandlerGroup = {
     const { result, error } = validate<Partial<Tag>>(Schemae.tag, body)
     if (error) return res.error(ApiErrors.MalformedContent(error))
     delete result._id
+    if (result.name) {
+      const findByName = (await db.tags.get({ name: result.name, uid })).data
+      if (findByName && findByName!._id !== pid) {
+        return res.error(ApiErrors.Duplicate("a tag with this name already exists"))
+      }
+    }
     const { status, data } = await db.tags.update({ uid, _id: pid }, result)
     const dbErr = reduceDBResultStatus(status)
     if (dbErr) return res.error(dbErr)

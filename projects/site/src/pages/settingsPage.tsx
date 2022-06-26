@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
+import { UserContext, User } from "../context/UserContext";
 // import CurrentUserContext from "../context/UserContext";
 
 const settingsPage = () => {
   const { theme, setTheme } = useContext(ThemeContext);
+  const { setUser } = useContext(UserContext);
 
   const changeTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -14,10 +16,12 @@ const settingsPage = () => {
   };
 
   const logout = () => {
-    // eslint-disable-next-line no-console
-    console.log("logging out apparently");
-    // const { setUser } = useContext(CurrentUserContext.Provider);
-    // setUser(null);
+    const loggedOutUser: User = {
+      loggedIn: false,
+      id: "",
+      email: "",
+    };
+    setUser(loggedOutUser);
   };
 
   return (
