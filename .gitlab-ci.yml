@@ -22,10 +22,27 @@ build-server:
       - projects/common/**/*
       - .gitlab-ci.yml
 
+deploy-dev-server:
+  stage: deploy
+  image: ruby:latest
+  needs: [ build-server ]
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=on-it-api-dev --api-key=$HEROKU_API_KEY
+  only:
+    refs:
+      - dev
+    changes:
+      - projects/server/**/*
+      - projects/common/**/*
+
+
 deploy-server:
   stage: deploy
   image: ruby:latest
-  needs: [build-server]
+  needs: [ build-server ]
   script:
     - apt-get update -qy
     - apt-get install -y ruby-dev
