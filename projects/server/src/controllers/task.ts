@@ -52,13 +52,16 @@ const post: HandlerGroup = {
       case DBResultStatus.FAILURE_INTERNAL:
         logger.error("failed to find task limits")
         return res.error(ApiErrors.Internal())
+      case DBResultStatus.SUCCESS:
+        const { status, data: count } = await db.tasks.count({ uid: session.uid })
+        if (status === DBResultStatus.FAILURE_INTERNAL)
+          return res.error(ApiErrors.Internal())
+        if ((count || 0) >= limits.tasks)
+          return res.error(
+            ApiErrors.MalformedContent(`maximum task count reached (${ count }`),
+          )
+        break
     }
-    const { status: cstatus, data: count } = await db.tasks.count({ uid: session.uid })
-    if (cstatus === DBResultStatus.FAILURE_INTERNAL) return res.error(ApiErrors.Internal())
-    if ((count || 0) >= limits.tasks)
-      return res.error(
-        ApiErrors.MalformedContent(`maximum task count reached (${ count }`),
-      )
     if (result.tags) {
       if (result.tags.length >= limits.tasks.maxTags)
         return res.error(ApiErrors.MalformedContent("task has too many tags"))
