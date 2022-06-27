@@ -4,7 +4,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 import { UserContext, User } from "../context/UserContext";
-// import CurrentUserContext from "../context/UserContext";
+import OnItApi from "../services/OnItApi";
 
 const settingsPage = () => {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -16,13 +16,24 @@ const settingsPage = () => {
     setTheme(newTheme);
   };
 
-  const logout = () => {
-    const loggedOutUser: User = {
-      loggedIn: false,
-      id: "",
-      email: "",
-    };
-    setUser(loggedOutUser);
+  const logout = async () => {
+
+    try {
+      const response = await OnItApi.logout();
+
+      if(response.error)
+        throw response.error
+
+      const loggedOutUser: User = {
+        loggedIn: false,
+        id: "",
+        email: "",
+      };
+      
+      setUser(loggedOutUser);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
