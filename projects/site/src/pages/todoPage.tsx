@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Task } from "common";
+import OnItApi from "../services/OnItApi";
 import Collection from "../components/items/Collection/Collection";
 import ToDo from "../components/items/ToDo/ToDo";
 import Header from "../components/navigation/Header/Header";
@@ -62,17 +64,29 @@ const fakedata = [
   },
 ];
 
-const updateTodo = (title: string, status: string) => {
-  // eslint-disable-next-line no-console
-  console.log(`${title} ${status}`);
-  // communicate to API
-};
-
 const todoPage = () => {
+  const [todoData, setToDoData] = useState<Array<Task>>([]);
 
-  const renderToDo = (data:Array<any>) => data.map(({ title, state, reminders }) => (
-    <ToDo title={title} status={state} update={updateTodo} reminder={reminders[0]} />
-  ));
+  useEffect(() => {
+
+      const fetchData = async () => {
+        const response = await OnItApi.task.search({});
+        setToDoData(response.payload!);
+      }
+
+      fetchData()
+        .catch(console.error);
+  }, []);
+
+  const updateTodo = (title: string, status: string) => {
+    // eslint-disable-next-line no-console
+    console.log(`${title} ${status}`);
+    // communicate to API
+  };
+
+  const renderToDo = (data:Array<any>) => data.length > 0 ? data.map(({ title, state, reminders }) => (
+    <ToDo title={title} status={state} update={updateTodo} reminder={reminders} />
+  )) : null;
   return (
     <>
       <NavBar />
@@ -80,7 +94,7 @@ const todoPage = () => {
         <Header title="To Do" />
         <div className="secondary-content">
           {renderToDo(fakedata)}
-          <Collection collectionTitle="General" variant="normalCollection">{renderToDo(fakedata)}</Collection>
+          <Collection collectionTitle="General" variant="normalCollection">{renderToDo(todoData)}</Collection>
         </div>
       </div>
     </>
