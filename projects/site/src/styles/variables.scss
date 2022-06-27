@@ -44,6 +44,8 @@ $content-max-width: 1250px;
 /* Themes */
 .light {
   // --navbar-color: #{$navbar-color-light};
+  --background-color: #{$light};
+  --header-background-color: #{scale-color($light, $alpha: $lighten)};
   --button-background-hover-color: #{scale-color($button-color-light, $lightness: $darken)};
   --button-background-color: #{$button-color-light};
   --text-color: #{$black};
@@ -57,6 +59,8 @@ $content-max-width: 1250px;
 
 .dark {
   // --navbar-color: #{$navbar-color-dark};
+  --background-color: #{$dark};
+  --header-background-color: #{scale-color($dark, $alpha: -20%)};
   --button-background-color: #{$button-color-dark};
   --button-background-hover-color: #{scale-color($button-color-dark, $lightness: $lighten)};
   --text-color: #{$white};

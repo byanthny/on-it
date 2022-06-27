@@ -4,7 +4,9 @@
   position: sticky;
   top: 0;
   width: 100%;
-  background-color: inherit;
+  background-color: var(--header-background-color);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: space-between;
   padding-top: 15px;

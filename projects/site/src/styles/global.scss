@@ -16,22 +16,8 @@ h1 {
   min-height: -webkit-fill-available;
   min-height: 100vh;
   transition: $theme-transition;
-}
-
-.light {
-  color: $dark;
-
-  &.background {
-    background-color: $light;
-  }
-}
-
-.dark {
-  color: $light;
-
-  &.background {
-    background-color: $dark;
-  }
+  background-color: var(--background-color);
+  color: var(--text-color)
 }
 
 .main-content {
