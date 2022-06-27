@@ -64,7 +64,7 @@ export default async (): Promise<Application> => {
       client: mongoClient,
       dbName: "auth",
       collectionName: "sessions",
-      stringify: Env.NODE_ENV !== "DEVELOPMENT",
+      //stringify: Env.NODE_ENV !== "DEVELOPMENT",
       crypto: Env.NODE_ENV !== "DEVELOPMENT" && { secret: Env.SESSION_SECRET },
     }),
   }))
