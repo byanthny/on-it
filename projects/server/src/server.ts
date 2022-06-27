@@ -64,7 +64,8 @@ export default async (): Promise<Application> => {
       client: mongoClient,
       dbName: "auth",
       collectionName: "sessions",
-      //crypto: Env.NODE_ENV !== "DEVELOPMENT" && { secret: Env.SESSION_SECRET },
+      stringify: Env.NODE_ENV !== "DEVELOPMENT",
+      crypto: Env.NODE_ENV !== "DEVELOPMENT" && { secret: Env.SESSION_SECRET },
     }),
   }))
   api.use("/users", /* auth handled in router */routes.users)

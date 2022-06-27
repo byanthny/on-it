@@ -18,6 +18,7 @@ export function authentication(required: boolean | UserRole[] | "self" = true): 
         req.session.user = data
         req.session.uid = data._id
         req.session.role = req.session.user.role
+        logger.info("session data set")
       }
     } else logger.debug("no session")
 
