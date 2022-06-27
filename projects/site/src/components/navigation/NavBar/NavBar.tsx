@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   RiSettings3Fill,
@@ -7,9 +7,32 @@ import {
   RiCheckboxFill,
   RiAddFill,
 } from "react-icons/ri";
+import { Task, TaskState } from "common";
 import styles from "./navbar.module.scss";
+import OnItApi from "../../../services/OnItApi";
+import { UserContext } from "../../../context/UserContext";
 
-const Navbar = () => (
+
+const Navbar = () => {
+  const { user } = useContext(UserContext);
+  const tempCreate = (e:any) => {
+    e.preventDefault();
+    console.log(`${user.id}`);
+    const tempTask:Task = {
+      uid: user.id,
+      title: "test",
+      state: TaskState.TODO
+    }
+    console.log(tempTask);
+    try {
+      const response = OnItApi.task.create(tempTask);
+      console.log(response);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return(
   <div className={styles.navbar}>
     <div className={styles.innerbox}>
       <Link aria-label="home" to="/">
@@ -18,7 +41,7 @@ const Navbar = () => (
       <Link aria-label="to do" to="/todo">
         <RiCheckboxFill />
       </Link>
-      <button aria-label="add" type="button" className={styles.addbutton} onClick={() => {}}>
+      <button aria-label="add" type="button" className={styles.addbutton} onClick={(e) => tempCreate(e)}>
         <div className={styles.addbuttonwrapper}>
           <div className={styles.addbuttonfixed}>
             <RiAddFill />
@@ -34,5 +57,6 @@ const Navbar = () => (
     </div>
   </div>
 );
+}
 
 export default Navbar;
