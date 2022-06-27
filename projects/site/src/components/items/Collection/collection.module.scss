@@ -4,9 +4,9 @@
 .noteCollection {
     position: relative;
     display: flex;
-    transition: 0.4s;
     overflow-x: scroll;
     font-size: 2rem;
+    transition: 0.4s;
 
     @include md {
         flex-wrap: wrap;
@@ -14,8 +14,13 @@
     }
 }
 
-.noteCollectionClosed {
+.normalCollection {
+    transition: 0.4s;
+}
+
+.collectionClosed {
     height: 0;
+    display: none;
 }
 
 .collectionTitle {

@@ -1,5 +1,6 @@
 import React from "react";
-import ToDo from "../components/ToDo/ToDo";
+import Collection from "../components/items/Collection/Collection";
+import ToDo from "../components/items/ToDo/ToDo";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 
@@ -68,7 +69,8 @@ const updateTodo = (title: string, status: string) => {
 };
 
 const todoPage = () => {
-  const todoList = fakedata.map(({ title, state, reminders }) => (
+
+  const renderToDo = (data:Array<any>) => data.map(({ title, state, reminders }) => (
     <ToDo title={title} status={state} update={updateTodo} reminder={reminders[0]} />
   ));
   return (
@@ -76,7 +78,10 @@ const todoPage = () => {
       <NavBar />
       <div className="main-content">
         <Header title="To Do" />
-        <div className="secondary-content">{todoList}</div>
+        <div className="secondary-content">
+          {renderToDo(fakedata)}
+          <Collection collectionTitle="General" variant="normalCollection">{renderToDo(fakedata)}</Collection>
+        </div>
       </div>
     </>
   );

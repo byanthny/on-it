@@ -1,30 +1,28 @@
 import React, { useState } from "react";
 import { RiArrowDropDownLine, RiArrowDropRightLine } from "react-icons/ri"
 import Button from "../../interactive/Button/Button";
-import Note from "../Note/Note"
-import styles from "./noteCollection.module.scss"
+import styles from "./collection.module.scss"
+
+type CollectionTypes = "noteCollection" | "normalCollection";
 
 interface PropTypes {
-    data: Array<any>
-    collectionTitle: string
+    children: React.ReactNode,
+    collectionTitle: string,
+    variant: CollectionTypes
 }
 
-const NoteCollection = ({data, collectionTitle}:PropTypes) => {
-
-    const notesList = data.map(({ title, text, tags, updatedAt }) => (
-        <Note title={title} text={text} tags={tags} updatedAt={updatedAt} />
-      ));
+const Collection = ({children, collectionTitle, variant}:PropTypes) => {
 
     const [open, setOpen] = useState(true);
         
       return (
         <div>
             <h2 className={styles.collectionTitle}>{collectionTitle}<Button variant="transparent" onClickFunction={()=>setOpen(!open)}>{open ? <RiArrowDropDownLine /> : <RiArrowDropRightLine />}</Button></h2>
-            <div className={`${styles.noteCollection} ${open? "" : styles.noteCollectionClosed}`}>
-                {notesList}
+            <div className={`${styles[variant]} ${open? "" : styles.collectionClosed}`}>
+                {children}
             </div>
         </div>
       );
 }
 
-export default NoteCollection;
+export default Collection;
