@@ -45,7 +45,7 @@ $content-max-width: 1250px;
 .light {
   // --navbar-color: #{$navbar-color-light};
   --background-color: #{$light};
-  --header-background-color: #{scale-color($light, $alpha: $lighten)};
+  --header-background-color: #{scale-color($light, $alpha: -20%)};
   --button-background-hover-color: #{scale-color($button-color-light, $lightness: $darken)};
   --button-background-color: #{$button-color-light};
   --text-color: #{$black};
