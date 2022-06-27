@@ -1,0 +1,3662 @@
+{
+	"info": {
+		"_postman_id": "411b2d6b-85fb-4394-87a3-c5464fd06ce2",
+		"name": "authentication",
+		"description": "REST API for On It",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "{uid}",
+					"item": [
+						{
+							"name": "Get a user by ID",
+							"id": "da05f9a1-6189-4049-8adf-d48788dcf995",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/:uid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":uid"
+									],
+									"variable": [
+										{
+											"id": "8a1dde73-61a5-41e5-830e-697d18316417",
+											"key": "uid",
+											"value": "velit",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "6fa78272-6e60-4cb7-b2e2-2434ac7d8dfa",
+									"name": "The User",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid",
+													"value": "velit",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {\n    \"_id\": \"Lorem ex do\",\n    \"email\": \"05Y@sVRjYhuyGWWlqwAVi.uhu\",\n    \"name\": {\n      \"first\": \"CkY\",\n      \"last\": \"qtlojEK\",\n      \"display\": \"s8TkQiH8tRZEqB\"\n    },\n    \"created\": -78199358.94039887,\n    \"updated\": 96180212.93647304\n  },\n  \"error\": null,\n  \"meta\": null\n}"
+								},
+								{
+									"id": "6d20da89-bc12-4343-b658-7b2c70c94306",
+									"name": "An error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid",
+													"value": "velit",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a User",
+							"id": "0a3703a6-3b2b-448a-911e-dcc31bf64d5d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"_id\": \"Lorem et occaecat ipsum cillum\",\n  \"email\": \"KgV5YbMRx@oNWEKsvHIEfxYHsLCS.rca\",\n  \"name\": {\n    \"first\": \"dUdU\",\n    \"last\": \"okSJ0oVy\",\n    \"display\": \"zmfmYzQp_z0JO\"\n  },\n  \"created\": -14500199.067036852,\n  \"updated\": 5132857.878247559\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/:uid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":uid"
+									],
+									"variable": [
+										{
+											"id": "a7e0c298-8825-4af1-8767-603224d1d2b2",
+											"key": "uid",
+											"value": "velit",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "1bc82f19-0968-4fcf-85b2-49971eacdb73",
+									"name": "User updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"_id\": \"Lorem et occaecat ipsum cillum\",\n  \"email\": \"KgV5YbMRx@oNWEKsvHIEfxYHsLCS.rca\",\n  \"name\": {\n    \"first\": \"dUdU\",\n    \"last\": \"okSJ0oVy\",\n    \"display\": \"zmfmYzQp_z0JO\"\n  },\n  \"created\": -14500199.067036852,\n  \"updated\": 5132857.878247559\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid",
+													"value": "velit",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								},
+								{
+									"id": "d7253e40-f1ae-4645-922d-5bf70d4a927a",
+									"name": "An error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"_id\": \"Lorem et occaecat ipsum cillum\",\n  \"email\": \"KgV5YbMRx@oNWEKsvHIEfxYHsLCS.rca\",\n  \"name\": {\n    \"first\": \"dUdU\",\n    \"last\": \"okSJ0oVy\",\n    \"display\": \"zmfmYzQp_z0JO\"\n  },\n  \"created\": -14500199.067036852,\n  \"updated\": 5132857.878247559\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid",
+													"value": "velit",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete a user",
+							"id": "eaf60b76-48f7-4e7e-bb2e-d82c8610b22d",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/:uid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":uid"
+									],
+									"variable": [
+										{
+											"id": "fbb23dee-ab71-440c-b57c-81c4fbc1eb44",
+											"key": "uid",
+											"value": "velit",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "cd0ab1d8-65d0-426d-99d1-10cd42c7a75b",
+									"name": "User deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid",
+													"value": "velit",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								},
+								{
+									"id": "f99b48cb-4f46-4496-a30e-13e14ebc5d1c",
+									"name": "An error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid",
+													"value": "velit",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						}
+					],
+					"id": "c0f1a4dd-2d11-41ea-a14e-7dca6dec1e48"
+				},
+				{
+					"name": "Login",
+					"id": "c5af98cb-3a63-4db5-bdc4-a52b7b1ea3d4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"identity\": \"qui aliqua cul\",\n  \"password\": \";{8, 20}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "Logs a user in with email or username and passowrd"
+					},
+					"response": [
+						{
+							"id": "60947933-f735-4d8c-88fe-ab4a1aacd3eb",
+							"name": "Authenticated",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"identity\": \"qui aliqua cul\",\n  \"password\": \";{8, 20}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "c3412b4d-48f2-4180-8b0c-3bb21e6b7abf",
+							"name": "An error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"identity\": \"qui aliqua cul\",\n  \"password\": \";{8, 20}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a new User",
+					"id": "76d9857a-d310-4e7c-af56-c35504245133",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"NN-UxWQXUELDZ@kXY.yi\",\n  \"password\": \"L{8, 20}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "ee4e3268-28eb-4464-b8c0-422b72aebf03",
+							"name": "User created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"NN-UxWQXUELDZ@kXY.yi\",\n  \"password\": \"L{8, 20}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "f6935203-d645-4884-95d8-29088f496bc3",
+							"name": "An error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"NN-UxWQXUELDZ@kXY.yi\",\n  \"password\": \"L{8, 20}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "/users/logout",
+					"id": "8ec8c40a-8dff-402d-af47-d3bf20d756e4",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"logout"
+							]
+						},
+						"description": "logout and clear user session"
+					},
+					"response": [
+						{
+							"id": "741feaae-d924-4575-ab4e-3b0939939577",
+							"name": "user logged out",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/logout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "d19f190a-cc66-42ca-bc82-c1edf773d7e4",
+							"name": "An error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/logout",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"logout"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				}
+			],
+			"id": "ea3f30b2-ca76-43dc-b658-80f1eec4f34e"
+		},
+		{
+			"name": "tag",
+			"item": [
+				{
+					"name": "{pid}",
+					"item": [
+						{
+							"name": "/tag/:pid",
+							"id": "07204140-8df7-4f37-90ca-6ebeb2db4ede",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tag/:pid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tag",
+										":pid"
+									],
+									"variable": [
+										{
+											"id": "a6123ad1-3a5e-469f-b877-e55e8ae8ecab",
+											"key": "pid",
+											"value": "velit",
+											"description": "(Required) Tag ID"
+										}
+									]
+								},
+								"description": "Get all Tag"
+							},
+							"response": [
+								{
+									"id": "06bf7662-a19f-490d-ad24-ecc11fc6f50c",
+									"name": "A user's Tag",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tag/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tag",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid",
+													"value": "velit",
+													"description": "(Required) Tag ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								},
+								{
+									"id": "e078edfc-d3bc-4506-9946-0709b22a86eb",
+									"name": "An error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tag/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tag",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid",
+													"value": "velit",
+													"description": "(Required) Tag ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "/tag/:pid",
+							"id": "fbdab39d-5fb6-4d65-83df-663ebdc03347",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"_id\": \"reprehenderit officia ea\",\n  \"uid\": \"elit sint\",\n  \"name\": \"Z04\",\n  \"color\": \"#485\",\n  \"created\": \"1966-07-06T20:37:40.044Z\",\n  \"updated\": \"2008-08-14T11:08:00.608Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tag/:pid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tag",
+										":pid"
+									],
+									"variable": [
+										{
+											"id": "3d0fec5e-0aa6-4fa2-838b-7a61129e35d4",
+											"key": "pid",
+											"value": "velit",
+											"description": "(Required) Tag ID"
+										}
+									]
+								},
+								"description": "Update a Tag"
+							},
+							"response": [
+								{
+									"id": "9fa34d32-4bda-4d29-a277-5943a80b22c7",
+									"name": "Tag Updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"_id\": \"reprehenderit officia ea\",\n  \"uid\": \"elit sint\",\n  \"name\": \"Z04\",\n  \"color\": \"#485\",\n  \"created\": \"1966-07-06T20:37:40.044Z\",\n  \"updated\": \"2008-08-14T11:08:00.608Z\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/tag/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tag",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid",
+													"value": "velit",
+													"description": "(Required) Tag ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								},
+								{
+									"id": "3827a54c-addf-4fbe-9a04-e4cd117d0901",
+									"name": "An error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"_id\": \"reprehenderit officia ea\",\n  \"uid\": \"elit sint\",\n  \"name\": \"Z04\",\n  \"color\": \"#485\",\n  \"created\": \"1966-07-06T20:37:40.044Z\",\n  \"updated\": \"2008-08-14T11:08:00.608Z\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/tag/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tag",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid",
+													"value": "velit",
+													"description": "(Required) Tag ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "/tag/:pid",
+							"id": "7cb100d7-6bd5-40cb-8766-77f9d0d9dcf3",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tag/:pid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tag",
+										":pid"
+									],
+									"variable": [
+										{
+											"id": "c337466b-0dd0-457a-8b1b-e16542420e81",
+											"key": "pid",
+											"value": "velit",
+											"description": "(Required) Tag ID"
+										}
+									]
+								},
+								"description": "Delete a Tag"
+							},
+							"response": [
+								{
+									"id": "23245726-8498-46d1-aa5b-0cd80cd2adb2",
+									"name": "Tag deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tag/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tag",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid",
+													"value": "velit",
+													"description": "(Required) Tag ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								},
+								{
+									"id": "9a6ecad6-6878-4763-a7d9-35cca6000078",
+									"name": "An error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tag/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tag",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid",
+													"value": "velit",
+													"description": "(Required) Tag ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						}
+					],
+					"id": "b04d287f-6a0a-4531-81f0-d80169fd6223"
+				},
+				{
+					"name": "Get all of a user's tags",
+					"id": "b4aa8985-556b-40a2-a063-a083d5fe45fc",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "session",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "<API Key>",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tag",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tag"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "6823d413-62c8-4839-a188-a42d6e800aa2",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tag",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tag"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "2e396409-2692-4658-8ab0-634a1a431008",
+							"name": "An error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tag",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tag"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Add a new Tag",
+					"id": "e16b6418-2491-44bf-bfd0-2803b3deb17a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "session",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "<API Key>",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"incididunt tempor cupidatat\",\n  \"color\": \"dolore irure\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tag",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tag"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "92251976-3b80-46c3-8193-41d70838e9ea",
+							"name": "Tag created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"incididunt tempor cupidatat\",\n  \"color\": \"dolore irure\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tag",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tag"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "54960b4e-1ab4-4a43-829d-75f024689313",
+							"name": "An error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"incididunt tempor cupidatat\",\n  \"color\": \"dolore irure\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tag",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tag"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "delete multiple tags",
+					"id": "fb510501-b30c-4a12-8cc9-5bb40a20d7e7",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "session",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "<API Key>",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tag?ids=mollit minim aliqua&ids=aliqua nostrud eiusmod",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tag"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "mollit minim aliqua"
+								},
+								{
+									"key": "ids",
+									"value": "aliqua nostrud eiusmod"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "b67ac9fe-a912-4b67-8e90-1d9fc1eb80a0",
+							"name": "tags deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tag?ids=velit&ids=exercitation ex in",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tag"
+									],
+									"query": [
+										{
+											"key": "ids",
+											"value": "velit"
+										},
+										{
+											"key": "ids",
+											"value": "exercitation ex in"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "86edf57f-e366-45da-9f3e-832670d88c61",
+							"name": "An error",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tag?ids=velit&ids=exercitation ex in",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tag"
+									],
+									"query": [
+										{
+											"key": "ids",
+											"value": "velit"
+										},
+										{
+											"key": "ids",
+											"value": "exercitation ex in"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				}
+			],
+			"id": "3aa65468-b310-4687-83dc-7763af093b6d"
+		},
+		{
+			"name": "tasks",
+			"item": [
+				{
+					"name": "{tid}",
+					"item": [
+						{
+							"name": "Gets a Task by ID",
+							"id": "022985ef-5b91-4548-8f23-1d97c3a3b4ff",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tasks/:tid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks",
+										":tid"
+									],
+									"variable": [
+										{
+											"id": "da851f36-f625-4789-93f4-3b5b1f934fe7",
+											"key": "tid",
+											"value": "velit",
+											"description": "(Required) ID of the task"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "e922c5fc-6def-42a6-81fc-81ce5179e28c",
+									"name": "Returns the Task matching the given ID",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid",
+													"value": "velit",
+													"description": "(Required) ID of the task"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								},
+								{
+									"id": "c6a60db4-64e4-477c-9f74-aa5db2ae7841",
+									"name": "An error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid",
+													"value": "velit",
+													"description": "(Required) ID of the task"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a task",
+							"id": "550ae6c0-31d7-4b64-85e9-d926c3696969",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"_id\": \"Excepteur magna sed Duis\",\n  \"uid\": \"esse aliquip aliqua\",\n  \"parent\": null,\n  \"title\": \"consectetur\",\n  \"description\": null,\n  \"due\": null,\n  \"reminders\": [\n    \"2016-07-20T04:59:18.546Z\",\n    \"1985-04-14T05:18:01.410Z\"\n  ],\n  \"state\": \"done\",\n  \"pinned\": false,\n  \"tags\": [\n    {\n      \"_id\": \"est id ipsum\",\n      \"uid\": \"dolore et adipisicing\",\n      \"name\": \"qJuv\",\n      \"color\": \"#8c6\",\n      \"created\": \"1954-06-12T16:52:38.310Z\",\n      \"updated\": \"1952-08-10T23:55:47.910Z\"\n    },\n    {\n      \"_id\": \"Excepteur\",\n      \"uid\": \"ea magna in\",\n      \"name\": \"zH8VP\",\n      \"color\": \"#e09\",\n      \"created\": \"1980-01-09T01:24:12.961Z\",\n      \"updated\": \"1970-12-04T22:49:25.823Z\"\n    }\n  ],\n  \"created\": \"2022-06-17T13:55:31.688Z\",\n  \"updated\": \"1987-01-22T19:26:35.652Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tasks/:tid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks",
+										":tid"
+									],
+									"variable": [
+										{
+											"id": "4834695f-0eb1-480e-b20b-284d3dd95689",
+											"key": "tid",
+											"value": "velit",
+											"description": "(Required) ID of the task"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "247a1170-c0d8-4e0b-a0e2-77d96785c442",
+									"name": "Task updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"_id\": \"Excepteur magna sed Duis\",\n  \"uid\": \"esse aliquip aliqua\",\n  \"parent\": null,\n  \"title\": \"consectetur\",\n  \"description\": null,\n  \"due\": null,\n  \"reminders\": [\n    \"2016-07-20T04:59:18.546Z\",\n    \"1985-04-14T05:18:01.410Z\"\n  ],\n  \"state\": \"done\",\n  \"pinned\": false,\n  \"tags\": [\n    {\n      \"_id\": \"est id ipsum\",\n      \"uid\": \"dolore et adipisicing\",\n      \"name\": \"qJuv\",\n      \"color\": \"#8c6\",\n      \"created\": \"1954-06-12T16:52:38.310Z\",\n      \"updated\": \"1952-08-10T23:55:47.910Z\"\n    },\n    {\n      \"_id\": \"Excepteur\",\n      \"uid\": \"ea magna in\",\n      \"name\": \"zH8VP\",\n      \"color\": \"#e09\",\n      \"created\": \"1980-01-09T01:24:12.961Z\",\n      \"updated\": \"1970-12-04T22:49:25.823Z\"\n    }\n  ],\n  \"created\": \"2022-06-17T13:55:31.688Z\",\n  \"updated\": \"1987-01-22T19:26:35.652Z\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid",
+													"value": "velit",
+													"description": "(Required) ID of the task"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								},
+								{
+									"id": "dc4d1e8c-0e03-4c31-a547-9b464c7d4cc2",
+									"name": "An error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"_id\": \"Excepteur magna sed Duis\",\n  \"uid\": \"esse aliquip aliqua\",\n  \"parent\": null,\n  \"title\": \"consectetur\",\n  \"description\": null,\n  \"due\": null,\n  \"reminders\": [\n    \"2016-07-20T04:59:18.546Z\",\n    \"1985-04-14T05:18:01.410Z\"\n  ],\n  \"state\": \"done\",\n  \"pinned\": false,\n  \"tags\": [\n    {\n      \"_id\": \"est id ipsum\",\n      \"uid\": \"dolore et adipisicing\",\n      \"name\": \"qJuv\",\n      \"color\": \"#8c6\",\n      \"created\": \"1954-06-12T16:52:38.310Z\",\n      \"updated\": \"1952-08-10T23:55:47.910Z\"\n    },\n    {\n      \"_id\": \"Excepteur\",\n      \"uid\": \"ea magna in\",\n      \"name\": \"zH8VP\",\n      \"color\": \"#e09\",\n      \"created\": \"1980-01-09T01:24:12.961Z\",\n      \"updated\": \"1970-12-04T22:49:25.823Z\"\n    }\n  ],\n  \"created\": \"2022-06-17T13:55:31.688Z\",\n  \"updated\": \"1987-01-22T19:26:35.652Z\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid",
+													"value": "velit",
+													"description": "(Required) ID of the task"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "Deletes a task",
+							"id": "55a184c6-d51d-45d9-937c-7df6858e45b1",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tasks/:tid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks",
+										":tid"
+									],
+									"variable": [
+										{
+											"id": "484d2021-154c-43c3-8777-dddf81654a64",
+											"key": "tid",
+											"value": "velit",
+											"description": "(Required) ID of the task"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "126e7a2a-b4bf-43e3-9f96-eef77b36e911",
+									"name": "Task deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid",
+													"value": "velit",
+													"description": "(Required) ID of the task"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								},
+								{
+									"id": "b94990f2-e742-49fe-b970-aea9e8ba2a00",
+									"name": "An error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid",
+													"value": "velit",
+													"description": "(Required) ID of the task"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						}
+					],
+					"id": "68a5a6b6-6427-4604-ab98-c7ccf368cc2d"
+				},
+				{
+					"name": "Search for tasks",
+					"id": "708d899c-db53-4682-a357-26d647aeb5ab",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "session",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "<API Key>",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks?limit=-17767628&skip=-17767628&parent=velit&tags=mollit minim aliqua&tags=aliqua nostrud eiusmod&state=sit voluptate officia culpa&state=Lorem&text=velit&before=null&after=null",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "-17767628"
+								},
+								{
+									"key": "skip",
+									"value": "-17767628"
+								},
+								{
+									"key": "parent",
+									"value": "velit",
+									"description": "Parent task ID"
+								},
+								{
+									"key": "tags",
+									"value": "mollit minim aliqua",
+									"description": "tag IDs"
+								},
+								{
+									"key": "tags",
+									"value": "aliqua nostrud eiusmod",
+									"description": "tag IDs"
+								},
+								{
+									"key": "state",
+									"value": "sit voluptate officia culpa",
+									"description": "The completion state of the tasks"
+								},
+								{
+									"key": "state",
+									"value": "Lorem",
+									"description": "The completion state of the tasks"
+								},
+								{
+									"key": "text",
+									"value": "velit",
+									"description": "text search for title and description"
+								},
+								{
+									"key": "before",
+									"value": "null"
+								},
+								{
+									"key": "after",
+									"value": "null"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "7db79cea-3b84-4e7b-8207-644377bc80b4",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tasks?limit=-17767628&skip=-17767628&parent=velit&tags=velit&tags=exercitation ex in&state=et&state=consequat ut in&text=velit&before=null&after=null",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "-17767628"
+										},
+										{
+											"key": "skip",
+											"value": "-17767628"
+										},
+										{
+											"key": "parent",
+											"value": "velit"
+										},
+										{
+											"key": "tags",
+											"value": "velit"
+										},
+										{
+											"key": "tags",
+											"value": "exercitation ex in"
+										},
+										{
+											"key": "state",
+											"value": "et"
+										},
+										{
+											"key": "state",
+											"value": "consequat ut in"
+										},
+										{
+											"key": "text",
+											"value": "velit"
+										},
+										{
+											"key": "before",
+											"value": "null"
+										},
+										{
+											"key": "after",
+											"value": "null"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "bcd3c3b5-efa9-4ea1-9b7a-22f7b7a72a18",
+							"name": "An error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tasks?limit=-17767628&skip=-17767628&parent=velit&tags=velit&tags=exercitation ex in&state=et&state=consequat ut in&text=velit&before=null&after=null",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "-17767628"
+										},
+										{
+											"key": "skip",
+											"value": "-17767628"
+										},
+										{
+											"key": "parent",
+											"value": "velit"
+										},
+										{
+											"key": "tags",
+											"value": "velit"
+										},
+										{
+											"key": "tags",
+											"value": "exercitation ex in"
+										},
+										{
+											"key": "state",
+											"value": "et"
+										},
+										{
+											"key": "state",
+											"value": "consequat ut in"
+										},
+										{
+											"key": "text",
+											"value": "velit"
+										},
+										{
+											"key": "before",
+											"value": "null"
+										},
+										{
+											"key": "after",
+											"value": "null"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Creates a new task",
+					"id": "119aabb8-7ab4-47d6-a96b-3c3f7aed85bf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "session",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "<API Key>",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"_id\": \"dolore sint\",\n  \"uid\": \"dolor\",\n  \"parent\": null,\n  \"title\": \"laborum Excepteur anim in ullamco\",\n  \"description\": null,\n  \"due\": null,\n  \"reminders\": [\n    \"1996-02-20T14:47:56.151Z\",\n    \"1997-10-28T19:37:52.031Z\"\n  ],\n  \"state\": \"todo\",\n  \"pinned\": false,\n  \"tags\": [\n    {\n      \"_id\": \"laboris dolor fugiat\",\n      \"uid\": \"cupidatat ipsum irure commodo\",\n      \"name\": \"FtvShx\",\n      \"color\": \"#5A3F9b\",\n      \"created\": \"2010-03-21T04:48:40.387Z\",\n      \"updated\": \"1990-12-06T08:47:37.793Z\"\n    },\n    {\n      \"_id\": \"do\",\n      \"uid\": \"mollit ut labore\",\n      \"name\": \"FZxAZcOh\",\n      \"color\": \"#C53eD3\",\n      \"created\": \"1970-03-19T18:37:47.489Z\",\n      \"updated\": \"1988-03-28T06:20:52.993Z\"\n    }\n  ],\n  \"created\": \"1950-03-29T18:58:20.435Z\",\n  \"updated\": \"2011-07-20T14:56:19.854Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "d67a0926-be4c-419f-a903-07f4872449b2",
+							"name": "Task created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"_id\": \"Excepteur magna sed Duis\",\n  \"uid\": \"esse aliquip aliqua\",\n  \"parent\": null,\n  \"title\": \"consectetur\",\n  \"description\": null,\n  \"due\": null,\n  \"reminders\": [\n    \"2016-07-20T04:59:18.546Z\",\n    \"1985-04-14T05:18:01.410Z\"\n  ],\n  \"state\": \"done\",\n  \"pinned\": false,\n  \"tags\": [\n    {\n      \"_id\": \"est id ipsum\",\n      \"uid\": \"dolore et adipisicing\",\n      \"name\": \"qJuv\",\n      \"color\": \"#8c6\",\n      \"created\": \"1954-06-12T16:52:38.310Z\",\n      \"updated\": \"1952-08-10T23:55:47.910Z\"\n    },\n    {\n      \"_id\": \"Excepteur\",\n      \"uid\": \"ea magna in\",\n      \"name\": \"zH8VP\",\n      \"color\": \"#e09\",\n      \"created\": \"1980-01-09T01:24:12.961Z\",\n      \"updated\": \"1970-12-04T22:49:25.823Z\"\n    }\n  ],\n  \"created\": \"2022-06-17T13:55:31.688Z\",\n  \"updated\": \"1987-01-22T19:26:35.652Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "ba54956f-2b09-4766-870e-1fa67a66a66c",
+							"name": "An error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"_id\": \"Excepteur magna sed Duis\",\n  \"uid\": \"esse aliquip aliqua\",\n  \"parent\": null,\n  \"title\": \"consectetur\",\n  \"description\": null,\n  \"due\": null,\n  \"reminders\": [\n    \"2016-07-20T04:59:18.546Z\",\n    \"1985-04-14T05:18:01.410Z\"\n  ],\n  \"state\": \"done\",\n  \"pinned\": false,\n  \"tags\": [\n    {\n      \"_id\": \"est id ipsum\",\n      \"uid\": \"dolore et adipisicing\",\n      \"name\": \"qJuv\",\n      \"color\": \"#8c6\",\n      \"created\": \"1954-06-12T16:52:38.310Z\",\n      \"updated\": \"1952-08-10T23:55:47.910Z\"\n    },\n    {\n      \"_id\": \"Excepteur\",\n      \"uid\": \"ea magna in\",\n      \"name\": \"zH8VP\",\n      \"color\": \"#e09\",\n      \"created\": \"1980-01-09T01:24:12.961Z\",\n      \"updated\": \"1970-12-04T22:49:25.823Z\"\n    }\n  ],\n  \"created\": \"2022-06-17T13:55:31.688Z\",\n  \"updated\": \"1987-01-22T19:26:35.652Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "delete multiple tasks",
+					"id": "3afe0167-baca-4ed5-8a82-5307a859d476",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "session",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "<API Key>",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks?ids=mollit minim aliqua&ids=aliqua nostrud eiusmod",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "mollit minim aliqua"
+								},
+								{
+									"key": "ids",
+									"value": "aliqua nostrud eiusmod"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "b11f176a-660e-4f9e-b90c-308e8ee660dd",
+							"name": "tasks deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tasks?ids=velit&ids=exercitation ex in",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "ids",
+											"value": "velit"
+										},
+										{
+											"key": "ids",
+											"value": "exercitation ex in"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "94a89e7a-1905-48d6-a2f4-2e07ef267cf4",
+							"name": "An error",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tasks?ids=velit&ids=exercitation ex in",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "ids",
+											"value": "velit"
+										},
+										{
+											"key": "ids",
+											"value": "exercitation ex in"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				}
+			],
+			"id": "3a7dd909-e740-46d8-b1d5-a34064b96b28"
+		},
+		{
+			"name": "notes",
+			"item": [
+				{
+					"name": "{nid}",
+					"item": [
+						{
+							"name": "Get a note by ID",
+							"id": "6428c208-5285-4724-9605-7d4d2816c177",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/notes/:nid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes",
+										":nid"
+									],
+									"variable": [
+										{
+											"id": "7461657e-51af-4fe5-8da6-22db184ec816",
+											"key": "nid",
+											"value": "velit",
+											"description": "(Required) Note ID"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "de487e1d-574b-41ef-b587-40e898736d1a",
+									"name": "Returns the requested note",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid",
+													"value": "velit",
+													"description": "(Required) Note ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								},
+								{
+									"id": "50bb6d5a-6681-4b34-9336-6aa1f24b9886",
+									"name": "An error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid",
+													"value": "velit",
+													"description": "(Required) Note ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a note",
+							"id": "e8a67b53-c725-4642-b4cb-f83025b56227",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"_id\": \"veniam sed Duis fugiat dolore\",\n  \"uid\": \"dolore ea\",\n  \"parent\": \"reprehenderit\",\n  \"title\": \"Ut dolor\",\n  \"text\": \"elit cupidatat ullamco et laboris\",\n  \"tags\": [\n    {\n      \"_id\": \"nulla in\",\n      \"uid\": \"D\",\n      \"name\": \"igAQhIT\",\n      \"color\": \"#25b346\",\n      \"created\": \"1943-06-22T01:40:40.394Z\",\n      \"updated\": \"1964-03-01T23:10:40.718Z\"\n    },\n    {\n      \"_id\": \"aliquip fugiat do consequat\",\n      \"uid\": \"id dolor Excepteur\",\n      \"name\": \"KveFzhCOf\",\n      \"color\": \"#Afc70c\",\n      \"created\": \"1997-03-03T03:56:26.921Z\",\n      \"updated\": \"1947-04-15T20:09:08.761Z\"\n    }\n  ],\n  \"created\": \"2010-05-10T08:07:51.827Z\",\n  \"updated\": \"1951-04-01T01:25:52.933Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/notes/:nid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes",
+										":nid"
+									],
+									"variable": [
+										{
+											"id": "de290b74-4990-418e-827b-faea1e30c58f",
+											"key": "nid",
+											"value": "velit",
+											"description": "(Required) Note ID"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "eea91a34-3323-45bd-afb2-00c0509a960f",
+									"name": "Note updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"_id\": \"veniam sed Duis fugiat dolore\",\n  \"uid\": \"dolore ea\",\n  \"parent\": \"reprehenderit\",\n  \"title\": \"Ut dolor\",\n  \"text\": \"elit cupidatat ullamco et laboris\",\n  \"tags\": [\n    {\n      \"_id\": \"nulla in\",\n      \"uid\": \"D\",\n      \"name\": \"igAQhIT\",\n      \"color\": \"#25b346\",\n      \"created\": \"1943-06-22T01:40:40.394Z\",\n      \"updated\": \"1964-03-01T23:10:40.718Z\"\n    },\n    {\n      \"_id\": \"aliquip fugiat do consequat\",\n      \"uid\": \"id dolor Excepteur\",\n      \"name\": \"KveFzhCOf\",\n      \"color\": \"#Afc70c\",\n      \"created\": \"1997-03-03T03:56:26.921Z\",\n      \"updated\": \"1947-04-15T20:09:08.761Z\"\n    }\n  ],\n  \"created\": \"2010-05-10T08:07:51.827Z\",\n  \"updated\": \"1951-04-01T01:25:52.933Z\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid",
+													"value": "velit",
+													"description": "(Required) Note ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								},
+								{
+									"id": "560de3fc-8cf5-4c13-9d63-75e778bbfe26",
+									"name": "An error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"_id\": \"veniam sed Duis fugiat dolore\",\n  \"uid\": \"dolore ea\",\n  \"parent\": \"reprehenderit\",\n  \"title\": \"Ut dolor\",\n  \"text\": \"elit cupidatat ullamco et laboris\",\n  \"tags\": [\n    {\n      \"_id\": \"nulla in\",\n      \"uid\": \"D\",\n      \"name\": \"igAQhIT\",\n      \"color\": \"#25b346\",\n      \"created\": \"1943-06-22T01:40:40.394Z\",\n      \"updated\": \"1964-03-01T23:10:40.718Z\"\n    },\n    {\n      \"_id\": \"aliquip fugiat do consequat\",\n      \"uid\": \"id dolor Excepteur\",\n      \"name\": \"KveFzhCOf\",\n      \"color\": \"#Afc70c\",\n      \"created\": \"1997-03-03T03:56:26.921Z\",\n      \"updated\": \"1947-04-15T20:09:08.761Z\"\n    }\n  ],\n  \"created\": \"2010-05-10T08:07:51.827Z\",\n  \"updated\": \"1951-04-01T01:25:52.933Z\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid",
+													"value": "velit",
+													"description": "(Required) Note ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete a note",
+							"id": "20c2c8ed-ce54-4290-9b20-83be5760d54a",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "session",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "<API Key>",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/notes/:nid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes",
+										":nid"
+									],
+									"variable": [
+										{
+											"id": "2397cc50-e9b8-4de5-842b-8323ad05ef7c",
+											"key": "nid",
+											"value": "velit",
+											"description": "(Required) Note ID"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "7efa9772-2735-4a04-aeeb-bafabe7ad90c",
+									"name": "Note Deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid",
+													"value": "velit",
+													"description": "(Required) Note ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								},
+								{
+									"id": "02461b4e-ab41-43f9-80d0-26ea95e09359",
+									"name": "An error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "session",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid",
+													"value": "velit",
+													"description": "(Required) Note ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+								}
+							]
+						}
+					],
+					"id": "0ffb188a-8af8-4bd8-81c3-aafb0b732d6c"
+				},
+				{
+					"name": "Search for Notes",
+					"id": "868b83b0-8273-4516-a0d9-f59b977578c4",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "session",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "<API Key>",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/notes?text=velit&tags=mollit minim aliqua&tags=aliqua nostrud eiusmod&parent=velit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notes"
+							],
+							"query": [
+								{
+									"key": "text",
+									"value": "velit",
+									"description": "text search title and note body"
+								},
+								{
+									"key": "tags",
+									"value": "mollit minim aliqua",
+									"description": "tag IDs"
+								},
+								{
+									"key": "tags",
+									"value": "aliqua nostrud eiusmod",
+									"description": "tag IDs"
+								},
+								{
+									"key": "parent",
+									"value": "velit",
+									"description": "ID of the Parent Task"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "0c84771c-e56e-46f3-b9b3-f8481271b59c",
+							"name": "User's Notes",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/notes?text=velit&tags=velit&tags=exercitation ex in&parent=velit",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									],
+									"query": [
+										{
+											"key": "text",
+											"value": "velit"
+										},
+										{
+											"key": "tags",
+											"value": "velit"
+										},
+										{
+											"key": "tags",
+											"value": "exercitation ex in"
+										},
+										{
+											"key": "parent",
+											"value": "velit"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "7c3f8b40-d07a-44d5-adfe-c3aec8bc1fca",
+							"name": "An error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/notes?text=velit&tags=velit&tags=exercitation ex in&parent=velit",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									],
+									"query": [
+										{
+											"key": "text",
+											"value": "velit"
+										},
+										{
+											"key": "tags",
+											"value": "velit"
+										},
+										{
+											"key": "tags",
+											"value": "exercitation ex in"
+										},
+										{
+											"key": "parent",
+											"value": "velit"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a new Note",
+					"id": "49f0e711-5bd4-4c1c-8bcb-e018f9907e01",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "session",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "<API Key>",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"_id\": \"non commodo adipisicing pariatur\",\n  \"uid\": \"fugiat ut mol\",\n  \"parent\": \"sit\",\n  \"title\": \"quis occaecat do anim\",\n  \"text\": \"enim magna tempor Lorem\",\n  \"tags\": [\n    {\n      \"_id\": \"irure laborum\",\n      \"uid\": \"pariatur minim sint\",\n      \"name\": \"Ft\",\n      \"color\": \"#50C\",\n      \"created\": \"1955-10-12T03:26:32.259Z\",\n      \"updated\": \"1956-03-29T20:23:08.523Z\"\n    },\n    {\n      \"_id\": \"pariatur laborum incididunt\",\n      \"uid\": \"Ut veniam aliquip dolore incididunt\",\n      \"name\": \"QJn4jZwh_ONMk\",\n      \"color\": \"#B8fb23\",\n      \"created\": \"1948-07-21T10:15:49.986Z\",\n      \"updated\": \"1993-08-22T07:16:27.021Z\"\n    }\n  ],\n  \"created\": \"1962-01-24T03:41:29.419Z\",\n  \"updated\": \"1982-03-25T17:27:18.357Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notes"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "aa0aa0e9-0b22-4045-b266-e11958fe3751",
+							"name": "Note created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"_id\": \"veniam sed Duis fugiat dolore\",\n  \"uid\": \"dolore ea\",\n  \"parent\": \"reprehenderit\",\n  \"title\": \"Ut dolor\",\n  \"text\": \"elit cupidatat ullamco et laboris\",\n  \"tags\": [\n    {\n      \"_id\": \"nulla in\",\n      \"uid\": \"D\",\n      \"name\": \"igAQhIT\",\n      \"color\": \"#25b346\",\n      \"created\": \"1943-06-22T01:40:40.394Z\",\n      \"updated\": \"1964-03-01T23:10:40.718Z\"\n    },\n    {\n      \"_id\": \"aliquip fugiat do consequat\",\n      \"uid\": \"id dolor Excepteur\",\n      \"name\": \"KveFzhCOf\",\n      \"color\": \"#Afc70c\",\n      \"created\": \"1997-03-03T03:56:26.921Z\",\n      \"updated\": \"1947-04-15T20:09:08.761Z\"\n    }\n  ],\n  \"created\": \"2010-05-10T08:07:51.827Z\",\n  \"updated\": \"1951-04-01T01:25:52.933Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/notes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "d02c11b1-ca34-4c38-9e10-a8a4c37d970d",
+							"name": "An error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"_id\": \"veniam sed Duis fugiat dolore\",\n  \"uid\": \"dolore ea\",\n  \"parent\": \"reprehenderit\",\n  \"title\": \"Ut dolor\",\n  \"text\": \"elit cupidatat ullamco et laboris\",\n  \"tags\": [\n    {\n      \"_id\": \"nulla in\",\n      \"uid\": \"D\",\n      \"name\": \"igAQhIT\",\n      \"color\": \"#25b346\",\n      \"created\": \"1943-06-22T01:40:40.394Z\",\n      \"updated\": \"1964-03-01T23:10:40.718Z\"\n    },\n    {\n      \"_id\": \"aliquip fugiat do consequat\",\n      \"uid\": \"id dolor Excepteur\",\n      \"name\": \"KveFzhCOf\",\n      \"color\": \"#Afc70c\",\n      \"created\": \"1997-03-03T03:56:26.921Z\",\n      \"updated\": \"1947-04-15T20:09:08.761Z\"\n    }\n  ],\n  \"created\": \"2010-05-10T08:07:51.827Z\",\n  \"updated\": \"1951-04-01T01:25:52.933Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/notes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "delete multiple notes",
+					"id": "09b386e3-6eac-4564-a36e-54a510af49d5",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "session",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "<API Key>",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/notes?ids=mollit minim aliqua&ids=aliqua nostrud eiusmod",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"notes"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "mollit minim aliqua"
+								},
+								{
+									"key": "ids",
+									"value": "aliqua nostrud eiusmod"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "a0cdc837-a06a-408d-bd0c-6fd57ddb8f02",
+							"name": "notes deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/notes?ids=velit&ids=exercitation ex in",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									],
+									"query": [
+										{
+											"key": "ids",
+											"value": "velit"
+										},
+										{
+											"key": "ids",
+											"value": "exercitation ex in"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						},
+						{
+							"id": "505f50f3-9462-482d-a3f9-8d13e6f9061b",
+							"name": "An error",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "session",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/notes?ids=velit&ids=exercitation ex in",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									],
+									"query": [
+										{
+											"key": "ids",
+											"value": "velit"
+										},
+										{
+											"key": "ids",
+											"value": "exercitation ex in"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"payload\": {},\n  \"error\": null,\n  \"meta\": null\n}"
+						}
+					]
+				}
+			],
+			"id": "3e741aa0-d844-4cad-9b37-e483f8adb5ed"
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "session",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "<API Key>",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"id": "32294eb9-5fbb-4000-8b05-c1b59761c514",
+			"key": "baseUrl",
+			"value": "https://on-it-api.herku.com/api",
+			"type": "string"
+		}
+	]
+}

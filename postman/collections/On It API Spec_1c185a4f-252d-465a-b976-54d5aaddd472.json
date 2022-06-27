@@ -1,0 +1,3463 @@
+{
+	"info": {
+		"_postman_id": "3749b07d-a3e5-419d-9b3b-4e062d481cca",
+		"name": "On It API Spec",
+		"description": "REST API for On It",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "/:uid",
+					"item": [
+						{
+							"name": "Get a user by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5f5bac1c-b58e-4c34-a040-e3df406a7cf2",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const { payload } = pm.response.json()\r",
+											"\r",
+											"if (!payload) return\r",
+											"\r",
+											"pm.test(\"Payload has user\", () => {\r",
+											"    pm.expect(payload).to.have.property(\"_id\")\r",
+											"    pm.expect(payload).to.have.property(\"email\")\r",
+											"    pm.expect(payload).to.have.property(\"role\")\r",
+											"})\r",
+											"\r",
+											"const { _id, email, role } = payload\r",
+											"pm.test(\"User has correct id\", () => {\r",
+											"    pm.expect(_id).to.equal(pm.environment.get(\"user._id\"))\r",
+											"})\r",
+											"\r",
+											"pm.test(\"User has correct email\", () => {\r",
+											"    pm.expect(email).to.equal(pm.environment.get(\"user.email\"))\r",
+											"})\r",
+											"\r",
+											"pm.test(\"User has correct role\", () => {\r",
+											"    pm.expect(role).to.equal(pm.environment.get(\"user.role\"))\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "56e60e18-c012-44a2-8a6b-198d69aeb376",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "token",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{localUrl}}/users/:uid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"users",
+										":uid"
+									],
+									"variable": [
+										{
+											"key": "uid",
+											"value": "{{user._id}}",
+											"description": "(Required) User ID"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "3da8a15a-373e-45f7-8462-2f772119ca81",
+									"name": "The User",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {\n  \"user\": {\n   \"_id\": \"aliqua nisi nostrud\",\n   \"email\": \"LU3qGVn@HPglqBCTSRQrMciFvfPNFrpfCWlkU.fw\",\n   \"name\": {\n    \"first\": \"p7TcQQtzrMeFqy\",\n    \"last\": \"L\",\n    \"display\": \"jjBuQ\"\n   },\n   \"createdAt\": -33911030.62675276,\n   \"updatedAt\": -54763075.104147285\n  }\n },\n \"error\": \"do qui anim laborum sed\"\n}"
+								},
+								{
+									"id": "446166b5-c17f-49ae-8776-93af6d273729",
+									"name": "An error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "015a719f-2d59-4362-8cd1-94fe4aae9cdb",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											"\r",
+											"const { payload } = pm.response.json()\r",
+											"\r",
+											"if (!payload) return\r",
+											"\r",
+											"pm.test(\"Payload has user\", () => {\r",
+											"    pm.expect(payload).to.have.property(\"_id\")\r",
+											"    pm.expect(payload).to.have.property(\"email\")\r",
+											"    pm.expect(payload).to.have.property(\"name\")\r",
+											"    pm.expect(payload).to.have.property(\"role\")\r",
+											"})\r",
+											"\r",
+											"const { _id, email, name } = payload\r",
+											"pm.expect(_id).to.equal(pm.environment.get(\"user._id\"))\r",
+											"\r",
+											"pm.test(\"User has updated email\", () => {\r",
+											"    pm.expect(email).to.equal(pm.environment.get(\"user.email_new\"))\r",
+											"})\r",
+											"\r",
+											"pm.test(\"User has updated name\", () => {\r",
+											"    pm.expect(name.first).to.equal(pm.environment.get(\"name.first\"))\r",
+											"    pm.expect(name.last).to.equal(pm.environment.get(\"name.last\"))\r",
+											"    pm.expect(name.display).to.equal(pm.environment.get(\"name.display\"))\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "bfe614f8-cd0d-4354-a50d-8f9ef10ba196",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"_id\": \"est\",\n    \"email\": \"{{user.email_new}}\",\n    \"name\": {\n        \"first\": \"{{name.first}}\",\n        \"last\": \"{{name.last}}\",\n        \"display\": \"{{name.display}}\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{localUrl}}/users/:uid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"users",
+										":uid"
+									],
+									"variable": [
+										{
+											"key": "uid",
+											"value": "{{user._id}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "82780405-595c-4174-a640-07c4abc96a86",
+									"name": "User updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"_id\": \"est\",\n    \"email\": \"D2AiqjjYSKY@eSkueNUAbeAqNzgSVdwqNaYZNLX.xuua\",\n    \"name\": {\n        \"first\": \"HnOZShH9yDC\",\n        \"last\": \"gh4eH67rj\",\n        \"display\": \"W\"\n    },\n    \"createdAt\": -58205676.32547027,\n    \"updatedAt\": -81461901.17344068\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								},
+								{
+									"id": "5efa5260-4d74-409a-8bb1-40bc5669382f",
+									"name": "An error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"_id\": \"est\",\n    \"email\": \"D2AiqjjYSKY@eSkueNUAbeAqNzgSVdwqNaYZNLX.xuua\",\n    \"name\": {\n        \"first\": \"HnOZShH9yDC\",\n        \"last\": \"gh4eH67rj\",\n        \"display\": \"W\"\n    },\n    \"createdAt\": -58205676.32547027,\n    \"updatedAt\": -81461901.17344068\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete a user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e01c6465-ac7a-4561-88cd-4a43e1f3b7b0",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "003d9fd1-4937-45f9-8b2a-46ef49fcd027",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{localUrl}}/users/:uid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"users",
+										":uid"
+									],
+									"variable": [
+										{
+											"key": "uid",
+											"value": "{{user._id}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "f9d6d8ad-8bb5-4372-b6c5-5b8eea38b06c",
+									"name": "User deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								},
+								{
+									"id": "8d17be0c-67ab-486f-ac12-cb10f2945a57",
+									"name": "An error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:uid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":uid"
+											],
+											"variable": [
+												{
+													"key": "uid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						}
+					],
+					"id": "c986f01b-a3df-4485-8bc0-851b50d8d64f"
+				},
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "Create a new User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "68276a10-16bc-4b95-ac0c-bda0fb99187c",
+										"exec": [
+											"pm.test(\"Status code is 201\", () => {\r",
+											"    pm.response.to.have.status(201);\r",
+											"})\r",
+											"\r",
+											"pm.cookies.clear()"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "9c660c16-1315-423c-8590-82066b762a50",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"{{user.email}}\",\n    \"password\": \"{{user.password}}\"\n}"
+								},
+								"url": {
+									"raw": "{{localUrl}}/users/register",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "060756cc-c930-42e6-87f8-105b44247a63",
+									"name": "User updated",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"zmOWdvpEK@ppVqnrTAc.moqa\",\n    \"password\": \"r{8, 20}\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								},
+								{
+									"id": "d67da162-7124-4b37-a54e-3782e112ddd6",
+									"name": "An error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"zmOWdvpEK@ppVqnrTAc.moqa\",\n    \"password\": \"r{8, 20}\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"register"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "41cb3c4f-fe4f-40a0-a419-2f9107fb8e98",
+										"exec": [
+											"pm.test(\"Status code is 201\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "778f8feb-a976-4523-9ce3-ed5a5720ffef",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"{{user.email}}\",\n    \"password\": \"{{user.password}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localUrl}}/users/login",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								},
+								"description": "Logs a user in with email or username and passowrd"
+							},
+							"response": [
+								{
+									"id": "c45157f0-1470-4139-8e16-995b6644de55",
+									"name": "User updated",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"B2EXeGv5QMc@IavDgkPOsKrbqrbsjMoIfXdb.jyv\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								},
+								{
+									"id": "d0598432-10f7-4046-8cab-582dad973c7e",
+									"name": "An error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"B2EXeGv5QMc@IavDgkPOsKrbqrbsjMoIfXdb.jyv\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												"login"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						}
+					],
+					"id": "d8692155-fc4e-4813-85ea-2c46ebdfb037",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4da6d400-4ad6-49c3-a0bc-287b71f3cc0b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d0e2f153-2a8a-4419-b91f-ee155c1c9e43",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Has onit.app.session cookie\", () => {",
+									"    pm.expect(pm.cookies.get(\"onit.app.session\")).to.not.be.undefined",
+									"})",
+									"",
+									"const { payload } = pm.response.json()",
+									"",
+									"if (!payload) return",
+									"",
+									"pm.test(\"Payload has correct structure\", () => {",
+									"    pm.expect(payload).to.have.property(\"_id\")",
+									"    pm.expect(payload).to.have.property(\"email\")",
+									"    pm.expect(payload).to.have.property(\"role\")",
+									"})",
+									"",
+									"const { _id, email, role } = payload",
+									"",
+									"pm.test(\"User has string id\", () => {",
+									"    pm.expect(typeof _id).to.equal(\"string\")",
+									"    pm.environment.set(\"user._id\", _id)",
+									"})",
+									"",
+									"pm.test(\"Has user with correct email\", () => {",
+									"    pm.expect(email).to.equal(pm.environment.get(\"user.email\"))",
+									"})",
+									"",
+									"pm.test(\"Has User with email and _id\", () => {",
+									"    pm.expect(role).to.equal(pm.environment.get(\"user.role\"))",
+									"})",
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3898e85f-72ba-4913-a7a6-a4d922653dd8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "dedd63b9-f9f8-4f01-be53-ff2d665d4bb5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{localUrl}}/users/logout",
+							"host": [
+								"{{localUrl}}"
+							],
+							"path": [
+								"users",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "7d5a8c57-0c8c-4926-a663-715d25747770",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8cad933a-fa52-4e8a-8e16-e5f5e4ae6064",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "89ad7f63-47eb-4579-ac46-980de8b7fac6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Has no passowrd field\", () => {",
+							"    const { payload } = pm.response.json()",
+							"    if (payload) {",
+							"        pm.expect(payload.password).to.be.undefined",
+							"    }",
+							"})"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "tags",
+			"item": [
+				{
+					"name": "/:pid",
+					"item": [
+						{
+							"name": "get tag",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ed8714cd-ee37-4ad4-9a46-4c4802db752d",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const { payload } = pm.response.json()\r",
+											"\r",
+											"if (!payload) return\r",
+											"\r",
+											"pm.test(\"Payload is Tag\", () => {\r",
+											"    pm.expect(payload).to.have.property(\"_id\")\r",
+											"    pm.expect(payload).to.have.property(\"name\")\r",
+											"    pm.expect(payload).to.have.property(\"color\")\r",
+											"    pm.expect(payload).to.have.property(\"uid\")\r",
+											"})\r",
+											"\r",
+											"const { _id, name, color, uid } = payload\r",
+											"\r",
+											"pm.test(\"Tag has correct id\", () => {\r",
+											"    pm.expect(_id).to.equal(pm.environment.get(\"tag._id\"))\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Tag has correct user ID\", () => {\r",
+											"    pm.expect(uid).to.equal(pm.environment.get(\"user._id\"))\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Tag has correct name\", () => {\r",
+											"    pm.expect(name).to.equal(pm.environment.get(\"tag.name\"))\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Tag has correct color\", () => {\r",
+											"    pm.expect(color).to.equal(pm.environment.get(\"tag.color\"))\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "f0c54fba-9526-45c6-8221-9f769266f366",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localUrl}}/tags/:pid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"tags",
+										":pid"
+									],
+									"variable": [
+										{
+											"key": "pid",
+											"value": "{{tag._id}}"
+										}
+									]
+								},
+								"description": "Get all projects"
+							},
+							"response": [
+								{
+									"id": "9195c0b5-a85e-4c7d-be35-af24f922aa7e",
+									"name": "A user's projects",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								},
+								{
+									"id": "33537bc2-b40e-46ed-b789-265a93658e67",
+									"name": "An error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						},
+						{
+							"name": "update tag",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8eeb40c8-3b1a-45ff-b157-7d648309e29e",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const { payload } = pm.response.json()\r",
+											"\r",
+											"if (!payload) return\r",
+											"\r",
+											"pm.test(\"Payload is Tag\", () => {\r",
+											"    pm.expect(payload).to.have.property(\"_id\")\r",
+											"    pm.expect(payload).to.have.property(\"name\")\r",
+											"    pm.expect(payload).to.have.property(\"color\")\r",
+											"    pm.expect(payload).to.have.property(\"uid\")\r",
+											"})\r",
+											"\r",
+											"const { _id, name, color, uid } = payload\r",
+											"\r",
+											"pm.test(\"Tag has updated name\", () => {\r",
+											"    pm.expect(name).to.equal(pm.environment.get(\"tag.name_new\"))\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Tag has updated color\", () => {\r",
+											"    pm.expect(color).to.equal(pm.environment.get(\"tag.color_new\"))\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Tag ID has not changed\", () => {\r",
+											"    pm.expect(_id).to.equal(pm.environment.get(\"tag._id\"))\r",
+											"})\r",
+											"\r",
+											"pm.test(\"Tag user ID has not changed\", () => {\r",
+											"    pm.expect(uid).to.equal(pm.environment.get(\"user._id\"))\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "c4a078f3-fa13-415a-8bcb-0ffd1c00ba12",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"_id\": \"exercitation dolor qui reprehenderit consequat\",\n    \"uid\": \"sunt ut qui dolor\",\n    \"name\": \"{{tag.name_new}}\",\n    \"color\": \"{{tag.color_new}}\"\n}"
+								},
+								"url": {
+									"raw": "{{localUrl}}/tags/:pid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"tags",
+										":pid"
+									],
+									"variable": [
+										{
+											"key": "pid",
+											"value": "{{tag._id}}",
+											"description": "(Required) Project ID"
+										}
+									]
+								},
+								"description": "Update a project"
+							},
+							"response": [
+								{
+									"id": "a93615e3-11f1-4e6f-b275-1e86ba04bc81",
+									"name": "Project Updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"_id\": \"exercitation dolor qui reprehenderit consequat\",\n    \"uid\": \"sunt ut qui dolor\",\n    \"name\": \"bW3\",\n    \"color\": \"#df3\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/projects/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								},
+								{
+									"id": "3d9f0923-8134-40d1-bcb4-ee93bee54bac",
+									"name": "An error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"_id\": \"exercitation dolor qui reprehenderit consequat\",\n    \"uid\": \"sunt ut qui dolor\",\n    \"name\": \"bW3\",\n    \"color\": \"#df3\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/projects/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						},
+						{
+							"name": "delete tag",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b4c2f692-6d01-4ab3-87bf-b5033ebfb18d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "a6295ffb-3b03-4cc8-94db-cf5d5b122a9a",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{token}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{localUrl}}/tags/:pid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"tags",
+										":pid"
+									],
+									"variable": [
+										{
+											"key": "pid",
+											"value": "{{tag._id}}",
+											"description": "(Required) tag ID"
+										}
+									]
+								},
+								"description": "Delete a project"
+							},
+							"response": [
+								{
+									"id": "1f389e97-4afa-4c74-a98e-a7682a3054af",
+									"name": "Project deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								},
+								{
+									"id": "af0bcad6-6e99-47b6-8bf2-7b79d058090b",
+									"name": "An error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/projects/:pid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"projects",
+												":pid"
+											],
+											"variable": [
+												{
+													"key": "pid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						}
+					],
+					"id": "9a5fae68-097b-4ffe-82b8-a4aebbed4b39"
+				},
+				{
+					"name": "Search for tags",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "41f1f920-56d5-48d1-a94b-6aff8ff8e988",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const { payload } = pm.response.json()\r",
+									"\r",
+									"if (!payload) return\r",
+									"\r",
+									"pm.test(\"Payload is array\", () => {\r",
+									"    pm.expect(Array.isArray(payload)).to.be.true\r",
+									"})\r",
+									"\r",
+									"if (!Array.isArray(payload)) return\r",
+									"\r",
+									"pm.test(\"Search single result\", () => {\r",
+									"    pm.expect(payload.length).to.equal(1)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Single result is correct tag\", () => {\r",
+									"    pm.expect(payload[0]._id).to.equal(pm.environment.get(\"tag._id\"))\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d22b7b2a-8cc7-44d9-a350-ee9278f885c2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localUrl}}/tags?name={{tag.name}}",
+							"host": [
+								"{{localUrl}}"
+							],
+							"path": [
+								"tags"
+							],
+							"query": [
+								{
+									"key": "uid",
+									"value": "{{user._id}}",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "{{tag.name}}"
+								},
+								{
+									"key": "color",
+									"value": "{{tag.color}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "150fb88a-7169-4618-9020-14c711852c2c",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/projects?uid=do ipsum Duis",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "do ipsum Duis"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						},
+						{
+							"id": "aa11ca0f-da22-489d-a6c4-edc10b5907a8",
+							"name": "An error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/projects?uid=do ipsum Duis",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "do ipsum Duis"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create new tag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f5d06c6-6fab-49e5-a35d-288101de638d",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const { payload } = pm.response.json()\r",
+									"\r",
+									"if (!payload) return;\r",
+									"\r",
+									"pm.test(\"Payload is tag\", () => {\r",
+									"    pm.expect(payload).to.have.property(\"_id\")\r",
+									"    pm.expect(payload).to.have.property(\"name\")\r",
+									"    pm.expect(payload).to.have.property(\"color\")\r",
+									"    pm.expect(payload).to.have.property(\"uid\")\r",
+									"})\r",
+									"\r",
+									"const { _id, name, color, uid } = payload\r",
+									"\r",
+									"pm.test(\"Tag has string id\", () => {\r",
+									"    pm.expect(typeof _id).to.equal(\"string\")\r",
+									"    pm.environment.set(\"tag._id\", _id);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Tag has correct name\", () => {\r",
+									"    pm.expect(name).to.equal(pm.environment.get(\"tag.name\"))\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Tag has correct color\", () => {\r",
+									"    pm.expect(color).to.equal(pm.environment.get(\"tag.color\"))\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Tag has correct user id\", function () {\r",
+									"    pm.expect(uid).to.equal(pm.environment.get(\"user._id\"))\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ed0bb4a1-6781-4c31-a34e-02394df059d9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{tag.name}}\",\n    \"color\": \"{{tag.color}}\"\n}"
+						},
+						"url": {
+							"raw": "{{localUrl}}/tags",
+							"host": [
+								"{{localUrl}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "8cdc16d4-7acd-4efe-97fa-70aae7e0ce62",
+							"name": "Project created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"sunt sit exercitation veniam fugiat\",\n    \"color\": \"dolor nostrud sed\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						},
+						{
+							"id": "d01af8e0-5c71-4573-8455-2a96cc896190",
+							"name": "An error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"sunt sit exercitation veniam fugiat\",\n    \"color\": \"dolor nostrud sed\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						}
+					]
+				}
+			],
+			"id": "a1fbc033-5ffd-4488-825c-c23df30f619a",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "982610f8-85d2-4509-b735-54758ee0a486",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7faf2f9-57ed-4747-81c0-1cb4d96012d7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "tasks",
+			"item": [
+				{
+					"name": "{tid}",
+					"item": [
+						{
+							"name": "Gets a Task by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "45932564-09f2-4dfd-8b5c-75feb1f2fad0",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "666e7b90-8387-4e85-a117-c3693e81a6d9",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localUrl}}/tasks/:tid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"tasks",
+										":tid"
+									],
+									"variable": [
+										{
+											"key": "tid",
+											"value": "{{task._id}}",
+											"description": "(Required) ID of the task"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "8275272f-3bb5-40af-95e0-1e22e5274be1",
+									"name": "Returns the Task matching the given ID",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								},
+								{
+									"id": "d9efbfaf-ed45-4544-9234-0af96da3dac2",
+									"name": "An error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a task",
+							"id": "09ccace0-3c30-4567-9efc-725692879df3",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"_id\": \"incididunt id ven\",\n    \"uid\": \"non ex\",\n    \"parent\": null,\n    \"title\": \"elit culpa\",\n    \"due\": \"1982-05-01T14:31:25.709Z\",\n    \"reminders\": [\n        \"2015-04-05T06:01:34.249Z\",\n        \"1967-06-11T10:55:34.187Z\"\n    ],\n    \"state\": \"todo\",\n    \"pinned\": false,\n    \"tags\": [\n        \"{{tag._id}}\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{localUrl}}/tasks/:tid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"tasks",
+										":tid"
+									],
+									"variable": [
+										{
+											"key": "tid",
+											"value": "{{task._id}}",
+											"description": "(Required) ID of the task"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "55907418-2818-4d5c-9419-75d242a6394a",
+									"name": "Task updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"_id\": \"incididunt id ven\",\n    \"uid\": \"non ex\",\n    \"parent\": null,\n    \"title\": \"elit culpa\",\n    \"due\": \"1982-05-01T14:31:25.709Z\",\n    \"reminders\": [\n        \"2015-04-05T06:01:34.249Z\",\n        \"1967-06-11T10:55:34.187Z\"\n    ],\n    \"state\": \"todo\",\n    \"pinned\": false,\n    \"tags\": [\n        {\n            \"_id\": \"exercitation reprehenderit labore commodo\",\n            \"uid\": \"veniam labore quis\",\n            \"name\": \"FGSQ4dnJoJ6\",\n            \"color\": \"#5A2b8e\"\n        },\n        {\n            \"_id\": \"ut\",\n            \"uid\": \"reprehenderit consectetur sed\",\n            \"name\": \"XnxyaNzNqH0PNi\",\n            \"color\": \"#B94\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								},
+								{
+									"id": "8a9a0af5-d294-49fa-906f-d21bc1655122",
+									"name": "An error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"_id\": \"incididunt id ven\",\n    \"uid\": \"non ex\",\n    \"parent\": null,\n    \"title\": \"elit culpa\",\n    \"due\": \"1982-05-01T14:31:25.709Z\",\n    \"reminders\": [\n        \"2015-04-05T06:01:34.249Z\",\n        \"1967-06-11T10:55:34.187Z\"\n    ],\n    \"state\": \"todo\",\n    \"pinned\": false,\n    \"tags\": [\n        {\n            \"_id\": \"exercitation reprehenderit labore commodo\",\n            \"uid\": \"veniam labore quis\",\n            \"name\": \"FGSQ4dnJoJ6\",\n            \"color\": \"#5A2b8e\"\n        },\n        {\n            \"_id\": \"ut\",\n            \"uid\": \"reprehenderit consectetur sed\",\n            \"name\": \"XnxyaNzNqH0PNi\",\n            \"color\": \"#B94\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Deletes a task",
+							"id": "242c3857-f425-4fb8-abd3-c2c95fbd9a15",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{localUrl}}/tasks/:tid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"tasks",
+										":tid"
+									],
+									"variable": [
+										{
+											"key": "tid",
+											"value": "{{task._id}}",
+											"description": "(Required) ID of the task"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "49c73cf6-42d3-440a-b00a-fcd170f68d38",
+									"name": "Task deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								},
+								{
+									"id": "ef4ac13f-023f-4880-8f1c-49aca5c1df37",
+									"name": "An error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/tasks/:tid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"tasks",
+												":tid"
+											],
+											"variable": [
+												{
+													"key": "tid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						}
+					],
+					"id": "e151c95b-5626-421e-8325-4ae208e8a705",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "01f5362e-9396-4b4a-b8dc-eb512297c692",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "857b1240-6793-4af1-8df4-de51ce1fa287",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Search for tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a9687e6d-e87c-487f-8139-ca747254684a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "cd503585-d49a-4962-8392-429bd81df34c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localUrl}}/tasks",
+							"host": [
+								"{{localUrl}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "parent",
+									"value": "",
+									"description": "Parent task ID",
+									"disabled": true
+								},
+								{
+									"key": "state",
+									"value": "todo",
+									"description": "The completion state of the tasks",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "57f7a201-f0d2-4223-9bf3-7f49c380dcd1",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tasks?uid=do ipsum Duis&parent=do ipsum Duis&state=todo",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "parent",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "state",
+											"value": "todo"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						},
+						{
+							"id": "d66ec694-134e-43bd-84b2-684944049009",
+							"name": "An error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/tasks?uid=do ipsum Duis&parent=do ipsum Duis&state=todo",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "parent",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "state",
+											"value": "todo"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Creates a new task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "22495cd3-c810-4426-b9bc-1fefed08b03b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const { payload } = pm.response.json()\r",
+									"\r",
+									"if (!payload) return;\r",
+									"\r",
+									"pm.test(\"Payload is task\", () => {\r",
+									"    pm.expect(payload).to.have.property(\"_id\")\r",
+									"    // TODO\r",
+									"})\r",
+									"\r",
+									"const { _id } = payload\r",
+									"\r",
+									"pm.test(\"Task has string id\", () => {\r",
+									"    pm.expect(typeof _id).to.equal(\"string\")\r",
+									"    pm.environment.set(\"task._id\", _id)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "64c600d3-e677-41aa-8781-dd29b263de2b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"test\",\n    \"state\": \"todo\"\n}"
+						},
+						"url": {
+							"raw": "{{prodUrl}}/tasks",
+							"host": [
+								"{{prodUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "a64a1593-3c6f-4524-a7ee-a874222e553f",
+							"name": "Task created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"_id\": \"incididunt id ven\",\n    \"uid\": \"non ex\",\n    \"parent\": null,\n    \"title\": \"elit culpa\",\n    \"due\": \"1982-05-01T14:31:25.709Z\",\n    \"reminders\": [\n        \"2015-04-05T06:01:34.249Z\",\n        \"1967-06-11T10:55:34.187Z\"\n    ],\n    \"state\": \"todo\",\n    \"pinned\": false,\n    \"tags\": [\n        {\n            \"_id\": \"exercitation reprehenderit labore commodo\",\n            \"uid\": \"veniam labore quis\",\n            \"name\": \"FGSQ4dnJoJ6\",\n            \"color\": \"#5A2b8e\"\n        },\n        {\n            \"_id\": \"ut\",\n            \"uid\": \"reprehenderit consectetur sed\",\n            \"name\": \"XnxyaNzNqH0PNi\",\n            \"color\": \"#B94\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						},
+						{
+							"id": "1d19e692-53ca-4ff5-9af4-d9814bb322e5",
+							"name": "An error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"_id\": \"incididunt id ven\",\n    \"uid\": \"non ex\",\n    \"parent\": null,\n    \"title\": \"elit culpa\",\n    \"due\": \"1982-05-01T14:31:25.709Z\",\n    \"reminders\": [\n        \"2015-04-05T06:01:34.249Z\",\n        \"1967-06-11T10:55:34.187Z\"\n    ],\n    \"state\": \"todo\",\n    \"pinned\": false,\n    \"tags\": [\n        {\n            \"_id\": \"exercitation reprehenderit labore commodo\",\n            \"uid\": \"veniam labore quis\",\n            \"name\": \"FGSQ4dnJoJ6\",\n            \"color\": \"#5A2b8e\"\n        },\n        {\n            \"_id\": \"ut\",\n            \"uid\": \"reprehenderit consectetur sed\",\n            \"name\": \"XnxyaNzNqH0PNi\",\n            \"color\": \"#B94\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						}
+					]
+				}
+			],
+			"id": "a35cac7e-d408-4774-9f5c-9a3d402dced9"
+		},
+		{
+			"name": "notes",
+			"item": [
+				{
+					"name": "/:nid",
+					"item": [
+						{
+							"name": "Get a note by ID",
+							"id": "00dab320-0a6a-46bd-b3e9-3505e6c2db49",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{localUrl}}/notes/:nid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"notes",
+										":nid"
+									],
+									"variable": [
+										{
+											"key": "nid",
+											"value": "{{note._id}}",
+											"description": "(Required) Note ID"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "3328815d-896c-4315-b5b8-66746c8eb881",
+									"name": "Returns the requested note",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								},
+								{
+									"id": "ebee3f9b-6496-4daf-b51b-98b1fcd1a40b",
+									"name": "An error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update a note",
+							"id": "8712b32c-8c34-402c-86c3-16ab20202ed3",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"_id\": \"tempor labore velit\",\n    \"uid\": \"dolore anim irure adipisicing\",\n    \"title\": \"nostrud ea id do sit\",\n    \"text\": \"ex voluptate quis\",\n    \"tags\": [],\n    \"createdAt\": \"2002-06-26T14:22:57.362Z\",\n    \"updatedAt\": \"2007-02-25T11:47:40.407Z\"\n}"
+								},
+								"url": {
+									"raw": "{{localUrl}}/notes/:nid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"notes",
+										":nid"
+									],
+									"variable": [
+										{
+											"key": "nid",
+											"value": "{{note._id}}",
+											"description": "(Required) Note ID"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "3621b55e-67cc-42b3-85f0-c412e8b53b0a",
+									"name": "Note updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"_id\": \"tempor labore velit\",\n    \"uid\": \"dolore anim irure adipisicing\",\n    \"parent\": \"Ut\",\n    \"title\": \"nostrud ea id do sit\",\n    \"text\": \"ex voluptate quis\",\n    \"tags\": [\n        {\n            \"_id\": \"culpa ex\",\n            \"uid\": \"in consequat\",\n            \"name\": \"iTF5L7gI\",\n            \"color\": \"#ABF\"\n        },\n        {\n            \"_id\": \"enim\",\n            \"uid\": \"deserunt ex\",\n            \"name\": \"uL2qS6ZMe7voy\",\n            \"color\": \"#EdE\"\n        }\n    ],\n    \"createdAt\": \"2002-06-26T14:22:57.362Z\",\n    \"updatedAt\": \"2007-02-25T11:47:40.407Z\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								},
+								{
+									"id": "19b8e50b-ba4a-4fad-b689-b2fd008e3a21",
+									"name": "An error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"_id\": \"tempor labore velit\",\n    \"uid\": \"dolore anim irure adipisicing\",\n    \"parent\": \"Ut\",\n    \"title\": \"nostrud ea id do sit\",\n    \"text\": \"ex voluptate quis\",\n    \"tags\": [\n        {\n            \"_id\": \"culpa ex\",\n            \"uid\": \"in consequat\",\n            \"name\": \"iTF5L7gI\",\n            \"color\": \"#ABF\"\n        },\n        {\n            \"_id\": \"enim\",\n            \"uid\": \"deserunt ex\",\n            \"name\": \"uL2qS6ZMe7voy\",\n            \"color\": \"#EdE\"\n        }\n    ],\n    \"createdAt\": \"2002-06-26T14:22:57.362Z\",\n    \"updatedAt\": \"2007-02-25T11:47:40.407Z\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete a note",
+							"id": "a068fbe0-26e8-4690-8d66-fb02e53a9fe4",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": true,
+											"type": "boolean"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{localUrl}}/notes/:nid",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"notes",
+										":nid"
+									],
+									"variable": [
+										{
+											"key": "nid",
+											"value": "{{note._id}}",
+											"description": "(Required) Note ID"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "31ae0398-4f7d-4e6d-9181-f14b81dbc307",
+									"name": "Note Deleted",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								},
+								{
+									"id": "82cbf191-1626-4b00-8d98-ec9ad865ed11",
+									"name": "An error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"description": "Added as a part of security scheme: apikey",
+												"key": "token",
+												"value": "<API Key>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/notes/:nid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"notes",
+												":nid"
+											],
+											"variable": [
+												{
+													"key": "nid"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"responseTime": null,
+									"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+								}
+							]
+						}
+					],
+					"id": "01faa82b-595e-43ca-9471-c20bc91f097a",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ce6e0035-c709-4ea0-aa0b-4ff6fcb9afd3",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "a482c5c3-5933-4216-817e-37f51d81e67c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Search for Notes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "81c86c5e-4613-4180-b1b1-91faf7fd49d8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8f432bee-e8f6-4b31-b989-7c15c0d8a2eb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localUrl}}/notes",
+							"host": [
+								"{{localUrl}}"
+							],
+							"path": [
+								"notes"
+							],
+							"query": [
+								{
+									"key": "uid",
+									"value": "",
+									"description": "Owning user ID. Defaults to client ID",
+									"disabled": true
+								},
+								{
+									"key": "text",
+									"value": "",
+									"description": "Note text",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "",
+									"description": "Note project tags",
+									"disabled": true
+								},
+								{
+									"key": "parent",
+									"value": "{{task._id}}",
+									"description": "ID of the Parent Task",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "ece271e3-33a9-430d-ba48-b5c2b1e0a17e",
+							"name": "User's Notes",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/notes?uid=do ipsum Duis&title=do ipsum Duis&text=do ipsum Duis&tags=do ipsum Duis&parent=do ipsum Duis",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "title",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "text",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "tags",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "parent",
+											"value": "do ipsum Duis"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						},
+						{
+							"id": "e894a498-9a5e-4fcb-b801-18f9cc7637aa",
+							"name": "An error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/notes?uid=do ipsum Duis&title=do ipsum Duis&text=do ipsum Duis&tags=do ipsum Duis&parent=do ipsum Duis",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									],
+									"query": [
+										{
+											"key": "uid",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "title",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "text",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "tags",
+											"value": "do ipsum Duis"
+										},
+										{
+											"key": "parent",
+											"value": "do ipsum Duis"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a new Note",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c61e9361-8f7b-49a5-aa3a-1b4f325d041a",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const { payload } = pm.response.json()\r",
+									"\r",
+									"const { _id } = payload\r",
+									"\r",
+									"pm.test(\"Note has string id\", () => {\r",
+									"    pm.expect(typeof _id).to.equal(\"string\")\r",
+									"    pm.environment.set(\"note._id\", _id)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a4cc6c29-12c0-4afc-9c06-6ab6ac59a2df",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\": \"in culpa qui dolore magna\",\n    \"uid\": \"dolor cupidatat Excepteur\",\n    \"parent\": \"{{task._id}}\",\n    \"title\": \"non ut ipsum dolore\",\n    \"text\": \"nostrud irure do deserunt\"\n}"
+						},
+						"url": {
+							"raw": "{{localUrl}}/notes",
+							"host": [
+								"{{localUrl}}"
+							],
+							"path": [
+								"notes"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "1b0857e5-a811-474b-ae48-2e70e09137a3",
+							"name": "Note created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"_id\": \"tempor labore velit\",\n    \"uid\": \"dolore anim irure adipisicing\",\n    \"parent\": \"Ut\",\n    \"title\": \"nostrud ea id do sit\",\n    \"text\": \"ex voluptate quis\",\n    \"tags\": [\n        {\n            \"_id\": \"culpa ex\",\n            \"uid\": \"in consequat\",\n            \"name\": \"iTF5L7gI\",\n            \"color\": \"#ABF\"\n        },\n        {\n            \"_id\": \"enim\",\n            \"uid\": \"deserunt ex\",\n            \"name\": \"uL2qS6ZMe7voy\",\n            \"color\": \"#EdE\"\n        }\n    ],\n    \"createdAt\": \"2002-06-26T14:22:57.362Z\",\n    \"updatedAt\": \"2007-02-25T11:47:40.407Z\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/notes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						},
+						{
+							"id": "aa9ab79b-561f-4980-9aa9-7e431b1df9ee",
+							"name": "An error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"description": "Added as a part of security scheme: apikey",
+										"key": "token",
+										"value": "<API Key>"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"_id\": \"tempor labore velit\",\n    \"uid\": \"dolore anim irure adipisicing\",\n    \"parent\": \"Ut\",\n    \"title\": \"nostrud ea id do sit\",\n    \"text\": \"ex voluptate quis\",\n    \"tags\": [\n        {\n            \"_id\": \"culpa ex\",\n            \"uid\": \"in consequat\",\n            \"name\": \"iTF5L7gI\",\n            \"color\": \"#ABF\"\n        },\n        {\n            \"_id\": \"enim\",\n            \"uid\": \"deserunt ex\",\n            \"name\": \"uL2qS6ZMe7voy\",\n            \"color\": \"#EdE\"\n        }\n    ],\n    \"createdAt\": \"2002-06-26T14:22:57.362Z\",\n    \"updatedAt\": \"2007-02-25T11:47:40.407Z\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/notes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"notes"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"payload\": {},\n \"error\": \"incididunt ea Ut qui\"\n}"
+						}
+					]
+				}
+			],
+			"id": "698b84cf-2d50-4a1a-87f8-4b621d015389"
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Limits",
+					"item": [
+						{
+							"name": "Create Limit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7b67cd55-b7d6-407f-85f5-d08bd2e18ffd",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"const { payload } = pm.response.json()\r",
+											"\r",
+											"if (!payload) return\r",
+											"\r",
+											"pm.test(\"Payload is limit\", () => {\r",
+											"    pm.expect(payload).to.have.property(\"role\")\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "a90f41c2-996d-44ab-a1f4-2396bcd6fc63",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"role\": \"GENERIC\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localUrl}}/admin/limits",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"admin",
+										"limits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Limit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5ae48720-3f76-4634-81cd-0b36ec67e9fa",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"const { payload } = pm.response.json()\r",
+											"\r",
+											"if (!payload) return\r",
+											"\r",
+											"pm.test(\"Payload is limit\", () => {\r",
+											"    pm.expect(payload).to.have.property(\"role\")\r",
+											"})\r",
+											"\r",
+											"const { role } = payload\r",
+											"\r",
+											"pm.test(\"Limit role is not updated\", () => {\r",
+											"    pm.expect(role).to.equal(pm.environment.get(\"user.role\"))\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "ba26eb1c-be0b-4dd4-9ffb-e86a97a17c2a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "fnEEWq5-XeACUAQjAW-0UAYEhK--U-TVAGTNNaZ_b6kbBRfitZg",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"role\": \"BAD_NAME\",\r\n  \"projects\": {\r\n    \"max\": 1\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localUrl}}/admin/limits/{{user.role}}",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"admin",
+										"limits",
+										"{{user.role}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Limit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "77bb340b-dbfc-4c04-b08f-8011ac64958c",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "1e482d91-e0cf-408d-8a6f-449e6fa1642e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localUrl}}/admin/limits/{{user.role}}",
+									"host": [
+										"{{localUrl}}"
+									],
+									"path": [
+										"admin",
+										"limits",
+										"{{user.role}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "280bc4c4-b1d9-4e58-802d-6752e3cce33f"
+				}
+			],
+			"id": "7bf4a422-59dd-4d71-924e-843750dc7103"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "23285510-fdea-4084-8a68-029e7954d881",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8044dee7-b91b-478f-ac6a-2e8b2941445c",
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Has JSON body\", () => {",
+					"    pm.response.to.have.jsonBody()",
+					"})"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "effc9b9c-78cd-4294-9d5e-3508bb47fc7f",
+			"key": "localUrl",
+			"value": "http://localhost:3500/api"
+		},
+		{
+			"id": "c103dcf8-cb03-4b35-97ec-a3befdbb1067",
+			"key": "user.email",
+			"value": "test@test.com",
+			"type": "string"
+		},
+		{
+			"id": "61d059b7-104c-4324-a974-969ebc7d9e21",
+			"key": "user.password",
+			"value": "password1234",
+			"type": "string"
+		}
+	]
+}

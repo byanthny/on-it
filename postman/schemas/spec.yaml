@@ -1,0 +1,827 @@
+openapi: 3.0.0
+info:
+  title: On It API Spec
+  description: REST API for On It
+  version: 2.0.0
+security:
+  - session: []
+
+
+servers:
+  - description: Production
+    url: https://on-it-api.herku.com/api
+  - description: Postman Mock
+    url: https://7d8aef91-ebd2-4280-af1b-adf7b67e4e21.mock.pstmn.io
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/JonoAugustine/OnIt/1.0.0
+
+components:
+  securitySchemes:
+    session:
+      type: apiKey
+      in: cookie
+      name: session
+  schemas:
+    packet:
+      type: object
+      description: The packaging in which all API responses are sent.
+      properties:
+        payload:
+          type: object
+          nullable: true
+        error:
+          type: string
+          nullable: true
+          default: null
+        meta:
+          type: object
+          nullable: true
+          default: null
+    Name:
+      type: string
+      pattern: ^[A-Za-z][A-Za-z0-9_\-]{0,13}$
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: object
+          properties:
+            first:
+              $ref: "#/components/schemas/Name"
+            last:
+              $ref: "#/components/schemas/Name"
+            display:
+              $ref: "#/components/schemas/Name"
+        created:
+          type: number
+          description: The date at which the user was added.
+        updated:
+          type: number
+          description: The last time the user was updated.
+    Tag:
+      type: object
+      properties:
+        _id:
+          type: string
+        uid:
+          type: string
+        name:
+          $ref: "#/components/schemas/Name"
+        color:
+          type: string
+          pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    Task:
+      type: object
+      properties:
+        _id:
+          type: string
+        uid:
+          type: string
+          description: Owning User's ID
+        parent:
+          type: string
+          description: ID of parent task
+          default: null
+        title:
+          type: string
+          maxLength: 255
+          minLength: 1
+          description: The name or title of the task
+        description:
+          type: string
+          maxLength: 255
+          description: Short description
+          nullable: true
+          default: null
+        due:
+          type: string
+          format: date-time
+          description: The date this task is due
+          nullable: true
+          default: null
+        reminders:
+          type: array
+          description: An array of dates for reminders
+          items:
+            type: string
+            format: date-time
+        state:
+          type: string
+          enum:
+            - todo
+            - done
+            - cancelled
+        pinned:
+          type: boolean
+          description: Whether this task is pinned to the top of lists
+          default: false
+        tags:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/Tag"
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    Note:
+      type: object
+      description: A note
+      properties:
+        _id:
+          type: string
+          description: Note's ID
+        uid:
+          type: string
+          description: Owning user ID
+        parent:
+          type: string
+          description: The ID of the owning task
+        title:
+          type: string
+          maxLength: 255
+        text:
+          type: string
+          maxLength: 5120
+        tags:
+          type: array
+          maxLength: 50
+          items:
+            $ref: "#/components/schemas/Tag"
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+  responses:
+    Error:
+      description: An error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/packet"
+            properties:
+              payload:
+                default: null
+              error:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  message:
+                    type: string
+
+tags:
+  - name: user
+    description: Routes used for accessing & modifying user data
+  - name: task
+    description: Routes used for accessing & modifying user tasks
+  - name: tag
+    description: Routes relating to tags
+  - name: note
+    description: Routes relating to notes
+
+paths:
+  # USERS
+  /users/login:
+    post:
+      summary: Login
+      description: Logs a user in with email or username and passowrd
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                identity:
+                  type: string
+                  description: User display name or email
+                password:
+                  type: string
+                  pattern: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: Authenticated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/User"
+  /users/register:
+    post:
+      summary: Create a new User
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  pattern: ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/User"
+  /users/logout:
+    post:
+      description: logout and clear user session
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: user logged out
+  /users/{uid}:
+    parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get a user by ID
+      tags:
+        - user
+      security:
+        - session: []
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: The User
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                  - type: object
+                    properties:
+                      payload:
+                        $ref: "#/components/schemas/User"
+    patch:
+      summary: Update a User
+      tags:
+        - user
+      security:
+        - session: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: User updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/User"
+    delete:
+      summary: Delete a user
+      security:
+        - session: []
+      tags:
+        - user
+      responses:
+        "200":
+          description: User deleted
+        default:
+          $ref: "#/components/responses/Error"
+  # Tags
+  /tag:
+    get:
+      summary: Get all of a user's tags
+      tags:
+        - tag
+      security:
+        - session: []
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Tag"
+    post:
+      summary: Add a new Tag
+      tags:
+        - tag
+      security:
+        - session: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                color:
+                  type: string
+              required:
+                - name
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "201":
+          description: Tag created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Tag"
+    delete:
+      summary: delete multiple tags
+      tags:
+        - tag
+      security:
+        - session: []
+      parameters:
+        - name: ids
+          in: query
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: tags deleted
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    description: number of deleted tags
+                    type: integer
+  /tag/{pid}:
+    parameters:
+      - name: pid
+        description: Tag ID
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      description: Get all Tag
+      tags:
+        - tag
+      security:
+        - session: []
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: A user's Tag
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Tag"
+    patch:
+      description: Update a Tag
+      tags:
+        - tag
+      security:
+        - session: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tag"
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: Tag Updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Tag"
+    delete:
+      description: Delete a Tag
+      tags:
+        - tag
+      security:
+        - session: []
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: Tag deleted
+  # TASKS
+  /tasks:
+    get:
+      summary: Search for tasks
+      tags:
+        - task
+      security:
+        - session: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          schema:
+            type: integer
+        - name: parent
+          description: Parent task ID
+          in: query
+          schema:
+            type: string
+        - name: tags
+          description: tag IDs
+          in: query
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+        - name: state
+          description: The completion state of the tasks
+          in: query
+          style: form
+          schema:
+            type: array
+            maxLength: 3
+            minLength: 1
+            items:
+              enum:
+                - todo
+                - done
+                - cancelled
+        - name: text
+          in: query
+          schema:
+            type: string
+          description: text search for title and description
+        - name: due
+          in: query
+          style: form
+          schema:
+            type: object
+            properties:
+              before:
+                type: string
+                nullable: true
+                default: null
+              after:
+                type: string
+                nullable: true
+                default: null
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Task"
+    post:
+      summary: Creates a new task
+      tags:
+        - task
+      security:
+        - session: []
+      requestBody:
+        description: The task to create
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/Task"
+              properties:
+                tags:
+                  description: tag IDs
+                  type: array
+                  items:
+                    type: string
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "201":
+          description: Task created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Task"
+    delete:
+      summary: delete multiple tasks
+      tags:
+        - task
+      security:
+        - session: []
+      parameters:
+        - name: ids
+          in: query
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: tasks deleted
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    description: number of deleted tasks
+                    type: integer
+  /tasks/{tid}:
+    parameters:
+      - name: tid
+        description: ID of the task
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Gets a Task by ID
+      tags:
+        - task
+      security:
+        - session: []
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: Returns the Task matching the given ID
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Task"
+    patch:
+      summary: Update a task
+      tags:
+        - task
+      security:
+        - session: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: Task updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Task"
+    delete:
+      summary: Deletes a task
+      tags:
+        - task
+      security:
+        - session: []
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: Task deleted
+  # NOTES
+  /notes:
+    get:
+      summary: Search for Notes
+      tags:
+        - note
+      security:
+        - session: []
+      parameters:
+        - name: text
+          description: text search title and note body
+          in: query
+          schema:
+            type: string
+        - name: tags
+          description: tag IDs
+          in: query
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+        - name: parent
+          description: ID of the Parent Task
+          in: query
+          schema:
+            type: string
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: User's Notes
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Note"
+    post:
+      summary: Create a new Note
+      tags:
+        - note
+      security:
+        - session: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Note"
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "201":
+          description: Note created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Note"
+    delete:
+      summary: delete multiple notes
+      tags:
+        - note
+      security:
+        - session: []
+      parameters:
+        - name: ids
+          in: query
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: notes deleted
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    description: number of deleted notes
+                    type: integer
+  /notes/{nid}:
+    parameters:
+      - name: nid
+        description: Note ID
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get a note by ID
+      tags:
+        - note
+      security:
+        - session: []
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: Returns the requested note
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Note"
+    patch:
+      summary: Update a note
+      tags:
+        - note
+      security:
+        - session: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Note"
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: Note updated
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/packet"
+                properties:
+                  payload:
+                    $ref: "#/components/schemas/Note"
+    delete:
+      summary: Delete a note
+      tags:
+        - note
+      security:
+        - session: []
+      responses:
+        default:
+          $ref: "#/components/responses/Error"
+        "200":
+          description: Note Deleted
