@@ -6,6 +6,7 @@ import { Schemae, Task, TaskSearch, validate } from "common"
 import { DBResultStatus } from "../db/types"
 import { reduceDBResultStatus } from "./util"
 import Joi from "joi"
+import logger from "winston"
 
 const get: HandlerGroup = {
   /**
@@ -48,9 +49,8 @@ const post: HandlerGroup = {
     }
     const { status: lstatus, data: limits } = await db.limits.get(session.role)
     switch (lstatus) {
-      case DBResultStatus.FAILURE_NO_MATCH:
-        return res.error(ApiErrors.MalformedContent("parent does not exist"))
       case DBResultStatus.FAILURE_INTERNAL:
+        logger.error("failed to find task limits")
         return res.error(ApiErrors.Internal())
     }
     const { status: cstatus, data: count } = await db.tasks.count({ uid: session.uid })
