@@ -9,15 +9,29 @@ interface PropTypes {
   updatedAt: string;
 }
 
-const Note = ({ title, text, tags, updatedAt }: PropTypes) => (
+const Note = ({ title, text, tags, updatedAt }: PropTypes) => {
+
+  // TODO if showing tags how to handle overflow
+/*   const tagsToString = () => {
+    const tagsString = tags.map((t:any) => (
+        t.name
+      )
+    );
+    return tagsString
+  } */
+
+  const tagCountString = () =>
+    `${tags.length} ${tags.length > 1 ? "Tags" : "Tag"}`
+
+  return (
   <div className={styles.note}>
     <div className={styles.noteInner}>
       <p>{title}</p>
       <p>{text}</p>
-      <p className="floatLeft">{tags.toString()}</p>
+      <p className="floatLeft">{tagCountString()}</p>
       <p className="floatRight">{utils.dateToString(updatedAt)}</p>
     </div>
-  </div>
-);
+  </div>);
+};
 
 export default Note;

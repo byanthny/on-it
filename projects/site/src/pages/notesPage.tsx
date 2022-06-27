@@ -17,6 +17,18 @@ const fakedata = [
         name: "TsRqcLgjUIhb",
         color: "#b5De21",
       },
+      {
+        _id: "string",
+        uid: "string",
+        name: "TsRqcLgjUIhb",
+        color: "#b5De21",
+      },
+      {
+        _id: "string",
+        uid: "string",
+        name: "TsRqcLgjUIhb",
+        color: "#b5De21",
+      },
     ],
     createdAt: "2022-06-22T00:25:20.710Z",
     updatedAt: "2022-06-22T00:25:20.710Z",
