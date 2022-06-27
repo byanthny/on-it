@@ -19,7 +19,7 @@ const NoteCollection = ({data, collectionTitle}:PropTypes) => {
         
       return (
         <div>
-            <h2>{collectionTitle}<Button variant="transparent" onClickFunction={()=>setOpen(!open)}>{open ? <RiArrowDropDownLine /> : <RiArrowDropRightLine />}</Button></h2>
+            <h2 className={styles.collectionTitle}>{collectionTitle}<Button variant="transparent" onClickFunction={()=>setOpen(!open)}>{open ? <RiArrowDropDownLine /> : <RiArrowDropRightLine />}</Button></h2>
             <div className={`${styles.noteCollection} ${open? "" : styles.noteCollectionClosed}`}>
                 {notesList}
             </div>

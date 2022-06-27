@@ -1,16 +1,30 @@
 @import "../../../styles/mixins.scss";
+@import "../../../styles/typography.scss";
 
 .noteCollection {
     position: relative;
     display: flex;
-    overflow-x: scroll;
     transition: 0.4s;
+    overflow-x: scroll;
+    font-size: 2rem;
 
     @include md {
         flex-wrap: wrap;
+        overflow-x: hidden;
     }
 }
 
 .noteCollectionClosed {
     height: 0;
+}
+
+.collectionTitle {
+    font-size: $collectionFontSize;
+    button {
+        padding: 5px;
+        margin: 0px;
+    }
+    svg {
+        font-size: $collectionFontSize;
+    }
 }
