@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {Note as NoteModel} from "common";
+import OnItApi from "../services/OnItApi";
 import Collection from "../components/items/Collection/Collection";
 import NavBar from "../components/navigation/NavBar/NavBar";
 import Header from "../components/navigation/Header/Header";
@@ -112,10 +113,22 @@ interface ExtendedNoteModel extends NoteModel {
 
 const notesPage = () => {
 
-  const renderNotes = (data:Array<ExtendedNoteModel>) =>
+  const [noteData, setNoteData] = useState<Array<any>>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await OnItApi.note.search({});
+      setNoteData(response.payload!);
+    }
+
+    fetchData()
+      .catch(console.error);
+  }, []);
+
+  const renderNotes = (data:Array<ExtendedNoteModel>) => data.length > 0 ?
     data.map(({ title, text, tags, updatedAt }) => (
       <Note title={title} text={text} tags={tags} updatedAt={updatedAt} />
-    ));
+    )) : null;
 
 
   return (
@@ -125,7 +138,7 @@ const notesPage = () => {
         <Header title="Notes" />
         <div className="secondary-content">
           <Collection collectionTitle="General" variant="noteCollection">{renderNotes(fakedata)}</Collection>
-          <Collection collectionTitle="General" variant="noteCollection">{renderNotes(fakedata)}</Collection>
+          <Collection collectionTitle="General" variant="noteCollection">{renderNotes(noteData)}</Collection>
           <Collection collectionTitle="General" variant="noteCollection">{renderNotes(fakedata)}</Collection>
           <Collection collectionTitle="General" variant="noteCollection">{renderNotes(fakedata)}</Collection>
 
