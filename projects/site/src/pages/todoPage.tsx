@@ -1,5 +1,5 @@
 import React from "react";
-import ToDo from "../components/ToDo/ToDo";
+import ToDo from "../components/items/ToDo/ToDo";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 

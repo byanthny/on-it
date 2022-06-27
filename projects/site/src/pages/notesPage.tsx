@@ -1,5 +1,5 @@
 import React from "react";
-import NoteCollection from "../components/notes/NoteCollection/NoteCollection";
+import NoteCollection from "../components/items/Collection/Collection";
 import NavBar from "../components/navigation/NavBar/NavBar";
 import Header from "../components/navigation/Header/Header";
 

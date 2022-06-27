@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { RiArrowDropDownLine, RiArrowDropRightLine } from "react-icons/ri"
 import Button from "../../interactive/Button/Button";
 import Note from "../Note/Note"
-import styles from "./noteCollection.module.scss"
+import styles from "./collection.module.scss"
 
 interface PropTypes {
     data: Array<any>
     collectionTitle: string
 }
 
-const NoteCollection = ({data, collectionTitle}:PropTypes) => {
+const Collection = ({data, collectionTitle}:PropTypes) => {
 
     const notesList = data.map(({ title, text, tags, updatedAt }) => (
         <Note title={title} text={text} tags={tags} updatedAt={updatedAt} />
@@ -27,4 +27,4 @@ const NoteCollection = ({data, collectionTitle}:PropTypes) => {
       );
 }
 
-export default NoteCollection;
+export default Collection;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./ToDo.module.scss";
-import utils from "../../utils/utils";
+import utils from "../../../utils/utils";
 
 interface PropTypes {
   title: string;
