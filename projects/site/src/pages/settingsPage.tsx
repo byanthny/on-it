@@ -32,7 +32,8 @@ const settingsPage = () => {
       
       setUser(loggedOutUser);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      // TODO handle error
     }
   };
 

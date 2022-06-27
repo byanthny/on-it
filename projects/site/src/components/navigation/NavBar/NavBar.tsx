@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -17,18 +18,18 @@ const Navbar = () => {
   const { user } = useContext(UserContext);
   const tempCreate = (e:any) => {
     e.preventDefault();
-    console.log(`${user.id}`);
+    // console.log(`${user.id}`);
     const tempTask:Task = {
       uid: user.id,
       title: "test",
       state: TaskState.TODO
     }
-    console.log(tempTask);
+    // console.log(tempTask);
     try {
       const response = OnItApi.task.create(tempTask);
-      console.log(response);
+      // console.log(response);
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
 
