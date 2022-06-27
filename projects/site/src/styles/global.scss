@@ -6,16 +6,15 @@
   caret-color: scale-color($pastel-blue, $lightness: +5%);
 }
 
-body {
-  background-color: var(--background-color);
-}
-
 p,
 h1 {
   transition: $theme-transition;
 }
 
 .background {
+  width: 100%;
+  min-height: -webkit-fill-available;
+  min-height: 100vh;
   transition: $theme-transition;
   background-color: var(--background-color);
   color: var(--text-color)
