@@ -8,6 +8,7 @@ interface PropTypes {
   update: Function;
   reminder: string;
 }
+
 const ToDo = ({ title, status, update, reminder }: PropTypes) => {
   const [text, setText] = useState(title);
   const [focused, setFocused] = useState(false);

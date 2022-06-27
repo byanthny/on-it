@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 import utils from "../utils/utils";
 
@@ -10,7 +11,7 @@ const homePage = () => {
     <>
       <NavBar />
       <div className="main-content">
-        <h1>{dateString}</h1>
+        <Header title={dateString} />
       </div>
     </>
   );

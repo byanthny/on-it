@@ -11,9 +11,13 @@ const convertMonthNum = (date: number) => {
 const daysTillDue = (date: string) =>
   Math.ceil((new Date(date).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
 
+const dateToString = (date:string) => 
+  (new Date(date)).toDateString();
+
 const utils = {
   convertMonthNum,
   daysTillDue,
+  dateToString
 };
 
 export default utils;

@@ -12,27 +12,12 @@ h1 {
 }
 
 .background {
-  width: 100vw;
+  width: 100%;
   min-height: -webkit-fill-available;
   min-height: 100vh;
   transition: $theme-transition;
-  overflow: hidden;
-}
-
-.light {
-  color: $dark;
-
-  &.background {
-    background-color: $light;
-  }
-}
-
-.dark {
-  color: $light;
-
-  &.background {
-    background-color: $dark;
-  }
+  background-color: var(--background-color);
+  color: var(--text-color)
 }
 
 .main-content {
@@ -40,6 +25,7 @@ h1 {
   max-width: $content-max-width;
   margin: 0 auto;
   padding-top: clamp(25px, 10vh, 150px) !important;
+  background-color: inherit;
 
   @include md {
     padding: 5rem;
@@ -49,6 +35,7 @@ h1 {
 .secondary-content {
   padding: 15px;
   display: block;
+  overflow: hidden;
 }
 
 .secondary-content-xs {
@@ -58,8 +45,8 @@ h1 {
 
 button {
   padding: 10px 15px;
-  background-color: var(--button-background-color);
-  color: var(--inverse-text-color);
+  background-color: grey;
+  color: black;
   border-radius: $border-radius;
   border-style: none;
   transition: $theme-transition;
@@ -68,15 +55,6 @@ button {
   &:hover {
     background-color: var(--button-background-hover-color);
     cursor: pointer;
-  }
-
-  &.buttonLink {
-    background-color: transparent;
-    color: var(--text-color);
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 }
 
@@ -106,6 +84,22 @@ input {
 
 .textCenter {
   text-align: center;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.textLeft {
+  text-align: left;
+}
+
+.floatRight {
+  float: right;
+}
+
+.floatLeft {
+  float: left;
 }
 
 /* Page Specific */

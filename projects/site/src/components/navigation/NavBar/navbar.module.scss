@@ -3,8 +3,9 @@
 
 .navbar {
   width: 100vw;
-  position: absolute;
+  position: fixed;
   bottom: 0;
+  z-index: 10;
 }
 
 .innerbox {

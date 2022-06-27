@@ -1,0 +1,20 @@
+@import "../../../styles/variables.scss";
+
+.normal {
+    background-color: var(--button-background-color);
+    color: var(--inverse-text-color);
+
+    &:hover {
+        background-color: var(--button-background-hover-color);
+    }
+}
+
+.transparent {
+    background-color: transparent;
+    color: var(--text-color);
+
+    &:hover {
+        background-color: transparent;
+        text-decoration: underline;
+    }
+}

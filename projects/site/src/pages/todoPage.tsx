@@ -1,5 +1,6 @@
 import React from "react";
 import ToDo from "../components/ToDo/ToDo";
+import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 
 // TODO Remove fake data and use API
@@ -74,7 +75,7 @@ const todoPage = () => {
     <>
       <NavBar />
       <div className="main-content">
-        <h1>To Do</h1>
+        <Header title="To Do" />
         <div className="secondary-content">{todoList}</div>
       </div>
     </>
