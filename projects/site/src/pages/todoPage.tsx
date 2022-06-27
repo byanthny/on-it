@@ -6,7 +6,6 @@ import ToDo from "../components/items/ToDo/ToDo";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 
-// TODO Remove fake data and use API
 const fakedata = [
   {
     _id: "string",
@@ -84,8 +83,8 @@ const todoPage = () => {
     // communicate to API
   };
 
-  const renderToDo = (data:Array<any>) => data.length > 0 ? data.map(({ title, state, reminders }) => (
-    <ToDo title={title} status={state} update={updateTodo} reminder={reminders} />
+  const renderToDo = (data:Array<any>) => data.length > 0 ? data.map(({ title, state, due }) => (
+    <ToDo title={title} status={state} update={updateTodo} due={due} />
   )) : null;
   return (
     <>

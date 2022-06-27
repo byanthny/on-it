@@ -6,10 +6,10 @@ interface PropTypes {
   title: string;
   status: string;
   update: Function;
-  reminder: string;
+  due: string;
 }
 
-const ToDo = ({ title, status, update, reminder }: PropTypes) => {
+const ToDo = ({ title, status, update, due }: PropTypes) => {
   const [text, setText] = useState(title);
   const [focused, setFocused] = useState(false);
   const [checked, setChecked] = useState(status === "done");
@@ -51,7 +51,7 @@ const ToDo = ({ title, status, update, reminder }: PropTypes) => {
       >
         {text}
       </span>
-      <p className={styles.todoReminder}>{`${utils.daysTillDue(reminder)} days`}</p>
+      <p className={styles.todoReminder}>{`${utils.daysTillDue(due)} days`}</p>
     </div>
   );
 };
