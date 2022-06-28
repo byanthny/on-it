@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import styles from "./ToDo.module.scss";
-import utils from "../../../utils/utils";
+// import utils from "../../../utils/utils";
 
-interface PropTypes {
-  title: string;
-  status: string;
-  update: Function;
-  due: string;
+interface PropTypes { // TODO Use extended Task interface
+  title: string,
+  status: string,
+  update: Function,
+  due?: number,
+  key: string
 }
 
-const ToDo = ({ title, status, update, due }: PropTypes) => {
+const ToDo = ({ title, status, update, due = undefined, key }: PropTypes) => {
   const [text, setText] = useState(title);
   const [focused, setFocused] = useState(false);
   const [checked, setChecked] = useState(status === "done");
@@ -29,7 +30,7 @@ const ToDo = ({ title, status, update, due }: PropTypes) => {
   };
 
   return (
-    <div className={focused ? styles.todoFocused : styles.todo}>
+    <div key={key} className={focused ? styles.todoFocused : styles.todo}>
       <input
         type="checkbox"
         defaultChecked={checked}
@@ -51,7 +52,7 @@ const ToDo = ({ title, status, update, due }: PropTypes) => {
       >
         {text}
       </span>
-      <p className={styles.todoReminder}>{`${utils.daysTillDue(due)} days`}</p>
+      <p className={styles.todoReminder}>{due ? /* `${utils.daysTillDue(due)} */ `${due} days` : ""}</p>
     </div>
   );
 };

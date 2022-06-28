@@ -7,12 +7,13 @@ interface PropTypes {
   text: string;
   tags: Array<any>;
   updatedAt: string;
+  key: string
 }
 
-const Note = ({ title, text, tags, updatedAt }: PropTypes) => {
+const Note = ({ title, text, tags, updatedAt, key }: PropTypes) => {
 
   // TODO if showing tags how to handle overflow
-/*   const tagsToString = () => {
+  /*   const tagsToString = () => {
     const tagsString = tags.map((t:any) => (
         t.name
       )
@@ -24,7 +25,7 @@ const Note = ({ title, text, tags, updatedAt }: PropTypes) => {
     `${tags.length} ${tags.length > 1 ? "Tags" : "Tag"}`
 
   return (
-  <div className={styles.note}>
+  <div key={key} className={styles.note}>
     <div className={styles.noteInner}>
       <p>{title}</p>
       <p>{text}</p>
