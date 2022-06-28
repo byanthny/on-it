@@ -1,13 +1,15 @@
+import Env from "../types/env"
+
 export default {
   dbs: {
     auth: {
-      name: "auth",
+      name: "auth" + (Env.isDev ? "DEV" : ""),
       collections: {
         sessions: "sessions",
       },
     },
     app: {
-      name: "application",
+      name: "application" + (Env.isDev ? "DEV" : ""),
       collections: {
         users: "users",
         tasks: "tasks",

@@ -62,7 +62,7 @@ export default async (): Promise<Application> => {
     },
     store: MongoStore.create({
       client: mongoClient,
-      dbName: "auth",
+      dbName: "auth" + (Env.isDev ? "DEV" : ""),
       collectionName: "sessions",
       stringify: Env.NODE_ENV !== "DEVELOPMENT",
       crypto: Env.NODE_ENV !== "DEVELOPMENT" && { secret: Env.SESSION_SECRET },
