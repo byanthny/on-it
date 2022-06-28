@@ -8,7 +8,7 @@ import AuthPage from "./pages/authPage";
 import HomePage from "./pages/homePage";
 import NotesPage from "./pages/notesPage";
 import SettingsPage from "./pages/settingsPage";
-import TodoPage from "./pages/todoPage";
+import TodoPage from "./pages/taskPage";
 import PageNoteFound from "./pages/pageNotFound";
 import { UserContext } from "./context/UserContext";
 import PrivateRoute, { PrivateRouteProps } from "./components/hoc/PrivateRoute";

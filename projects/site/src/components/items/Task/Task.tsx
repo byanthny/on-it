@@ -1,24 +1,21 @@
+import { Task } from "common";
 import React, { useState } from "react";
-import styles from "./ToDo.module.scss";
-// import utils from "../../../utils/utils";
+import styles from "./task.module.scss";
 
-interface PropTypes { // TODO Use extended Task interface
-  title: string,
-  status: string,
-  update: Function,
-  due?: number,
-  key: string
+interface PropTypes {
+  TaskData: Task
+  update: Function
 }
 
-const ToDo = ({ title, status, update, due = undefined, key }: PropTypes) => {
-  const [text, setText] = useState(title);
+const ToDo = ({ TaskData, update }: PropTypes) => {
+  const [text, setText] = useState(TaskData.title);
   const [focused, setFocused] = useState(false);
-  const [checked, setChecked] = useState(status === "done");
+  const [checked, setChecked] = useState(TaskData.state === "done");
 
   const updateText = (toUpdate: boolean, newText: string) => {
     if (toUpdate) {
       setText(newText);
-      update(newText, status);
+      update(newText, TaskData.state);
       setFocused(false);
     }
   };
@@ -30,7 +27,7 @@ const ToDo = ({ title, status, update, due = undefined, key }: PropTypes) => {
   };
 
   return (
-    <div key={key} className={focused ? styles.todoFocused : styles.todo}>
+    <div key={TaskData._id} className={focused ? styles.todoFocused : styles.todo}>
       <input
         type="checkbox"
         defaultChecked={checked}
@@ -52,7 +49,7 @@ const ToDo = ({ title, status, update, due = undefined, key }: PropTypes) => {
       >
         {text}
       </span>
-      <p className={styles.todoReminder}>{due ? /* `${utils.daysTillDue(due)} */ `${due} days` : ""}</p>
+      <p className={styles.todoReminder}>{TaskData.due ? /* `${utils.daysTillDue(due)} */ `${TaskData.due} days` : ""}</p>
     </div>
   );
 };

@@ -106,4 +106,59 @@ export const fakeNoteData = [
   },
 ];
 
-export const fakeTaskData = [];
+export const fakeTaskData = [
+  {
+    _id: "string",
+    uid: "string",
+    parent: null,
+    title: "test",
+    due: 0,
+    reminders: ["2022-05-16T23:09:56.903Z"],
+    state: "todo",
+    pinned: false,
+    tags: [
+      {
+        _id: "string",
+        uid: "string",
+        name: "mOwV",
+        color: "#bEF",
+      },
+    ],
+  },
+  {
+    _id: "string",
+    uid: "string",
+    parent: null,
+    title: "super long to do because idk super long to do because idk",
+    due: 0,
+    reminders: ["2022-05-16T23:09:56.903Z"],
+    state: "done",
+    pinned: false,
+    tags: [
+      {
+        _id: "string",
+        uid: "string",
+        name: "mOwV",
+        color: "#bEF",
+      },
+    ],
+  },
+  {
+    _id: "string",
+    uid: "string",
+    parent: null,
+    title: "medium to do because idk",
+    due: 0,
+    reminders: ["2022-05-16T23:09:56.903Z"],
+    state: "todo",
+    pinned: false,
+    tags: [
+      {
+        _id: "string",
+        uid: "string",
+        name: "mOwV",
+        color: "#bEF",
+      },
+    ],
+  },
+];
