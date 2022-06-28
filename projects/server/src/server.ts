@@ -57,15 +57,18 @@ export default async (): Promise<Application> => {
     unset: "destroy",
     name: "onit.app.session",
     cookie: {
-      secure: Env.NODE_ENV !== "DEVELOPMENT",
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      secure: !Env.isDev,
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 day max age
     },
     store: MongoStore.create({
       client: mongoClient,
       dbName: "auth" + (Env.isDev ? "DEV" : ""),
       collectionName: "sessions",
-      stringify: Env.NODE_ENV !== "DEVELOPMENT",
-      crypto: Env.NODE_ENV !== "DEVELOPMENT" && { secret: Env.SESSION_SECRET },
+      stringify: false,
+      // TODO enable session encryption is sensitive data is added to the session
+      // note that encrypting caused a bug where UID was not decrypted
+      // a custom encryption impl might be needed in this case
+      // crypto: !Env.isDev && { secret: Env.SESSION_SECRET },
     }),
   }))
   api.use("/users", /* auth handled in router */routes.users)
