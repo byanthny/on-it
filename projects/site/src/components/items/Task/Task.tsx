@@ -1,4 +1,4 @@
-import { Task } from "common";
+import { Task, TaskState } from "common";
 import React, { useState } from "react";
 import styles from "./task.module.scss";
 
@@ -10,8 +10,9 @@ interface PropTypes {
 const ToDo = ({ TaskData, update }: PropTypes) => {
   const [text, setText] = useState(TaskData.title);
   const [focused, setFocused] = useState(false);
-  const [checked, setChecked] = useState(TaskData.state === "done");
+  const [checked, setChecked] = useState(TaskData.state === TaskState.DONE);
 
+  /* When done editing callback to update Task */
   const updateText = (toUpdate: boolean, newText: string) => {
     if (toUpdate) {
       setText(newText);
@@ -20,10 +21,11 @@ const ToDo = ({ TaskData, update }: PropTypes) => {
     }
   };
 
+  /* When updating status callback to update Task */
   const updateStatus = (e: any) => {
     const updatedChecked = e.target.checked;
     setChecked(updatedChecked);
-    update(text, updatedChecked ? "done" : "todo");
+    update(text, updatedChecked ? TaskState.DONE : TaskState.TODO);
   };
 
   return (
