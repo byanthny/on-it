@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint  prefer-template: 0 */
 
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -18,6 +17,7 @@ const App = () => {
   const { theme } = useContext(ThemeContext);
   const { user } = useContext(UserContext);
 
+  /* Default Props for Private Route */
   const defaultPrivateRouteProps: Omit<PrivateRouteProps, "component"> = {
     loggedIn: user.loggedIn,
     authPath: "/auth",
@@ -27,8 +27,7 @@ const App = () => {
     <div className={`${theme} background`}>
       <Router basename="/on-it">
         <Routes>
-          <Route path="/dev" element={<DevPage />} />
-          <Route path="/auth" element={<AuthPage />} />
+          {/* Main Routes */}
           <Route
             path="/settings"
             element={<PrivateRoute {...defaultPrivateRouteProps} component={<SettingsPage />} />}
@@ -43,9 +42,13 @@ const App = () => {
           />
           <Route
             path="/"
-            element={<PrivateRoute {...defaultPrivateRouteProps} component={<HomePage />} />}
+            element={user.loggedIn ? <HomePage /> : <AuthPage />}
           />
           <Route path="*" element={<PageNoteFound />} />
+
+          {/* Development Only Routes */}
+          {process.env.NODE_ENV === "development" && <Route path="/auth" element={<AuthPage />} /> && <Route path="/dev" element={<DevPage />} /> }
+
         </Routes>
       </Router>
     </div>
