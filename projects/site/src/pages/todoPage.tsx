@@ -63,8 +63,14 @@ const fakedata = [
   },
 ];
 
+interface ExtendedTaskModel extends Omit<Task, "due" | "state"> {
+  _id: string,
+  due: number,
+  state: string
+}
+
 const todoPage = () => {
-  const [todoData, setToDoData] = useState<Array<Task>>([]);
+  const [todoData, setToDoData] = useState<Array<any>>([]);
 
   useEffect(() => {
 
@@ -83,8 +89,8 @@ const todoPage = () => {
     // communicate to API
   };
 
-  const renderToDo = (data:Array<any>) => data.length > 0 ? data.map(({ title, state, due }) => (
-    <ToDo title={title} status={state} update={updateTodo} due={due} />
+  const renderToDo = (data:Array<ExtendedTaskModel>) => data.length > 0 ? data.map(({ title, state, due, _id }) => (
+    <ToDo title={title} status={state} update={updateTodo} due={due} key={_id!} />
   )) : null;
   return (
     <>

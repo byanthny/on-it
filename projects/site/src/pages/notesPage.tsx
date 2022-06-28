@@ -108,7 +108,8 @@ const fakedata = [
 
 interface ExtendedNoteModel extends NoteModel {
   tags: Array<any>,
-  updatedAt: string
+  updatedAt: string,
+  _id: string
 }
 
 const notesPage = () => {
@@ -126,8 +127,8 @@ const notesPage = () => {
   }, []);
 
   const renderNotes = (data:Array<ExtendedNoteModel>) => data.length > 0 ?
-    data.map(({ title, text, tags, updatedAt }) => (
-      <Note title={title} text={text} tags={tags} updatedAt={updatedAt} />
+    data.map(({ title, text, tags, updatedAt, _id }) => (
+      <Note title={title} text={text} tags={tags} updatedAt={updatedAt} key={_id!} />
     )) : null;
 
 
