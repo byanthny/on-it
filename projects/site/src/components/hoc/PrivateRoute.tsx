@@ -1,4 +1,4 @@
-import { Navigate } from "react-router";
+import { Navigate } from "react-router-dom";
 
 export type PrivateRouteProps = {
   loggedIn: boolean;
@@ -7,9 +7,8 @@ export type PrivateRouteProps = {
 };
 
 export const PrivateRoute = ({ loggedIn, authPath, component }: PrivateRouteProps) => {
-  if (loggedIn) {
+  if (loggedIn)
     return component;
-  } else {
-    return <Navigate to={{ pathname: authPath }} />;
-  }
+
+  return <Navigate to={{ pathname: authPath }} />;
 };
