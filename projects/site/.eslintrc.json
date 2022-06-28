@@ -45,6 +45,7 @@
     "no-unused-vars": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
-    "@typescript-eslint/no-unused-vars": ["error"]
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "react/require-default-props": "off"
   }
 }
