@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/interactive/Button/Button";
@@ -9,33 +8,32 @@ import OnItApi from "../services/OnItApi";
 const authPage = () => {
   const [login, setLogin] = useState(true);
   const { setUser } = useContext(UserContext);
-
   const navigate = useNavigate();
 
+  /* On form submit login/signup user 
+   * setError: callback provided by Form comp to create error message
+   */
   const submitForm = async (email: string, password: string, setError: Function) => {
     try {
-      let response;
+      const response = login ? await OnItApi.login(email, password) : await OnItApi.register(email, password);
 
-      if (login) {
-        response = await OnItApi.login(email, password);
-      } else {
-        response = await OnItApi.register(email, password);
-      }
-
+      // Error occurred
       if (response.error) {
         throw response.error;
       }
 
+      // Update user in context with API response
       const newUser: User = {
         loggedIn: true,
-        // eslint-disable-next-line no-underscore-dangle
         id: response.payload?._id!,
         email: response.payload?.email!,
       };
 
       setUser(newUser);
       navigate("../", { replace: true });
+
     } catch (error: any) {
+      // callback form to produce error message
       setError({ error: true, errorMessage: error.message });
     }
   };
@@ -46,7 +44,7 @@ const authPage = () => {
         <div className="secondary-content-xs authPage">
           <h1>On-It</h1>
           <AuthForm loginState={login} submit={submitForm} />
-          <Button variant="transparent" onClickFunction={()=>setLogin(!login)}>{login ? "Dont have an account?" : "Already have an account?"}</Button>
+          <Button variant="transparent" onClickFunction={()=>setLogin(!login)}>{login ? "Don't have an account?" : "Already have an account?"}</Button>
         </div>
       </div>
       <a

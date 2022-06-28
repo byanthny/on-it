@@ -18,4 +18,4 @@ const PrivateRoute = ({ loggedIn, authPath, component }: PrivateRouteProps) => {
   return <Navigate to={{ pathname: authPath }} />;
 };
 
-export default {PrivateRoute};
+export default PrivateRoute;

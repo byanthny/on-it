@@ -11,7 +11,7 @@ import SettingsPage from "./pages/settingsPage";
 import TodoPage from "./pages/todoPage";
 import PageNoteFound from "./pages/pageNotFound";
 import { UserContext } from "./context/UserContext";
-import { PrivateRoute, PrivateRouteProps } from "./components/hoc/PrivateRoute";
+import PrivateRoute, { PrivateRouteProps } from "./components/hoc/PrivateRoute";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
