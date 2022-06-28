@@ -41,11 +41,10 @@
         "namedComponents": "arrow-function"
       }
     ],
-    "no-underscore-dangle": ["error"],
-    "no-unused-vars": "off",
+    "no-underscore-dangle": "off",
+    "no-unused-vars": "warn",
+    "no-undef": "off",
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
-    "@typescript-eslint/no-unused-vars": ["error"],
     "react/require-default-props": "off"
   }
 }
