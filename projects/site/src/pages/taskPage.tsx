@@ -27,7 +27,7 @@ const todoPage = () => {
     // communicate to API
   };
 
-  const renderToDo = (data:Array<Task>) => data.length > 0 ? data.forEach((task) => (
+  const renderToDo = (data:Array<Task>) => data.length > 0 ? data.map((task) => (
     <ToDo TaskData={task} update={updateTodo} />
   )) : null;
   return (
