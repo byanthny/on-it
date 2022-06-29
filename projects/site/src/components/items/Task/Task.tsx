@@ -29,7 +29,7 @@ const ToDo = ({ TaskData, update }: PropTypes) => {
   };
 
   return (
-    <div key={TaskData._id} className={focused ? styles.todoFocused : styles.todo}>
+    <div className={focused ? styles.todoFocused : styles.todo}>
       <input
         type="checkbox"
         defaultChecked={checked}

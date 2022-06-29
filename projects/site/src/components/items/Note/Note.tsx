@@ -22,7 +22,7 @@ const Note = ({ NoteData }: PropTypes) => {
     `${NoteData.tags.length} ${NoteData.tags.length > 1 ? "Tags" : "Tag"}`
 
   return (
-  <div key={NoteData._id} className={styles.note}>
+  <div className={styles.note}>
     <div className={styles.noteInner}>
       <p>{NoteData.title}</p>
       <p>{NoteData.text}</p>

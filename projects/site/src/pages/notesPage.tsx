@@ -27,7 +27,7 @@ const notesPage = () => {
   /* Render Notes */
   const renderNotes = (data:Array<NoteModel>) => data.length > 0 ?
     data.map((note) => (
-      <Note NoteData={note} />
+      <Note key={note._id} NoteData={note} />
     )) : null;
 
 
