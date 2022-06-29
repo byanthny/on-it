@@ -1,35 +1,35 @@
+import { Task, TaskState } from "common";
 import React, { useState } from "react";
-import styles from "./ToDo.module.scss";
-import utils from "../../../utils/utils";
+import styles from "./task.module.scss";
 
 interface PropTypes {
-  title: string;
-  status: string;
-  update: Function;
-  reminder: string;
+  TaskData: Task
+  update: Function
 }
 
-const ToDo = ({ title, status, update, reminder }: PropTypes) => {
-  const [text, setText] = useState(title);
+const ToDo = ({ TaskData, update }: PropTypes) => {
+  const [text, setText] = useState(TaskData.title);
   const [focused, setFocused] = useState(false);
-  const [checked, setChecked] = useState(status === "done");
+  const [checked, setChecked] = useState(TaskData.state === TaskState.DONE);
 
+  /* When done editing callback to update Task */
   const updateText = (toUpdate: boolean, newText: string) => {
     if (toUpdate) {
       setText(newText);
-      update(newText, status);
+      update(newText, TaskData.state);
       setFocused(false);
     }
   };
 
+  /* When updating status callback to update Task */
   const updateStatus = (e: any) => {
     const updatedChecked = e.target.checked;
     setChecked(updatedChecked);
-    update(text, updatedChecked ? "done" : "todo");
+    update(text, updatedChecked ? TaskState.DONE : TaskState.TODO);
   };
 
   return (
-    <div className={focused ? styles.todoFocused : styles.todo}>
+    <div key={TaskData._id} className={focused ? styles.todoFocused : styles.todo}>
       <input
         type="checkbox"
         defaultChecked={checked}
@@ -51,7 +51,7 @@ const ToDo = ({ title, status, update, reminder }: PropTypes) => {
       >
         {text}
       </span>
-      <p className={styles.todoReminder}>{`${utils.daysTillDue(reminder)} days`}</p>
+      <p className={styles.todoReminder}>{TaskData.due ? /* `${utils.daysTillDue(due)} */ `${TaskData.due} days` : ""}</p>
     </div>
   );
 };

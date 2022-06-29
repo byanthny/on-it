@@ -1,6 +1,7 @@
 import Joi from "joi"
 import { ID, idSchema, Snowflake } from "./Model"
 import { SearchOptions, searchOptionSchema } from "../Net"
+import { Tag } from "./Tag"
 
 export const noteSchema = {
   parent: idSchema,
@@ -15,6 +16,8 @@ export type Note = Snowflake & {
   order?: number
   title: string
   text: string
+  tags: Array<Tag>
+  updated: Date | string
 }
 
 export type NoteSearch = SearchOptions & {

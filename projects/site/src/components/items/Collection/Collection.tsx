@@ -6,7 +6,7 @@ import styles from "./collection.module.scss"
 type CollectionTypes = "noteCollection" | "normalCollection";
 
 interface PropTypes {
-    children: React.ReactNode,
+    children: React.ReactNode | void,
     collectionTitle: string,
     variant: CollectionTypes
 }
@@ -19,7 +19,7 @@ const Collection = ({children, collectionTitle, variant}:PropTypes) => {
         <div>
             <h2 className={styles.collectionTitle}>{collectionTitle}<Button variant="transparent" onClickFunction={()=>setOpen(!open)}>{open ? <RiArrowDropDownLine /> : <RiArrowDropRightLine />}</Button></h2>
             <div className={`${styles[variant]} ${open? "" : styles.collectionClosed}`}>
-                {children}
+                {children || (<p>nothing to show</p>)}
             </div>
         </div>
       );

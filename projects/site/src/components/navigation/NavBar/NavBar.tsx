@@ -11,16 +11,14 @@ import {
 import { Task, TaskState } from "common";
 import styles from "./navbar.module.scss";
 import OnItApi from "../../../services/OnItApi";
-import { UserContext } from "../../../context/UserContext";
 
 
 const Navbar = () => {
-  const { user } = useContext(UserContext);
   const tempCreate = (e:any) => {
     e.preventDefault();
     // console.log(`${user.id}`);
     const tempTask:Task = {
-      uid: user.id,
+      uid: "",
       title: "test",
       state: TaskState.TODO
     }
