@@ -5,20 +5,18 @@ import Collection from "../components/items/Collection/Collection";
 import ToDo from "../components/items/Task/Task";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
-import { fakeTaskData as fakedata } from "../utils/constants"
+import { fakeTaskData as fakedata } from "../utils/constants";
 
 const todoPage = () => {
   const [taskList, setTaskList] = useState<Array<Task>>([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const response = await OnItApi.task.search({});
+      setTaskList(response.payload!);
+    };
 
-      const fetchData = async () => {
-        const response = await OnItApi.task.search({});
-        setTaskList(response.payload!);
-      }
-
-      fetchData()
-        .catch(console.error);
+    fetchData().catch(console.error);
   }, []);
 
   const updateTodo = (title: string, status: string) => {
@@ -27,17 +25,20 @@ const todoPage = () => {
     // communicate to API
   };
 
-  const renderToDo = (data:Array<Task>) => data.length > 0 ? data.map((task) => (
-    <ToDo TaskData={task} update={updateTodo} />
-  )) : null;
+  const renderToDo = (data: Array<Task>) =>
+    data && data.length > 0
+      ? data.map((task) => <ToDo TaskData={task} update={updateTodo} />)
+      : null;
   return (
     <>
       <NavBar />
       <div className="main-content">
         <Header title="To Do" />
         <div className="secondary-content">
-          {renderToDo(fakedata) || (<p>Nothing to show</p>)}
-          <Collection collectionTitle="General" variant="normalCollection">{renderToDo(taskList)}</Collection>
+          {renderToDo(fakedata) || <p>Nothing to show</p>}
+          <Collection collectionTitle="General" variant="normalCollection">
+            {renderToDo(taskList)}
+          </Collection>
         </div>
       </div>
     </>

@@ -53,8 +53,8 @@ $content-max-width: 1250px;
   --todo-background-hover-color: #{$todo-color-dark};
   --todo-background-color: #{scale-color($todo-color-light, $lightness: +3%)};
   --input-background: #{scale-color($light, $lightness: $lighten)};
-  --note-background: #{scale-color($dark, $lightness: $lighten*.25)};
-  --note-hover-background: #{scale-color($dark, $lightness: $lighten*.75)};
+  --note-background: #{scale-color($dark, $lightness: $lighten * 0.25)};
+  --note-hover-background: #{scale-color($dark, $lightness: $lighten * 0.75)};
 }
 
 .dark {
@@ -67,7 +67,7 @@ $content-max-width: 1250px;
   --inverse-text-color: #{$black};
   --todo-background-hover-color: #{scale-color($todo-color-light, $lightness: $lighten)};
   --todo-background-color: #{$todo-color-dark};
-  --input-background: #{scale-color($dark, $lightness: $lighten*.75)};
-  --note-background:#{scale-color($dark, $lightness: $lighten*.25)};
-  --note-hover-background: #{scale-color($dark, $lightness: $lighten*.75)};
+  --input-background: #{scale-color($dark, $lightness: $lighten * 0.75)};
+  --note-background: #{scale-color($dark, $lightness: $lighten * 0.25)};
+  --note-hover-background: #{scale-color($dark, $lightness: $lighten * 0.75)};
 }

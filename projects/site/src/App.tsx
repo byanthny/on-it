@@ -40,15 +40,13 @@ const App = () => {
             path="/todo"
             element={<PrivateRoute {...defaultPrivateRouteProps} component={<TaskPage />} />}
           />
-          <Route
-            path="/"
-            element={user.loggedIn ? <HomePage /> : <AuthPage />}
-          />
+          <Route path="/" element={user.loggedIn ? <HomePage /> : <AuthPage />} />
           <Route path="*" element={<PageNoteFound />} />
 
           {/* Development Only Routes */}
-          {process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT" && <Route path="/dev" element={<DevPage />} /> }
-
+          {process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT" && (
+            <Route path="/dev" element={<DevPage />} />
+          )}
         </Routes>
       </Router>
     </div>
