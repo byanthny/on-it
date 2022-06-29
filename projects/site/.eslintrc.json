@@ -42,9 +42,10 @@
       }
     ],
     "no-underscore-dangle": "off",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "no-undef": "off",
     "no-use-before-define": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "no-console": "off"
   }
 }
