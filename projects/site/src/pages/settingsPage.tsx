@@ -17,24 +17,24 @@ const settingsPage = () => {
   };
 
   const logout = async () => {
-
     try {
       const response = await OnItApi.logout();
 
       if(response.error)
         throw response.error
 
-      const loggedOutUser: User = {
-        loggedIn: false,
-        id: "",
-        email: "",
-      };
-      
-      setUser(loggedOutUser);
     } catch (error) {
       // console.log(error);
       // TODO handle error
     }
+
+    const loggedOutUser: User = {
+      loggedIn: false,
+      id: "",
+      email: "",
+    };
+    
+    setUser(loggedOutUser);
   };
 
   return (

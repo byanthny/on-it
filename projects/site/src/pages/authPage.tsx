@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/interactive/Button/Button";
 import AuthForm from "../components/forms/AuthForm/AuthForm";
-import { UserContext, User } from "../context/UserContext";
+import { UserContext, UserContextData } from "../context/UserContext";
 import OnItApi from "../services/OnItApi";
 
 const authPage = () => {
@@ -23,10 +23,12 @@ const authPage = () => {
       }
 
       // Update user in context with API response
-      const newUser: User = {
+      const newUser: UserContextData = {
         loggedIn: true,
-        id: response.payload?._id!,
-        email: response.payload?.email!,
+        user: {
+          email: response.payload?.email!,
+          role: response.payload?.role!
+        }
       };
 
       setUser(newUser);

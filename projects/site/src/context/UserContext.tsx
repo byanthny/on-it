@@ -1,26 +1,26 @@
-/* eslint react/jsx-no-constructed-context-values: 0 */
-
 import React, { createContext, useState } from "react";
+import { User, UserRole } from "common"
 
-export interface User {
-  loggedIn: boolean;
-  id: string;
-  email: string;
+export interface UserContextData { 
+  user: User
+  loggedIn: boolean
 }
 
-const initalUser: User = {
+const initialUser: UserContextData = {
   loggedIn: process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT",
-  id: "null",
-  email: "null",
+  user: {
+    email: "null",
+    role: UserRole.GENERIC
+  }
 };
 interface UserProviderProps {
   children: React.ReactNode;
 }
 
-export const UserContext = createContext<any>(initalUser);
+export const UserContext = createContext<any>(initialUser);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState(initalUser);
-  const value = { user, setUser };
+  const [user, setUser] = useState(initialUser);
+  const value = React.useMemo(() => [user, setUser], [user]);
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
