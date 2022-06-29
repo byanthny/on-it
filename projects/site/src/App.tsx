@@ -20,7 +20,7 @@ const App = () => {
   /* Default Props for Private Route */
   const defaultPrivateRouteProps: Omit<PrivateRouteProps, "component"> = {
     loggedIn: user.loggedIn,
-    authPath: "/auth",
+    authPath: "/",
   };
 
   return (
@@ -47,7 +47,7 @@ const App = () => {
           <Route path="*" element={<PageNoteFound />} />
 
           {/* Development Only Routes */}
-          {process.env.NODE_ENV === "development" && <Route path="/auth" element={<AuthPage />} /> && <Route path="/dev" element={<DevPage />} /> }
+          {process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT" && <Route path="/dev" element={<DevPage />} /> }
 
         </Routes>
       </Router>
