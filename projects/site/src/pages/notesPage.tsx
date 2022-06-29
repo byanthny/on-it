@@ -28,7 +28,7 @@ const notesPage = () => {
   const renderNotes = (data:Array<NoteModel>) => data.length > 0 ?
     data.forEach((note) => (
       <Note NoteData={note} />
-    )) : undefined;
+    )) : null;
 
 
   return (

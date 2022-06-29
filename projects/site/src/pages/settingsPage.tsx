@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
+import { UserRole } from "common";
 import Button from "../components/interactive/Button/Button";
 import { ThemeContext } from "../context/ThemeContext";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
-import { UserContext, User } from "../context/UserContext";
+import { UserContext, UserContextData } from "../context/UserContext";
 import OnItApi from "../services/OnItApi";
+
 
 const settingsPage = () => {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -28,10 +30,12 @@ const settingsPage = () => {
       // TODO handle error
     }
 
-    const loggedOutUser: User = {
+    const loggedOutUser: UserContextData = {
       loggedIn: false,
-      id: "",
-      email: "",
+      user: { 
+        email: "",
+        role: UserRole.GENERIC
+      }
     };
     
     setUser(loggedOutUser);

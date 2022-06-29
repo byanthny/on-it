@@ -36,7 +36,7 @@ const todoPage = () => {
       <div className="main-content">
         <Header title="To Do" />
         <div className="secondary-content">
-          {renderToDo(fakedata)}
+          {renderToDo(fakedata) || (<p>Nothing to show</p>)}
           <Collection collectionTitle="General" variant="normalCollection">{renderToDo(taskList)}</Collection>
         </div>
       </div>

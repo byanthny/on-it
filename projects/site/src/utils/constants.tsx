@@ -1,3 +1,5 @@
+import { TaskState } from "common";
+
 export const monthShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Nov", "Dev"];
 
 export const monthLong = ["January", "February", "March", "April", "May", "June",
@@ -110,11 +112,11 @@ export const fakeTaskData = [
   {
     _id: "string",
     uid: "string",
-    parent: null,
+    parent: undefined,
     title: "test",
     due: 0,
     reminders: ["2022-05-16T23:09:56.903Z"],
-    state: "todo",
+    state: TaskState.TODO,
     pinned: false,
     tags: [
       {
@@ -128,11 +130,11 @@ export const fakeTaskData = [
   {
     _id: "string",
     uid: "string",
-    parent: null,
+    parent: undefined,
     title: "super long to do because idk super long to do because idk",
     due: 0,
     reminders: ["2022-05-16T23:09:56.903Z"],
-    state: "done",
+    state: TaskState.DONE,
     pinned: false,
     tags: [
       {
@@ -146,11 +148,11 @@ export const fakeTaskData = [
   {
     _id: "string",
     uid: "string",
-    parent: null,
+    parent: undefined,
     title: "medium to do because idk",
     due: 0,
     reminders: ["2022-05-16T23:09:56.903Z"],
-    state: "todo",
+    state: TaskState.TODO,
     pinned: false,
     tags: [
       {
