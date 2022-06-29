@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React, { createContext, useState } from "react";
 
 const initialTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark";
@@ -9,6 +10,6 @@ export const ThemeContext = createContext<any>(initialTheme);
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState(initialTheme);
-  const value = React.useMemo(() => [theme, setTheme], [theme]);
+  const value = {theme, setTheme};
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

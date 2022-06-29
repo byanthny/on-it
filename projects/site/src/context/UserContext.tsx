@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React, { createContext, useState } from "react";
 import { User, UserRole } from "common"
 
@@ -21,6 +22,6 @@ export const UserContext = createContext<any>(initialUser);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState(initialUser);
-  const value = React.useMemo(() => [user, setUser], [user]);
+  const value = {user, setUser};
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
