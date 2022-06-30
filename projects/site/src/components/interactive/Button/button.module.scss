@@ -18,3 +18,12 @@
         text-decoration: underline;
     }
 }
+
+.light {
+    background-color: $light;
+    color: $black;
+
+    &:hover {
+        background-color: scale-color($light, $lightness: -5%);
+    }
+}

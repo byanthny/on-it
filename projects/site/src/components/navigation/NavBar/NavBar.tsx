@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   RiSettings3Fill,
@@ -11,11 +11,17 @@ import {
 import { Task, TaskState } from "common";
 import styles from "./navbar.module.scss";
 import OnItApi from "../../../services/OnItApi";
+import Modal from "../../overlays/Modal/Modal";
+import CreateForm from "../../forms/CreateForm/CreateForm";
 
 
 const Navbar = () => {
+
+  const [modalOpen, setModalOpen] = useState(false);
+
   const tempCreate = (e:any) => {
     e.preventDefault();
+    setModalOpen(true);
     // console.log(`${user.id}`);
     const tempTask:Task = {
       uid: "",
@@ -32,6 +38,7 @@ const Navbar = () => {
   }
 
   return(
+  <>
   <div className={styles.navbar}>
     <div className={styles.innerbox}>
       <Link aria-label="home" to="/">
@@ -55,6 +62,8 @@ const Navbar = () => {
       </Link>
     </div>
   </div>
+  <Modal open={modalOpen} onClose={setModalOpen}><CreateForm/></Modal>
+  </>
 );
 }
 
