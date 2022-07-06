@@ -49,7 +49,7 @@ const todoPage = () => {
     }
   }
 
-  const renderToDo = (data:Array<Task>) => data.length > 0 ? data.map((task) => (
+  const renderToDo = (data:Array<Task>) => data && data.length > 0 ? data.map((task) => (
     <ToDo TaskData={task} key={task._id} update={updateTodo} />
   )) : null;
   return (
