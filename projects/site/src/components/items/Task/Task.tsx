@@ -4,7 +4,7 @@ import styles from "./task.module.scss";
 
 interface PropTypes {
   TaskData: Task;
-  update: Function;
+  update: (title: string, state: TaskState, taskID: string)=>void;
 }
 
 const ToDo = ({ TaskData, update }: PropTypes) => {
@@ -16,7 +16,7 @@ const ToDo = ({ TaskData, update }: PropTypes) => {
   const updateText = (toUpdate: boolean, newText: string) => {
     if (toUpdate) {
       setText(newText);
-      update(newText, TaskData.state);
+      update(newText, TaskData.state, TaskData._id!);
       setFocused(false);
     }
   };
@@ -25,7 +25,7 @@ const ToDo = ({ TaskData, update }: PropTypes) => {
   const updateStatus = (e: any) => {
     const updatedChecked = e.target.checked;
     setChecked(updatedChecked);
-    update(text, updatedChecked ? TaskState.DONE : TaskState.TODO);
+    update(text, updatedChecked ? TaskState.DONE : TaskState.TODO, TaskData._id!);
   };
 
   return (

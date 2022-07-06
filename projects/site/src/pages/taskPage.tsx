@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Note, Task } from "common";
+import { Note, Task, TaskState } from "common";
 import OnItApi, {createItem} from "../services/OnItApi";
 import Collection from "../components/items/Collection/Collection";
 import ToDo from "../components/items/Task/Task";
@@ -28,9 +28,21 @@ const todoPage = () => {
         .catch(console.error);
   }, []);
 
-  const updateTodo = (title: string, status: string) => {
-    // eslint-disable-next-line no-console
-    console.log(`${title} ${status}`);
+  const updateTask = async (title: string, state: TaskState, taskID: string) => {
+    try {
+      const updatedTask = {
+        title,
+        state 
+      }
+      const response = await OnItApi.task.update(taskID, updatedTask);
+
+      if (response.error)
+        throw response.error;
+      
+      
+    } catch (error) {
+      console.log(error);
+    }
     // communicate to API
   };
 
@@ -60,7 +72,7 @@ const todoPage = () => {
   }
 
   const renderToDo = (data:Array<Task>) => data && data.length > 0 ? data.map((task) => (
-    <ToDo TaskData={task} key={task._id} update={updateTodo} />
+    <ToDo TaskData={task} key={task._id} update={updateTask} />
   )) : null;
   return (
     <>
