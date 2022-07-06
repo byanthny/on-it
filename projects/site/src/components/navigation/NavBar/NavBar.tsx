@@ -12,7 +12,7 @@ import styles from "./navbar.module.scss";
 import Modal from "../../overlays/Modal/Modal";
 
 type PropTypes = {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const Navbar = ({children}:PropTypes) => {

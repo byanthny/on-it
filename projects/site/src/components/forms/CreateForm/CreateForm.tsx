@@ -6,7 +6,7 @@ import checkboxStyles from "../../items/Task/task.module.scss";
 
 
 type PropTypes = {
-    handleSubmit: (itemType: string, item: Task | Note)=>{}
+    handleSubmit: (itemType: string, data: {checked: boolean, description: string, title: string})=>void
 }
 
 const CreateForm = ({handleSubmit}: PropTypes) => {
@@ -16,37 +16,13 @@ const [title, setTitle] = useState("");
 
 const submit = (e:any) => {
     e.preventDefault();
-
-    const itemType = description.length < 1 ? "todo" : "note";
-
-    if (itemType === "todo") {
-        const task: Task = {
-            uid: "",
-            title,
-            state: checked ? TaskState.DONE : TaskState.TODO,
-            // description?: string | undefined;
-            // parent?: string | undefined;
-            // tags?: Tag[] | undefined;
-            // due?: number | Date | undefined;
-            // reminders?: Date[] | ... 1 more ... | undefined;
-            // pinned?: boolean | undefined
-        }
-
-        handleSubmit(itemType, task);
-        return
+    const itemType = description.length < 1 ? "task" : "note";
+    const data = {
+        checked,
+        description,
+        title
     }
-
-    const note: Note = {
-        uid: "",
-        parent: "",
-        // order?: number | undefined;
-        title,
-        text: description,
-        tags: [],
-        updated: (new Date).toISOString()
-    }
-
-    handleSubmit(itemType, note)
+    handleSubmit(itemType, data)
 }
 
     return (
