@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserRole } from "common";
 import CreateForm from "../components/forms/CreateForm/CreateForm";
 import Button from "../components/interactive/Button/Button";
@@ -11,6 +11,7 @@ import OnItApi, { createItem } from "../services/OnItApi";
 const settingsPage = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   const { setUser } = useContext(UserContext);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const changeTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -52,7 +53,7 @@ const settingsPage = () => {
 
   return (
     <>
-      <NavBar><CreateForm handleSubmit={handleSubmit}/></NavBar>
+      <NavBar modalState={modalOpen} closeModal={setModalOpen}><CreateForm handleSubmit={handleSubmit}/></NavBar>
       <div className="main-content">
         <Header title="Settings" />
         <div className="secondary-content">

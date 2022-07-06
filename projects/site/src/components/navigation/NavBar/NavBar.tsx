@@ -13,15 +13,17 @@ import Modal from "../../overlays/Modal/Modal";
 
 type PropTypes = {
   children?: React.ReactNode
+  modalState: boolean,
+  closeModal: Function
 }
 
-const Navbar = ({children}:PropTypes) => {
+const Navbar = ({children, modalState, closeModal}:PropTypes) => {
 
-  const [modalOpen, setModalOpen] = useState(false);
+
 
   const openCreateModal = (e:any) => {
     e.preventDefault();
-    setModalOpen(true);
+    closeModal(true);
   }
 
   return(
@@ -49,7 +51,7 @@ const Navbar = ({children}:PropTypes) => {
         </Link>
       </div>
     </div>
-  <Modal open={modalOpen} onClose={setModalOpen}>{children}</Modal>
+  <Modal open={modalState} onClose={closeModal}>{children}</Modal>
   </>
 );
 }

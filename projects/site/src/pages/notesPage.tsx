@@ -9,6 +9,7 @@ import { fakeNoteData as fakedata } from "../utils/constants";
 
 const notesPage = () => {
   const [noteData, setNoteData] = useState<Array<NoteModel>>([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     /* Fetch all notes from api */
@@ -28,7 +29,7 @@ const notesPage = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar modalState={modalOpen} closeModal={setModalOpen}/>
       <div className="main-content">
         <Header title="Notes" />
         <div className="secondary-content">
