@@ -8,7 +8,6 @@ import NavBar from "../components/navigation/NavBar/NavBar";
 import { UserContext, UserContextData } from "../context/UserContext";
 import OnItApi, { createItem } from "../services/OnItApi";
 
-
 const settingsPage = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   const { setUser } = useContext(UserContext);
@@ -23,9 +22,7 @@ const settingsPage = () => {
     try {
       const response = await OnItApi.logout();
 
-      if(response.error)
-        throw response.error
-
+      if (response.error) throw response.error;
     } catch (error) {
       // console.log(error);
       // TODO handle error
@@ -33,12 +30,12 @@ const settingsPage = () => {
 
     const loggedOutUser: UserContextData = {
       loggedIn: false,
-      user: { 
+      user: {
         email: "",
-        role: UserRole.GENERIC
-      }
+        role: UserRole.GENERIC,
+      },
     };
-    
+
     setUser(loggedOutUser);
   };
 
@@ -59,9 +56,13 @@ const settingsPage = () => {
       <div className="main-content">
         <Header title="Settings" />
         <div className="secondary-content">
-          <Button variant="normal" onClickFunction={changeTheme}>toggle theme</Button>
-          <br/>
-          <Button variant="normal" onClickFunction={logout}>logout</Button>
+          <Button variant="normal" onClickFunction={changeTheme}>
+            toggle theme
+          </Button>
+          <br />
+          <Button variant="normal" onClickFunction={logout}>
+            logout
+          </Button>
         </div>
       </div>
     </>

@@ -10,12 +10,14 @@ const authPage = () => {
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  /* On form submit login/signup user 
+  /* On form submit login/signup user
    * setError: callback provided by Form comp to create error message
    */
   const submitForm = async (email: string, password: string, setError: Function) => {
     try {
-      const response = login ? await OnItApi.login(email, password) : await OnItApi.register(email, password);
+      const response = login
+        ? await OnItApi.login(email, password)
+        : await OnItApi.register(email, password);
 
       // Error occurred
       if (response.error) {
@@ -27,13 +29,12 @@ const authPage = () => {
         loggedIn: true,
         user: {
           email: response.payload?.email!,
-          role: response.payload?.role!
-        }
+          role: response.payload?.role!,
+        },
       };
 
       setUser(newUser);
       navigate("../", { replace: true });
-
     } catch (error: any) {
       // callback form to produce error message
       setError({ error: true, errorMessage: error.message });
@@ -46,7 +47,9 @@ const authPage = () => {
         <div className="secondary-content-xs authPage">
           <h1>On-It</h1>
           <AuthForm loginState={login} submit={submitForm} />
-          <Button variant="transparent" onClickFunction={()=>setLogin(!login)}>{login ? "Don't have an account?" : "Already have an account?"}</Button>
+          <Button variant="transparent" onClickFunction={() => setLogin(!login)}>
+            {login ? "Don't have an account?" : "Already have an account?"}
+          </Button>
         </div>
       </div>
       <a
@@ -55,7 +58,7 @@ const authPage = () => {
         href="https://gitlab.com/JonoAugustine/on-it"
         className="bottom right textCenter"
       >
-       ?
+        ?
       </a>
     </>
   );

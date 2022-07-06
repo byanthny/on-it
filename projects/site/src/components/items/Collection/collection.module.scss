@@ -2,34 +2,34 @@
 @import "../../../styles/typography.scss";
 
 .noteCollection {
-    position: relative;
-    display: flex;
-    overflow-x: scroll;
-    font-size: 2rem;
-    transition: 0.4s;
+  position: relative;
+  display: flex;
+  overflow-x: scroll;
+  font-size: 2rem;
+  transition: 0.4s;
 
-    @include md {
-        flex-wrap: wrap;
-        overflow-x: hidden;
-    }
+  @include md {
+    flex-wrap: wrap;
+    overflow-x: hidden;
+  }
 }
 
 .normalCollection {
-    transition: 0.4s;
+  transition: 0.4s;
 }
 
 .collectionClosed {
-    height: 0;
-    display: none;
+  height: 0;
+  display: none;
 }
 
 .collectionTitle {
+  font-size: $collectionFontSize;
+  button {
+    padding: 5px;
+    margin: 0px;
+  }
+  svg {
     font-size: $collectionFontSize;
-    button {
-        padding: 5px;
-        margin: 0px;
-    }
-    svg {
-        font-size: $collectionFontSize;
-    }
+  }
 }

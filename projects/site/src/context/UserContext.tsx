@@ -1,18 +1,18 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { createContext, useState } from "react";
-import { User, UserRole } from "common"
+import { User, UserRole } from "common";
 
-export interface UserContextData { 
-  user: User
-  loggedIn: boolean
+export interface UserContextData {
+  user: User;
+  loggedIn: boolean;
 }
 
 const initialUser: UserContextData = {
   loggedIn: process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT",
   user: {
     email: "null",
-    role: UserRole.GENERIC
-  }
+    role: UserRole.GENERIC,
+  },
 };
 interface UserProviderProps {
   children: React.ReactNode;
@@ -22,6 +22,6 @@ export const UserContext = createContext<any>(initialUser);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState(initialUser);
-  const value = {user, setUser};
+  const value = { user, setUser };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

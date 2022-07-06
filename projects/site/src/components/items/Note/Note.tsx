@@ -1,14 +1,13 @@
 import React from "react";
 import { Note as NoteModel } from "common";
 import styles from "./note.module.scss";
-import { dateToString } from "../../../utils/utils"
+import { dateToString } from "../../../utils/utils";
 
 type PropTypes = {
-  NoteData: NoteModel
+  NoteData: NoteModel;
 };
 
 const Note = ({ NoteData }: PropTypes) => {
-
   // TODO if showing tags how to handle overflow
   /*   const tagsToString = () => {
     const tagsString = tags.map((t:any) => (
@@ -19,7 +18,7 @@ const Note = ({ NoteData }: PropTypes) => {
   } */
 
   const tagCountString = () =>
-    `${NoteData.tags.length} ${NoteData.tags.length > 1 ? "Tags" : "Tag"}`
+    `${NoteData.tags.length} ${NoteData.tags.length > 1 ? "Tags" : "Tag"}`;
 
   return (
   <div className={styles.note}>
@@ -29,7 +28,8 @@ const Note = ({ NoteData }: PropTypes) => {
       <p className="floatLeft">{tagCountString()}</p>
       <p className="floatRight">{dateToString(NoteData.updated.toString())}</p>
     </div>
-  </div>);
+    </div>
+  );
 };
 
 export default Note;

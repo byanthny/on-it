@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import styles from "./task.module.scss";
 
 interface PropTypes {
-  TaskData: Task
-  update: Function
+  TaskData: Task;
+  update: Function;
 }
 
 const ToDo = ({ TaskData, update }: PropTypes) => {
@@ -51,7 +51,9 @@ const ToDo = ({ TaskData, update }: PropTypes) => {
       >
         {text}
       </span>
-      <p className={styles.todoReminder}>{TaskData.due ? /* `${utils.daysTillDue(due)} */ `${TaskData.due} days` : ""}</p>
+      <p className={styles.todoReminder}>
+        {TaskData.due ? /* `${utils.daysTillDue(due)} */ `${TaskData.due} days` : ""}
+      </p>
     </div>
   );
 };

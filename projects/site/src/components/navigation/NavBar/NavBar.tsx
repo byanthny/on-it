@@ -39,16 +39,16 @@ const Navbar = ({children}:PropTypes) => {
           <div className={styles.addbuttonfixed}>
             <RiAddFill />
           </div>
-        </div>
-      </button>
-      <Link aria-label="notes" to="/notes">
-        <RiStickyNoteFill />
-      </Link>
-      <Link aria-label="settings" to="/settings">
-        <RiSettings3Fill />
-      </Link>
+          </div>
+        </button>
+        <Link aria-label="notes" to="/notes">
+          <RiStickyNoteFill />
+        </Link>
+        <Link aria-label="settings" to="/settings">
+          <RiSettings3Fill />
+        </Link>
+      </div>
     </div>
-  </div>
   <Modal open={modalOpen} onClose={setModalOpen}>{children}</Modal>
   </>
 );
