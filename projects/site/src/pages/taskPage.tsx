@@ -16,6 +16,7 @@ type TaskList = {
 const todoPage = () => {
   const [taskList, setTaskList] = useState<Array<Task>>([]);
   const [projects, setProjects] = useState();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const fetchData = async () => {
     const response = await OnItApi.task.search({});
@@ -33,19 +34,28 @@ const todoPage = () => {
     // communicate to API
   };
 
+  const handleResponse = (response: any) => {
+    const task: Task = {
+      _id: response._id,
+      uid: response.uuid,
+      title: response.title,
+      state: response.state,
+    }
+    setTaskList([...taskList, task]);
+    setModalOpen(false)
+    console.log(taskList);
+  }
+
   const handleSubmit = async (itemType: string, data: {checked: boolean, description: string, title: string}) => {
     try {    
-      const response = await createItem(itemType, data);
-
-      if(itemType==="task") {
-        console.log("handling repsonse to rerender");
-      }
-
+      const response = await createItem(itemType, data, itemType==="task" ? handleResponse : undefined);
+ 
       if(response.error)
         throw response.error
 
     } catch(error) {
       console.log(error);
+      setModalOpen(false)
     }
   }
 
@@ -54,7 +64,7 @@ const todoPage = () => {
   )) : null;
   return (
     <>
-      <NavBar><CreateForm handleSubmit={handleSubmit}/></NavBar>
+      <NavBar modalState={modalOpen} closeModal={setModalOpen}><CreateForm handleSubmit={handleSubmit}/></NavBar>
       <div className="main-content">
         <Header title="To Do" />
         <div className="secondary-content">

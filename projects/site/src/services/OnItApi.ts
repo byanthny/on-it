@@ -100,7 +100,7 @@ class OnItApi {
   };
 }
 
-export const createItem = async (itemType: string, data: {checked: boolean, description: string, title: string}) => {
+export const createItem = async (itemType: string, data: {checked: boolean, description: string, title: string}, handleResponse?: Function) => {
 
   const api = new OnItApi;
   let response;
@@ -130,6 +130,9 @@ export const createItem = async (itemType: string, data: {checked: boolean, desc
       }
       response = await api.note.create(note);
     }
+
+    if(handleResponse && !response.error)
+      handleResponse(response.payload);
 
     return response;
 }
