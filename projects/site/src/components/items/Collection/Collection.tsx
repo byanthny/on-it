@@ -15,7 +15,7 @@ const Collection = ({ children, collectionTitle, variant }: PropTypes) => {
   const [open, setOpen] = useState(true);
 
   return (
-    <div>
+    <>
       <h2 className={styles.collectionTitle}>
         {collectionTitle}
         <Button variant="transparent" onClickFunction={() => setOpen(!open)}>
@@ -25,7 +25,7 @@ const Collection = ({ children, collectionTitle, variant }: PropTypes) => {
       <div className={`${styles[variant]} ${open ? "" : styles.collectionClosed}`}>
         {children || <p>nothing to show</p>}
       </div>
-    </div>
+    </>
   );
 };
 
