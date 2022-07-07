@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./button.module.scss";
 
 interface PropTypes {
   children: React.ReactNode;
@@ -8,7 +7,7 @@ interface PropTypes {
 }
 
 const Button = ({ children, onClickFunction, variant }: PropTypes) => (
-  <button className={`${styles[variant]}`} type="button" onClick={onClickFunction}>
+  <button className={`${variant}`} type="button" onClick={onClickFunction}>
     {children}
   </button>
 );

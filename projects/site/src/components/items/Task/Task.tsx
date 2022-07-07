@@ -1,6 +1,5 @@
 import { Tag, Task as TaskModel, TaskState } from "common";
 import React, { useState } from "react";
-import styles from "./task.module.scss";
 
 interface PropTypes {
   TaskData: TaskModel;
@@ -47,17 +46,17 @@ const Task = ({ TaskData, update }: PropTypes) => {
   };
 
   return (
-    <div className={focused ? styles.todoFocused : styles.todo}>
+    <div className={focused ? "todoFocused" : "todo"}>
       <input
         type="checkbox"
         checked={checked}
         onChange={updateStatus}
-        className={styles.checkbox}
+        className="checkbox"
       />
       <span
         role="textbox"
         aria-label="click to edit todo"
-        className={checked ? styles.todoDone : styles.todoText}
+        className={checked ? "todoDone" : "todoText"}
         onBlur={(e) => {
           setFocused(false);
           updateText(true, e.currentTarget.innerText);
@@ -69,7 +68,7 @@ const Task = ({ TaskData, update }: PropTypes) => {
       >
         {text}
       </span>
-      <p className={styles.todoReminder}>
+      <p className="todoReminder">
         {TaskData.due ? /* `${utils.daysTillDue(due)} */ `${TaskData.due} days` : ""}
       </p>
     </div>

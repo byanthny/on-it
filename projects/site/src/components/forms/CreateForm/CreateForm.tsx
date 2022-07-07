@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import { Note, Task, TaskState } from "common";
 import Button from "../../interactive/Button/Button";
-import styles from "./createForm.module.scss";
-import checkboxStyles from "../../items/Task/task.module.scss";
 
 type PropTypes = {
   handleSubmit: (
@@ -28,14 +25,14 @@ const CreateForm = ({ handleSubmit }: PropTypes) => {
   };
 
   return (
-    <div className={styles.createForm}>
-      <div className={styles.task}>
+    <div className="createForm">
+      <div className="task">
         {description.length < 1 && (
           <input
             type="checkbox"
             defaultChecked={checked}
             onChange={(e) => setChecked(e.target.checked)}
-            className={`${checkboxStyles.checkbox} ${styles.checkbox}`}
+            className="checkbox"
           />
         )}
         <input type="text" placeholder="title" onChange={(e) => setTitle(e.target.value)} />

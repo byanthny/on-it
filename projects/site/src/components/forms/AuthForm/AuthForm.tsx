@@ -33,7 +33,7 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
   };
 
   return (
-    <form className={`${styles.authForm}`}>
+    <form className="authForm">
       <input type="email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
       {!loginState ? (
@@ -45,7 +45,7 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
       ) : (
         ""
       )}
-      {error.error ? <p className={styles.errorMessage}>{error.errorMessage}</p> : ""}
+      {error.error ? <p className="errorMessage">{error.errorMessage}</p> : ""}
       <Button
         variant="normal"
         onClickFunction={(e: any) => submitForm(e, email, password, confirmPassword)}

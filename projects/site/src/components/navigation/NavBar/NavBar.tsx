@@ -8,7 +8,6 @@ import {
   RiCheckboxFill,
   RiAddFill,
 } from "react-icons/ri";
-import styles from "./navbar.module.scss";
 import Modal from "../../overlays/Modal/Modal";
 
 type PropTypes = {
@@ -25,8 +24,8 @@ const Navbar = ({ children, modalState, closeModal }: PropTypes) => {
 
   return (
     <>
-      <div className={styles.navbar}>
-        <div className={styles.innerbox}>
+      <div className="navbar">
+        <div className="navbar-inner">
           <Link aria-label="home" to="/">
             <RiHomeFill />
           </Link>
@@ -36,11 +35,11 @@ const Navbar = ({ children, modalState, closeModal }: PropTypes) => {
           <button
             aria-label="add"
             type="button"
-            className={styles.addbutton}
+            className="navbar-add"
             onClick={(e) => openCreateModal(e)}
           >
-            <div className={styles.addbuttonwrapper}>
-              <div className={styles.addbuttonfixed}>
+            <div className="addbuttonwrapper">
+              <div className="addbuttonfixed">
                 <RiAddFill />
               </div>
             </div>

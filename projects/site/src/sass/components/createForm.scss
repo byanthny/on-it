@@ -1,0 +1,23 @@
+.createForm {
+    input {
+      background-color: scale-color(scale-color($dark, $lightness: $lighten * 0.75), $alpha: -100%);
+      border-bottom: 1px solid gray;
+      border-radius: 4px;
+  
+      &:focus {
+        outline: none;
+      }
+    }
+  
+    text-align: center;
+  
+    .checkbox {
+      margin: 10px;
+    }
+
+    .task {
+        display: flex;
+        gap: 1;
+      }
+  }
+  
