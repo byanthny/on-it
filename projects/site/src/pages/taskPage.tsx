@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Note, Task, TaskState } from "common";
+import { Task as TaskModel, TaskState } from "common";
 import OnItApi, {createItem} from "../services/OnItApi";
 import Collection from "../components/items/Collection/Collection";
-import ToDo from "../components/items/Task/Task";
+import Task from "../components/items/Task/Task";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 import { fakeTaskData as fakedata } from "../utils/constants"
 import CreateForm from "../components/forms/CreateForm/CreateForm";
-
-type TaskList = {
-  name: string,
-  tasks: Task[]
-}
+import { toKeyValueMap } from "../utils/utils";
 
 const todoPage = () => {
-  const [taskList, setTaskList] = useState<Array<Task>>([]);
+  const [taskList, setTaskList] = useState<Map<any, any>>();
   const [projects, setProjects] = useState();
   const [modalOpen, setModalOpen] = useState(false);
 
   const fetchData = async () => {
     const response = await OnItApi.task.search({});
-    setTaskList(response.payload!);
+    setTaskList(new Map([["none", toKeyValueMap(response.payload!)]]));
   }
 
   useEffect(() => {
@@ -39,6 +35,7 @@ const todoPage = () => {
       if (response.error)
         throw response.error;
       
+      taskList!.get("none");
       
     } catch (error) {
       console.log(error);
@@ -47,13 +44,13 @@ const todoPage = () => {
   };
 
   const handleResponse = (response: any) => {
-    const task: Task = {
+    const task: TaskModel = {
       _id: response._id,
       uid: response.uuid,
       title: response.title,
       state: response.state,
     }
-    setTaskList([...taskList, task]);
+    // setTaskList([...taskList, task]);
     setModalOpen(false)
     console.log(taskList);
   }
@@ -71,19 +68,21 @@ const todoPage = () => {
     }
   }
 
-  const renderToDo = (data:Array<Task>) => data && data.length > 0 ? data.map((task) => (
-    <ToDo TaskData={task} key={task._id} update={updateTask} />
-  )) : null;
+/*   const renderTask = (data:Array<TaskModel>) => data && data.length > 0 ? data.map((task) => (
+    <Task TaskData={task} key={task._id} update={updateTask} />
+  )) : null; */
+
+
   return (
     <>
       <NavBar modalState={modalOpen} closeModal={setModalOpen}><CreateForm handleSubmit={handleSubmit}/></NavBar>
       <div className="main-content">
         <Header title="To Do" />
         <div className="secondary-content">
-          {renderToDo(fakedata) || <p>Nothing to show</p>}
+{/*           {renderTask(fakedata) || <p>Nothing to show</p>}
           <Collection collectionTitle="General" variant="normalCollection">
-            {renderToDo(taskList)}
-          </Collection>
+            {renderTask(taskList)}
+          </Collection> */}
         </div>
       </div>
     </>
