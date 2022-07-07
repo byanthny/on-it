@@ -7,7 +7,7 @@ interface PropTypes {
   update: (title: string, state: TaskState, taskID: string)=>void;
 }
 
-const ToDo = ({ TaskData, update }: PropTypes) => {
+const Task = ({ TaskData, update }: PropTypes) => {
   const [text, setText] = useState(TaskData.title);
   const [focused, setFocused] = useState(false);
   const [checked, setChecked] = useState(TaskData.state === TaskState.DONE);
@@ -58,4 +58,4 @@ const ToDo = ({ TaskData, update }: PropTypes) => {
   );
 };
 
-export default ToDo;
+export default Task;
