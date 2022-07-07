@@ -68,10 +68,26 @@ const todoPage = () => {
     }
   }
 
-/*   const renderTask = (data:Array<TaskModel>) => data && data.length > 0 ? data.map((task) => (
-    <Task TaskData={task} key={task._id} update={updateTask} />
-  )) : null; */
+  const renderTaskList = (data:Map<any, TaskModel>) => {
+    const toRender: Array<React.ReactNode> = [];
+    data.forEach((value) => 
+      toRender.push(<Task TaskData={value} key={value._id} update={updateTask} />)
+    );
+    return toRender;
+  };
 
+  const renderTask = (data:any) => {
+    const toRender: Array<React.ReactNode> = [];
+    if(taskList) {
+    taskList.forEach((value, key) => {
+      if(key !== "none")
+        toRender.push(<Collection collectionTitle={key} variant="normalCollection">{renderTaskList(value)}</Collection>)
+      else
+        toRender.push(renderTaskList(value));
+    });
+  }
+    return toRender;
+  }
 
   return (
     <>
@@ -79,6 +95,7 @@ const todoPage = () => {
       <div className="main-content">
         <Header title="To Do" />
         <div className="secondary-content">
+          {renderTask(taskList)}
 {/*           {renderTask(fakedata) || <p>Nothing to show</p>}
           <Collection collectionTitle="General" variant="normalCollection">
             {renderTask(taskList)}

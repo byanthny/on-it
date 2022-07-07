@@ -1,9 +1,9 @@
-import { Task, TaskState } from "common";
+import { Task as TaskModel, TaskState } from "common";
 import React, { useState } from "react";
 import styles from "./task.module.scss";
 
 interface PropTypes {
-  TaskData: Task;
+  TaskData: TaskModel;
   update: (title: string, state: TaskState, taskID: string)=>void;
 }
 
