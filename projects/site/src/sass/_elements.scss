@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  caret-color: scale-color($pastel-blue, $lightness: +5%);
+}
+
+p,
+h1 {
+  transition: $theme-transition;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: grey;
+  color: black;
+  border-radius: $border-radius;
+  border-style: none;
+  transition: $theme-transition;
+  margin: 5px;
+
+  &:hover {
+    background-color: var(--button-background-hover-color);
+    cursor: pointer;
+  }
+}
+
+input {
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 0;
+  border-radius: 5px;
+  background-color: var(--input-background);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 8px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}

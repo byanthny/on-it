@@ -3,8 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { ThemeProvider } from "./context/ThemeContext";
 import { UserProvider } from "./context/UserContext";
-import "./styles/global.scss";
-import "./styles/typography.scss";
+import "./sass/on-it.scss";
 
 ReactDOM.render(
   <ThemeProvider>

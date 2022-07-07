@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../sass/pages/authPage.scss";
 import Button from "../components/interactive/Button/Button";
 import AuthForm from "../components/forms/AuthForm/AuthForm";
 import { UserContext, UserContextData } from "../context/UserContext";
