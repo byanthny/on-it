@@ -1,22 +1,28 @@
-import { Task, TaskState } from "common";
+import { Tag, Task as TaskModel, TaskState } from "common";
 import React, { useState } from "react";
 import styles from "./task.module.scss";
 
 interface PropTypes {
-  TaskData: Task;
-  update: Function;
+  TaskData: TaskModel;
+  update: (
+    title: string,
+    state: TaskState,
+    taskID: string,
+    errorCallback: Function,
+    tags?: Array<Tag>,
+  ) => void;
 }
 
-const ToDo = ({ TaskData, update }: PropTypes) => {
+const Task = ({ TaskData, update }: PropTypes) => {
   const [text, setText] = useState(TaskData.title);
   const [focused, setFocused] = useState(false);
   const [checked, setChecked] = useState(TaskData.state === TaskState.DONE);
 
   /* When done editing callback to update Task */
   const updateText = (toUpdate: boolean, newText: string) => {
-    if (toUpdate) {
+    if (toUpdate && text !== newText) {
       setText(newText);
-      update(newText, TaskData.state);
+      update(newText, TaskData.state, TaskData._id!, errorCallback, TaskData.tags);
       setFocused(false);
     }
   };
@@ -25,14 +31,26 @@ const ToDo = ({ TaskData, update }: PropTypes) => {
   const updateStatus = (e: any) => {
     const updatedChecked = e.target.checked;
     setChecked(updatedChecked);
-    update(text, updatedChecked ? TaskState.DONE : TaskState.TODO);
+    update(
+      text,
+      updatedChecked ? TaskState.DONE : TaskState.TODO,
+      TaskData._id!,
+      errorCallback,
+      TaskData.tags,
+    );
+  };
+
+  /* Error Callback for API response */
+  const errorCallback = () => {
+    setChecked(TaskData.state === TaskState.DONE);
+    setText(TaskData.title);
   };
 
   return (
-    <div key={TaskData._id} className={focused ? styles.todoFocused : styles.todo}>
+    <div className={focused ? styles.todoFocused : styles.todo}>
       <input
         type="checkbox"
-        defaultChecked={checked}
+        checked={checked}
         onChange={updateStatus}
         className={styles.checkbox}
       />
@@ -58,4 +76,4 @@ const ToDo = ({ TaskData, update }: PropTypes) => {
   );
 };
 
-export default ToDo;
+export default Task;

@@ -1,15 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserRole } from "common";
+import CreateForm from "../components/forms/CreateForm/CreateForm";
 import Button from "../components/interactive/Button/Button";
 import { ThemeContext } from "../context/ThemeContext";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 import { UserContext, UserContextData } from "../context/UserContext";
-import OnItApi from "../services/OnItApi";
+import OnItApi, { createItem } from "../services/OnItApi";
 
 const settingsPage = () => {
   const { theme, setTheme } = useContext(ThemeContext);
   const { setUser } = useContext(UserContext);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const changeTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -38,9 +40,23 @@ const settingsPage = () => {
     setUser(loggedOutUser);
   };
 
+  const handleSubmit = async (
+    itemType: string,
+    data: { checked: boolean; description: string; title: string },
+  ) => {
+    try {
+      const response = await createItem(itemType, data);
+      if (response.error) throw response.error;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <NavBar />
+      <NavBar modalState={modalOpen} closeModal={setModalOpen}>
+        <CreateForm handleSubmit={handleSubmit} />
+      </NavBar>
       <div className="main-content">
         <Header title="Settings" />
         <div className="secondary-content">

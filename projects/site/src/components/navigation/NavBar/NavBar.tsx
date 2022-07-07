@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   RiSettings3Fill,
@@ -8,57 +8,55 @@ import {
   RiCheckboxFill,
   RiAddFill,
 } from "react-icons/ri";
-import { Task, TaskState } from "common";
 import styles from "./navbar.module.scss";
-import OnItApi from "../../../services/OnItApi";
+import Modal from "../../overlays/Modal/Modal";
 
-const Navbar = () => {
-  const tempCreate = (e: any) => {
+type PropTypes = {
+  children?: React.ReactNode;
+  modalState: boolean;
+  closeModal: Function;
+};
+
+const Navbar = ({ children, modalState, closeModal }: PropTypes) => {
+  const openCreateModal = (e: any) => {
     e.preventDefault();
-    // console.log(`${user.id}`);
-    const tempTask: Task = {
-      uid: "",
-      title: "test",
-      state: TaskState.TODO,
-    };
-    // console.log(tempTask);
-    try {
-      const response = OnItApi.task.create(tempTask);
-      // console.log(response);
-    } catch (error) {
-      // console.log(error)
-    }
+    closeModal(true);
   };
 
   return (
-    <div className={styles.navbar}>
-      <div className={styles.innerbox}>
-        <Link aria-label="home" to="/">
-          <RiHomeFill />
-        </Link>
-        <Link aria-label="to do" to="/todo">
-          <RiCheckboxFill />
-        </Link>
-        <button
-          aria-label="add"
-          type="button"
-          className={styles.addbutton}
-          onClick={(e) => tempCreate(e)}
-        >
-          <div className={styles.addbuttonwrapper}>
-            <div className={styles.addbuttonfixed}>
-              <RiAddFill />
+    <>
+      <div className={styles.navbar}>
+        <div className={styles.innerbox}>
+          <Link aria-label="home" to="/">
+            <RiHomeFill />
+          </Link>
+          <Link aria-label="to do" to="/todo">
+            <RiCheckboxFill />
+          </Link>
+          <button
+            aria-label="add"
+            type="button"
+            className={styles.addbutton}
+            onClick={(e) => openCreateModal(e)}
+          >
+            <div className={styles.addbuttonwrapper}>
+              <div className={styles.addbuttonfixed}>
+                <RiAddFill />
+              </div>
             </div>
-          </div>
-        </button>
-        <Link aria-label="notes" to="/notes">
-          <RiStickyNoteFill />
-        </Link>
-        <Link aria-label="settings" to="/settings">
-          <RiSettings3Fill />
-        </Link>
+          </button>
+          <Link aria-label="notes" to="/notes">
+            <RiStickyNoteFill />
+          </Link>
+          <Link aria-label="settings" to="/settings">
+            <RiSettings3Fill />
+          </Link>
+        </div>
       </div>
-    </div>
+      <Modal open={modalState} onClose={closeModal}>
+        {children}
+      </Modal>
+    </>
   );
 };
 
