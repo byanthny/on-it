@@ -1,33 +1,33 @@
 .noteCollection {
-    position: relative;
-    display: flex;
-    overflow-x: scroll;
-    font-size: 2rem;
-    transition: 0.4s;
-  
-    @include md {
-      flex-wrap: wrap;
-      overflow-x: hidden;
-    }
+  position: relative;
+  display: flex;
+  overflow-x: scroll;
+  font-size: $fixed-header;
+  transition: 0.4s;
 
-    .normal {
-        transition: 0.4s;
-    }
+  @include md {
+    flex-wrap: wrap;
+    overflow-x: hidden;
   }
-  
-  .closed {
-    height: 0;
-    display: none;
+
+  .normal {
+    transition: 0.4s;
   }
-  
-  .collectionTitle {
+}
+
+.closed {
+  height: 0;
+  display: none;
+}
+
+.collectionTitle {
+  font-size: $collectionFontSize;
+  padding: 15px 0;
+  button {
+    padding: 5px;
+    margin: 0px;
+  }
+  svg {
     font-size: $collectionFontSize;
-    padding: 15px 0;
-    button {
-      padding: 5px;
-      margin: 0px;
-    }
-    svg {
-      font-size: $collectionFontSize;
-    }
   }
+}

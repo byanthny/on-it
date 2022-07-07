@@ -47,12 +47,7 @@ const Task = ({ TaskData, update }: PropTypes) => {
 
   return (
     <div className={focused ? "todoFocused" : "todo"}>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={updateStatus}
-        className="checkbox"
-      />
+      <input type="checkbox" checked={checked} onChange={updateStatus} className="checkbox" />
       <span
         role="textbox"
         aria-label="click to edit todo"

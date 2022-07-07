@@ -1,28 +1,27 @@
 .normal {
-    background-color: var(--button-background-color);
-    color: var(--inverse-text-color);
-  
-    &:hover {
-      background-color: var(--button-background-hover-color);
-    }
+  background-color: var(--button-background-color);
+  color: var(--inverse-text-color);
+
+  &:hover {
+    background-color: var(--button-background-hover-color);
   }
-  
-  .transparent {
+}
+
+.transparent {
+  background-color: transparent;
+  color: var(--text-color);
+
+  &:hover {
     background-color: transparent;
-    color: var(--text-color);
-  
-    &:hover {
-      background-color: transparent;
-      text-decoration: underline;
-    }
+    text-decoration: underline;
   }
-  
-  .light {
-    background-color: $light;
-    color: $black;
-  
-    &:hover {
-      background-color: scale-color($light, $lightness: -5%);
-    }
+}
+
+.light {
+  background-color: $light;
+  color: $black;
+
+  &:hover {
+    background-color: scale-color($light, $lightness: -5%);
   }
-  
+}

@@ -1,74 +1,74 @@
 .navbar {
-    width: 100vw;
-    position: fixed;
-    bottom: 0;
-    z-index: 10;
-  }
-  
-  .navbar-inner {
-    display: flex;
-    justify-content: space-around;
-    //background-color: var(--navbar-color);
-    background-color: $navbar-color-dark;
-    border-radius: $border-radius;
-    margin: 0 auto;
-    margin-bottom: 25px;
-    max-width: 600px;
-    width: 90%;
-    max-height: min-content;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-  
-    a {
-      flex-grow: 1;
-      text-align: center;
-      padding: 3% 0;
-      color: $light;
-      font-size: clamp(0.15rem, 0.25rem + 3vw, 1.5rem);
-      border-radius: $border-radius;
-      transition: $theme-transition;
-  
-      &:hover {
-        background-color: scale-color($navbar-color-dark, $lightness: $darken);
-      }
-    }
-  }
-  
-  .navbar-add {
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+}
+
+.navbar-inner {
+  display: flex;
+  justify-content: space-around;
+  //background-color: var(--navbar-color);
+  background-color: $navbar-color-dark;
+  border-radius: $border-radius;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  max-width: 600px;
+  width: 90%;
+  max-height: min-content;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+
+  a {
     flex-grow: 1;
-    border-style: none;
-    background-color: transparent;
-  
+    text-align: center;
+    padding: 3% 0;
+    color: $light;
+    font-size: clamp(0.15rem, 0.25rem + 3vw, 1.5rem);
+    border-radius: $border-radius;
+    transition: $theme-transition;
+
     &:hover {
       background-color: scale-color($navbar-color-dark, $lightness: $darken);
-  
-      svg {
-        background-color: scale-color($add-button, $lightness: -2%);
-      }
     }
-  
-    svg {
-      background-color: $add-button;
-      font-size: clamp(0.55rem, 0.75rem + 3vw, 2rem);
-      padding: 25% 25%;
-      border-radius: 10px;
-      text-align: center;
-      color: $black;
-      @include box-shadow(0px, 2px, 5px, 0px, rgba(0, 0, 0, 0.264));
-    }
-
-    .addbuttonwrapper {
-        position: relative;
-        width: 100%;
-      }
-      
-      .addbuttonfixed {
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        top: 47.5%;
-        transform: translateY(-47.5%);
-      }
   }
+}
+
+.navbar-add {
+  flex-grow: 1;
+  border-style: none;
+  background-color: transparent;
+
+  &:hover {
+    background-color: scale-color($navbar-color-dark, $lightness: $darken);
+
+    svg {
+      background-color: scale-color($add-button, $lightness: -2%);
+    }
+  }
+
+  svg {
+    background-color: $add-button;
+    font-size: clamp(0.55rem, 0.75rem + 3vw, 2rem);
+    padding: 25% 25%;
+    border-radius: 10px;
+    text-align: center;
+    color: $black;
+    @include box-shadow(0px, 2px, 5px, 0px, rgba(0, 0, 0, 0.264));
+  }
+
+  .addbuttonwrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .addbuttonfixed {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 47.5%;
+    transform: translateY(-47.5%);
+  }
+}
