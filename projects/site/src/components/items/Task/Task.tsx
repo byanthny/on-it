@@ -14,7 +14,7 @@ const Task = ({ TaskData, update }: PropTypes) => {
 
   /* When done editing callback to update Task */
   const updateText = (toUpdate: boolean, newText: string) => {
-    if (toUpdate) {
+    if (toUpdate && text !== newText) {
       setText(newText);
       update(newText, TaskData.state, TaskData._id!, errorCallback, TaskData.tags);
       setFocused(false);
