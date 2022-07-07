@@ -111,6 +111,11 @@ class OnItApi {
   };
 }
 
+/* Creates a new Note or Task based on itemType 
+ * Uses provided data
+ * if handleResponse is provided the API payload is provided to that function
+ * Otherwise the response is returned
+*/
 export const createItem = async (
   itemType: string,
   data: { checked: boolean; description: string; title: string },
