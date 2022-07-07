@@ -1,8 +1,5 @@
-import { ClassNames } from "@emotion/react";
 import React from "react";
 import ReactDOM from "react-dom";
-import Button from "../../interactive/Button/Button";
-import styles from "./modal.module.scss";
 
 type PropTypes = {
   open: boolean;
@@ -14,15 +11,14 @@ const Modal = ({ open, children, onClose }: PropTypes) => {
   if (!open) return null;
 
   return ReactDOM.createPortal(
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <div className="overlay">
+      <div className="modal">
         <button
           type="button"
           onClick={(e) => {
             e.preventDefault();
             onClose(false);
           }}
-          className={styles.closeButton}
         >
           X
         </button>
