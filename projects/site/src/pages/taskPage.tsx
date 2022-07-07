@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Task as TaskModel, TaskState } from "common";
+import { Tag, Task as TaskModel, TaskState } from "common";
 import OnItApi, {createItem} from "../services/OnItApi";
 import Collection from "../components/items/Collection/Collection";
 import Task from "../components/items/Task/Task";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
-import { fakeTaskData as fakedata } from "../utils/constants"
 import CreateForm from "../components/forms/CreateForm/CreateForm";
 import { toKeyValueMap } from "../utils/utils";
 
@@ -24,7 +23,7 @@ const todoPage = () => {
         .catch(console.error);
   }, []);
 
-  const updateTask = async (title: string, state: TaskState, taskID: string) => {
+  const updateTask = async (title: string, state: TaskState, taskID: string, tags?: Array<Tag>) => {
     try {
       const updatedTask = {
         title,
@@ -35,12 +34,16 @@ const todoPage = () => {
       if (response.error)
         throw response.error;
       
-      taskList!.get("none");
+      if(tags && tags.length > 0)
+        tags.forEach((tag) => {
+          setTaskList(taskList!.set(tag, taskList!.get(tag).set(taskID, response.payload)))
+        })
+      else
+        taskList!.set("none", taskList!.get("none").set(taskID, response.payload));
       
     } catch (error) {
       console.log(error);
     }
-    // communicate to API
   };
 
   const handleResponse = (response: any) => {
@@ -49,10 +52,17 @@ const todoPage = () => {
       uid: response.uuid,
       title: response.title,
       state: response.state,
+      tags: response.tags,
     }
-    // setTaskList([...taskList, task]);
+
+    if(task.tags && task.tags.length > 0)
+    task.tags.forEach((tag) => {
+      setTaskList(taskList!.set(tag, taskList!.get(tag).set(task._id, task)))
+    })
+    else
+      setTaskList(taskList!.set("none", taskList!.get("none").set(task._id, task)));
+
     setModalOpen(false)
-    console.log(taskList);
   }
 
   const handleSubmit = async (itemType: string, data: {checked: boolean, description: string, title: string}) => {
@@ -96,10 +106,6 @@ const todoPage = () => {
         <Header title="To Do" />
         <div className="secondary-content">
           {renderTask(taskList)}
-{/*           {renderTask(fakedata) || <p>Nothing to show</p>}
-          <Collection collectionTitle="General" variant="normalCollection">
-            {renderTask(taskList)}
-          </Collection> */}
         </div>
       </div>
     </>
