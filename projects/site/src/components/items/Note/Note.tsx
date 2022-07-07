@@ -21,13 +21,13 @@ const Note = ({ NoteData }: PropTypes) => {
     `${NoteData.tags.length} ${NoteData.tags.length > 1 ? "Tags" : "Tag"}`;
 
   return (
-  <div className={styles.note}>
-    <div className={styles.noteInner}>
-      <p>{NoteData.title}</p>
-      <p>{NoteData.text}</p>
-      <p className="floatLeft">{tagCountString()}</p>
-      <p className="floatRight">{dateToString(NoteData.updated.toString())}</p>
-    </div>
+    <div className={styles.note}>
+      <div className={styles.noteInner}>
+        <p>{NoteData.title}</p>
+        <p>{NoteData.text}</p>
+        <p className="floatLeft">{tagCountString()}</p>
+        <p className="floatRight">{dateToString(NoteData.updated.toString())}</p>
+      </div>
     </div>
   );
 };

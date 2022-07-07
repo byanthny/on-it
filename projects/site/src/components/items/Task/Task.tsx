@@ -4,7 +4,13 @@ import styles from "./task.module.scss";
 
 interface PropTypes {
   TaskData: TaskModel;
-  update: (title: string, state: TaskState, taskID: string, errorCallback: Function, tags?: Array<Tag>)=>void;
+  update: (
+    title: string,
+    state: TaskState,
+    taskID: string,
+    errorCallback: Function,
+    tags?: Array<Tag>,
+  ) => void;
 }
 
 const Task = ({ TaskData, update }: PropTypes) => {
@@ -25,14 +31,20 @@ const Task = ({ TaskData, update }: PropTypes) => {
   const updateStatus = (e: any) => {
     const updatedChecked = e.target.checked;
     setChecked(updatedChecked);
-    update(text, updatedChecked ? TaskState.DONE : TaskState.TODO, TaskData._id!, errorCallback, TaskData.tags);
+    update(
+      text,
+      updatedChecked ? TaskState.DONE : TaskState.TODO,
+      TaskData._id!,
+      errorCallback,
+      TaskData.tags,
+    );
   };
 
   /* Error Callback for API response */
   const errorCallback = () => {
     setChecked(TaskData.state === TaskState.DONE);
     setText(TaskData.title);
-  }
+  };
 
   return (
     <div className={focused ? styles.todoFocused : styles.todo}>

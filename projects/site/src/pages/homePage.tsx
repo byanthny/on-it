@@ -10,7 +10,7 @@ const homePage = () => {
 
   return (
     <>
-      <NavBar modalState={modalOpen} closeModal={setModalOpen}/>
+      <NavBar modalState={modalOpen} closeModal={setModalOpen} />
       <div className="main-content">
         <Header title={dateString} />
       </div>

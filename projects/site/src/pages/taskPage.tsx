@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Tag, Task as TaskModel, TaskState } from "common";
-import OnItApi, {createItem} from "../services/OnItApi";
+import OnItApi, { createItem } from "../services/OnItApi";
 import Collection from "../components/items/Collection/Collection";
 import Task from "../components/items/Task/Task";
 import Header from "../components/navigation/Header/Header";
@@ -16,31 +16,33 @@ const todoPage = () => {
   const fetchData = async () => {
     const response = await OnItApi.task.search({});
     setTaskList(new Map([["none", toKeyValueMap(response.payload!)]]));
-  }
+  };
 
   useEffect(() => {
-      fetchData()
-        .catch(console.error);
+    fetchData().catch(console.error);
   }, []);
 
-  const updateTask = async (title: string, state: TaskState, taskID: string, errorCallback: Function, tags?: Array<Tag>) => {
+  const updateTask = async (
+    title: string,
+    state: TaskState,
+    taskID: string,
+    errorCallback: Function,
+    tags?: Array<Tag>,
+  ) => {
     try {
       const updatedTask = {
         title,
-        state 
-      }
+        state,
+      };
       const response = await OnItApi.task.update(taskID, updatedTask);
 
-      if (response.error)
-        throw response.error;
-      
-      if(tags && tags.length > 0)
+      if (response.error) throw response.error;
+
+      if (tags && tags.length > 0)
         tags.forEach((tag) => {
-          setTaskList(taskList!.set(tag, taskList!.get(tag).set(taskID, response.payload)))
-        })
-      else
-        taskList!.set("none", taskList!.get("none").set(taskID, response.payload));
-      
+          setTaskList(taskList!.set(tag, taskList!.get(tag).set(taskID, response.payload)));
+        });
+      else taskList!.set("none", taskList!.get("none").set(taskID, response.payload));
     } catch (error) {
       console.log(error);
       errorCallback();
@@ -54,60 +56,67 @@ const todoPage = () => {
       title: response.title,
       state: response.state,
       tags: response.tags,
-    }
+    };
 
-    if(task.tags && task.tags.length > 0)
-    task.tags.forEach((tag) => {
-      setTaskList(taskList!.set(tag, taskList!.get(tag).set(task._id, task)))
-    })
-    else
-      setTaskList(taskList!.set("none", taskList!.get("none").set(task._id, task)));
+    if (task.tags && task.tags.length > 0)
+      task.tags.forEach((tag) => {
+        setTaskList(taskList!.set(tag, taskList!.get(tag).set(task._id, task)));
+      });
+    else setTaskList(taskList!.set("none", taskList!.get("none").set(task._id, task)));
 
-    setModalOpen(false)
-  }
+    setModalOpen(false);
+  };
 
-  const handleSubmit = async (itemType: string, data: {checked: boolean, description: string, title: string}) => {
-    try {    
-      const response = await createItem(itemType, data, itemType==="task" ? handleResponse : undefined);
- 
-      if(response.error)
-        throw response.error
+  const handleSubmit = async (
+    itemType: string,
+    data: { checked: boolean; description: string; title: string },
+  ) => {
+    try {
+      const response = await createItem(
+        itemType,
+        data,
+        itemType === "task" ? handleResponse : undefined,
+      );
 
-    } catch(error) {
+      if (response.error) throw response.error;
+    } catch (error) {
       console.log(error);
-      setModalOpen(false)
+      setModalOpen(false);
     }
-  }
+  };
 
-  const renderTaskList = (data:Map<any, TaskModel>) => {
+  const renderTaskList = (data: Map<any, TaskModel>) => {
     const toRender: Array<React.ReactNode> = [];
-    data.forEach((value) => 
-      toRender.push(<Task TaskData={value} key={value._id} update={updateTask} />)
+    data.forEach((value) =>
+      toRender.push(<Task TaskData={value} key={value._id} update={updateTask} />),
     );
     return toRender;
   };
 
-  const renderTask = (data:any) => {
+  const renderTask = (data: any) => {
     const toRender: Array<React.ReactNode> = [];
-    if(taskList) {
-    taskList.forEach((value, key) => {
-      if(key !== "none")
-        toRender.push(<Collection collectionTitle={key} variant="normalCollection">{renderTaskList(value)}</Collection>)
-      else
-        toRender.push(renderTaskList(value));
-    });
-  }
+    if (taskList) {
+      taskList.forEach((value, key) => {
+        if (key !== "none")
+          toRender.push(
+            <Collection collectionTitle={key} variant="normalCollection">
+              {renderTaskList(value)}
+            </Collection>,
+          );
+        else toRender.push(renderTaskList(value));
+      });
+    }
     return toRender;
-  }
+  };
 
   return (
     <>
-      <NavBar modalState={modalOpen} closeModal={setModalOpen}><CreateForm handleSubmit={handleSubmit}/></NavBar>
+      <NavBar modalState={modalOpen} closeModal={setModalOpen}>
+        <CreateForm handleSubmit={handleSubmit} />
+      </NavBar>
       <div className="main-content">
         <Header title="To Do" />
-        <div className="secondary-content">
-          {renderTask(taskList)}
-        </div>
+        <div className="secondary-content">{renderTask(taskList)}</div>
       </div>
     </>
   );

@@ -22,14 +22,12 @@ const notesPage = () => {
   }, []);
 
   /* Render Notes */
-  const renderNotes = (data:Array<NoteModel>) => data && data.length > 0 ?
-    data.map((note) => (
-      <Note key={note._id} NoteData={note} />
-    )) : null;
+  const renderNotes = (data: Array<NoteModel>) =>
+    data && data.length > 0 ? data.map((note) => <Note key={note._id} NoteData={note} />) : null;
 
   return (
     <>
-      <NavBar modalState={modalOpen} closeModal={setModalOpen}/>
+      <NavBar modalState={modalOpen} closeModal={setModalOpen} />
       <div className="main-content">
         <Header title="Notes" />
         <div className="secondary-content">

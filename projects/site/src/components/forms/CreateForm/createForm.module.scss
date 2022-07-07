@@ -1,25 +1,24 @@
 @import "../../../styles/variables.scss";
 
 .createForm {
-    input {
-        background-color: scale-color(scale-color($dark, $lightness: $lighten*.75), $alpha: -100%);
-        border-bottom: 1px solid gray;
-        border-radius: 4px;
+  input {
+    background-color: scale-color(scale-color($dark, $lightness: $lighten * 0.75), $alpha: -100%);
+    border-bottom: 1px solid gray;
+    border-radius: 4px;
 
-        &:focus {
-            outline: none;
-        }
+    &:focus {
+      outline: none;
     }
+  }
 
-    text-align: center;
+  text-align: center;
 
-    .checkbox {
-        margin: 10px
-    }
+  .checkbox {
+    margin: 10px;
+  }
 }
 
 .task {
-    display: flex;
-    gap: 1;
+  display: flex;
+  gap: 1;
 }
-

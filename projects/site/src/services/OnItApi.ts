@@ -1,5 +1,16 @@
 import axios, { AxiosResponse } from "axios";
-import { ApiResponse, ID, Note, NoteSearch, Tag, TagSearch, Task, TaskSearch, TaskState, User } from "common";
+import {
+  ApiResponse,
+  ID,
+  Note,
+  NoteSearch,
+  Tag,
+  TagSearch,
+  Task,
+  TaskSearch,
+  TaskState,
+  User,
+} from "common";
 
 const API_URI =
   process.env.NODE_ENV.toUpperCase() === "PRODUCTION"
@@ -100,41 +111,42 @@ class OnItApi {
   };
 }
 
-export const createItem = async (itemType: string, data: {checked: boolean, description: string, title: string}, handleResponse?: Function) => {
-
-  const api = new OnItApi;
+export const createItem = async (
+  itemType: string,
+  data: { checked: boolean; description: string; title: string },
+  handleResponse?: Function,
+) => {
+  const api = new OnItApi();
   let response;
-    if(itemType === "task") {
-      const task: Task = {
-        uid: "",
-        title: data.title,
-        state: data.checked ? TaskState.DONE : TaskState.TODO,
-        // description?: string | undefined;
-        // parent?: string | undefined;
-        // tags?: Tag[] | undefined;
-        // due?: number | Date | undefined;
-        // reminders?: Date[] | ... 1 more ... | undefined;
-        // pinned?: boolean | undefined
-      }
-      response = await api.task.create(task);
-    }
-    else {
-      const note: Note = {
-        uid: "",
-        parent: "",
-        // order?: number | undefined;
-        title: data.title,
-        text: data.description,
-        tags: [],
-        updated: (new Date).toISOString()
-      }
-      response = await api.note.create(note);
-    }
+  if (itemType === "task") {
+    const task: Task = {
+      uid: "",
+      title: data.title,
+      state: data.checked ? TaskState.DONE : TaskState.TODO,
+      // description?: string | undefined;
+      // parent?: string | undefined;
+      // tags?: Tag[] | undefined;
+      // due?: number | Date | undefined;
+      // reminders?: Date[] | ... 1 more ... | undefined;
+      // pinned?: boolean | undefined
+    };
+    response = await api.task.create(task);
+  } else {
+    const note: Note = {
+      uid: "",
+      parent: "",
+      // order?: number | undefined;
+      title: data.title,
+      text: data.description,
+      tags: [],
+      updated: new Date().toISOString(),
+    };
+    response = await api.note.create(note);
+  }
 
-    if(handleResponse && !response.error)
-      handleResponse(response.payload);
+  if (handleResponse && !response.error) handleResponse(response.payload);
 
-    return response;
-}
+  return response;
+};
 
 export default new OnItApi();

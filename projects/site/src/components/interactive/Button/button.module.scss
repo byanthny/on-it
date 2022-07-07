@@ -13,17 +13,17 @@
   background-color: transparent;
   color: var(--text-color);
 
-    &:hover {
-        background-color: transparent;
-        text-decoration: underline;
-    }
+  &:hover {
+    background-color: transparent;
+    text-decoration: underline;
+  }
 }
 
 .light {
-    background-color: $light;
-    color: $black;
+  background-color: $light;
+  color: $black;
 
-    &:hover {
-        background-color: scale-color($light, $lightness: -5%);
-    }
+  &:hover {
+    background-color: scale-color($light, $lightness: -5%);
+  }
 }

@@ -8,5 +8,5 @@ export const daysTillDue = (date: string) =>
 
 export const dateToString = (date: string) => new Date(date).toDateString();
 
-export const toKeyValueMap = (items: Array<Task | Note>) => 
-  new Map(items.map((item)=>[item._id, item]));
+export const toKeyValueMap = (items: Array<Task | Note>) =>
+  new Map(items.map((item) => [item._id, item]));
