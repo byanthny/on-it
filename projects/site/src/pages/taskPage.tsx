@@ -23,7 +23,7 @@ const todoPage = () => {
         .catch(console.error);
   }, []);
 
-  const updateTask = async (title: string, state: TaskState, taskID: string, tags?: Array<Tag>) => {
+  const updateTask = async (title: string, state: TaskState, taskID: string, errorCallback: Function, tags?: Array<Tag>) => {
     try {
       const updatedTask = {
         title,
@@ -43,6 +43,7 @@ const todoPage = () => {
       
     } catch (error) {
       console.log(error);
+      errorCallback();
     }
   };
 
