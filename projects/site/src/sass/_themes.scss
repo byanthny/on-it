@@ -1,11 +1,30 @@
 /* Themes */
 
 $themes: (
-  $light: (
+  light: (
     bg: $light,
+    text-color: $black,
     header-bg: scale-color($light, $alpha: -20%),
+    button-bg-hover: scale-color($button-color-light, $lightness: $darken),
+    button-bg: $button-color-light,
+    todo-bg-hover: $todo-color-dark,
+    todo-bg: scale-color($todo-color-light, $lightness: +3%),
+    input-bg: scale-color($light, $lightness: $lighten),
+    note-bg: scale-color($dark, $lightness: $lighten * 0.25),
+    note-bg-hover: scale-color($dark, $lightness: $lighten * 0.75),
   ),
-  $dark: (),
+  dark: (
+    bg: $dark,
+    text-color: $white,
+    header-bg: scale-color($dark, $alpha: -20%),
+    button-bg: $button-color-dark,
+    button-bg-hover: scale-color($button-color-dark, $lightness: $lighten),
+    todo-bg-hover: scale-color($todo-color-light, $lightness: $lighten),
+    todo-bg: $todo-color-dark,
+    input-bg: scale-color($dark, $lightness: $lighten * 0.75),
+    note-bg: scale-color($dark, $lightness: $lighten * 0.25),
+    note-hover-bg: scale-color($dark, $lightness: $lighten * 0.75),
+  ),
 );
 
 .light {

@@ -3,7 +3,7 @@
 /* Themes */
 @mixin themify() {
   @each $theme, $map in $themes {
-    .theme--#{$theme} & {
+    .#{$theme} & {
       $theme-map: () !global;
       @each $key, $submap in $map {
         $value: map-get(map-get($themes, $theme), "#{$key}");
@@ -23,6 +23,21 @@
 @function themed($key) {
   @return map-get($theme-map, $key);
 }
+
+@function getTextColorBasedOnBG($color) {
+  @if (lightness($color) > 50) {
+    @return $black;
+  } @else {
+    @return $white;
+  }
+};
+
+@mixin applyTextColor($bg-color) {
+  @include themify(){
+    background: themed($bg-color);
+    color: getTextColorBasedOnBG(themed($bg-color));
+  }
+};
 
 /* Media Queries */
 // Small

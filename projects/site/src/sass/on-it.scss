@@ -1,4 +1,6 @@
-//Main Imports
+/* Main Sass file */ 
+
+// General
 @import "./_variables.scss";
 @import "./themes.scss";
 @import "./_mixins.scss";
@@ -7,7 +9,7 @@
 
 @import "./global.scss";
 
-// Elements
+// Components
 @import "./components/authForm.scss";
 @import "./components/button.scss";
 @import "./components/collection.scss";
