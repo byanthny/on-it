@@ -12,7 +12,9 @@
 
   &.transparent {
     background-color: transparent;
-    color: var(--text-color);
+    @include themify() {
+      color: themed("text-color");
+    }
 
     &:hover {
       background-color: transparent;
