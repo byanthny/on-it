@@ -46,7 +46,7 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
       )}
       {error.error ? <p className="errorMessage">{error.errorMessage}</p> : ""}
       <Button
-        variant="normal"
+        variant="light"
         onClick={(e: any) => submitForm(e, email, password, confirmPassword)}
       >
         {loginState ? "Login" : "Sign Up"}
