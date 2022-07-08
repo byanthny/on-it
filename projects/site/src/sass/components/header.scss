@@ -1,22 +1,20 @@
-@import "../../../styles/variables.scss";
-
 .header {
   position: sticky;
   top: 0;
   width: 100%;
-  background-color: var(--header-background-color);
+  @include applyTextColor("header-bg");
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   display: flex;
   justify-content: space-between;
-  padding-top: 15px;
+  padding-top: $small-gap;
   z-index: 10;
   transition: $theme-transition;
-}
 
-.searchIcon {
-  font-size: 2rem;
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
+  a {
+    font-size: 2rem;
+    position: absolute;
+    bottom: $small-gap;
+    right: $small-gap;
+  }
 }

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../sass/pages/authPage.scss";
 import Button from "../components/interactive/Button/Button";
 import AuthForm from "../components/forms/AuthForm/AuthForm";
 import { UserContext, UserContextData } from "../context/UserContext";
@@ -47,7 +48,7 @@ const authPage = () => {
         <div className="secondary-content-xs authPage">
           <h1>On-It</h1>
           <AuthForm loginState={login} submit={submitForm} />
-          <Button variant="transparent" onClickFunction={() => setLogin(!login)}>
+          <Button variant="transparent" onClick={() => setLogin(!login)}>
             {login ? "Don't have an account?" : "Already have an account?"}
           </Button>
         </div>

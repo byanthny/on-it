@@ -1,14 +1,13 @@
 import React from "react";
-import styles from "./button.module.scss";
 
-interface PropTypes {
+type PropTypes = {
   children: React.ReactNode;
-  onClickFunction: (e?: any) => void;
-  variant: string;
-}
+  onClick: (e?: any) => void;
+  variant: "dark" | "normal" | "light" | "transparent";
+};
 
-const Button = ({ children, onClickFunction, variant }: PropTypes) => (
-  <button className={`${styles[variant]}`} type="button" onClick={onClickFunction}>
+const Button = ({ children, onClick, variant }: PropTypes) => (
+  <button className={`${variant} button`} type="button" onClick={onClick}>
     {children}
   </button>
 );

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { RiArrowDropDownLine, RiArrowDropRightLine } from "react-icons/ri";
 import Button from "../../interactive/Button/Button";
-import styles from "./collection.module.scss";
 
 type CollectionTypes = "noteCollection" | "normalCollection";
 
@@ -16,13 +15,13 @@ const Collection = ({ children, collectionTitle, variant }: PropTypes) => {
 
   return (
     <>
-      <h2 className={styles.collectionTitle}>
+      <h2 className="collectionTitle">
         {collectionTitle}
-        <Button variant="transparent" onClickFunction={() => setOpen(!open)}>
+        <Button variant="transparent" onClick={() => setOpen(!open)}>
           {open ? <RiArrowDropDownLine /> : <RiArrowDropRightLine />}
         </Button>
       </h2>
-      <div className={`${styles[variant]} ${open ? "" : styles.collectionClosed}`}>
+      <div className={`noteCollection ${variant} ${open ? "" : "closed"}`}>
         {children || <p>nothing to show</p>}
       </div>
     </>

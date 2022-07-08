@@ -1,0 +1,60 @@
+.background {
+  width: 100%;
+  min-height: -webkit-fill-available;
+  min-height: 100vh;
+  transition: $theme-transition;
+  @include applyTextColor("bg");
+}
+
+.main-content {
+  padding: 25px;
+  max-width: $content-max-width;
+  margin: 0 auto;
+  padding-top: clamp(25px, 10vh, 150px) !important;
+  background-color: inherit;
+
+  @include md {
+    padding: 5rem;
+  }
+}
+
+.secondary-content {
+  padding: 15px;
+  display: block;
+  overflow: hidden;
+}
+
+.secondary-content-xs {
+  max-width: min(100vw, 650px);
+  margin: 0 auto;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 25px;
+}
+
+.right {
+  position: absolute;
+  right: 25px;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.textLeft {
+  text-align: left;
+}
+
+.floatRight {
+  float: right;
+}
+
+.floatLeft {
+  float: left;
+}

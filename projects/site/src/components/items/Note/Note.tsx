@@ -1,6 +1,5 @@
 import React from "react";
 import { Note as NoteModel } from "common";
-import styles from "./note.module.scss";
 import { dateToString } from "../../../utils/utils";
 
 type PropTypes = {
@@ -21,8 +20,8 @@ const Note = ({ NoteData }: PropTypes) => {
     `${NoteData.tags.length} ${NoteData.tags.length > 1 ? "Tags" : "Tag"}`;
 
   return (
-    <div className={styles.note}>
-      <div className={styles.noteInner}>
+    <div className="note">
+      <div className="noteInner">
         <p>{NoteData.title}</p>
         <p>{NoteData.text}</p>
         <p className="floatLeft">{tagCountString()}</p>

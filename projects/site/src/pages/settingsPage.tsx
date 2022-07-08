@@ -60,11 +60,11 @@ const settingsPage = () => {
       <div className="main-content">
         <Header title="Settings" />
         <div className="secondary-content">
-          <Button variant="normal" onClickFunction={changeTheme}>
+          <Button variant="normal" onClick={changeTheme}>
             toggle theme
           </Button>
           <br />
-          <Button variant="normal" onClickFunction={logout}>
+          <Button variant="normal" onClick={logout}>
             logout
           </Button>
         </div>

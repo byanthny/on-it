@@ -1,15 +1,14 @@
 import React from "react";
 import { RiSearchLine } from "react-icons/ri";
-import styles from "./header.module.scss";
 
 interface PropTypes {
   title: string;
 }
 
 const Header = ({ title }: PropTypes) => (
-  <div className={styles.header}>
+  <div className="header">
     <h1>{title}</h1>
-    <a aria-label="search" href="/#" className={styles.searchIcon}>
+    <a aria-label="search" href="/#">
       <RiSearchLine />
     </a>
   </div>

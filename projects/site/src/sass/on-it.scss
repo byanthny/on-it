@@ -1,0 +1,21 @@
+/* Main Sass file */
+
+// General
+@import "./_variables.scss";
+@import "./themes.scss";
+@import "./_mixins.scss";
+@import "./typography.scss";
+@import "./_elements.scss";
+
+@import "./global.scss";
+
+// Components
+@import "./components/authForm.scss";
+@import "./components/button.scss";
+@import "./components/collection.scss";
+@import "./components/createForm.scss";
+@import "./components/header.scss";
+@import "./components/modal.scss";
+@import "./components/navbar.scss";
+@import "./components/note.scss";
+@import "./components/task.scss";

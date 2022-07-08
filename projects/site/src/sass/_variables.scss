@@ -1,19 +1,13 @@
 /* Colors */
-$light: rgb(239, 239, 231);
-$dark: rgb(22, 22, 22);
-$darker: scale-color($dark, $lightness: -30%);
-
 $black: black;
 $white: white;
+$faded-black: rgb(22, 22, 22);
+$off-white: rgb(239, 239, 231);
 $pastel-blue: rgb(58, 141, 223);
 
-/* Navbar */
-$navbar-color-light: scale-color($dark, $lightness: -5%);
-$navbar-color-dark: scale-color(scale-color($dark, $lightness: +3%), $alpha: -10%);
-
-$add-button: scale-color($light, $lightness: +10%);
-
-$nav-max-width: 600px;
+$light: $off-white;
+$dark: $faded-black;
+$darker: scale-color($dark, $lightness: -30%);
 
 /* Buttons */
 $button-color-light: scale-color($dark, $lightness: -5%);
@@ -22,6 +16,11 @@ $button-color-dark: scale-color($light, $lightness: -5%);
 /* To Do */
 $todo-color-light: scale-color($dark, $lightness: -5%);
 $todo-color-dark: scale-color($light, $lightness: -5%);
+
+/* Navbar */
+$navbar-color-dark: scale-color(scale-color($dark, $lightness: +3%), $alpha: -10%);
+$add-button: scale-color($light, $lightness: +10%);
+$nav-max-width: 600px;
 
 /* Media Queries */
 $sm-screen: 768px;
@@ -33,15 +32,18 @@ $lighten: +20%;
 $darken: -20%;
 
 $border-radius: 10px;
-$theme-transition: background-color 0.5s ease;
-$todo-transition: background-color 0.5s ease, padding 0.25s ease-in;
-$note-transition: background-color 0.5s ease;
+$bg-transition: background-color 0.5s ease;
+$todo-transition: $bg-transition, padding 0.25s ease-in;
+$note-transition: $bg-transition;
+$theme-transition: $bg-transition;
 
-$margin: 15px;
+$small-gap: 15px;
+$large-gap: 25px;
+
+$margin: $small-gap;
 
 $content-max-width: 1250px;
 
-/* Themes */
 .light {
   // --navbar-color: #{$navbar-color-light};
   --background-color: #{$light};

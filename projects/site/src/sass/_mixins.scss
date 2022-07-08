@@ -1,0 +1,77 @@
+@import "./variables.scss";
+
+/* Themes */
+@mixin themify() {
+  @each $theme, $map in $themes {
+    .#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), "#{$key}");
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value,
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
+
+@function getTextColorBasedOnBG($color) {
+  @if (lightness($color) > 50) {
+    @return $black;
+  } @else {
+    @return $white;
+  }
+}
+
+@mixin applyTextColor($bg-color) {
+  @include themify() {
+    background: themed($bg-color);
+    color: getTextColorBasedOnBG(themed($bg-color));
+  }
+}
+
+/* Media Queries */
+// Small
+@mixin sm {
+  @media (min-width: #{$sm-screen}) {
+    @content;
+  }
+}
+
+// Medium
+@mixin md {
+  @media (min-width: #{$md-screen}) {
+    @content;
+  }
+}
+
+// Large
+@mixin lg {
+  @media (min-width: #{$lg-screen}) {
+    @content;
+  }
+}
+
+// Custom
+@mixin rwd($screen) {
+  @media (min-width: ($screen + "px")) {
+    @content;
+  }
+}
+
+/* Misc */
+
+@mixin box-shadow($top, $left, $blur, $size, $color) {
+  -webkit-box-shadow: $top $left $blur $size $color;
+  -moz-box-shadow: $top $left $blur $size $color;
+  box-shadow: $top $left $blur $size $color;
+}
