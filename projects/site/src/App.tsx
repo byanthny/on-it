@@ -24,31 +24,33 @@ const App = () => {
   };
 
   return (
-    <div className={`${theme} background`}>
-      <Router basename="/on-it">
-        <Routes>
-          {/* Main Routes */}
-          <Route
-            path="/settings"
-            element={<PrivateRoute {...defaultPrivateRouteProps} component={<SettingsPage />} />}
-          />
-          <Route
-            path="/notes"
-            element={<PrivateRoute {...defaultPrivateRouteProps} component={<NotesPage />} />}
-          />
-          <Route
-            path="/todo"
-            element={<PrivateRoute {...defaultPrivateRouteProps} component={<TaskPage />} />}
-          />
-          <Route path="/" element={user.loggedIn ? <HomePage /> : <AuthPage />} />
-          <Route path="*" element={<PageNoteFound />} />
+    <div className={theme}>
+      <div className="background">
+        <Router basename="/on-it">
+          <Routes>
+            {/* Main Routes */}
+            <Route
+              path="/settings"
+              element={<PrivateRoute {...defaultPrivateRouteProps} component={<SettingsPage />} />}
+            />
+            <Route
+              path="/notes"
+              element={<PrivateRoute {...defaultPrivateRouteProps} component={<NotesPage />} />}
+            />
+            <Route
+              path="/todo"
+              element={<PrivateRoute {...defaultPrivateRouteProps} component={<TaskPage />} />}
+            />
+            <Route path="/" element={user.loggedIn ? <HomePage /> : <AuthPage />} />
+            <Route path="*" element={<PageNoteFound />} />
 
-          {/* Development Only Routes */}
-          {process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT" && (
-            <Route path="/dev" element={<DevPage />} />
-          )}
-        </Routes>
-      </Router>
+            {/* Development Only Routes */}
+            {process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT" && (
+              <Route path="/dev" element={<DevPage />} />
+            )}
+          </Routes>
+        </Router>
+      </div>
     </div>
   );
 };

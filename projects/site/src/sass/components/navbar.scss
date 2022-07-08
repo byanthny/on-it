@@ -37,7 +37,7 @@
 .navbar-add {
   flex-grow: 1;
   border-style: none;
-  background-color: transparent;
+  background-color: transparent !important;
 
   &:hover {
     background-color: scale-color($navbar-color-dark, $lightness: $darken);

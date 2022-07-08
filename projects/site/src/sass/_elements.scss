@@ -10,15 +10,14 @@ h1 {
 
 button {
   padding: 10px 15px;
-  background-color: grey;
-  color: black;
+  @include applyTextColor("button-bg");
   border-radius: $border-radius;
   border-style: none;
   transition: $theme-transition;
   margin: 5px;
 
   &:hover {
-    background-color: var(--button-background-hover-color);
+    @include applyTextColor("button-bg-hover");
     cursor: pointer;
   }
 }
@@ -28,8 +27,7 @@ input {
   margin-bottom: 25px;
   padding: 0;
   border-radius: 5px;
-  background-color: var(--input-background);
-  color: var(--text-color);
+  @include applyTextColor("input-bg");
   border: none;
   padding: 10px 8px;
   -webkit-box-sizing: border-box;

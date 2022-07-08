@@ -3,8 +3,7 @@
   min-height: -webkit-fill-available;
   min-height: 100vh;
   transition: $theme-transition;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  @include applyTextColor("bg");
 }
 
 .main-content {
