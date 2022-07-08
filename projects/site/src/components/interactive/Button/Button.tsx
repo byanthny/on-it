@@ -1,13 +1,13 @@
 import React from "react";
 
-interface PropTypes {
-  children: React.ReactNode;
-  onClickFunction: (e?: any) => void;
-  variant: string;
+type PropTypes = {
+  children: React.ReactNode,
+  onClick: (e?: any) => void,
+  variant: "dark" | "normal" | "light" | "transparent",
 }
 
-const Button = ({ children, onClickFunction, variant }: PropTypes) => (
-  <button className={`${variant}`} type="button" onClick={onClickFunction}>
+const Button = ({ children, onClick, variant }: PropTypes) => (
+  <button className={`${variant} button`} type="button" onClick={onClick}>
     {children}
   </button>
 );

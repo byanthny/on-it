@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Button from "../../interactive/Button/Button";
-import styles from "./authForm.module.scss";
 
 interface PropTypes {
   loginState: boolean;
@@ -48,7 +47,7 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
       {error.error ? <p className="errorMessage">{error.errorMessage}</p> : ""}
       <Button
         variant="normal"
-        onClickFunction={(e: any) => submitForm(e, email, password, confirmPassword)}
+        onClick={(e: any) => submitForm(e, email, password, confirmPassword)}
       >
         {loginState ? "Login" : "Sign Up"}
       </Button>

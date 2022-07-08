@@ -17,7 +17,7 @@ const Collection = ({ children, collectionTitle, variant }: PropTypes) => {
     <>
       <h2 className="collectionTitle">
         {collectionTitle}
-        <Button variant="transparent" onClickFunction={() => setOpen(!open)}>
+        <Button variant="transparent" onClick={() => setOpen(!open)}>
           {open ? <RiArrowDropDownLine /> : <RiArrowDropRightLine />}
         </Button>
       </h2>

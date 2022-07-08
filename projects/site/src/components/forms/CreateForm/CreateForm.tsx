@@ -44,7 +44,7 @@ const CreateForm = ({ handleSubmit }: PropTypes) => {
       />
       <p>placeholder for other features</p>
       <br />
-      <Button variant="light" onClickFunction={(e) => submit(e)}>
+      <Button variant="light" onClick={(e) => submit(e)}>
         done
       </Button>
     </div>

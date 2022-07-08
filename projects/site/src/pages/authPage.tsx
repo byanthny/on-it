@@ -48,7 +48,7 @@ const authPage = () => {
         <div className="secondary-content-xs authPage">
           <h1>On-It</h1>
           <AuthForm loginState={login} submit={submitForm} />
-          <Button variant="transparent" onClickFunction={() => setLogin(!login)}>
+          <Button variant="transparent" onClick={() => setLogin(!login)}>
             {login ? "Don't have an account?" : "Already have an account?"}
           </Button>
         </div>
