@@ -19,6 +19,7 @@ const Modal = ({ open, children, onClose }: PropTypes) => {
             e.preventDefault();
             onClose(false);
           }}
+          className="closeButton"
         >
           X
         </button>
