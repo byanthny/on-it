@@ -25,7 +25,7 @@ const CreateForm = ({ handleSubmit }: PropTypes) => {
   };
 
   return (
-    <div className="createForm">
+    <form className="createForm">
       <div className="task">
         {description.length < 1 && (
           <input
@@ -44,10 +44,10 @@ const CreateForm = ({ handleSubmit }: PropTypes) => {
       />
       <p>placeholder for other features</p>
       <br />
-      <Button variant="light" onClick={(e) => submit(e)}>
+      <Button variant="light" onClick={(e) => submit(e)} submitButton>
         done
       </Button>
-    </div>
+    </form>
   );
 };
 
