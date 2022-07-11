@@ -48,6 +48,9 @@ const App = () => {
             {process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT" && (
               <Route path="/dev" element={<DevPage />} />
             )}
+            {process.env.NODE_ENV.toUpperCase() === "DEVELOPMENT" && (
+              <Route path="/auth" element={<AuthPage />} />
+            )}
           </Routes>
         </Router>
       </div>
