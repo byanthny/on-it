@@ -1,5 +1,13 @@
 /* Main Sass file */
 
+//Resets 
+* {
+    font-family: sans-serif;
+    text-decoration: none;
+    margin: 0;
+ }
+
+
 // General
 @import "./_variables.scss";
 @import "./themes.scss";

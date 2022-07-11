@@ -3,15 +3,10 @@
   display: flex;
   overflow-x: scroll;
   font-size: $fixed-header;
-  transition: 0.4s;
 
   @include md {
     flex-wrap: wrap;
     overflow-x: hidden;
-  }
-
-  .normal {
-    transition: 0.4s;
   }
 }
 
@@ -22,7 +17,7 @@
 
 .collectionTitle {
   font-size: $collectionFontSize;
-  padding: 15px 0;
+  padding: $small-gap 0;
   button {
     padding: 5px;
     margin: 0px;

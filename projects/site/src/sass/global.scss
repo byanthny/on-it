@@ -1,16 +1,16 @@
 .background {
+  @include applyTextColor("bg");
   width: 100%;
   min-height: -webkit-fill-available;
   min-height: 100vh;
-  transition: $theme-transition;
-  @include applyTextColor("bg");
+  transition: $bg-transition;
 }
 
 .main-content {
-  padding: 25px;
+  padding: $large-gap;
   max-width: $content-max-width;
   margin: 0 auto;
-  padding-top: clamp(25px, 10vh, 150px) !important;
+  padding-top: $main-content-padding-top !important;
   background-color: inherit;
 
   @include md {
@@ -19,24 +19,24 @@
 }
 
 .secondary-content {
-  padding: 15px;
+  padding: $small-gap;
   display: block;
   overflow: hidden;
 }
 
 .secondary-content-xs {
-  max-width: min(100vw, 650px);
+  max-width: $secondary-content-xs-width;
   margin: 0 auto;
 }
 
 .bottom {
   position: absolute;
-  bottom: 25px;
+  bottom: $large-gap;
 }
 
 .right {
   position: absolute;
-  right: 25px;
+  right: $large-gap;
 }
 
 .textCenter {

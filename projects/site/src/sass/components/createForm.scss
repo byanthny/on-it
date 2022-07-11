@@ -1,8 +1,8 @@
 .createForm {
   input {
-    background-color: scale-color(scale-color($dark, $lightness: $lighten * 0.75), $alpha: -100%);
-    border-bottom: 1px solid gray;
-    border-radius: 4px;
+    background-color: $modal-input-bg;
+    border-bottom: 1px solid $grey;
+    border-radius: $input-border-radius;
 
     &:focus {
       outline: none;

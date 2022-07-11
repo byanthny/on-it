@@ -1,18 +1,18 @@
 .authForm {
   display: block;
   text-align: center;
-  margin: 25px 0;
-  background-color: scale-color($dark, $lightness: +3%);
+  margin: $large-gap 0;
+  background-color: $auth-bg-color;
   border-radius: $border-radius;
   padding: 35px 25px;
   @include box-shadow(0px, 0px, 25px, 0px, rgba(0, 0, 0, 0.08));
 
   h2 {
     text-align: left;
-    margin-bottom: 25px;
+    margin-bottom: $large-gap;
   }
   .errorMessage {
     color: red;
-    margin-bottom: 15px;
+    margin-bottom: $small-gap;
   }
 }
