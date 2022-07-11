@@ -24,6 +24,7 @@
     color: $black;
     &:hover {
       background-color: scale-color($light, $lightness: -5%);
+      color: $black;
     }
   }
 
@@ -32,6 +33,7 @@
     color: $white;
     &:hover {
       background-color: scale-color($dark, $lightness: -5%);
+      color: $white;
     }
   }
 }
