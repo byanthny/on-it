@@ -1,11 +1,8 @@
 .button {
   &.normal {
-    // background-color: var(--button-background-color);
-    // color: var(--inverse-text-color);
     @include applyTextColor("button-bg");
 
     &:hover {
-      // background-color: var(--button-background-hover-color);
       @include applyTextColor("button-bg-hover");
     }
   }
@@ -25,18 +22,18 @@
   &.light {
     background-color: $light;
     color: $black;
-
     &:hover {
       background-color: scale-color($light, $lightness: -5%);
+      color: $black;
     }
   }
 
   &.dark {
     background-color: $dark;
-    color: $black;
-
+    color: $white;
     &:hover {
-      background-color: scale-color($light, $lightness: -5%);
+      background-color: scale-color($dark, $lightness: -5%);
+      color: $white;
     }
   }
 }

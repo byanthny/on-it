@@ -1,12 +1,11 @@
 .note {
-  padding: 25px;
   @include applyTextColor("note-bg");
+  padding: $large-gap;
   border-radius: $border-radius;
-  color: $white;
-  margin: 15px;
+  margin: $small-gap;
   width: 40%;
   flex-shrink: 0;
-  transition: $note-transition;
+  transition: $bg-transition;
 
   &:hover {
     @include applyTextColor("note-bg-hover");

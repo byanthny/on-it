@@ -1,19 +1,20 @@
 * {
   margin: 0;
-  caret-color: scale-color($pastel-blue, $lightness: +5%);
+  caret-color: $caret-color;
 }
 
 p,
 h1 {
-  transition: $theme-transition;
+  transition: $bg-transition;
 }
 
 button {
-  padding: 10px 15px;
   @include applyTextColor("button-bg");
+
+  padding: 10px 15px;
   border-radius: $border-radius;
   border-style: none;
-  transition: $theme-transition;
+  transition: $bg-transition;
   margin: 5px;
 
   &:hover {
@@ -23,14 +24,26 @@ button {
 }
 
 input {
-  width: 100%;
-  margin-bottom: 25px;
-  padding: 0;
-  border-radius: 5px;
   @include applyTextColor("input-bg");
+
+  width: 100%;
+  margin-bottom: $large-gap;
+  padding: 0;
+  border-radius: $border-radius;
   border: none;
   padding: 10px 8px;
+
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+a {
+  @include themify() {
+    color: themed("text-color")
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

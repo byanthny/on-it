@@ -1,26 +1,20 @@
 /* Colors */
 $black: black;
 $white: white;
+$grey: grey;
 $faded-black: rgb(22, 22, 22);
 $off-white: rgb(239, 239, 231);
 $pastel-blue: rgb(58, 141, 223);
 
+/* Themes */
 $light: $off-white;
 $dark: $faded-black;
 $darker: scale-color($dark, $lightness: -30%);
-
-/* Buttons */
-$button-color-light: scale-color($dark, $lightness: -5%);
-$button-color-dark: scale-color($light, $lightness: -5%);
-
-/* To Do */
-$todo-color-light: scale-color($dark, $lightness: -5%);
-$todo-color-dark: scale-color($light, $lightness: -5%);
-
-/* Navbar */
-$navbar-color-dark: scale-color(scale-color($dark, $lightness: +3%), $alpha: -10%);
-$add-button: scale-color($light, $lightness: +10%);
-$nav-max-width: 600px;
+$bg-light: $light;
+$bg-dark: $dark;
+$text-light: $black;
+$text-dark: $white;
+$caret-color: scale-color($pastel-blue, $lightness: +5%);
 
 /* Media Queries */
 $sm-screen: 768px;
@@ -30,13 +24,9 @@ $lg-screen: 1200px;
 /* Misc */
 $lighten: +20%;
 $darken: -20%;
+$blur-amount: 5px;
 
-$border-radius: 10px;
-$bg-transition: background-color 0.5s ease;
-$todo-transition: $bg-transition, padding 0.25s ease-in;
-$note-transition: $bg-transition;
-$theme-transition: $bg-transition;
-
+/* Layout */
 $small-gap: 15px;
 $large-gap: 25px;
 
@@ -44,32 +34,62 @@ $margin: $small-gap;
 
 $content-max-width: 1250px;
 
-.light {
-  // --navbar-color: #{$navbar-color-light};
-  --background-color: #{$light};
-  --header-background-color: #{scale-color($light, $alpha: -20%)};
-  --button-background-hover-color: #{scale-color($button-color-light, $lightness: $darken)};
-  --button-background-color: #{$button-color-light};
-  --text-color: #{$black};
-  --inverse-text-color: #{$white};
-  --todo-background-hover-color: #{$todo-color-dark};
-  --todo-background-color: #{scale-color($todo-color-light, $lightness: +3%)};
-  --input-background: #{scale-color($light, $lightness: $lighten)};
-  --note-background: #{scale-color($dark, $lightness: $lighten * 0.25)};
-  --note-hover-background: #{scale-color($dark, $lightness: $lighten * 0.75)};
-}
+$border-radius: 10px;
 
-.dark {
-  // --navbar-color: #{$navbar-color-dark};
-  --background-color: #{$dark};
-  --header-background-color: #{scale-color($dark, $alpha: -20%)};
-  --button-background-color: #{$button-color-dark};
-  --button-background-hover-color: #{scale-color($button-color-dark, $lightness: $lighten)};
-  --text-color: #{$white};
-  --inverse-text-color: #{$black};
-  --todo-background-hover-color: #{scale-color($todo-color-light, $lightness: $lighten)};
-  --todo-background-color: #{$todo-color-dark};
-  --input-background: #{scale-color($dark, $lightness: $lighten * 0.75)};
-  --note-background: #{scale-color($dark, $lightness: $lighten * 0.25)};
-  --note-hover-background: #{scale-color($dark, $lightness: $lighten * 0.75)};
-}
+$secondary-content-xs-width: min(100vw, 650px);
+$main-content-padding-top: clamp(25px, 10vh, 150px);
+
+/* Transitions */
+$bg-transition: background-color 0.5s ease;
+$task-transition: $bg-transition, padding 0.25s ease-in;
+
+/* Typography */
+$collectionFontSize: clamp(0.15rem, 0.75rem + 5vw, 2rem);
+$fixed-header: 2rem;
+
+/* Buttons */
+$button-bg-light: scale-color($dark, $lightness: -5%);
+$button-bg-dark: scale-color($light, $lightness: -5%);
+$button-bg-hover-light: scale-color($button-bg-light, $lightness: $darken);
+$button-bg-hover-dark: scale-color($button-bg-dark, $lightness: $lighten);
+
+/* Task */
+$task-bg-light: scale-color($dark, $lightness: +2%);
+$task-bg-dark: scale-color($light, $lightness: -5%);
+$task-bg-hover-light: $task-bg-dark;
+$task-bg-hover-dark: scale-color($task-bg-light, $lightness: $lighten);
+
+/* Notes */
+$note-bg-light: scale-color($dark, $lightness: $lighten * 0.25);
+$note-bg-dark: $note-bg-light;
+$note-bg-hover-light: scale-color($dark, $lightness: $lighten * 0.75);
+$note-bg-hover-dark: $note-bg-hover-light;
+
+/* Navbar */
+$navbar-bg-dark: scale-color(scale-color($dark, $lightness: +3%), $alpha: -10%);
+$nav-add-icon-bg: scale-color($light, $lightness: +10%);
+$nav-max-width: 600px;
+$nav-link-font-size: clamp(0.15rem, 0.25rem + 3vw, 1.5rem);
+$nav-link-bg-hover: scale-color($navbar-bg-dark, $lightness: $darken);
+$nav-add-bg: scale-color($navbar-bg-dark, $lightness: $darken);
+$nav-add-icon-bg-hover: scale-color($nav-add-icon-bg, $lightness: -2%);
+$nav-add-icon-font-size: clamp(0.55rem, 0.75rem + 3vw, 2rem);
+
+/* Header */
+$header-bg-light: scale-color($light, $alpha: -20%);
+$header-bg-dark: scale-color($dark, $alpha: -20%);
+
+/* Input */
+$input-bg-light: scale-color($light, $lightness: $lighten);
+$input-bg-dark: scale-color($dark, $lightness: $lighten * 0.75);
+$input-border-radius: 4px;
+$modal-input-bg: scale-color($input-bg-dark, $alpha: -100%);
+
+/* Modal */
+$overlay-bg: rgba(0, 0, 0, 0.545);
+$modal-max-width: min(80%, 700px);
+$modal-max-height: 400px;
+$modal-bg: $dark;
+
+/* Auth Form */
+$auth-bg-color: scale-color($dark, $lightness: +3%);

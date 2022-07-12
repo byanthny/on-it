@@ -48,6 +48,7 @@ const AuthForm = ({ loginState, submit }: PropTypes) => {
       <Button
         variant="light"
         onClick={(e: any) => submitForm(e, email, password, confirmPassword)}
+        submitButton
       >
         {loginState ? "Login" : "Sign Up"}
       </Button>
