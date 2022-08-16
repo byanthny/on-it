@@ -17,7 +17,7 @@ const Note = ({ NoteData }: PropTypes) => {
   } */
 
   const tagCountString = () =>
-    `${NoteData.tags.length} ${NoteData.tags.length > 1 ? "Tags" : "Tag"}`;
+    NoteData.tags ? `${NoteData.tags.length} ${NoteData.tags.length > 1 ? "Tags" : "Tag"}` : "0 Tags";
 
   return (
     <div className="note">
@@ -25,7 +25,7 @@ const Note = ({ NoteData }: PropTypes) => {
         <p>{NoteData.title}</p>
         <p>{NoteData.text}</p>
         <p className="floatLeft">{tagCountString()}</p>
-        <p className="floatRight">{dateToString(NoteData.updated.toString())}</p>
+        <p className="floatRight">{NoteData.updated && dateToString(NoteData.updated.toString())}</p>
       </div>
     </div>
   );
