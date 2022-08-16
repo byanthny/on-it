@@ -137,9 +137,12 @@ export const createItem = async (
     };
     response = await api.task.create(task);
   } else {
+
+    const temp:Task = await (await api.task.search({})).payload![0]; //Temp workaround till notes are decoupled from task
+
     const note: Note = {
       uid: "",
-      parent: "",
+      parent: temp._id!,
       // order?: number | undefined;
       title: data.title,
       text: data.description,
