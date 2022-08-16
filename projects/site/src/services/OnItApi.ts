@@ -118,40 +118,25 @@ class OnItApi {
  */
 export const createItem = async (
   itemType: string,
-  data: (Task & Note & {checked: boolean}),
+  data: Task | Note,
   handleResponse?: Function,
 ) => {
   const api = new OnItApi();
   let response;
-  if (itemType === "task") {
-/*     const task: Task = {
-      uid: "",
-      title: data.title,
-      state: data.checked ? TaskState.DONE : TaskState.TODO,
-      description: data.description,
-      parent: data.parent,
-      tags: data.tags,
-      due: data.due,
-      reminders: data.reminders,
-      pinned: data.pinned
-    }; */
+  if ((data as Task)) {
     const task: Task = data as Task;
     response = await api.task.create(task);
-  } else {
+  } else if (data as Note) {
 
     const temp:Task = await (await api.task.search({})).payload![0]; //Temp workaround till notes are decoupled from task
-/*     const note: Note = {
-      uid: "",
-      parent: temp._id!,
-      order: data.order,
-      title: data.title,
-      text: data.description!,
-      tags: [],
-      updated: new Date().toISOString(),
-    }; */
+
     const note: Note = data as Note;
     note.updated = new Date().toISOString();
     response = await api.note.create(note);
+  } else {
+    response = {
+      error: "Unknown"
+    }
   }
 
   if (handleResponse && !response.error) handleResponse(response.payload);
