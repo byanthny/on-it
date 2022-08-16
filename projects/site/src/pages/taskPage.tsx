@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tag, Task as TaskModel, TaskState } from "common";
+import { Note, Tag, Task as TaskModel, TaskState } from "common";
 import OnItApi, { createItem } from "../services/OnItApi";
 import Collection from "../components/items/Collection/Collection";
 import Task from "../components/items/Task/Task";
@@ -50,13 +50,7 @@ const todoPage = () => {
   };
 
   const handleResponse = (response: any) => {
-    const task: TaskModel = {
-      _id: response._id,
-      uid: response.uuid,
-      title: response.title,
-      state: response.state,
-      tags: response.tags,
-    };
+    const task: TaskModel = response as TaskModel;
 
     if (task.tags && task.tags.length > 0)
       task.tags.forEach((tag) => {
@@ -69,7 +63,7 @@ const todoPage = () => {
 
   const handleSubmit = async (
     itemType: string,
-    data: { checked: boolean; description: string; title: string },
+    data: TaskModel | Note,
   ) => {
     try {
       const response = await createItem(
