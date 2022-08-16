@@ -118,37 +118,39 @@ class OnItApi {
  */
 export const createItem = async (
   itemType: string,
-  data: { checked: boolean; description: string; title: string },
+  data: (Task & Note & {checked: boolean}),
   handleResponse?: Function,
 ) => {
   const api = new OnItApi();
   let response;
   if (itemType === "task") {
-    const task: Task = {
+/*     const task: Task = {
       uid: "",
       title: data.title,
       state: data.checked ? TaskState.DONE : TaskState.TODO,
-      // description?: string | undefined;
-      // parent?: string | undefined;
-      // tags?: Tag[] | undefined;
-      // due?: number | Date | undefined;
-      // reminders?: Date[] | ... 1 more ... | undefined;
-      // pinned?: boolean | undefined
-    };
+      description: data.description,
+      parent: data.parent,
+      tags: data.tags,
+      due: data.due,
+      reminders: data.reminders,
+      pinned: data.pinned
+    }; */
+    const task: Task = data as Task;
     response = await api.task.create(task);
   } else {
 
     const temp:Task = await (await api.task.search({})).payload![0]; //Temp workaround till notes are decoupled from task
-
-    const note: Note = {
+/*     const note: Note = {
       uid: "",
       parent: temp._id!,
-      // order?: number | undefined;
+      order: data.order,
       title: data.title,
-      text: data.description,
+      text: data.description!,
       tags: [],
       updated: new Date().toISOString(),
-    };
+    }; */
+    const note: Note = data as Note;
+    note.updated = new Date().toISOString();
     response = await api.note.create(note);
   }
 
