@@ -27,7 +27,19 @@ const App = () => {
   return (
     <div className={theme}>
       <div className="background">
-        <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={2500}
+        hideProgressBar
+        newestOnTop
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover={false}
+        limit={3}
+        theme="dark"
+      />
         <Router basename="/on-it">
           <Routes>
             {/* Main Routes */}
