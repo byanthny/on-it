@@ -1,16 +1,16 @@
 import React, { useContext, useState } from "react";
-import { UserRole } from "common";
+import { Note, Task } from "common";
 import CreateForm from "../components/forms/CreateForm/CreateForm";
 import Button from "../components/interactive/Button/Button";
 import { ThemeContext } from "../context/ThemeContext";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
-import { UserContext, UserContextData } from "../context/UserContext";
-import OnItApi, { createItem } from "../services/OnItApi";
+import { UserContext } from "../context/UserContext";
+import { createItem } from "../services/OnItApi";
 
 const settingsPage = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const { setUser } = useContext(UserContext);
+  const { logout } = useContext(UserContext);
   const [modalOpen, setModalOpen] = useState(false);
 
   const changeTheme = () => {
@@ -19,30 +19,9 @@ const settingsPage = () => {
     setTheme(newTheme);
   };
 
-  const logout = async () => {
-    try {
-      const response = await OnItApi.logout();
-
-      if (response.error) throw response.error;
-    } catch (error) {
-      // console.log(error);
-      // TODO handle error
-    }
-
-    const loggedOutUser: UserContextData = {
-      loggedIn: false,
-      user: {
-        email: "",
-        role: UserRole.GENERIC,
-      },
-    };
-
-    setUser(loggedOutUser);
-  };
-
   const handleSubmit = async (
     itemType: string,
-    data: { checked: boolean; description: string; title: string },
+    data: Task | Note,
   ) => {
     try {
       const response = await createItem(itemType, data);
