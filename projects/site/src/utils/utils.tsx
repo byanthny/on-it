@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { Note, Task } from "common";
 import { monthShort, millisecondsInADay } from "./constants";
 
@@ -10,3 +11,10 @@ export const dateToString = (date: string) => new Date(date).toDateString();
 
 export const toKeyValueMap = (items: Array<Task | Note>) =>
   new Map(items.map((item) => [item._id, item]));
+
+export const createToast = (message: string) => {
+  toast(message, {
+    position: "top-right",
+    hideProgressBar: true,
+  });
+}
