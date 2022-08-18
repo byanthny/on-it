@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Note as NoteModel } from "common";
 import OnItApi from "../services/OnItApi";
+import EditNote from "../components/items/Note/EditNote";
 import Collection from "../components/items/Collection/Collection";
 import NavBar from "../components/navigation/NavBar/NavBar";
 import Header from "../components/navigation/Header/Header";
@@ -10,6 +11,8 @@ import { fakeNoteData as fakedata } from "../utils/constants";
 const notesPage = () => {
   const [noteData, setNoteData] = useState<Array<NoteModel>>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [currentNote, setCurrentNote] = useState("");
 
   useEffect(() => {
     /* Fetch all notes from api */
@@ -21,9 +24,15 @@ const notesPage = () => {
     fetchData().catch(console.error);
   }, []);
 
+  const editNote = (noteID:string, e:any) => {
+    e.preventDefault();
+    setEditing(true);
+    setCurrentNote(noteID);
+  }
+
   /* Render Notes */
   const renderNotes = (data: Array<NoteModel>) =>
-    data && data.length > 0 ? data.map((note) => <Note key={note._id} NoteData={note} />) : null;
+    data && data.length > 0 ? data.map((note) => <Note key={note._id} NoteData={note} editNote={editNote} />) : null;
 
   return (
     <>
@@ -31,6 +40,7 @@ const notesPage = () => {
       <div className="main-content">
         <Header title="Notes" />
         <div className="secondary-content">
+          {editing && <EditNote onClose={setEditing} noteID={currentNote}/>}
           <Collection collectionTitle="General" variant="noteCollection">
             {renderNotes(fakedata)}
           </Collection>
