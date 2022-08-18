@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 import OnItApi from "../../../services/OnItApi";
 
 type PropTypes = {
@@ -30,11 +32,14 @@ const EditNote = ({noteID}:PropTypes) => {
         fetchData().catch(console.error);
     }, []);
 
+    const onChange = useCallback((value: string) => {
+        setText(value);
+      }, []);
 
     return (
         <div className="noteEditor">
             <h1>{title}</h1>
-            <p>{text}</p>
+            <SimpleMDE value={text} onChange={onChange} />
         </div>
     )
 
