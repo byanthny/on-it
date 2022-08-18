@@ -8,14 +8,6 @@ type PropTypes = {
 
 const Note = ({ NoteData }: PropTypes) => {
   // TODO if showing tags how to handle overflow
-  /*   const tagsToString = () => {
-    const tagsString = tags.map((t:any) => (
-        t.name
-      )
-    );
-    return tagsString
-  } */
-
   const tagCountString = () =>
     NoteData.tags ? `${NoteData.tags.length} ${NoteData.tags.length > 1 ? "Tags" : "Tag"}` : "0 Tags";
 
