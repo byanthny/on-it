@@ -1,5 +1,12 @@
 .noteEditor {
-    position: absolute;
-    height: 90vh;
+}
+
+.editNoteModal {
+    @extend .modal;
+    max-width: 90vw;
+    max-height: 80vh;
+    position: fixed;
     bottom: 0;
+    top: initial;
+    transform: translate(-50%);
 }

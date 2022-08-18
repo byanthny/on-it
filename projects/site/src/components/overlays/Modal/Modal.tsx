@@ -5,19 +5,22 @@ type PropTypes = {
   open: boolean;
   children: React.ReactNode;
   onClose: Function;
+  editNote?: boolean;
+  closeCallback?: Function;
 };
 
-const Modal = ({ open, children, onClose }: PropTypes) => {
+const Modal = ({ open, children, onClose, editNote = false, closeCallback = () => {} }: PropTypes) => {
   if (!open) return null;
 
   return ReactDOM.createPortal(
     <div className="overlay">
-      <div className="modal">
+      <div className={editNote ? "editNoteModal" : "modal"}>
         <button
           type="button"
           onClick={(e) => {
             e.preventDefault();
             onClose(false);
+            closeCallback();
           }}
           className="closeButton"
         >

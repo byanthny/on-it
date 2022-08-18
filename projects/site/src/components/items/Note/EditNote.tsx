@@ -3,11 +3,10 @@ import { toast } from "react-toastify";
 import OnItApi from "../../../services/OnItApi";
 
 type PropTypes = {
-    noteID: string,
-    onClose: Function
+    noteID: string
 };
 
-const EditNote = ({noteID, onClose}:PropTypes) => {
+const EditNote = ({noteID}:PropTypes) => {
 
     const [text, setText]  = useState("");
     const [title, setTitle] = useState("")
@@ -34,9 +33,8 @@ const EditNote = ({noteID, onClose}:PropTypes) => {
 
     return (
         <div className="noteEditor">
-        <h1>{title}</h1>
-        <p>{text}</p>
-        <button className="button" type="button" onClick={()=>onClose(false)}>close</button>
+            <h1>{title}</h1>
+            <p>{text}</p>
         </div>
     )
 

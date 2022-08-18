@@ -7,6 +7,7 @@ import NavBar from "../components/navigation/NavBar/NavBar";
 import Header from "../components/navigation/Header/Header";
 import Note from "../components/items/Note/Note";
 import { fakeNoteData as fakedata } from "../utils/constants";
+import Modal from "../components/overlays/Modal/Modal";
 
 const notesPage = () => {
   const [noteData, setNoteData] = useState<Array<NoteModel>>([]);
@@ -30,6 +31,10 @@ const notesPage = () => {
     setCurrentNote(noteID);
   }
 
+  const updateNote = () => {
+    console.log("Update Note");
+  }
+
   /* Render Notes */
   const renderNotes = (data: Array<NoteModel>) =>
     data && data.length > 0 ? data.map((note) => <Note key={note._id} NoteData={note} editNote={editNote} />) : null;
@@ -40,7 +45,9 @@ const notesPage = () => {
       <div className="main-content">
         <Header title="Notes" />
         <div className="secondary-content">
-          {editing && <EditNote onClose={setEditing} noteID={currentNote}/>}
+          <Modal open={editing} onClose={setEditing} editNote closeCallback={updateNote}>
+            <EditNote noteID={currentNote}/>
+          </Modal>
           <Collection collectionTitle="General" variant="noteCollection">
             {renderNotes(fakedata)}
           </Collection>
