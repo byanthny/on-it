@@ -33,7 +33,7 @@ const settingsPage = () => {
 
   return (
     <>
-      <NavBar modalState={modalOpen} closeModal={setModalOpen}>
+      <NavBar modalState={modalOpen} setModalOpen={setModalOpen}>
         <CreateForm handleSubmit={handleSubmit} />
       </NavBar>
       <div className="main-content">
