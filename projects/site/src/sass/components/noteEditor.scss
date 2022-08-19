@@ -3,6 +3,7 @@
 
 .editNoteModal {
     @extend .modal;
+    height: 90vh;
     max-width: 90vw;
     max-height: 80vh;
     position: fixed;
