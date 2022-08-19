@@ -1,5 +1,6 @@
 import { Tag, Task as TaskModel, TaskState } from "common";
 import React, { useState } from "react";
+import { daysTillDue } from "../../../utils/utils";
 
 interface PropTypes {
   TaskData: TaskModel;
@@ -64,7 +65,7 @@ const Task = ({ TaskData, update }: PropTypes) => {
         {text}
       </span>
       <p className="todoReminder">
-        {TaskData.due ? /* `${utils.daysTillDue(due)} */ `${TaskData.due} days` : ""}
+        {TaskData.due && `${daysTillDue(TaskData.due.toString())} days`}
       </p>
     </div>
   );
