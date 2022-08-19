@@ -1,4 +1,16 @@
 .noteEditor {
+    .EasyMDEContainer {
+        .CodeMirror {
+            background-color: $dark;
+            color: white;
+            border: none;
+        }
+
+        .CodeMirror-cursor {
+            border-left: 5px solid $caret-color;
+        }
+    }
+    background-color: $dark;
 }
 
 .editNoteModal {

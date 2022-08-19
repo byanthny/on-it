@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Note } from "common";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
@@ -10,15 +10,22 @@ type PropTypes = {
 
 const EditNote = ({noteData, setNoteData}:PropTypes) => {
 
+    const options = useMemo(() => ({
+        toolbar: false,
+        }), []);
+
     const onChange = useCallback((value: string) => {
         setNoteData({...noteData, text: value});
     }, []);
 
     return (
+        <>
+        <h1>{noteData.title}</h1>
+        <br/>
         <div className="noteEditor">
-            <h1>{noteData.title}</h1>
-            <SimpleMDE value={noteData.text} onChange={onChange} />
+            <SimpleMDE value={noteData.text} options={options} onChange={onChange} />
         </div>
+        </>
     )
 
 }
