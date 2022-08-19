@@ -9,6 +9,7 @@ import Header from "../components/navigation/Header/Header";
 import Note from "../components/items/Note/Note";
 import { fakeNoteData as fakedata } from "../utils/constants";
 import Modal from "../components/overlays/Modal/Modal";
+import CreateForm from "../components/forms/CreateForm/CreateForm";
 
 const initialNote: NoteModel =
   {
@@ -87,7 +88,9 @@ const notesPage = () => {
 
   return (
     <>
-      <NavBar modalState={modalOpen} setModalOpen={setModalOpen} />
+      <NavBar modalState={modalOpen} setModalOpen={setModalOpen}>
+        <CreateForm handleSubmit={()=>console.log("To be implemented")} />
+      </NavBar>
       <div className="main-content">
         <Header title="Notes" />
         <div className="secondary-content">
