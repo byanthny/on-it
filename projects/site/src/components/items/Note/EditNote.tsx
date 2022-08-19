@@ -12,7 +12,9 @@ const EditNote = ({noteData, setNoteData}:PropTypes) => {
 
     const options = useMemo(() => ({
         toolbar: false,
-        }), []);
+        status: false,
+        spellChecker: false,
+    }), []);
 
     const onChange = useCallback((value: string) => {
         setNoteData({...noteData, text: value});
