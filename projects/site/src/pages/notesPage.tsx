@@ -58,6 +58,7 @@ const notesPage = () => {
 
       setCurrentNote(response.payload!);
       setEditing(true);
+
     } catch (error) {
         toast("Error: Couldn't load note" || error as string);
     }
@@ -74,7 +75,7 @@ const notesPage = () => {
       setCurrentNote(initialNote);
       setEditing(false);
 
-      // TODO Update noteData
+      // TODO Update Note Data
     } catch (error) {
         toast("Error: Couldn't update note" || error as string);
     }
