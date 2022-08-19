@@ -6,10 +6,9 @@ type PropTypes = {
   children: React.ReactNode;
   onClose: Function;
   editNote?: boolean;
-  closeCallback?: Function;
 };
 
-const Modal = ({ open, children, onClose, editNote = false, closeCallback = () => {} }: PropTypes) => {
+const Modal = ({ open, children, onClose, editNote = false }: PropTypes) => {
   if (!open) return null;
 
   return ReactDOM.createPortal(
@@ -19,8 +18,7 @@ const Modal = ({ open, children, onClose, editNote = false, closeCallback = () =
           type="button"
           onClick={(e) => {
             e.preventDefault();
-            onClose(false);
-            closeCallback();
+            onClose();
           }}
           className="closeButton"
         >
