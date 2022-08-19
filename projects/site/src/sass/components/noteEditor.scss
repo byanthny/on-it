@@ -1,27 +1,27 @@
 .noteEditor {
-    padding: 0 $large-gap;
-    .EasyMDEContainer {
-        .CodeMirror {
-            background-color: $dark;
-            color: white;
-            border: none;
-        }
-
-        .CodeMirror-cursor {
-            border-left: 5px solid $caret-color;
-        }
+  padding: 0 $large-gap;
+  .EasyMDEContainer {
+    .CodeMirror {
+      background-color: $dark;
+      color: white;
+      border: none;
     }
-    background-color: $dark;
+
+    .CodeMirror-cursor {
+      border-left: 5px solid $caret-color;
+    }
+  }
+  background-color: $dark;
 }
 
 .editNoteModal {
-    @extend .modal;
-    height: 85vh;
-    width: 90vw;
-    max-width: $content-max-width;
-    max-height: 80vh;
-    position: fixed;
-    bottom: 0;
-    top: initial;
-    transform: translate(-50%);
+  @extend .modal;
+  height: 85vh;
+  width: 90vw;
+  max-width: $content-max-width;
+  max-height: 80vh;
+  position: fixed;
+  bottom: 0;
+  top: initial;
+  transform: translate(-50%);
 }

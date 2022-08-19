@@ -61,10 +61,7 @@ const todoPage = () => {
     setModalOpen(false);
   };
 
-  const handleSubmit = async (
-    itemType: string,
-    data: TaskModel | Note,
-  ) => {
+  const handleSubmit = async (itemType: string, data: TaskModel | Note) => {
     try {
       const response = await createItem(
         itemType,

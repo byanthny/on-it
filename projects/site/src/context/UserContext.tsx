@@ -31,10 +31,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const logout = async () => {
     try {
       const response = await OnItApi.logout();
-      if (response.error) 
-        throw response.error.message;
+      if (response.error) throw response.error.message;
 
-    setUser(initialUser);
+      setUser(initialUser);
     } catch (error) {
       toast(error as string);
     }
@@ -42,15 +41,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const updateTags = async () => {
     if (user.loggedIn) {
-      
       try {
         const response = await OnItApi.tag.search({});
 
-        if (response.error) 
-          throw response.error.message;
-          
-        user.tags = response.payload;
+        if (response.error) throw response.error.message;
 
+        user.tags = response.payload;
       } catch (error) {
         toast("Error Updating Tags");
       }

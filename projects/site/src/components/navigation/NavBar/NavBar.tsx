@@ -52,7 +52,7 @@ const Navbar = ({ children, modalState, setModalOpen }: PropTypes) => {
           </Link>
         </div>
       </div>
-      <Modal open={modalState} onClose={()=>setModalOpen(false)}>
+      <Modal open={modalState} onClose={() => setModalOpen(false)}>
         {children}
       </Modal>
     </>

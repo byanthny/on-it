@@ -9,6 +9,6 @@ export const ThemeContext = createContext<any>(initialTheme);
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState(initialTheme);
-  const value = useMemo(()=>({theme, setTheme }),[theme]);
+  const value = useMemo(() => ({ theme, setTheme }), [theme]);
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

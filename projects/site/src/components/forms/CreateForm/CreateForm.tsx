@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import Button from "../../interactive/Button/Button";
 
 type PropTypes = {
-  handleSubmit: (
-    itemType: string,
-    data: Task | Note,
-  ) => void;
+  handleSubmit: (itemType: string, data: Task | Note) => void;
 };
 
 const CreateForm = ({ handleSubmit }: PropTypes) => {
@@ -20,18 +17,18 @@ const CreateForm = ({ handleSubmit }: PropTypes) => {
 
     let data: Task | Note;
 
-    if(itemType === "task") {
+    if (itemType === "task") {
       data = {
         uid: "",
         state: checked ? TaskState.DONE : TaskState.TODO,
         title,
-      }
-    } else if(itemType === "note") {
+      };
+    } else if (itemType === "note") {
       data = {
         uid: "",
         state: checked ? TaskState.DONE : TaskState.TODO,
         title,
-      }
+      };
     } else {
       return;
     }

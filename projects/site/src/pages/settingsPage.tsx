@@ -19,10 +19,7 @@ const settingsPage = () => {
     setTheme(newTheme);
   };
 
-  const handleSubmit = async (
-    itemType: string,
-    data: Task | Note,
-  ) => {
+  const handleSubmit = async (itemType: string, data: Task | Note) => {
     try {
       const response = await createItem(itemType, data);
       if (response.error) throw response.error;

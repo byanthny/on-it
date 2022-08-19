@@ -4,32 +4,33 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 
 type PropTypes = {
-    noteData: Note,
-    setNoteData: Function,
+  noteData: Note;
+  setNoteData: Function;
 };
 
-const EditNote = ({noteData, setNoteData}:PropTypes) => {
+const EditNote = ({ noteData, setNoteData }: PropTypes) => {
+  const options = useMemo(
+    () => ({
+      toolbar: false,
+      status: false,
+      spellChecker: false,
+    }),
+    [],
+  );
 
-    const options = useMemo(() => ({
-        toolbar: false,
-        status: false,
-        spellChecker: false,
-    }), []);
+  const onChange = useCallback((value: string) => {
+    setNoteData({ ...noteData, text: value });
+  }, []);
 
-    const onChange = useCallback((value: string) => {
-        setNoteData({...noteData, text: value});
-    }, []);
-
-    return (
-        <>
-        <h1>{noteData.title}</h1>
-        <br/>
-        <div className="noteEditor">
-            <SimpleMDE value={noteData.text} options={options} onChange={onChange} />
-        </div>
-        </>
-    )
-
-}
+  return (
+    <>
+      <h1>{noteData.title}</h1>
+      <br />
+      <div className="noteEditor">
+        <SimpleMDE value={noteData.text} options={options} onChange={onChange} />
+      </div>
+    </>
+  );
+};
 
 export default EditNote;

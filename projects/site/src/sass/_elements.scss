@@ -9,7 +9,6 @@ h1 {
 }
 
 button {
-
 }
 
 input {
@@ -29,7 +28,7 @@ input {
 
 a {
   @include themify() {
-    color: themed("text-color")
+    color: themed("text-color");
   }
 
   &:hover {

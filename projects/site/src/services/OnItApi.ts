@@ -123,20 +123,19 @@ export const createItem = async (
 ) => {
   const api = new OnItApi();
   let response;
-  if ((data as Task)) {
+  if (data as Task) {
     const task: Task = data as Task;
     response = await api.task.create(task);
   } else if (data as Note) {
-
-    const temp:Task = await (await api.task.search({})).payload![0]; //Temp workaround till notes are decoupled from task
+    const temp: Task = await (await api.task.search({})).payload![0]; //Temp workaround till notes are decoupled from task
 
     const note: Note = data as Note;
     note.updated = new Date().toISOString();
     response = await api.note.create(note);
   } else {
     response = {
-      error: "Unknown"
-    }
+      error: "Unknown",
+    };
   }
 
   if (handleResponse && !response.error) handleResponse(response.payload);
