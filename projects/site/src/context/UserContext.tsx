@@ -48,11 +48,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
         if (response.error) 
           throw response.error.message;
-
+          
         user.tags = response.payload;
 
       } catch (error) {
-        toast(error as string);
+        toast("Error Updating Tags");
       }
     }
   };
