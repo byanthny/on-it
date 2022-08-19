@@ -9,18 +9,6 @@ h1 {
 }
 
 button {
-  @include applyTextColor("button-bg");
-
-  padding: 10px 15px;
-  border-radius: $border-radius;
-  border-style: none;
-  transition: $bg-transition;
-  margin: 5px;
-
-  &:hover {
-    @include applyTextColor("button-bg-hover");
-    cursor: pointer;
-  }
 }
 
 input {
@@ -40,7 +28,7 @@ input {
 
 a {
   @include themify() {
-    color: themed("text-color")
+    color: themed("text-color");
   }
 
   &:hover {

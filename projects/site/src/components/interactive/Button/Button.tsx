@@ -8,7 +8,11 @@ type PropTypes = {
 };
 
 const Button = ({ children, onClick, variant, submitButton = false }: PropTypes) => (
-  <button className={`${variant} button`} type={submitButton ? "submit" : "button"} onClick={onClick}>
+  <button
+    className={`${variant} button`}
+    type={submitButton ? "submit" : "button"}
+    onClick={onClick}
+  >
     {children}
   </button>
 );

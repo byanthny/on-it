@@ -1,4 +1,19 @@
 .button {
+  font-size: clamp(0.15rem, 0.75rem + 5vw, 1rem);
+
+  @include applyTextColor("button-bg");
+
+  padding: 10px 15px;
+  border-radius: $border-radius;
+  border-style: none;
+  transition: $bg-transition;
+  margin: 5px;
+
+  &:hover {
+    @include applyTextColor("button-bg-hover");
+    cursor: pointer;
+  }
+
   &.normal {
     @include applyTextColor("button-bg");
 

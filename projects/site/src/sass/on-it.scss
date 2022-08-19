@@ -1,4 +1,4 @@
-/* Main Sass file */ 
+/* Main Sass file */
 // General
 @import "./_variables.scss";
 @import "./themes.scss";
@@ -17,4 +17,5 @@
 @import "./components/modal.scss";
 @import "./components/navbar.scss";
 @import "./components/note.scss";
+@import "./components/noteEditor.scss";
 @import "./components/task.scss";

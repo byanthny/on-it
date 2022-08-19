@@ -1,11 +1,9 @@
+import { Note, Task, TaskState } from "common";
 import React, { useState } from "react";
 import Button from "../../interactive/Button/Button";
 
 type PropTypes = {
-  handleSubmit: (
-    itemType: string,
-    data: { checked: boolean; description: string; title: string },
-  ) => void;
+  handleSubmit: (itemType: string, data: Task | Note) => void;
 };
 
 const CreateForm = ({ handleSubmit }: PropTypes) => {
@@ -16,11 +14,25 @@ const CreateForm = ({ handleSubmit }: PropTypes) => {
   const submit = (e: any) => {
     e.preventDefault();
     const itemType = description.length < 1 ? "task" : "note";
-    const data = {
-      checked,
-      description,
-      title,
-    };
+
+    let data: Task | Note;
+
+    if (itemType === "task") {
+      data = {
+        uid: "",
+        state: checked ? TaskState.DONE : TaskState.TODO,
+        title,
+      };
+    } else if (itemType === "note") {
+      data = {
+        uid: "",
+        state: checked ? TaskState.DONE : TaskState.TODO,
+        title,
+      };
+    } else {
+      return;
+    }
+
     handleSubmit(itemType, data);
   };
 
