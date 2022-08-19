@@ -10,7 +10,7 @@ import Note from "../components/items/Note/Note";
 import { fakeNoteData as fakedata } from "../utils/constants";
 import Modal from "../components/overlays/Modal/Modal";
 
-const initalNote: NoteModel =
+const initialNote: NoteModel =
   {
     uid: "",
     parent: "",
@@ -25,17 +25,27 @@ const notesPage = () => {
   const [noteData, setNoteData] = useState<Array<NoteModel>>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [currentNote, setCurrentNote] = useState<NoteModel>(initalNote);
+  const [currentNote, setCurrentNote] = useState<NoteModel>(initialNote);
+
+    /* Fetch notes from api based on tags */
+    const fetchData = async () => {
+      try {
+        const response = await OnItApi.note.search({});
+
+        if(!response || response.error)
+          throw response.error?.message;
+          
+        setNoteData(response.payload!);
+
+      } catch (error) {
+        toast("Couldn't load notes :(" || error as string);
+      }
+    };
+    
 
   // onMount load all notes
   useEffect(() => {
-    /* Fetch all notes from api */
-    const fetchData = async () => {
-      const response = await OnItApi.note.search({});
-      setNoteData(response.payload!);
-    };
-
-    fetchData().catch(console.error);
+    fetchData();
   }, []);
 
   // onClick select Note and set state to edit.
@@ -43,35 +53,31 @@ const notesPage = () => {
     try {
       const response = await OnItApi.note.get(noteID);
 
-      if(response.error)
-          throw response.error.message
+      if(!response || response.error)
+        throw response.error?.message;
 
       setCurrentNote(response.payload!);
-
+      setEditing(true);
     } catch (error) {
-        toast(error as string);
+        toast("Error: Couldn't load note" || error as string);
     }
-
-    setEditing(true);
   }
 
   // onClose of Modal with EditNote update note to API
   const updateNote = async () => {
     try {
-      console.log(currentNote)
       const response = await OnItApi.note.update(currentNote._id!, currentNote);
 
       if(response.error)
-          throw response.error.message
+        throw response.error?.message;
 
+      setCurrentNote(initialNote);
+      setEditing(false);
+
+      // TODO Update noteData
     } catch (error) {
-        toast(error as string);
+        toast("Error: Couldn't update note" || error as string);
     }
-
-    // TODO Update noteData
-
-    setCurrentNote(initalNote);
-    setEditing(false);
   }
 
   /* Render Notes */
@@ -80,11 +86,11 @@ const notesPage = () => {
 
   return (
     <>
-      <NavBar modalState={modalOpen} closeModal={setModalOpen} />
+      <NavBar modalState={modalOpen} setModalOpen={setModalOpen} />
       <div className="main-content">
         <Header title="Notes" />
         <div className="secondary-content">
-          <Modal open={editing} onClose={setEditing} editNote closeCallback={updateNote}>
+          <Modal open={editing} onClose={updateNote} editNote>
             <EditNote noteData={currentNote} setNoteData={setCurrentNote}/>
           </Modal>
           <Collection collectionTitle="General" variant="noteCollection">
