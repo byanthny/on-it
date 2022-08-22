@@ -8,7 +8,7 @@ import NavBar from "../components/navigation/NavBar/NavBar";
 import CreateForm from "../components/forms/CreateForm/CreateForm";
 import { toKeyValueMap } from "../utils/utils";
 
-const todoPage = () => {
+const taskPage = () => {
   const [taskList, setTaskList] = useState<Map<any, any>>();
   const [projects, setProjects] = useState();
   const [modalOpen, setModalOpen] = useState(false);
@@ -113,4 +113,4 @@ const todoPage = () => {
   );
 };
 
-export default todoPage;
+export default taskPage;
