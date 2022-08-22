@@ -5,12 +5,12 @@ import Button from "../components/interactive/Button/Button";
 import { ThemeContext } from "../context/ThemeContext";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
-import { UserContext } from "../context/UserContext";
+import { useUser } from "../context/UserContext";
 import { createItem } from "../services/OnItApi";
 
 const settingsPage = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const { logout } = useContext(UserContext);
+  const { logout } = useUser();
   const [modalOpen, setModalOpen] = useState(false);
 
   const changeTheme = () => {

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { Tag, User, UserRole } from "common";
 import { toast } from "react-toastify";
 import OnItApi from "../services/OnItApi";
@@ -21,7 +21,9 @@ interface UserProviderProps {
   children: React.ReactNode;
 }
 
-export const UserContext = createContext<any>(initialUser);
+const UserContext = createContext<any>(initialUser);
+
+export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   // TODO Memoize
@@ -31,11 +33,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const logout = async () => {
     try {
       const response = await OnItApi.logout();
-      
-      if (response.error) 
+
+      if (response.error)
         throw response.error.message;
 
-      setUser({...initialUser, loggedIn: false});
+      setUser({ ...initialUser, loggedIn: false });
     } catch (error) {
       toast(error as string);
     }

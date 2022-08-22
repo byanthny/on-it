@@ -11,12 +11,12 @@ import NotesPage from "./pages/notesPage";
 import SettingsPage from "./pages/settingsPage";
 import TaskPage from "./pages/taskPage";
 import PageNoteFound from "./pages/pageNotFound";
-import { UserContext } from "./context/UserContext";
+import { useUser } from "./context/UserContext";
 import PrivateRoute, { PrivateRouteProps } from "./components/hoc/PrivateRoute";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
 
   /* Default Props for Private Route */
   const defaultPrivateRouteProps: Omit<PrivateRouteProps, "component"> = {
