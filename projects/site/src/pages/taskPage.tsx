@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Note, Tag, Task as TaskModel, TaskState } from "common";
 import OnItApi, { createItem } from "../services/OnItApi";
-import Collection from "../components/items/Collection/Collection";
-import Task from "../components/items/Task/Task";
-import Header from "../components/navigation/Header/Header";
-import NavBar from "../components/navigation/NavBar/NavBar";
-import CreateForm from "../components/forms/CreateForm/CreateForm";
+import Collection from "../components/items/Collection";
+import Task from "../components/items/Task";
+import Header from "../components/navigation/Header";
+import NavBar from "../components/navigation/NavBar";
+import CreateForm from "../components/forms/CreateForm";
 import { toKeyValueMap } from "../utils/utils";
 
 const taskPage = () => {

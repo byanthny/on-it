@@ -12,7 +12,7 @@ import SettingsPage from "./pages/settingsPage";
 import TaskPage from "./pages/taskPage";
 import PageNoteFound from "./pages/pageNotFound";
 import { useUser } from "./context/UserContext";
-import PrivateRoute, { PrivateRouteProps } from "./components/hoc/PrivateRoute";
+import PrivateRoute, { PrivateRouteProps } from "./components/navigation/PrivateRoute";
 
 const App = () => {
   const { theme } = useTheme();

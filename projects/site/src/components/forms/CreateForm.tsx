@@ -1,6 +1,6 @@
 import { Note, Task, TaskState } from "common";
 import React, { useState } from "react";
-import Button from "../../interactive/Button/Button";
+import Button from "../items/Button";
 
 type PropTypes = {
   handleSubmit: (itemType: string, data: Task | Note) => void;

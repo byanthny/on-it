@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../../interactive/Button/Button";
+import Button from "../items/Button";
 
 interface PropTypes {
   loginState: boolean;

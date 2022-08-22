@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Header from "../components/navigation/Header/Header";
-import NavBar from "../components/navigation/NavBar/NavBar";
+import Header from "../components/navigation/Header";
+import NavBar from "../components/navigation/NavBar";
 import { convertMonthNum } from "../utils/utils";
 
 const homePage = () => {

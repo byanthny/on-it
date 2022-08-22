@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RiArrowDropDownLine, RiArrowDropRightLine } from "react-icons/ri";
-import Button from "../../interactive/Button/Button";
+import Button from "./Button";
 
 type CollectionTypes = "noteCollection" | "normalCollection";
 

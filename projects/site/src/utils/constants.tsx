@@ -31,6 +31,8 @@ export const monthLong = [
 
 export const millisecondsInADay = 1000 * 60 * 60 * 24;
 
+// TODO Add initial data.
+
 export const fakeNoteData = [
   {
     _id: "string",

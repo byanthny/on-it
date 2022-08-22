@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../sass/pages/authPage.scss";
-import Button from "../components/interactive/Button/Button";
-import AuthForm from "../components/forms/AuthForm/AuthForm";
+import Button from "../components/items/Button";
+import AuthForm from "../components/forms/AuthForm";
 import { useUser, UserContextData } from "../context/UserContext";
 import OnItApi from "../services/OnItApi";
 
