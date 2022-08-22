@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 
-const initialTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark";
+const initialTheme = localStorage.getItem("theme") ?? "dark";
 interface ThemeProviderProps {
   children: React.ReactNode;
 }
