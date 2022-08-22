@@ -3,7 +3,7 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { ThemeContext } from "./context/ThemeContext";
+import { useTheme } from "./context/ThemeContext";
 import DevPage from "./pages/devPage";
 import AuthPage from "./pages/authPage";
 import HomePage from "./pages/homePage";
@@ -15,7 +15,7 @@ import { useUser } from "./context/UserContext";
 import PrivateRoute, { PrivateRouteProps } from "./components/hoc/PrivateRoute";
 
 const App = () => {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
   const { user } = useUser();
 
   /* Default Props for Private Route */

@@ -1,15 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Note, Task } from "common";
 import CreateForm from "../components/forms/CreateForm/CreateForm";
 import Button from "../components/interactive/Button/Button";
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import Header from "../components/navigation/Header/Header";
 import NavBar from "../components/navigation/NavBar/NavBar";
 import { useUser } from "../context/UserContext";
 import { createItem } from "../services/OnItApi";
 
 const settingsPage = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme } = useTheme();
   const { logout } = useUser();
   const [modalOpen, setModalOpen] = useState(false);
 
