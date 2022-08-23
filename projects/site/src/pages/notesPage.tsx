@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Note as NoteModel } from "common";
 import { toast } from "react-toastify";
 import OnItApi from "../services/OnItApi";
-import EditNote from "../components/items/Note/EditNote";
-import Collection from "../components/items/Collection/Collection";
-import NavBar from "../components/navigation/NavBar/NavBar";
-import Header from "../components/navigation/Header/Header";
-import Note from "../components/items/Note/Note";
+import EditNote from "../components/items/EditNote";
+import Collection from "../components/items/Collection";
+import NavBar from "../components/navigation/NavBar";
+import Header from "../components/navigation/Header";
+import Note from "../components/items/Note";
 import { fakeNoteData as fakedata } from "../utils/constants";
-import Modal from "../components/overlays/Modal/Modal";
-import CreateForm from "../components/forms/CreateForm/CreateForm";
+import Modal from "../components/overlays/Modal";
+import CreateForm from "../components/forms/CreateForm";
 
 const initialNote: NoteModel = {
   uid: "",
@@ -23,6 +23,7 @@ const initialNote: NoteModel = {
 const notesPage = () => {
   // TODO Use Reducer
   const [noteData, setNoteData] = useState<Array<NoteModel>>([]);
+  // const [noteData, dispatch] = useReducer(reducer, []);
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [currentNote, setCurrentNote] = useState<NoteModel>(initialNote);
@@ -79,8 +80,8 @@ const notesPage = () => {
   const renderNotes = (data: Array<NoteModel>) =>
     data && data.length > 0
       ? data.map((note) => (
-          <Note key={note._id} NoteData={note} selectNoteToEdit={selectNoteToEdit} />
-        ))
+        <Note key={note._id} NoteData={note} selectNoteToEdit={selectNoteToEdit} />
+      ))
       : null;
 
   return (
