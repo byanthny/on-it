@@ -24,6 +24,7 @@ export type NoteSearch = SearchOptions & {
   uid?: ID
   parent?: ID
   text?: ID
+  tags?: string[]
 }
 
 export const noteSearchSchema = {
@@ -31,4 +32,5 @@ export const noteSearchSchema = {
   uid: idSchema.optional(),
   parent: idSchema.optional(),
   text: Joi.string().max(255).optional(),
+  tags: Joi.array().items(idSchema).optional(),
 }
