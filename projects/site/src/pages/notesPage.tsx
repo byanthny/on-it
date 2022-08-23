@@ -20,13 +20,17 @@ const initialNote: NoteModel = {
   updated: "",
 };
 
+type currentNoteData = {
+  note: NoteModel;
+  isEditing: boolean;
+};
+
 const notesPage = () => {
   // TODO Use Reducer
   const [noteData, setNoteData] = useState<Array<NoteModel>>([]);
   // const [noteData, dispatch] = useReducer(reducer, []);
   const [modalOpen, setModalOpen] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [currentNote, setCurrentNote] = useState<NoteModel>(initialNote);
+  const [currentNote, setCurrentNote] = useState<currentNoteData>({ note: initialNote, isEditing: false });
 
   /* Fetch notes from api based on tags */
   const fetchData = async () => {
@@ -51,10 +55,11 @@ const notesPage = () => {
     try {
       const response = await OnItApi.note.get(noteID);
 
-      if (!response || response.error) throw response.error?.message;
+      if (!response || response.error)
+        throw response.error?.message;
 
-      setCurrentNote(response.payload!);
-      setEditing(true);
+      setCurrentNote({ note: response.payload!, isEditing: true });
+
     } catch (error) {
       toast("Error: Couldn't load note" || (error as string));
     }
@@ -63,12 +68,11 @@ const notesPage = () => {
   // onClose of Modal with EditNote update note to API
   const updateNote = async () => {
     try {
-      const response = await OnItApi.note.update(currentNote._id!, currentNote);
+      const response = await OnItApi.note.update(currentNote.note._id!, currentNote.note!);
 
       if (response.error) throw response.error?.message;
 
-      setCurrentNote(initialNote);
-      setEditing(false);
+      setCurrentNote({ note: initialNote, isEditing: false });
 
       // TODO Update Note Data
     } catch (error) {
@@ -92,8 +96,8 @@ const notesPage = () => {
       <div className="main-content">
         <Header title="Notes" />
         <div className="secondary-content">
-          <Modal open={editing} onClose={updateNote} editNote>
-            <EditNote noteData={currentNote} setNoteData={setCurrentNote} />
+          <Modal open={currentNote.isEditing} onClose={updateNote} editNote>
+            <EditNote noteData={currentNote.note} setNoteData={setCurrentNote} />
           </Modal>
           <Collection collectionTitle="General" variant="noteCollection">
             {renderNotes(fakedata)}
