@@ -1,6 +1,6 @@
 import React from "react";
 import { Note as NoteModel } from "common";
-import { dateToString } from "../../../utils/utils";
+import { dateToString } from "../../utils/utils";
 
 type PropTypes = {
   NoteData: NoteModel;

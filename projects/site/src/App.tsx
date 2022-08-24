@@ -3,7 +3,7 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { ThemeContext } from "./context/ThemeContext";
+import { useTheme } from "./context/ThemeContext";
 import DevPage from "./pages/devPage";
 import AuthPage from "./pages/authPage";
 import HomePage from "./pages/homePage";
@@ -11,12 +11,12 @@ import NotesPage from "./pages/notesPage";
 import SettingsPage from "./pages/settingsPage";
 import TaskPage from "./pages/taskPage";
 import PageNoteFound from "./pages/pageNotFound";
-import { UserContext } from "./context/UserContext";
-import PrivateRoute, { PrivateRouteProps } from "./components/hoc/PrivateRoute";
+import { useUser } from "./context/UserContext";
+import PrivateRoute, { PrivateRouteProps } from "./components/navigation/PrivateRoute";
 
 const App = () => {
-  const { theme } = useContext(ThemeContext);
-  const { user } = useContext(UserContext);
+  const { theme } = useTheme();
+  const { user } = useUser();
 
   /* Default Props for Private Route */
   const defaultPrivateRouteProps: Omit<PrivateRouteProps, "component"> = {

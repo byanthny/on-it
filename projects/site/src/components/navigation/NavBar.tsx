@@ -8,7 +8,7 @@ import {
   RiCheckboxFill,
   RiAddFill,
 } from "react-icons/ri";
-import Modal from "../../overlays/Modal/Modal";
+import Modal from "../overlays/Modal";
 
 type PropTypes = {
   children?: React.ReactNode;

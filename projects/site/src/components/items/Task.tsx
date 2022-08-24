@@ -1,6 +1,6 @@
 import { Tag, Task as TaskModel, TaskState } from "common";
 import React, { useState } from "react";
-import { daysTillDue } from "../../../utils/utils";
+import { daysTillDue } from "../../utils/utils";
 
 interface PropTypes {
   TaskData: TaskModel;

@@ -1,11 +1,13 @@
-import React, { createContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 
-const initialTheme = localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark";
+const initialTheme = localStorage.getItem("theme") ?? "dark";
 interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const ThemeContext = createContext<any>(initialTheme);
+const ThemeContext = createContext<any>(initialTheme);
+
+export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState(initialTheme);

@@ -1,6 +1,6 @@
 import { Note, Task, TaskState } from "common";
 import React, { useState } from "react";
-import Button from "../../interactive/Button/Button";
+import Button from "../items/Button";
 
 type PropTypes = {
   handleSubmit: (itemType: string, data: Task | Note) => void;
@@ -26,8 +26,11 @@ const CreateForm = ({ handleSubmit }: PropTypes) => {
     } else if (itemType === "note") {
       data = {
         uid: "",
-        state: checked ? TaskState.DONE : TaskState.TODO,
+        parent: "",
         title,
+        text: description,
+        tags: [],
+        updated: "",
       };
     } else {
       return;

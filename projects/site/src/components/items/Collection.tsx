@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RiArrowDropDownLine, RiArrowDropRightLine } from "react-icons/ri";
-import Button from "../../interactive/Button/Button";
+import Button from "./Button";
 
 type CollectionTypes = "noteCollection" | "normalCollection";
 
@@ -21,7 +21,7 @@ const Collection = ({ children, collectionTitle, variant }: PropTypes) => {
           {open ? <RiArrowDropDownLine /> : <RiArrowDropRightLine />}
         </Button>
       </h2>
-      <div className={`noteCollection ${variant} ${open ? "" : "closed"}`}>
+      <div className={`${variant} ${open ? "" : "closed"}`}>
         {children || <p>nothing to show</p>}
       </div>
     </>

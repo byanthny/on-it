@@ -19,7 +19,7 @@ const EditNote = ({ noteData, setNoteData }: PropTypes) => {
   );
 
   const onChange = useCallback((value: string) => {
-    setNoteData({ ...noteData, text: value });
+    setNoteData({ isEditing: true, note: { ...noteData, text: value } });
   }, []);
 
   return (
