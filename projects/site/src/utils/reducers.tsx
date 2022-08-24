@@ -1,6 +1,9 @@
 import { Tag } from "common";
 import { toKeyValueMap } from "./utils";
 
+/* Item reducer for use with useReducer 
+ * Handles updating the state of the items map
+ */
 const itemReducer = (state: Map<any, any>, action: any) => {
   switch (action.type) {
     case "CREATE":

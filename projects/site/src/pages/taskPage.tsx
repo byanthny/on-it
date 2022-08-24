@@ -1,14 +1,14 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Note, Tag, Task as TaskModel, TaskState } from "common";
 import { toast } from "react-toastify";
-import OnItApi, { createItem } from "../services/OnItApi";
+import OnItApi from "../services/OnItApi";
 import Collection from "../components/items/Collection";
 import Task from "../components/items/Task";
 import Header from "../components/navigation/Header";
 import NavBar from "../components/navigation/NavBar";
 import CreateForm from "../components/forms/CreateForm";
 import itemReducer from "../utils/reducers";
-import useLoadItems from "../utils/hooks";
+import { useLoadItems, useItemCreate } from "../utils/hooks";
 import { tempTags } from "../utils/constants";
 
 const taskPage = () => {
@@ -75,8 +75,7 @@ const taskPage = () => {
   // onSubmit create new item
   const handleSubmit = async (itemType: string, data: TaskModel | Note) => {
     try {
-      const response = await createItem(
-        itemType,
+      const response = await useItemCreate(
         data,
         itemType === "task" ? handleResponse : undefined,
       );
@@ -98,17 +97,14 @@ const taskPage = () => {
 
   const renderTaskCollection = (data: Map<any, any>) => {
     const toRender: Array<React.ReactNode> = [];
-    if (data) {
-      data.forEach((value, key) => {
-        if (key !== "untagged")
-          toRender.push(
-            <Collection collectionTitle={key} variant="normalCollection">
-              {renderTasks(value)}
-            </Collection>,
-          );
-        else toRender.unshift(renderTasks(value));
-      });
-    }
+    data.forEach((value, key) => {
+      toRender.push(
+        // eslint-disable-next-line react/no-array-index-key
+        <Collection key={key} collectionTitle={key} variant="normalCollection">
+          {renderTasks(value)}
+        </Collection>
+      );
+    });
     return toRender;
   };
 

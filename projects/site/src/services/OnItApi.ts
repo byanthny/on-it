@@ -111,36 +111,4 @@ class OnItApi {
   };
 }
 
-/* Creates a new Note or Task based on itemType
- * Uses provided data
- * if handleResponse is provided the API payload is provided to that function
- * Otherwise the response is returned
- */
-export const createItem = async (
-  itemType: string,
-  data: Task | Note,
-  handleResponse?: Function,
-) => {
-  const api = new OnItApi();
-  let response;
-  if (data as Task) {
-    const task: Task = data as Task;
-    response = await api.task.create(task);
-  } else if (data as Note) {
-    const temp: Task = await (await api.task.search({})).payload![0]; //Temp workaround till notes are decoupled from task
-
-    const note: Note = data as Note;
-    note.updated = new Date().toISOString();
-    response = await api.note.create(note);
-  } else {
-    response = {
-      error: "Unknown",
-    };
-  }
-
-  if (handleResponse && !response.error) handleResponse(response.payload);
-
-  return response;
-};
-
 export default new OnItApi();

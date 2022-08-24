@@ -6,7 +6,7 @@ import { useTheme } from "../context/ThemeContext";
 import Header from "../components/navigation/Header";
 import NavBar from "../components/navigation/NavBar";
 import { useUser } from "../context/UserContext";
-import { createItem } from "../services/OnItApi";
+import { useItemCreate } from "../utils/hooks";
 
 const settingsPage = () => {
   const { theme, setTheme } = useTheme();
@@ -21,7 +21,7 @@ const settingsPage = () => {
 
   const handleSubmit = async (itemType: string, data: Task | Note) => {
     try {
-      const response = await createItem(itemType, data);
+      const response = await useItemCreate(data);
       if (response.error) throw response.error;
     } catch (error) {
       console.log(error);
