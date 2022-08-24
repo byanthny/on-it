@@ -9,7 +9,7 @@ const itemReducer = (state: Map<any, any>, action: any) => {
     case "CREATE":
       return new Map(state.set(action.payload.tag, toKeyValueMap(action.payload.response)));
     case "UPDATE": {
-      const tags = action.payload.response.tags ?? [{ name: "untagged" }];
+      const tags = (!action.payload.response.tags || action.payload.response.tags.length < 1) ? [{ name: "untagged" }] : action.payload.response.tags;
       tags.forEach((tag: Tag) => {
         state.set(
           tag.name,

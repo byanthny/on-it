@@ -63,12 +63,8 @@ const taskPage = () => {
   const handleResponse = (response: any) => {
     const task: TaskModel = response as TaskModel;
 
-    if (task.tags && task.tags.length > 0)
-      task.tags.forEach((tag) => {
-        setTaskList(taskList!.set(tag, taskList!.get(tag).set(task._id, task)));
-      });
-    else setTaskList(taskList!.set("none", taskList!.get("none").set(task._id, task)));
-
+    dispatch({ type: "UPDATE", payload: { id: task._id, response: task } });
+    console.log(taskData);
     setModalOpen(false);
   };
 
