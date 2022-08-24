@@ -73,7 +73,7 @@ const taskPage = () => {
       const response = await useItemCreate(
         itemType,
         data,
-        itemType === "task" ? handleResponse : undefined,
+        itemType === "task" ? handleResponse : () => setModalOpen(false),
       );
 
       if (response.error) throw response.error;

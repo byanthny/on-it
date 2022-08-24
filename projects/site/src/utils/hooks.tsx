@@ -31,6 +31,7 @@ export async function useItemCreate(
 
     const note: Note = data as Note;
     note.updated = new Date().toISOString();
+    note.parent = temp._id!;
     response = await OnItApi.note.create(note);
   } else if (itemType === "task") {
     const task: Task = data as Task;

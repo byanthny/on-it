@@ -26,8 +26,11 @@ const CreateForm = ({ handleSubmit }: PropTypes) => {
     } else if (itemType === "note") {
       data = {
         uid: "",
-        state: checked ? TaskState.DONE : TaskState.TODO,
+        parent: "",
         title,
+        text: description,
+        tags: [],
+        updated: "",
       };
     } else {
       return;
