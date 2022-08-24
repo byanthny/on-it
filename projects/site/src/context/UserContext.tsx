@@ -34,8 +34,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     try {
       const response = await OnItApi.logout();
 
-      if (response.error)
-        throw response.error.message;
+      if (response.error) throw response.error.message;
 
       setUser({ ...initialUser, loggedIn: false });
     } catch (error) {

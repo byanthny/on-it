@@ -30,14 +30,16 @@ type currentNoteData = {
 const notesPage = () => {
   const [noteData, dispatch] = useReducer(itemReducer, new Map());
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentNote, setCurrentNote] = useState<currentNoteData>({ note: initialNote, isEditing: false });
+  const [currentNote, setCurrentNote] = useState<currentNoteData>({
+    note: initialNote,
+    isEditing: false,
+  });
 
   /* Fetch notes from api based on tags */
   const fetchData = async (tagID: string) => {
     try {
       const response = await OnItApi.note.search(tagID !== "" ? { tags: [tagID] } : {});
-      if (!response || response.error)
-        throw response.error?.message;
+      if (!response || response.error) throw response.error?.message;
 
       return response.payload;
     } catch (error) {
@@ -56,11 +58,9 @@ const notesPage = () => {
     try {
       const response = await OnItApi.note.get(noteID);
 
-      if (!response || response.error)
-        throw response.error?.message;
+      if (!response || response.error) throw response.error?.message;
 
       setCurrentNote({ note: response.payload!, isEditing: true });
-
     } catch (error) {
       toast("Error: Couldn't load note" || (error as string));
     }
@@ -75,8 +75,10 @@ const notesPage = () => {
 
       setCurrentNote({ note: initialNote, isEditing: false });
 
-      dispatch({ type: "UPDATE", payload: { id: currentNote.note._id, response: response.payload } });
-
+      dispatch({
+        type: "UPDATE",
+        payload: { id: currentNote.note._id, response: response.payload },
+      });
     } catch (error) {
       toast("Error: Couldn't update note" || (error as string));
     }

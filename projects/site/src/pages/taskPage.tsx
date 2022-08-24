@@ -20,8 +20,7 @@ const taskPage = () => {
   const fetchData = async (tagID: string) => {
     try {
       const response = await OnItApi.task.search(tagID !== "" ? { tags: [tagID] } : {});
-      if (!response || response.error)
-        throw response.error?.message;
+      if (!response || response.error) throw response.error?.message;
 
       return response.payload;
     } catch (error) {
@@ -50,8 +49,7 @@ const taskPage = () => {
       };
       const response = await OnItApi.task.update(taskID, updatedTask);
 
-      if (response.error)
-        throw response.error;
+      if (response.error) throw response.error;
 
       dispatch({ type: "UPDATE", payload: { id: taskID, response: response.payload } });
     } catch (error) {
@@ -108,8 +106,7 @@ const taskPage = () => {
               {renderTasks(value)}
             </Collection>,
           );
-        else
-          toRender.unshift(renderTasks(value));
+        else toRender.unshift(renderTasks(value));
       });
     }
     return toRender;

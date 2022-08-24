@@ -4,7 +4,7 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 
 type PropTypes = {
-  noteData: Note
+  noteData: Note;
   setNoteData: Function;
 };
 

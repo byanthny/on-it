@@ -192,35 +192,35 @@ export const fakeTaskData = [
 
 export const tempTags = [
   {
-    "_id": "457",
-    "uid": "string",
-    "name": "testTag",
-    "color": "#c5CC6D",
-    "created": "2022-08-23T23:13:06.983Z",
-    "updated": "2022-08-23T23:13:06.983Z"
+    _id: "457",
+    uid: "string",
+    name: "testTag",
+    color: "#c5CC6D",
+    created: "2022-08-23T23:13:06.983Z",
+    updated: "2022-08-23T23:13:06.983Z",
   },
   {
-    "_id": "",
-    "uid": "string",
-    "name": "untagged",
-    "color": "#c5CC6D",
-    "created": "2022-08-23T23:13:06.983Z",
-    "updated": "2022-08-23T23:13:06.983Z"
+    _id: "",
+    uid: "string",
+    name: "untagged",
+    color: "#c5CC6D",
+    created: "2022-08-23T23:13:06.983Z",
+    updated: "2022-08-23T23:13:06.983Z",
   },
   {
-    "_id": "5647",
-    "uid": "string",
-    "name": "testTag2",
-    "color": "#c5CC6D",
-    "created": "2022-08-23T23:13:06.983Z",
-    "updated": "2022-08-23T23:13:06.983Z"
+    _id: "5647",
+    uid: "string",
+    name: "testTag2",
+    color: "#c5CC6D",
+    created: "2022-08-23T23:13:06.983Z",
+    updated: "2022-08-23T23:13:06.983Z",
   },
   {
-    "_id": "testTag3",
-    "uid": "string",
-    "name": "testTag3",
-    "color": "#c5CC6D",
-    "created": "2022-08-23T23:13:06.983Z",
-    "updated": "2022-08-23T23:13:06.983Z"
-  }
+    _id: "testTag3",
+    uid: "string",
+    name: "testTag3",
+    color: "#c5CC6D",
+    created: "2022-08-23T23:13:06.983Z",
+    updated: "2022-08-23T23:13:06.983Z",
+  },
 ];

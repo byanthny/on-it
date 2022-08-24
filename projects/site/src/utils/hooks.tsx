@@ -6,13 +6,11 @@ import { toast } from "react-toastify";
  * returns map of Notes or Tasks
  */
 function useLoadItems(fetch: Function, tags: Tag[], dispatch: Function) {
-    tags.forEach(async (tag) => {
-        const response = await fetch(tag._id);
-        if (response.length > 0)
-            dispatch({ type: "CREATE", payload: { tag: tag.name, response } });
-        else
-            toast(`Nothing found for tag: ${tag.name}`);
-    });
-};
+  tags.forEach(async (tag) => {
+    const response = await fetch(tag._id);
+    if (response.length > 0) dispatch({ type: "CREATE", payload: { tag: tag.name, response } });
+    else toast(`Nothing found for tag: ${tag.name}`);
+  });
+}
 
 export default useLoadItems;
