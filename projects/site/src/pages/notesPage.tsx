@@ -22,7 +22,7 @@ const initialNote: NoteModel = {
 
 const tempTags = [
   {
-    "_id": "testTag",
+    "_id": "457",
     "uid": "string",
     "name": "testTag",
     "color": "#c5CC6D",
@@ -30,15 +30,15 @@ const tempTags = [
     "updated": "2022-08-23T23:13:06.983Z"
   },
   {
-    "_id": "testTag",
+    "_id": "",
     "uid": "string",
-    "name": "",
+    "name": "something",
     "color": "#c5CC6D",
     "created": "2022-08-23T23:13:06.983Z",
     "updated": "2022-08-23T23:13:06.983Z"
   },
   {
-    "_id": "testTag2",
+    "_id": "5647",
     "uid": "string",
     "name": "testTag2",
     "color": "#c5CC6D",
@@ -63,17 +63,17 @@ type currentNoteData = {
 const reducer = (state: Map<any, any>, action: any) => {
   switch (action.type) {
     case "CREATE":
-      return state.set(action.payload.tag, action.payload.response);
+      return new Map(state.set(action.payload.tag, action.payload.response));
     case "UPDATE":
       action.payload.response.tags.forEach((tag: Tag) => {
         state.set(tag, state.get(tag).set(action.payload.id, action.payload.response));
       });
-      return state;
+      return new Map(state);
     case "DELETE":
       action.payload.response.tags.forEach((tag: Tag) => {
         state.set(tag, state.get(tag).delete(action.payload.id, action.payload.response));
       });
-      return state;
+      return new Map(state);
     default:
       return state;
   };
@@ -85,28 +85,25 @@ const notesPage = () => {
   const [currentNote, setCurrentNote] = useState<currentNoteData>({ note: initialNote, isEditing: false });
 
   /* Fetch notes from api based on tags */
-  const fetchData = async (tag: string) => {
+  const fetchData = async (tagID: string) => {
     try {
-      const response = await OnItApi.note.search({ tags: [tag] });
-      console.log(tag);
+      const response = await OnItApi.note.search(tagID !== "" ? { tags: [tagID] } : {});
       if (!response || response.error) throw response.error?.message;
 
-      return response;
+      return response.payload;
     } catch (error) {
-      toast("Couldn't load notes :(" || (error as string));
+      // console.log(`Couldn't load ${tagID}`);
     }
     return null;
   };
 
   const mapData = (fetch: Function) => {
-    tempTags.forEach((tag) => {
-      const response = fetch(tag);
-
-      if (!response)
-        console.log(`Couldn't load ${tag}`);
+    tempTags.forEach(async (tag) => {
+      const response = await fetch(tag._id);
+      if (response.length > 0)
+        dispatch({ type: "CREATE", payload: { tag: tag.name, response } });
       else
-        dispatch({ type: "CREATE", payload: { tag, response: response.payload } });
-
+        console.log(`Couldn't load ${tag.name}`);
     });
   }
 
@@ -156,6 +153,7 @@ const notesPage = () => {
 
   const renderNotes = (data: Map<any, NoteModel>) => {
     const toRender: Array<React.ReactNode> = [];
+    console.log(data)
     data.forEach((value) =>
       toRender.push(<Note key={value._id} NoteData={value} selectNoteToEdit={selectNoteToEdit} />),
     );
@@ -165,6 +163,7 @@ const notesPage = () => {
   const renderNoteCollection = (data: any) => {
     const toRender: Array<React.ReactNode> = [];
     if (noteData) {
+      console.log(noteData)
       noteData.forEach((value, key) => {
         if (key !== "none")
           toRender.push(

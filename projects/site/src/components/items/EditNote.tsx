@@ -4,7 +4,7 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 
 type PropTypes = {
-  noteData: Note;
+  noteData: Note
   setNoteData: Function;
 };
 
@@ -19,7 +19,7 @@ const EditNote = ({ noteData, setNoteData }: PropTypes) => {
   );
 
   const onChange = useCallback((value: string) => {
-    setNoteData({ ...noteData, text: value });
+    setNoteData({ isEditing: true, note: { ...noteData, text: value } });
   }, []);
 
   return (
