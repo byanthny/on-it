@@ -65,13 +65,13 @@ const reducer = (state: Map<any, any>, action: any) => {
   switch (action.type) {
     case "CREATE":
       return new Map(state.set(action.payload.tag, toKeyValueMap(action.payload.response)));
-    case "UPDATE":
-      // eslint-disable-next-line no-case-declarations
+    case "UPDATE": {
       const tags = action.payload.response.tags ?? [{ "name": "untagged" }];
       tags.forEach((tag: Tag) => {
         state.set(tag.name, new Map(state.get(tag.name).set(action.payload.id, action.payload.response)));
       });
       return new Map(state);
+    }
     case "DELETE":
       action.payload.response.tags.forEach((tag: Tag) => {
         state.set(tag, state.get(tag).delete(action.payload.id, action.payload.response));
@@ -91,11 +91,12 @@ const notesPage = () => {
   const fetchData = async (tagID: string) => {
     try {
       const response = await OnItApi.note.search(tagID !== "" ? { tags: [tagID] } : {});
-      if (!response || response.error) throw response.error?.message;
+      if (!response || response.error)
+        throw response.error?.message;
 
       return response.payload;
     } catch (error) {
-      // console.log(`Couldn't load ${tagID}`);
+      toast(`Error loading tag: ${tagID}`);
     }
     return null;
   };
@@ -106,7 +107,7 @@ const notesPage = () => {
       if (response.length > 0)
         dispatch({ type: "CREATE", payload: { tag: tag.name, response } });
       else
-        console.log(`Couldn't load ${tag.name}`);
+        toast(`Nothing found for tag: ${tag.name}`);
     });
   }
 
@@ -148,7 +149,6 @@ const notesPage = () => {
 
   const renderNotes = (data: Map<any, NoteModel>) => {
     const toRender: Array<React.ReactNode> = [];
-    console.log(data)
     data.forEach((value) =>
       toRender.push(<Note key={value._id} NoteData={value} selectNoteToEdit={selectNoteToEdit} />),
     );
@@ -157,16 +157,14 @@ const notesPage = () => {
 
   const renderNoteCollection = (data: any) => {
     const toRender: Array<React.ReactNode> = [];
-    if (noteData) {
-      console.log(noteData)
-      noteData.forEach((value, key) => {
-        toRender.push(
-          <Collection collectionTitle={key} variant="normalCollection">
-            {renderNotes(value)}
-          </Collection>,
-        );
-      });
-    }
+    noteData.forEach((value, key) => {
+      toRender.push(
+        // eslint-disable-next-line react/no-array-index-key
+        <Collection key={key} collectionTitle={key} variant="normalCollection">
+          {renderNotes(value)}
+        </Collection>,
+      );
+    });
     return toRender;
   };
 
