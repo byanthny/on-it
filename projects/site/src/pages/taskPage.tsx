@@ -120,7 +120,7 @@ const taskPage = () => {
         <CreateForm handleSubmit={handleSubmit} />
       </NavBar>
       <div className="main-content">
-        <Header title="To Do" />
+        <Header title="Tasks" />
         <div className="secondary-content">{renderTaskCollection(taskData)}</div>
       </div>
     </>

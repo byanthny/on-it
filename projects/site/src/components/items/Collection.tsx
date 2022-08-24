@@ -21,7 +21,7 @@ const Collection = ({ children, collectionTitle, variant }: PropTypes) => {
           {open ? <RiArrowDropDownLine /> : <RiArrowDropRightLine />}
         </Button>
       </h2>
-      <div className={`noteCollection ${variant} ${open ? "" : "closed"}`}>
+      <div className={`${variant} ${open ? "" : "closed"}`}>
         {children || <p>nothing to show</p>}
       </div>
     </>
