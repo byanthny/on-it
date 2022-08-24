@@ -98,12 +98,14 @@ const taskPage = () => {
   const renderTaskCollection = (data: Map<any, any>) => {
     const toRender: Array<React.ReactNode> = [];
     data.forEach((value, key) => {
-      toRender.push(
-        // eslint-disable-next-line react/no-array-index-key
-        <Collection key={key} collectionTitle={key} variant="normalCollection">
-          {renderTasks(value)}
-        </Collection>
-      );
+      if (key !== "untagged")
+        toRender.push(
+          // eslint-disable-next-line react/no-array-index-key
+          <Collection key={key} collectionTitle={key} variant="normalCollection">
+            {renderTasks(value)}
+          </Collection>
+        );
+      else toRender.unshift(renderTasks(value));
     });
     return toRender;
   };

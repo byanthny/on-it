@@ -96,12 +96,20 @@ const notesPage = () => {
   const renderNoteCollection = (data: Map<any, any>) => {
     const toRender: Array<React.ReactNode> = [];
     data.forEach((value, key) => {
-      toRender.push(
-        // eslint-disable-next-line react/no-array-index-key
-        <Collection key={key} collectionTitle={key} variant="noteCollection">
-          {renderNotes(value)}
-        </Collection>,
-      );
+      if (key !== "untagged")
+        toRender.push(
+          // eslint-disable-next-line react/no-array-index-key
+          <Collection key={key} collectionTitle={key} variant="noteCollection">
+            {renderNotes(value)}
+          </Collection>
+        );
+      else
+        toRender.unshift(
+          // eslint-disable-next-line react/no-array-index-key
+          <Collection key={key} collectionTitle={key} variant="noteCollection" >
+            {renderNotes(value)}
+          </Collection>
+        );
     });
     return toRender;
   };
