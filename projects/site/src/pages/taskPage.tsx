@@ -8,7 +8,7 @@ import Header from "../components/navigation/Header";
 import NavBar from "../components/navigation/NavBar";
 import CreateForm from "../components/forms/CreateForm";
 import itemReducer from "../utils/reducers";
-import useMapItems from "../utils/hooks";
+import useLoadItems from "../utils/hooks";
 import { tempTags } from "../utils/constants";
 
 const taskPage = () => {
@@ -32,7 +32,7 @@ const taskPage = () => {
 
   // onMount load all tasks
   useEffect(() => {
-    useMapItems(fetchData, tempTags, dispatch);
+    useLoadItems(fetchData, tempTags, dispatch);
   }, []);
 
   // Update Task
@@ -60,6 +60,7 @@ const taskPage = () => {
     }
   };
 
+  // TODO Update to useReducer
   // Handle response from create form
   const handleResponse = (response: any) => {
     const task: TaskModel = response as TaskModel;

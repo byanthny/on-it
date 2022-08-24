@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Note as NoteModel, Tag } from "common";
 import { toast } from "react-toastify";
 import itemReducer from "../utils/reducers";
-import useMapItems from "../utils/hooks";
+import useLoadItems from "../utils/hooks";
 import { tempTags } from "../utils/constants";
 import OnItApi from "../services/OnItApi";
 import EditNote from "../components/items/EditNote";
@@ -48,7 +48,7 @@ const notesPage = () => {
 
   // onMount load all notes
   useEffect(() => {
-    useMapItems(fetchData, tempTags, dispatch);
+    useLoadItems(fetchData, tempTags, dispatch);
   }, []);
 
   // onClick select Note and set state to edit.

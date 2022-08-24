@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
  * Creates map of Notes or Tasks by grouped by tags
  * returns map of Notes or Tasks
  */
-function useMapItems(fetch: Function, tags: Tag[], dispatch: Function) {
+function useLoadItems(fetch: Function, tags: Tag[], dispatch: Function) {
     tags.forEach(async (tag) => {
         const response = await fetch(tag._id);
         if (response.length > 0)
@@ -15,4 +15,4 @@ function useMapItems(fetch: Function, tags: Tag[], dispatch: Function) {
     });
 };
 
-export default useMapItems;
+export default useLoadItems;
