@@ -21,7 +21,7 @@ const settingsPage = () => {
 
   const handleSubmit = async (itemType: string, data: Task | Note) => {
     try {
-      const response = await useItemCreate(data);
+      const response = await useItemCreate(itemType, data);
       if (response.error) throw response.error;
     } catch (error) {
       console.log(error);

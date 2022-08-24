@@ -21,20 +21,23 @@ export function useLoadItems(fetch: Function, tags: Tag[], dispatch: Function) {
  * Otherwise the response is returned
  */
 export async function useItemCreate(
+  itemType: string,
   data: Task | Note,
   handleResponse?: Function,
 ) {
   let response;
-  if (data as Task) {
-    const task: Task = data as Task;
-    response = await OnItApi.task.create(task);
-  } else if (data as Note) {
+  if (itemType === "note") {
     const temp: Task = await (await OnItApi.task.search({})).payload![0]; // Temp workaround till notes are decoupled from task
 
     const note: Note = data as Note;
     note.updated = new Date().toISOString();
     response = await OnItApi.note.create(note);
-  } else {
+  } else if (itemType === "task") {
+    const task: Task = data as Task;
+    response = await OnItApi.task.create(task);
+  }
+
+  else {
     response = {
       error: "Unknown",
     };

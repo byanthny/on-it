@@ -12,7 +12,6 @@ import { useLoadItems, useItemCreate } from "../utils/hooks";
 import { tempTags } from "../utils/constants";
 
 const taskPage = () => {
-  const [taskList, setTaskList] = useState<Map<any, any>>();
   const [modalOpen, setModalOpen] = useState(false);
   const [taskData, dispatch] = useReducer(itemReducer, new Map());
 
@@ -72,6 +71,7 @@ const taskPage = () => {
   const handleSubmit = async (itemType: string, data: TaskModel | Note) => {
     try {
       const response = await useItemCreate(
+        itemType,
         data,
         itemType === "task" ? handleResponse : undefined,
       );
