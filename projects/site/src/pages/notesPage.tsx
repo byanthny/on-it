@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Note as NoteModel, Tag } from "common";
 import { toast } from "react-toastify";
 import itemReducer from "../utils/reducers";
-import useLoadItems from "../utils/hooks";
+import { useLoadItems } from "../utils/hooks";
 import { tempTags } from "../utils/constants";
 import OnItApi from "../services/OnItApi";
 import EditNote from "../components/items/EditNote";
@@ -73,12 +73,13 @@ const notesPage = () => {
 
       if (response.error) throw response.error?.message;
 
-      setCurrentNote({ note: initialNote, isEditing: false });
-
       dispatch({
         type: "UPDATE",
         payload: { id: currentNote.note._id, response: response.payload },
       });
+
+      setCurrentNote({ note: initialNote, isEditing: false });
+
     } catch (error) {
       toast("Error: Couldn't update note" || (error as string));
     }
@@ -92,12 +93,12 @@ const notesPage = () => {
     return toRender;
   };
 
-  const renderNoteCollection = (data: any) => {
+  const renderNoteCollection = (data: Map<any, any>) => {
     const toRender: Array<React.ReactNode> = [];
-    noteData.forEach((value, key) => {
+    data.forEach((value, key) => {
       toRender.push(
         // eslint-disable-next-line react/no-array-index-key
-        <Collection key={key} collectionTitle={key} variant="normalCollection">
+        <Collection key={key} collectionTitle={key} variant="noteCollection">
           {renderNotes(value)}
         </Collection>,
       );
