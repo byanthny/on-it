@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Note as NoteModel, Tag } from "common";
 import { toast } from "react-toastify";
+import { toKeyValueMap } from "../utils/utils";
 import OnItApi from "../services/OnItApi";
 import EditNote from "../components/items/EditNote";
 import Collection from "../components/items/Collection";
@@ -32,7 +33,7 @@ const tempTags = [
   {
     "_id": "",
     "uid": "string",
-    "name": "something",
+    "name": "untagged",
     "color": "#c5CC6D",
     "created": "2022-08-23T23:13:06.983Z",
     "updated": "2022-08-23T23:13:06.983Z"
@@ -63,10 +64,12 @@ type currentNoteData = {
 const reducer = (state: Map<any, any>, action: any) => {
   switch (action.type) {
     case "CREATE":
-      return new Map(state.set(action.payload.tag, action.payload.response));
+      return new Map(state.set(action.payload.tag, toKeyValueMap(action.payload.response)));
     case "UPDATE":
-      action.payload.response.tags.forEach((tag: Tag) => {
-        state.set(tag, state.get(tag).set(action.payload.id, action.payload.response));
+      // eslint-disable-next-line no-case-declarations
+      const tags = action.payload.response.tags ?? [{ "name": "untagged" }];
+      tags.forEach((tag: Tag) => {
+        state.set(tag.name, new Map(state.get(tag.name).set(action.payload.id, action.payload.response)));
       });
       return new Map(state);
     case "DELETE":
@@ -143,14 +146,6 @@ const notesPage = () => {
     }
   };
 
-  /* Render Notes */
-  // const renderNotes = (data: Array<NoteModel>) =>
-  //   data && data.length > 0
-  //     ? data.map((note) => (
-  //       <Note key={note._id} NoteData={note} selectNoteToEdit={selectNoteToEdit} />
-  //     ))
-  //     : null;
-
   const renderNotes = (data: Map<any, NoteModel>) => {
     const toRender: Array<React.ReactNode> = [];
     console.log(data)
@@ -165,13 +160,11 @@ const notesPage = () => {
     if (noteData) {
       console.log(noteData)
       noteData.forEach((value, key) => {
-        if (key !== "none")
-          toRender.push(
-            <Collection collectionTitle={key} variant="normalCollection">
-              {renderNotes(value)}
-            </Collection>,
-          );
-        else toRender.push(renderNotes(value));
+        toRender.push(
+          <Collection collectionTitle={key} variant="normalCollection">
+            {renderNotes(value)}
+          </Collection>,
+        );
       });
     }
     return toRender;
