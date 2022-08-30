@@ -1,4 +1,4 @@
-# On It
+# On-It
 
 Keeping you focused on what needs to get done
 ---
@@ -10,11 +10,40 @@ Presenting On-It our solution to managing simpleton task. You can create project
 [Anomaly Detected] Ah duty calls, we must save the universe once again. You'll find other relevant information below and updates in the changelog. Godspeed.
 
 ---
-<https://jonoaugustine.gitlab.io/on-it>
 
-<https://on-it-api.herokuapp.com/>
+Site: <https://jonoaugustine.gitlab.io/on-it>
 
-<https://app.swaggerhub.com/apis-docs/JonoAugustine/OnIt/2.0.0>
+Backend: <https://on-it-api.herokuapp.com/>
+
+API Documentation: <https://app.swaggerhub.com/apis-docs/JonoAugustine/OnIt/2.0.0>
+
+---
+
+# Current State
+
+- Production Build is having cookie issues with deployment server.
+- Wrapping up tag implementation on frontend
+- Changelog to be properly setup
+
+More up to date progress can be found under repo issues.
+
+## Features
+
+![Login](docs/assets/Login.gif)
+
+### Dark/Light Mode
+
+![Theme](docs/assets/Theme.gif)
+
+### Creating & Editing Notes
+
+![New Note](docs/assets/New-Note.gif)
+![Edit Note](docs/assets/Edit-Note.gif)
+
+### Creating & Editing Tasks
+
+![New Task](docs/assets/New-Task.gif)
+![Edit Task](docs/assets/Edit-Task.gif)
 
 ---
 
@@ -27,3 +56,5 @@ $ yarn build
 $ yarn server <dev|start> # runs server in dev or prod mode
 $ yarn site start # runs frontend
 ```
+
+##
